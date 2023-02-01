@@ -7,7 +7,7 @@ import {EmployeeEditComponent} from './employee-edit/employee-edit.component';
 
 const routes: Routes = [
   {
-    path: '', component: EmployeeListComponent
+    path: '', component: EmployeeListComponent, data: {title: 'employee'}
     // , canActivate: [AuthGuard],
     // data: {
     //   roles: ['ROLE_ADMIN']
