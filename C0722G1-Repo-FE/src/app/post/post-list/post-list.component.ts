@@ -10,8 +10,45 @@ import {ToastrService} from "ngx-toastr";
 })
 export class PostListComponent implements OnInit {
   page: number = 1;
-  postList: Post[] | undefined;
-
+  // postList: Post[] | undefined;
+postList: Post[]= [
+  {
+    idPost:1,
+    area: 32
+  },
+  {
+    idPost:2,
+    area: 32
+  },
+  {
+    idPost:3,
+    area: 32
+  },
+  {
+    idPost:4,
+    area: 32
+  },
+  {
+    idPost:5,
+    area: 32
+  },
+  {
+    idPost:5,
+    area: 32
+  },
+  {
+    idPost:5,
+    area: 32
+  },
+  {
+    idPost:5,
+    area: 32
+  },
+  {
+    idPost:5,
+    area: 32
+  }
+]
   constructor(private _postService: PostService) {
   }
 

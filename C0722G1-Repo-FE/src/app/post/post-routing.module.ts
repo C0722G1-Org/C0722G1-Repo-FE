@@ -15,7 +15,7 @@ const routes: Routes = [
   {
     path: 'edit', component: PostEditComponent
   },
-  {path:'list/post', component: PostListComponent}
+  {path:'list', component: PostListComponent}
 ];
 
 @NgModule({

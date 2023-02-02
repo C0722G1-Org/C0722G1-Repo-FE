@@ -46,54 +46,27 @@
       </nav>
       <hr style="background-color: blue; height: 2px">
     </div>
-    <div style="margin-top: 30px">
-      <div class="container">
-        <div *ngIf="postList">
-          <div *ngFor="let item if postList| paginate:{itemsPerPage: 8, currentPage: page}, let i = index">
-            <div class="row" style="padding-left: 30px;padding-right: 30px">
-              <div class="card" style="width: 18rem;margin-right: 20px; padding: 0 !important;">
-                <img src="{{item.imageListURL}}}" class="card-img-top d-block w-100" style="height: 195px" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Loại nhu cầu: {{item.demandType}}</h5>
-                  <p class="card-text">Loại BĐS: {{item.landType}}</p>
-                  <p class="card-text">Vị trí: {{item.direction}}</p>
-                  <p class="card-text">Diện tích: {{item.area}}m<sup>2</sup></p>
-                  <p style="text-align: center"><a href="#" class="btn btn-outline-primary">Xem chi tiết</a>
-                  </p>
-                </div>
-              </div>
-            </div>
+    <div class="row">
+      <div *ngFor="let item of postList| paginate:{itemsPerPage: 8, currentPage: page}, let i = index" class="col-lg-3">
+        <div class="card" style="padding: 0 !important;">
+          <img src="{{item?.imageListURL}}}" class="card-img-top d-block w-100" style="height: 195px" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Loại nhu cầu: {{item?.demandType?.nameDemandType}}</h5>
+            <p class="card-text">Loại BĐS: {{item?.landType?.nameLandType}}</p>
+            <p class="card-text">Vị trí: {{item?.direction}}</p>
+            <p class="card-text">Diện tích: {{item?.area}}m<sup>2</sup></p>
+            <p style="text-align: center"><a href="#" class="btn btn-outline-primary">Xem chi tiết</a>
+            </p>
           </div>
         </div>
+      </div>
+      <div class="d-flex justify-content-center align-items-center">
+        <pagination-controls (pageChange)="page = $event"></pagination-controls>
       </div>
     </div>
   </div>
 </div>
-<div class="d-flex justify-content-center">
-  <nav aria-label="...">
-    <ul class="pagination">
-      <li class="page-item disabled">
-        <a class="page-link">Trước</a>
-      </li>
-      <li class="page-item active">
-        <a class="page-link" href="#">1</a>
-      </li>
-      <li class="page-item" aria-current="page">
-        <a class="page-link" href="#">2</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="#">3</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="#">4</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="#">Sau</a>
-      </li>
-    </ul>
-  </nav>
-</div>
-<pagination-controls (pageChange)="page = $event"></pagination-controls>
+
 </body>
 
 

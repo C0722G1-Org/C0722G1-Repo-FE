@@ -12,6 +12,11 @@ body {
   background-attachment: fixed;
 }
 
+ul{
+  margin: 0;
+  padding: 0 !important;
+}
+
 .inputSearch{
   border-radius: 8px;
   border: 1px solid #0D6EFD;
