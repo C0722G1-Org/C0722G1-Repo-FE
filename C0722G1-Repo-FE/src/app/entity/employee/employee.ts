@@ -12,5 +12,6 @@ export interface Employee {
   flagDeleted?: string;
   nameDivision?: string;
   division?: Division;
-  account?: Account;
+  // account?: Account;
+
 }
