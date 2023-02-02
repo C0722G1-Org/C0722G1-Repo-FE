@@ -17,8 +17,7 @@ export class CustomerService {
     return this.httpClient.get(this.CUSTOMER_URL + '/' + idCustomer);
   }
 
-  // tslint:disable-next-line:typedef
-  updateCustomer(customer: Customer) {
+  updateCustomer(customer: Customer): Observable<any> {
     return this.httpClient.patch(this.CUSTOMER_URL + '/' + customer.idCustomer, customer);
   }
 

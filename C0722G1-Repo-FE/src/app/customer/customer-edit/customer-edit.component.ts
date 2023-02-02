@@ -11,7 +11,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 })
 export class CustomerEditComponent implements OnInit {
   customer: Customer[] = [];
-  // @ts-ignore
   editForm: FormGroup;
 
   constructor(private customerService: CustomerService,
