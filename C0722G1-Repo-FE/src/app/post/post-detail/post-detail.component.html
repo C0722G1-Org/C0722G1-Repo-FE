@@ -1,1 +1,267 @@
-<p>post-detail works!</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-2">
+    </div>
+    <div class="col-lg-6">
+      <div class="card card-body w-100">
+        <div id="carouselExampleCaptions" class="carousel slide mb-3" data-bs-ride="false">
+          <div class="carousel-indicators">
+            <button style="width: 5rem;" type="button" data-bs-target="#carouselExampleCaptions"
+                    data-bs-slide-to="0" class="active rounded"
+                    aria-current="true" aria-label="Slide 1">
+              <img style="border: inset #585858 4px; border-radius: 1px" src="https://file4.batdongsan.com.vn/resize/1275x717/2022/11/09/20221109093445-1eb4_wm.jpg"
+                   class="d-block w-100" alt="...">
+            </button>
+            <button style="width: 5rem" type="button" data-bs-target="#carouselExampleCaptions"
+                    data-bs-slide-to="1"
+                    aria-label="Slide 2">
+              <img style="border: inset #585858 4px; border-radius: 1px" src="https://file4.batdongsan.com.vn/resize/1275x717/2022/11/09/20221109093445-c8fa_wm.jpg"
+                   class="d-block w-100" alt="...">
+            </button>
+            <button style="width: 5rem" type="button" data-bs-target="#carouselExampleCaptions"
+                    data-bs-slide-to="2"
+                    aria-label="Slide 3">
+              <img style="border: inset #585858 4px; border-radius: 1px" src="https://file4.batdongsan.com.vn/resize/1275x717/2022/11/09/20221109093446-a04c_wm.jpg"
+                   class="d-block w-100" alt="...">
+            </button>
+          </div>
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img src="https://file4.batdongsan.com.vn/resize/1275x717/2022/11/09/20221109093445-1eb4_wm.jpg"
+                   class="d-block w-100" alt="...">
+              <!--                        <div class="carousel-caption d-none d-md-block">-->
+              <!--                            <h5>First slide label</h5>-->
+              <!--                            <p>Some representative placeholder content for the first slide.</p>-->
+              <!--                        </div>-->
+            </div>
+            <div class="carousel-item">
+              <img src="https://file4.batdongsan.com.vn/resize/1275x717/2022/11/09/20221109093445-c8fa_wm.jpg"
+                   class="d-block w-100" alt="...">
+              <!--                        <div class="carousel-caption d-none d-md-block">-->
+              <!--                            <h5>Second slide label</h5>-->
+              <!--                            <p>Some representative placeholder content for the second slide.</p>-->
+              <!--                        </div>-->
+            </div>
+            <div class="carousel-item">
+              <img src="https://file4.batdongsan.com.vn/resize/1275x717/2022/11/09/20221109093446-a04c_wm.jpg"
+                   class="d-block w-100" alt="...">
+              <!--                        <div class="carousel-caption d-none d-md-block">-->
+              <!--                            <h5>Third slide label</h5>-->
+              <!--                            <p>Some representative placeholder content for the third slide.</p>-->
+              <!--                        </div>-->
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+                  data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+                  data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-2 ">
+      <div class="row sticky-top">
+        <div class="col-lg-6">
+          <div class="card" style="width: 14rem; height: max-content">
+            <div class="row">
+              <div class="col-lg-3"></div>
+              <div class="col-lg-6">
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/147/147142.png"
+                  class="card-img-top" alt="...">
+              </div>
+              <div class="col-lg-3"></div>
+            </div>
+
+            <div class="card-body">
+              <p style="text-align: center"><span>Được đăng bởi</span> <br>
+                <span class="hr_value" id="customerName">Đặng Nhật Huy</span></p>
+
+              <p style="font-size: smaller; text-align: center">
+                <span class="hl_value"> Ngày đăng: </span><span>10/01/2023</span>
+              </p>
+              <span class="link" style="font-size: smaller; text-align: center">Xem thêm những bài đăng khác</span>
+            </div>
+            <div class="row">
+              <div class="col-1"></div>
+              <div class="col-10">
+                <button style="text-align: center; width: 11rem" id="show" class="btn mt-1"
+                        onclick="showPhoneNumber()"><span id="phoneNumber"
+                                                          style="font-size: smaller; color: white">0799 440 *** . Hiện số</span>
+                </button>
+              </div>
+              <div class="col-1"></div>
+              <div class="row">
+                <div class="col-10">
+                  <button id="email" style="border: solid 1px #ccc; width: 11rem"
+                          class="btn mt-1 mb-2"><span
+                    style="font-size: smaller">Gửi email</span></button>
+                </div>
+                <div class="col-1"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-lg-2">
+
+    </div>
+    <div class="col-lg-6">
+      <span class="link">Cho thuê</span>
+      / <span class="link">Đà Nẵng</span>
+      / <span class="link">Cẩm Lệ </span>
+      / <span>Căn hộ chung cư</span>
+      <h4 class="mt-2">CHO THUÊ CĂN HỘ QUẬN CẨM LỆ TỌA LẠC NGAY MẶT TIỀN
+        VIEW SÔNG 6TR/TH 1PN, LH ĐỂ XEM NHÀ 0799 440 *** </h4>
+      <span class="mt-3">Dự án căn hộ, Đường Nguyễn Phước Lan, Phường Hòa Xuân, Quận Cẩm Lệ, Đà Nẵng</span>
+      <hr>
+      <div class="row">
+        <div class="col-3"><span class="hr_title">Mức giá</span></div>
+        <div class="col-3"><span class="hr_title">Diện tích</span></div>
+        <div class="col-3"><span class="hr_title">Phòng ngủ</span></div>
+        <div class="col-2"><span class="hr_title">Loại bài viết</span></div>
+        <div class="col-1"><i id="share" class="fa-solid fa-share-nodes"></i></div>
+
+      </div>
+      <div class="row">
+        <div class="col-3"><span class="hr_value">6 Triệu / tháng</span></div>
+        <div class="col-3"><span class="hr_value">53m²</span></div>
+        <div class="col-3"><span class="hr_value">1 PN</span></div>
+        <div class="col-2"><span class="hr_value">Cho thuê</span></div>
+        <div class="col-1"><i id="warning" class="fa-solid fa-circle-exclamation"></i></div>
+      </div>
+      <hr>
+    </div>
+    <div class="col-lg-2 rounded">
+      <!--            <div class="row">-->
+      <!--                <div class="col-12 rounded" style="background-color: #e1e1e1">-->
+      <!--                    <ul>-->
+      <!--                        <li class="hl_value">Cho thuê căn hộ chung cư Quận Cẩm Lệ</li>-->
+      <!--                        <li>Belleza Apartment (36)</li>-->
+      <!--                        <li>Căn hộ Florita Đức Khải (19)</li>-->
+      <!--                        <li>Chung cư Hưng Phúc (36)</li>-->
+      <!--                        <li>Eco Green Sài Gòn (96)</li>-->
+      <!--                        <li>Him Lam Riverside (29)</li>-->
+      <!--                        <li>Lavida Plus (19)</li>-->
+      <!--                        <li>LuxGarden (21)</li>-->
+      <!--                    </ul>-->
+      <!--                </div>-->
+      <!--            </div>-->
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-lg-2">
+
+    </div>
+
+    <div class="col-lg-6">
+      <div class="hr_value">Thông tin mô tả</div>
+      <div>
+        <p style="font-family: Arial,serif, sans-serif" class="mt-2">
+          Căn hộ 1PN 1WC, DT: 53m². Giá cực sốc chỉ 6tr/th.
+          Tầng cao, view sông triệu đô, thoáng mát.
+          Tất cả các căn hộ được thiết kế tối ưu không gian mở, các căn đều có tầm view xa bao quát thành
+          phố từ nhiều hướng.
+          Các phòng ngủ trong mỗi căn hộ đều có cửa sổ lớn, hướng ra không gian ngoài trời đón ánh sáng, gió
+          tự nhiên giúp căn hộ luôn thông thoáng, mát mẻ.
+          Khu bếp và phòng khách được tách riêng biệt và có sân phơi riêng.
+          Khu phòng khách được thiết kế nối với khu bàn ăn, có ban công riêng, giúp tối ưu diện tích và thuận
+          tiện trong sinh hoạt.
+        </p>
+      </div>
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-2">
+
+    </div>
+    <div class="col-lg-6 mt-2">
+      <span class="hr_value">Đặc điểm bất động sản</span>
+      <div class="row">
+        <div class="col-6">
+          <hr>
+        </div>
+        <div class="col-6">
+          <hr>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="row">
+            <div class="col-1"><i class="fa-solid fa-chart-area"></i></div>
+            <div class="col-5"><span class="hl_value">Diện tích</span></div>
+            <div class="col-6">53m²</div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="row">
+            <div class="col-1"><i class="fa-solid fa-coins"></i></div>
+            <div class="col-5"><span class="hl_value">Mức giá</span></div>
+            <div class="col-6"><span>6 triệu/tháng</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <hr>
+        </div>
+        <div class="col-6">
+          <hr>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="row">
+            <div class="col-1"><i class="fa-solid fa-bed"></i></div>
+            <div class="col-5"><span class="hl_value">Số phòng ngủ</span></div>
+            <div class="col-6">1 phòng</div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="row">
+            <div class="col-1"><i class="fa-solid fa-bath"></i></div>
+            <div class="col-5"><span class="hl_value">Số phòng tắm</span></div>
+            <div class="col-6"><span>1 phòng</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <hr>
+        </div>
+        <div class="col-6">
+          <hr>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--<script>-->
+<!--  function showPhoneNumber() {-->
+<!--    document.getElementById("phoneNumber").innerText = "0799440686 . \nSao chép";-->
+<!--  }-->
+<!--</script>-->
+
+
