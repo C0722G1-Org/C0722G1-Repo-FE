@@ -1,1 +1,189 @@
-<p>post-create works!</p>
+<div class="container shadow pt-2 mt-5 border border-primary" style="background-color:#FFFFFF;">
+  <button class="btn btn-outline-primary" type="button"><i class="fa-solid fa-arrow-left"></i></button>
+  <p class="text-center p-title fw-bold">Thêm bài đăng</p>
+  <hr>
+  <div class="row mt-4 mx-3 mb-3">
+    <div class="col-2"></div>
+    <div class="col-2">
+      <label for="customerCode" class="form-label"><i class="fa-regular fa-id-card"></i> Mã khách hàng(<span
+        class="requirement-field">*</span>):</label>
+    </div>
+    <div class="col-3">
+      <input readonly value="KH001" class="form-control-plaintext" type="text" id="customerCode">
+      <div class="form-text">Đã được điền tự động. Không được chỉnh sửa
+      </div>
+    </div>
+  </div>
+  <div class="row mt-4 mx-3 mb-3">
+    <div class="col-2"></div>
+    <div class="col-2">
+      <label for="postName" class="form-label"><i class="fa-regular fa-id-card"></i> Tên bài đăng(<span
+        class="requirement-field">*</span>):</label>
+    </div>
+    <div class="col-3">
+      <input class="form-control" type="text" id="postName">
+    </div>
+  </div>
+  <div class="row mx-3 mb-3">
+    <div class="col-2"></div>
+    <div class="col-2">
+      <label class="form-label"><i class="fa-brands fa-sellsy"></i>Nhu cầu(<span
+        class="requirement-field">*</span>):</label>
+    </div>
+    <div class="col-1">
+      <div class="form-check">
+        <input class="form-check-input shadow" type="radio" name="demandType" id="buy"><label class="form-check-label"
+                                                                                              for="buy">Mua</label>
+      </div>
+    </div>
+    <div class="col-1">
+      <div class="form-check">
+        <input class="form-check-input shadow" type="radio" name="demandType" id="sell">
+        <label class="form-check-label" for="sell">Bán</label>
+      </div>
+    </div>
+    <div class="col-2">
+      <div class="form-check">
+        <input class="form-check-input shadow" type="radio" name="demandType" id="lease">
+        <label class="form-check-label" for="lease">Cho Thuê</label>
+      </div>
+    </div>
+  </div>
+  <div class="row mx-3 mb-3">
+    <div class="col-2"></div>
+    <div class="col-2">
+      <label class="form-label"><i class="fa-brands fa-sellsy"></i>Loại bất động sản:(<span
+        class="requirement-field">*</span>):</label>
+    </div>
+    <div class="col-1">
+      <div class="form-check">
+        <input class="form-check-input shadow" type="radio" name="landType" id="home">
+        <label class="form-check-label" for="home">Nhà</label>
+      </div>
+    </div>
+    <div class="col-1">
+      <div class="form-check">
+        <input class="form-check-input shadow" type="radio" name="landType" id="land">
+        <label class="form-check-label" for="land">Đất</label>
+      </div>
+    </div>
+  </div>
+  <div class="row mx-3 mb-3">
+    <div class="col-2"></div>
+    <div class="col-2">
+      <label for="numberAddress" class="form-label"><i class="fa-solid fa-address-book"></i> Địa chỉ(<span
+        class="requirement-field">*</span>):</label>
+    </div>
+    <div class="col-4">
+      <input class="form-control" type="text" id="numberAddress" required>
+      <div class="form-text">VD: 122 đường abc</div>
+    </div>
+  </div>
+  <div class="row mx-3 mb-3">
+    <div class="col-2"></div>
+    <div class="col-2">
+      <label for="postDirection" class="form-label"><i class="fa-solid fa-location-dot"></i> Hướng nhà:(<span
+        class="requirement-field">*</span>):</label>
+    </div>
+    <div class="col-3">
+      <select class="form-select" name="" id="postDirection">
+        <option value="">Đông</option>
+        <option value="">Tây</option>
+        <option value="">Nam</option>
+        <option value="">Bắc</option>
+      </select>
+    </div>
+  </div>
+  <div class="row mx-3 mb-3">
+    <div class="col-2"></div>
+    <div class="col-2">
+      <label for="postCity" class="form-label"><i class="fa-solid fa-location-dot"></i> Tỉnh/Thành phố:(<span
+        class="requirement-field">*</span>):</label>
+    </div>
+    <div class="col-3">
+      <select class="form-select" name="" id="postCity">
+        <option value="">Tỉnh Khánh Hoà</option>
+        <option value="">Thành phố Đà Nẵng</option>
+        <option value="">Thành phố Hà Nội</option>
+      </select>
+    </div>
+  </div>
+  <div class="row mx-3 mb-3">
+    <div class="col-2"></div>
+    <div class="col-2">
+      <label for="postDistrict" class="form-label"><i class="fa-solid fa-location-dot"></i> Quận/Huyện(<span
+        class="requirement-field">*</span>):</label>
+    </div>
+    <div class="col-2 me-5">
+      <select class="form-select" name="" id="postDistrict">
+        <option value="">Quận Hải Châu</option>
+        <option value="">Quận Cẩm Lệ</option>
+        <option value="">Quận Thanh Khê</option>
+      </select>
+    </div>
+    <div class="col-2 border-start pe-0">
+      <label for="postWards" class="form-label"><i class="fa-solid fa-location-dot"></i> Phường/Xã(<span
+        class="requirement-field">*</span>):</label>
+    </div>
+    <div class="col-2 p-0">
+      <select class="form-select" name="" id="postWards">
+        <option value="">Phường Hoà Hiệp Bắc</option>
+        <option value="">Phường Hoà Hiệp Nam</option>
+        <option value="">Phường Hoà Khánh Bắc</option>
+      </select>
+    </div>
+  </div>
+  <div class="row mx-3 mb-3">
+    <div class="col-2"></div>
+    <div class="col-2">
+      <label for="postPrice" class="form-label"><i class="fa-solid fa-chart-area"></i> Giá(<span
+        class="requirement-field">*</span>):</label>
+    </div>
+    <div class="col-4">
+      <div class="input-group flex-nowrap">
+        <input type="tel" id="postPrice" class="form-control">
+        <span class="input-group-text rounded-end">VND/m<sup>2</sup></span>
+        <span hidden class="input-group-text">VND/Tháng</span>
+      </div>
+      <div class="form-text">Đơn vị VND/m<sup>2</sup> hoặc VND/Tháng sẽ thay đổi theo nhu cầu</div>
+    </div>
+  </div>
+  <div class="row mx-3 mb-3">
+    <div class="col-2"></div>
+    <div class="col-2">
+      <label for="postArea" class="form-label"><i class="fa-solid fa-chart-area"></i> Diện tích(<span
+        class="requirement-field">*</span>):</label>
+    </div>
+    <div class="col-4">
+      <div class="input-group flex-nowrap">
+        <input type="tel" id="postArea" class="form-control">
+        <span class="input-group-text rounded-end">m<sup>2</sup></span>
+      </div>
+    </div>
+  </div>
+  <div class="row mx-3 mb-3">
+    <div class="col-2"></div>
+    <div class="col-2">
+      <label class="form-label"><i class="fa-regular fa-image"></i> Ảnh minh hoạ:</label>
+    </div>
+    <div class="col-4">
+      <label for="addImage" class="form-label btn btn-outline-success">Chọn ảnh minh hoạ</label>
+      <span id="fileChosen">chưa có ảnh</span>
+      <input type="file" onchange="showFilesName()" id="addImage" multiple accept="image/*" hidden/>
+    </div>
+  </div>
+  <div class="row mx-3 mb-4">
+    <div class="col-2"></div>
+    <div class="col-2">
+      <label for="" class="form-label"><i class="fa-regular fa-note-sticky"></i> Mô tả chi tiết:</label>
+    </div>
+    <div class="col-4"><textarea class="form-control" name="" id="" cols="30" rows="3"></textarea></div>
+  </div>
+  <div class="row mx-3 mb-3">
+    <div class="col-5"></div>
+    <div class="col-4 p-0">
+      <button type="submit" class="btn btn-primary me-3">Xác nhận</button>
+      <button type="button" class="btn btn-light">Nhập lại</button>
+    </div>
+  </div>
+</div>
