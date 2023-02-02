@@ -1,1 +1,107 @@
-<p>employee-list works!</p>
+<div class="container-fluid main-content">
+
+  <div class="row mt-3">
+    <div class="col-md-1 col-sm-12">
+      <button class="btn button-css" routerLink="/home"><i class="fa-solid fa-arrow-left"></i></button>
+    </div>
+    <div class="col-md-10 col-sm-12">
+      <h2 class="text-center">Quản lý nhân viên</h2>
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+
+  <div class="row">
+    <div class="col-2">
+      <button class="btn btn-primary button-css col-md-1" type="button" routerLink="/employee/create">Thêm mới</button>
+    </div>
+    <div class="col-10"></div>
+  </div>
+
+
+  <form>
+    <div class="row mt-2">
+      <div class="col-12">
+        <div class="col-md-3 col-sm-12 d-flex justify-content-end align-items-center" style="float: left">
+          <label class="text-center" for="codeEmployee"><span>Mã NV</span></label>
+          <input class="form-control select" type="search" id="codeEmployee"
+                 name="codeEmployeeSearch" #codeEmployeeSearch placeholder="Mã nhân viên">
+        </div>
+        <div class="col-md-3 col-sm-12 d-flex justify-content-end align-items-center" style="float: left">
+          <label class="text-center" for="nameEmployee"><span>Tên NV</span></label>
+          <input class="form-control select" type="search" id="nameEmployee"
+                 name="nameEmployeeSearch" #nameEmployeeSearch placeholder="Tên nhân viên">
+        </div>
+        <div class="col-md-3 col-sm-12 d-flex justify-content-end align-items-center" style="float: left">
+          <label class="text-center" for="division"><span>Chức vụ</span></label>
+          <select class="form-select select" name="divisionSearch" #divisionSearch id="division">
+            <option value="">Chức vụ</option>
+            <option [ngValue]="division" *ngFor="let division of divisions">{{division.nameDivision}}</option>
+          </select>
+        </div>
+        <div class="col-md-3 col-sm-12 d-flex justify-content-end align-items-center" style="float: left">
+          <label class="text-center" for="emailEmployee"><span>Email</span></label>
+          <input class="form-control select" type="search" id="emailEmployee"
+                 name="emailEmployeeSearch" #emailEmployeeSearch placeholder="Email">
+        </div>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-md-10"></div>
+      <div class="col-md-2 col-sm-12 d-flex justify-content-end">
+        <button class="btn button-css btn-outline-danger" type="button"
+                (click)="searchEmployee(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value)">
+          Tìm kiếm
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <div *ngIf="employees.length != 0; else elseBlock">
+    <div class="row">
+      <div class="col col-md-12">
+        <table class="table table-light table-striped mt-3">
+          <thead class="text-center">
+          <tr>
+            <th scope="col">STT</th>
+            <th scope="col">Mã nhân viên</th>
+            <th scope="col">Họ tên</th>
+            <th scope="col">Ngày sinh</th>
+            <th scope="col">Giới tính</th>
+            <th scope="col">Số điện thoại</th>
+            <th scope="col">Email</th>
+            <th scope="col">Chức vụ</th>
+            <th scope="col">Xóa</th>
+            <th scope="col">Sửa</th>
+          </tr>
+          </thead>
+          <tbody class="text-center">
+          <tr *ngFor="let employee of employees; let i = index">
+            <td>{{(i + 1)}}</td>
+            <td>{{employee.codeEmployee}}</td>
+            <td>{{employee.nameEmployee}}</td>
+            <td>{{employee.dateOfBirth}}</td>
+            <td>{{employee.genderEmployee ? 'Nam' : 'Nữ'}}</td>
+            <td>{{employee.phoneEmployee}}</td>
+            <td>{{employee.emailEmployee}}</td>
+            <td>{{employee.nameDivision}}</td>
+            <td>
+              <button type="button" class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal"
+                      (click)="temp = employee">
+                <i class="fa-regular fa-trash-can"></i>
+              </button>
+            </td>
+            <td>
+              <a type="button" class="btn btn-sm" (dblclick)="editEmployee(employee.idEmployee)">
+                <i class="fa-regular fa-pen-to-square"></i>
+              </a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <ng-template #elseBlock><h2>Không có dữ liệu.</h2></ng-template>
+
+</div>
+<app-employee-delete [employee]="temp" (eventDelete)="reload()"></app-employee-delete>
