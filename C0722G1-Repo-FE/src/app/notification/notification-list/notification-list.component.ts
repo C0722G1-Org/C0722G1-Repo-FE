@@ -12,6 +12,13 @@ import {NotificationDeleteDto} from "../../dto/notification/notification-delete-
   templateUrl: './notification-list.component.html',
   styleUrls: ['./notification-list.component.css']
 })
+
+/**
+ * Create by: DatLA
+ * Screen: Notification-manager
+ * Role: Admin
+ * Date: 02/02/2023
+ */
 export class NotificationListComponent implements OnInit {
   pageNotifications!: PageNotificationDto;
   rfSearch!: FormGroup;
@@ -34,6 +41,12 @@ export class NotificationListComponent implements OnInit {
     console.log('test date: ' + this.testDate);
   }
 
+  /**
+   * Create by: DatLA
+   * Function: Search by role admin
+   * @Param pageNumber
+   * Date: 02/02/2023
+   */
   searchNotification(pageNumber: number): void {
     this.notificationService.getPageNotifications(this.rfSearch.value, pageNumber).subscribe(next => {
       this.pageNotifications = next;
@@ -42,6 +55,11 @@ export class NotificationListComponent implements OnInit {
     });
   }
 
+  /**
+   * Create by: DatLA
+   * Function: Get the search date
+   * Date: 02/02/2023
+   */
   getSearchDate(timeInfo: string): string {
     let today = new Date();
     switch (timeInfo) {
@@ -58,6 +76,11 @@ export class NotificationListComponent implements OnInit {
     }
   }
 
+  /**
+   * Create by: DatLA
+   * Function: Create search form
+   * Date: 02/02/2023
+   */
   createSearchForm(): void {
     this.rfSearch = this.formBuilder.group({
       title: ['', [
@@ -70,6 +93,11 @@ export class NotificationListComponent implements OnInit {
     });
   }
 
+  /**
+   * Create by: DatLA
+   * Function: Constrain not after today to validate search date input
+   * Date: 02/02/2023
+   */
   constrainNotAfterToday(abstractControl: AbstractControl): any {
     if (abstractControl.value == '') {
       return null;
