@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {LandType} from '../../entity/post/land-type';
 
 @Component({
   selector: 'app-post-list',
@@ -6,10 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./post-list.component.css']
 })
 export class PostListComponent implements OnInit {
+  landTypeList: LandType[] = [];
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
   }
 
+  getLandType(): void {
+
+  }
 }
