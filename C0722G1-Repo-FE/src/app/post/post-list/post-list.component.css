@@ -1,0 +1,36 @@
+.header-nav {
+  background-color:#fff;
+}
+.container-fluid {
+  color: white;
+}
+body {
+  /*background-image: url("src/assets/img/bgfurama.jpg");*/
+  background-position: right bottom;
+  background-repeat: no-repeat;
+  background-size: 70%;
+  background-attachment: fixed;
+}
+
+.inputSearch{
+  border-radius: 8px;
+  border: 1px solid #0D6EFD;
+  outline: none;
+  margin-right: 2px;
+  padding: 8px 24px;
+}
+.card {
+  border: none !important;
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.35);
+  margin-bottom: 30px;
+}
+
+.card:hover {
+  cursor: pointer;
+  box-shadow: 1px 1px 17px rgba(0, 0, 0, 0.35);
+}
+/*::placeholder{*/
+/*    color: #0D6EFD;*/
+/*}*/
+
+
