@@ -1,1 +1,148 @@
-<p>post-list works!</p>
+<div class="row" style="margin: 0 20px">
+  <div class="row g-0" style="margin-bottom: 10px">
+    <div class="col-md-3">
+      <a class="btn text-center" href="#"><i class="fa-solid fa-arrow-left"></i> Quay lại</a>
+    </div>
+  </div>
+  <div class="row g-0" style="border: black 1px solid; min-height: 100px">
+    <div class="col-md-12 g-0">
+      <label class="search"> Tìm kiếm </label>
+      <div class="row" style="margin: 0 5px">
+        <div class="col-md-12">
+          <span >DIỆN TÍCH: </span>
+          <span> <input type="text" style="width: 5rem" id="area" name="area"></span> -
+          <span><input type="text" style="width: 5rem"> </span>
+          <span style="position: absolute; right: 4rem"><button class="btn btn-outline-danger">Tìm kiếm</button> </span>
+        </div>
+      </div>
+      <div class="row" style="margin: 10px 5px">
+        <div class="col-md-12 col-lg-5 col-xxl-4">
+          <span>LOẠI NC: </span>
+          <input id="by" type="radio" name="type-nc"/>
+          <label for="by" class="me-2"> Mua </label>
+          <input id="sale" type="radio" name="type-nc"/>
+          <label for="sale" class="me-2"> Bán </label>
+          <input id="rent" type="radio" name="type-nc"/>
+          <label for="rent" class="me-2"> Thuê </label>
+          <input id="lease" type="radio" name="type-nc"/>
+          <label for="lease" class="me-2"> Cho thuê</label>
+        </div>
+        <div class="col-md-12 col-lg-3 col-xxl-2">
+          <span>LOẠI BĐS: </span>
+          <input id="land" type="radio" name="type-bds"/>
+          <label for="land" class="me-2"> Đất </label>
+          <input id="house" type="radio" name="type-bds"/>
+          <label for="house" class="me-2">Nhà </label>
+        </div>
+        <div class="col-md-12 col-lg-4 col-xxl-4">
+          <span>Vị Trí: </span>
+          <input id="suburb" type="radio" name="position"/>
+          <label for="suburb" class="me-2"> Ngoại ô </label>
+          <input id="center" type="radio" name="position">
+          <label for="center" class="me-2"> Trung tâm </label>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row g-0" style="border: black 1px solid; min-height: 200px; margin-top: 20px">
+    <table class="table table-light table-striped">
+      <thead>
+      <th>Mã NC</th>
+      <th>Mã KH</th>
+      <th>Loại NC</th>
+      <th>Loại BĐS</th>
+      <th>Vị Trí</th>
+      <th>Diện tích(Min-Max)</th>
+      <th>Ghi chú</th>
+      <th colspan="2" style="text-align: center">Chức năng</th>
+      </thead>
+      <tbody>
+      <tr>
+        <td>NC001</td>
+        <td>KH054</td>
+        <td>Mua</td>
+        <td>Nhà</td>
+        <td>Ngoại ô</td>
+        <td>500-750 m<sup>2</sup></td>
+        <td>Mua nhà ngoại ô</td>
+        <td>
+          <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Duyệt
+            </button>
+            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+              <li><a class="dropdown-item active" href="#">Chấp thuận</a></li>
+              <li><a class="dropdown-item" href="#">Từ chối</a></li>
+            </ul>
+          </div>
+        </td>
+        <td><button class="btn" data-bs-toggle="modal" data-bs-target="#deleteModal"><a class="btn btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#deleteModal"><i
+          class="fa-regular fa-trash-can fa-1.5x"></i></a></button> </td>
+      </tr>
+
+      <tr>
+        <td>NC007</td>
+        <td>KH079</td>
+        <td>Mua</td>
+        <td>Nhà</td>
+        <td>Ngoại ô</td>
+        <td>650-870 m<sup>2</sup></td>
+        <td>Mua nhà vùng ngoại</td>
+        <td>
+          <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Duyệt
+            </button>
+            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+              <li><a class="dropdown-item active" href="#">Chấp thuận</a></li>
+              <li><a class="dropdown-item" href="#">Từ chối</a></li>
+            </ul>
+          </div>
+        </td>
+        <td><button class="btn" data-bs-toggle="modal" data-bs-target="#deleteModal"><a class="btn btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#deleteModal"><i
+          class="fa-regular fa-trash-can fa-1.5x"></i></a></button> </td>
+      </tr>
+
+      <tr>
+        <td>NC001</td>
+        <td>KH054</td>
+        <td>Mua</td>
+        <td>Nhà</td>
+        <td>Ngoại ô</td>
+        <td>500-750 m<sup>2</sup></td>
+        <td>Mua nhà ngoại ô</td>
+        <td>
+          <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+              Duyệt
+            </button>
+            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+              <li><a class="dropdown-item active" href="#">Chấp thuận</a></li>
+              <li><a class="dropdown-item" href="#">Từ chối</a></li>
+            </ul>
+          </div>
+        </td>
+        <td><button class="btn" data-bs-toggle="modal" data-bs-target="#deleteModal"><a class="btn btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#deleteModal"><i
+          class="fa-regular fa-trash-can fa-1.5x"></i></a></button> </td>
+      </tr>
+      </tbody>
+
+    </table>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-end me-4">
+        <li class="page-item">
+          <a class="page-link" href="#">Trước</a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item">
+          <a class="page-link" href="#">Sau</a>
+        </li>
+      </ul>
+    </nav>
+
+  </div>
+
+</div>

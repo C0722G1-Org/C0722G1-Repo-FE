@@ -1,0 +1,16 @@
+
+*{
+  box-sizing: border-box;
+  font-family: Arial;
+  font-size: 16px;
+}
+.search{
+  position: relative;
+  left: 5%;
+  top: -12%;
+  background-color: white;
+  display: inline-block;
+  width: 77px;
+  height: 20px;
+  padding: 0 5px;
+}
