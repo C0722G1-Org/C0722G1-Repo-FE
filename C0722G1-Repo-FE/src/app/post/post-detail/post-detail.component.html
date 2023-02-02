@@ -9,19 +9,22 @@
             <button style="width: 5rem;" type="button" data-bs-target="#carouselExampleCaptions"
                     data-bs-slide-to="0" class="active rounded"
                     aria-current="true" aria-label="Slide 1">
-              <img style="border: inset #585858 4px; border-radius: 1px" src="https://file4.batdongsan.com.vn/resize/1275x717/2022/11/09/20221109093445-1eb4_wm.jpg"
+              <img style="border: inset #585858 4px; border-radius: 1px"
+                   src="https://file4.batdongsan.com.vn/resize/1275x717/2022/11/09/20221109093445-1eb4_wm.jpg"
                    class="d-block w-100" alt="...">
             </button>
             <button style="width: 5rem" type="button" data-bs-target="#carouselExampleCaptions"
                     data-bs-slide-to="1"
                     aria-label="Slide 2">
-              <img style="border: inset #585858 4px; border-radius: 1px" src="https://file4.batdongsan.com.vn/resize/1275x717/2022/11/09/20221109093445-c8fa_wm.jpg"
+              <img style="border: inset #585858 4px; border-radius: 1px"
+                   src="https://file4.batdongsan.com.vn/resize/1275x717/2022/11/09/20221109093445-c8fa_wm.jpg"
                    class="d-block w-100" alt="...">
             </button>
             <button style="width: 5rem" type="button" data-bs-target="#carouselExampleCaptions"
                     data-bs-slide-to="2"
                     aria-label="Slide 3">
-              <img style="border: inset #585858 4px; border-radius: 1px" src="https://file4.batdongsan.com.vn/resize/1275x717/2022/11/09/20221109093446-a04c_wm.jpg"
+              <img style="border: inset #585858 4px; border-radius: 1px"
+                   src="https://file4.batdongsan.com.vn/resize/1275x717/2022/11/09/20221109093446-a04c_wm.jpg"
                    class="d-block w-100" alt="...">
             </button>
           </div>
@@ -80,19 +83,19 @@
 
             <div class="card-body">
               <p style="text-align: center"><span>Được đăng bởi</span> <br>
-                <span class="hr_value" id="customerName">Đặng Nhật Huy</span></p>
+                <span class="hr_value" id="customerName">{{postDetail.customer.nameCustomer}}</span></p>
 
               <p style="font-size: smaller; text-align: center">
-                <span class="hl_value"> Ngày đăng: </span><span>10/01/2023</span>
+                <span class="hl_value"> Ngày đăng: </span><span>{{postDetail.dateCreation}}</span>
               </p>
-              <span class="link" style="font-size: smaller; text-align: center">Xem thêm những bài đăng khác</span>
+              <!--              <span class="link" style="font-size: smaller; text-align: center">Xem thêm những bài đăng khác</span>-->
             </div>
             <div class="row">
               <div class="col-1"></div>
               <div class="col-10">
                 <button style="text-align: center; width: 11rem" id="show" class="btn mt-1"
                         onclick="showPhoneNumber()"><span id="phoneNumber"
-                                                          style="font-size: smaller; color: white">0799 440 *** . Hiện số</span>
+                                                          style="font-size: smaller; color: white">{{postDetail.customer.phoneCustomer1}}</span>
                 </button>
               </div>
               <div class="col-1"></div>
@@ -119,27 +122,27 @@
 
     </div>
     <div class="col-lg-6">
-      <span class="link">Cho thuê</span>
-      / <span class="link">Đà Nẵng</span>
-      / <span class="link">Cẩm Lệ </span>
-      / <span>Căn hộ chung cư</span>
-      <h4 class="mt-2">CHO THUÊ CĂN HỘ QUẬN CẨM LỆ TỌA LẠC NGAY MẶT TIỀN
-        VIEW SÔNG 6TR/TH 1PN, LH ĐỂ XEM NHÀ 0799 440 *** </h4>
-      <span class="mt-3">Dự án căn hộ, Đường Nguyễn Phước Lan, Phường Hòa Xuân, Quận Cẩm Lệ, Đà Nẵng</span>
+      <span class="link">{{postDetail.demandType.nameDemandType}}</span>
+      / <span class="link">{{postDetail.address.wards.district.city.nameCity}}</span>
+      / <span class="link">{{postDetail.address.wards.district.nameDistrict}}</span>
+      / <span>{{postDetail.landType.nameLandType}}</span>
+      <h4 class="mt-2">{{postDetail.namePost}}</h4>
+      <span class="mt-3">{{postDetail.address.numberAddress}}, {{postDetail.address.wards.nameWards}},
+        {{postDetail.address.wards.district.nameDistrict}}, {{postDetail.address.wards.district.city.nameCity}}</span>
       <hr>
       <div class="row">
         <div class="col-3"><span class="hr_title">Mức giá</span></div>
         <div class="col-3"><span class="hr_title">Diện tích</span></div>
-        <div class="col-3"><span class="hr_title">Phòng ngủ</span></div>
+        <!--        <div class="col-3"><span class="hr_title">Phòng ngủ</span></div>-->
         <div class="col-2"><span class="hr_title">Loại bài viết</span></div>
         <div class="col-1"><i id="share" class="fa-solid fa-share-nodes"></i></div>
 
       </div>
       <div class="row">
-        <div class="col-3"><span class="hr_value">6 Triệu / tháng</span></div>
-        <div class="col-3"><span class="hr_value">53m²</span></div>
-        <div class="col-3"><span class="hr_value">1 PN</span></div>
-        <div class="col-2"><span class="hr_value">Cho thuê</span></div>
+        <div class="col-3"><span class="hr_value">{{postDetail.price}}</span></div>
+        <div class="col-3"><span class="hr_value">{{postDetail.area}}</span></div>
+        <!--        <div class="col-3"><span class="hr_value">1 PN</span></div>-->
+        <div class="col-2"><span class="hr_value">{{postDetail.demandType.nameDemandType}}</span></div>
         <div class="col-1"><i id="warning" class="fa-solid fa-circle-exclamation"></i></div>
       </div>
       <hr>
@@ -174,16 +177,7 @@
       <div class="hr_value">Thông tin mô tả</div>
       <div>
         <p style="font-family: Arial,serif, sans-serif" class="mt-2">
-          Căn hộ 1PN 1WC, DT: 53m². Giá cực sốc chỉ 6tr/th.
-          Tầng cao, view sông triệu đô, thoáng mát.
-          Tất cả các căn hộ được thiết kế tối ưu không gian mở, các căn đều có tầm view xa bao quát thành
-          phố từ nhiều hướng.
-          Các phòng ngủ trong mỗi căn hộ đều có cửa sổ lớn, hướng ra không gian ngoài trời đón ánh sáng, gió
-          tự nhiên giúp căn hộ luôn thông thoáng, mát mẻ.
-          Khu bếp và phòng khách được tách riêng biệt và có sân phơi riêng.
-          Khu phòng khách được thiết kế nối với khu bàn ăn, có ban công riêng, giúp tối ưu diện tích và thuận
-          tiện trong sinh hoạt.
-        </p>
+          {{postDetail.note}}
       </div>
     </div>
     <div class="col-lg-2">
@@ -212,14 +206,14 @@
           <div class="row">
             <div class="col-1"><i class="fa-solid fa-chart-area"></i></div>
             <div class="col-5"><span class="hl_value">Diện tích</span></div>
-            <div class="col-6">53m²</div>
+            <div class="col-6">{{postDetail.area}}</div>
           </div>
         </div>
         <div class="col-6">
           <div class="row">
             <div class="col-1"><i class="fa-solid fa-coins"></i></div>
             <div class="col-5"><span class="hl_value">Mức giá</span></div>
-            <div class="col-6"><span>6 triệu/tháng</span></div>
+            <div class="col-6"><span>{{postDetail.price}}</span></div>
           </div>
         </div>
       </div>
