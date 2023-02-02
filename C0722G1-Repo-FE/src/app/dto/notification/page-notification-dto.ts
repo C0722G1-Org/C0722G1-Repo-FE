@@ -2,6 +2,12 @@
 
 import {NotificationDtoAllProperty} from './notification-dto-all-property';
 
+/**
+ * Create by: DatLA
+ * User for screen: Notification-manager
+ * Role: Admin
+ * Date: 02/02/2023
+ */
 export interface PageNotificationDto {
   content: NotificationDtoAllProperty[],
   pageable: {

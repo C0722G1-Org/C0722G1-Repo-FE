@@ -43,7 +43,7 @@ export class NotificationListComponent implements OnInit {
 
   /**
    * Create by: DatLA
-   * Function: Search by role admin
+   * Function: Search notification by role admin
    * @Param pageNumber
    * Date: 02/02/2023
    */
@@ -57,7 +57,8 @@ export class NotificationListComponent implements OnInit {
 
   /**
    * Create by: DatLA
-   * Function: Get the search date
+   * Function: calculate the time to assign to the interval find function
+   * @Param timeInfo
    * Date: 02/02/2023
    */
   getSearchDate(timeInfo: string): string {
@@ -95,7 +96,8 @@ export class NotificationListComponent implements OnInit {
 
   /**
    * Create by: DatLA
-   * Function: Constrain not after today to validate search date input
+   * Function: Constrain not after today to validate the search date input
+   * @Param abstractControl
    * Date: 02/02/2023
    */
   constrainNotAfterToday(abstractControl: AbstractControl): any {
@@ -107,19 +109,41 @@ export class NotificationListComponent implements OnInit {
     return (today - inputSearchDate >= 0) ? null : {invalidSearchDate: true};
   }
 
+  /**
+   * Create by: DatLA
+   * Function: Refresh form and data in search engine
+   * Date: 02/02/2023
+   */
   resetFormAndData(): void {
     this.ngOnInit();
   }
 
+  /**
+   * Create by: DatLA
+   * Function: Go to different pages
+   * @Param pageNumber
+   * Date: 02/02/2023
+   */
   gotoPage(pageNumber: number): void {
     this.searchNotification(pageNumber);
   }
 
+  /**
+   * Create by: DatLA
+   * Function: add the id you want to delete into the deleteIds array
+   * @Param id
+   * Date: 02/02/2023
+   */
   addToDelete(id: number): void {
     const index = this.deleteIds.indexOf(id);
     index > -1 ? this.deleteIds.splice(index, 1) : this.deleteIds.push(id);
   }
 
+  /**
+   * Create by: DatLA
+   * Function: add all ids in a page to deleteIds array
+   * Date: 02/02/2023
+   */
   addAllToDelete(): void {
     this.checkedAll = true;
     for (let value of this.pageNotifications.content) {
@@ -147,6 +171,11 @@ export class NotificationListComponent implements OnInit {
     }
   }
 
+  /**
+   * Create by: DatLA
+   * Function: get backend objects by id list, send to modal delete
+   * Date: 02/02/2023
+   */
   sendToDeleteGroupModal(): void {
     this.deleteNotifications = [];
     this.notificationService.findByListId(this.deleteIds).subscribe(data => {
@@ -156,6 +185,11 @@ export class NotificationListComponent implements OnInit {
     });
   }
 
+  /**
+   * Create by: DatLA
+   * Function: delete objects
+   * Date: 02/02/2023
+   */
   delete(): void {
     this.notificationService.delete(this.deleteIds).subscribe(next => {
       this.toastrService.success('Xóa thành công', 'Thông báo', {
@@ -176,6 +210,12 @@ export class NotificationListComponent implements OnInit {
     });
   }
 
+  /**
+   * Create by: DatLA
+   * Function: expand or collapse notification content
+   * @Param id,action
+   * Date: 02/02/2023
+   */
   expandOrCollapse(id: number, action: string) {
     if (action === 'expand') {
       // @ts-ignore

@@ -18,6 +18,7 @@ export class NotificationService {
   /**
    * Created: DatLA
    * Function: get all and search notifications
+   * @Param searchNotification,pageNumber
    * Date: 31/01/2023
    */
   getPageNotifications(searchNotification: any, pageNumber: any): Observable<PageNotificationDto> {
@@ -28,6 +29,7 @@ export class NotificationService {
   /**
    * Created: DatLA
    * Function: find notifications by selected ids
+   * @Param deleteIds
    * Date: 31/01/2023
    */
   findByListId(deleteIds: number[]): Observable<NotificationDeleteDto[]> {
@@ -37,6 +39,7 @@ export class NotificationService {
   /**
    * Created: DatLA
    * Function: delete notifications by selected ids
+   * @Param deleteIds
    * Date: 31/01/2023
    */
   delete(deleteIds: number[]): Observable<any> {
