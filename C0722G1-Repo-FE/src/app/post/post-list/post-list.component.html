@@ -1,7 +1,7 @@
 <div>
   <div class="searchArea row p-3 my-5" style="margin-left: 300px; margin-right: 300px">
     <div class="col-4">
-      <select class="form-select my-2" aria-label="Default select example">
+      <select #area class="form-select my-2" aria-label="Default select example">
         <option value="" selected>Diện tích</option>
         <option value="50">0-50 m2</option>
         <option value="100">50-100 m2</option>
@@ -9,25 +9,26 @@
         <option value="200">150-200 m2</option>
         <option value="250">200-250 m2</option>
       </select>
-      <select class="form-select my-2" aria-label="Default select example">
+      <select #landType class="form-select my-2" aria-label="Default select example">
         <option value="" selected>Loại bất động sản</option>
         <option value="Dat">Đất</option>
         <option value="NhaO">Nhà ở</option>
       </select>
     </div>
     <div class="col-4">
-      <select class="form-select my-2" aria-label="Default select example">
+      <select #price class="form-select my-2" aria-label="Default select example">
         <option value="" selected>Giá tiền</option>
-        <option value="500">< 500 triệu</option>
-        <option value="1000">500 triệu - 1 tỷ</option>
-        <option value="1500">1 tỷ - 1,5 tỷ</option>
-        <option value="2000">1,5 tỷ - 2 tỷ</option>
-        <option value="2500">2 tỷ - 2,5 tỷ</option>
-        <option value="3000">2,5 tỷ - 3 tỷ</option>
-        <option value="3500">3,5 tỷ - 4 tỷ</option>
-        <option value="3500">> 4 tỷ</option>
+        <option value="0-500000000">< 500 triệu</option>
+        <option value="500000000-1000000000">500 triệu - 1 tỷ</option>
+        <option value="1000000000-1500000000">1 tỷ - 1,5 tỷ</option>
+        <option value="1500000000-2000000000">1,5 tỷ - 2 tỷ</option>
+        <option value="2000000000-2500000000">2 tỷ - 2,5 tỷ</option>
+        <option value="2500000000-3000000000">2,5 tỷ - 3 tỷ</option>
+        <option value="3000000000-3500000000">3 tỷ - 3,5 tỷ</option>
+        <option value="3500000000-4000000000">3,5 tỷ - 4 tỷ</option>
+        <option value="4000000000-3000000000">> 4 tỷ</option>
       </select>
-      <select class="form-select my-2" aria-label="Default select example">
+      <select #city class="form-select my-2" aria-label="Default select example">
         <option value="" selected>Thành phố</option>
         <option value="DaNang">Đà Nẵng</option>
         <option value="HoChiMinh">Hồ Chí Minh</option>
@@ -35,9 +36,9 @@
       </select>
     </div>
     <div class="col-4">
-      <button class="btn btn-outline-danger my-1">Tìm kiếm</button>
+      <button class="btn btn-outline-danger my-1" (click)="search(direction.value, city.value, price.value, landType.value, area.value)">Tìm kiếm</button>
       <button class="btn btn-outline-danger my-1"><i class="fa-solid fa-arrows-rotate"></i></button>
-      <select class="form-select my-2" aria-label="Default select example">
+      <select #direction class="form-select my-2" aria-label="Default select example">
         <option value="" selected>Hướng</option>
         <option value="Đông">Đông</option>
         <option value="Tây">Tây</option>
