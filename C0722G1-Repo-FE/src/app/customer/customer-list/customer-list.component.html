@@ -31,125 +31,37 @@
   <table class="table table-light table-striped mt-3">
     <thead>
     <tr>
+      <th scope="col">STT</th>
       <th scope="col">Mã KH</th>
-      <th scope="col">Loại KH</th>
       <th scope="col">Họ và tên</th>
       <th scope="col">Địa chỉ</th>
       <th scope="col">Số điện thoại</th>
+      <th scope="col">Số điện thoại 2</th>
       <th scope="col">Tình trạng</th>
       <th scope="col">Chi tiết</th>
       <th scope="col">Chức năng</th>
     </tr>
     </thead>
     <tbody>
-    <tr>
-      <td>B-01</td>
-      <td>Mua</td>
-      <td>Nguyễn Văn Huy</td>
-      <td>Trần Hưng Đạo, Quảng Trị</td>
-      <td>090514538</td>
-      <td>Đã duyệt</td>
+    <tr *ngFor="let item of customer; let i = index">
+      <td>{{(i + 1)}}</td>
+      <td>{{item.code_customer}}</td>
+      <td>{{item.name_customer}}</td>
+      <td>{{item.address_customer}}</td>
+      <td>{{item.phone_customer1}}</td>
+      <td>{{item.phone_customer2}}</td>
+      <td>
+        <span *ngIf="item.approval_customer == 0; else elseApproval">Đã duyệt</span>
+        <ng-template #elseApproval>
+          <button type="button" class="btn btn-light btn-outline-secondary btn-sm" data-bs-toggle="modal"
+                  data-bs-target="#confirmModal">
+            Duyệt
+          </button>        </ng-template>
+      </td>
+
       <td>
         <button type="button" class="btn btn-light btn-outline-secondary btn-sm">
-          Chi tiết<i class="fa-solid fa-thin fa-circle-info  h6 m-auto px-2"></i>
-        </button>
-      </td>
-      <td>
-        <button type="button" class="btn btn-light btn-outline-secondary btn-sm">
-          <i class="fa-regular fa-pen-to-square"></i>
-        </button>
-        <button type="button" class="btn btn-light btn-outline-secondary btn-sm" data-bs-toggle="modal"
-                data-bs-target="#exampleModal">
-          <i class="fa-regular fa-trash-can"></i>
-        </button>
-      </td>
-    </tr>
-    <tr>
-      <td>S-01</td>
-      <td>Bán</td>
-      <td>Trịnh Minh Đức</td>
-      <td>Sơn Trà, Đà Nẵng</td>
-      <td>090563578</td>
-      <td>
-        <button type="button" class="btn btn-light btn-outline-secondary btn-sm" data-bs-toggle="modal"
-                data-bs-target="#confirmModal">
-          Duyệt
-        </button>
-      </td>
-      <td>
-        <button type="button" class="btn btn-light btn-outline-secondary btn-sm">
-          Chi tiết<i class="fa-solid fa-thin fa-circle-info  h6 m-auto px-2"></i>
-        </button>
-      </td>
-      <td>
-        <button type="button" class="btn btn-light btn-outline-secondary btn-sm">
-          <i class="fa-regular fa-pen-to-square"></i>
-        </button>
-        <button type="button" class="btn btn-light btn-outline-secondary btn-sm" data-bs-toggle="modal"
-                data-bs-target="#exampleModal">
-          <i class="fa-regular fa-trash-can"></i>
-        </button>
-      </td>
-    </tr>
-    <tr>
-      <td>B-02</td>
-      <td>Mua</td>
-      <td>Trần Đặng Trâm Anh</td>
-      <td>Hòa Vang, Đà Nẵng</td>
-      <td>090541475</td>
-      <td>Đã duyệt</td>
-      <td>
-        <button type="button" class="btn btn-light btn-outline-secondary btn-sm">
-          Chi tiết<i class="fa-solid fa-thin fa-circle-info  h6 m-auto px-2"></i>
-        </button>
-      </td>
-      <td>
-        <button type="button" class="btn btn-light btn-outline-secondary btn-sm">
-          <i class="fa-regular fa-pen-to-square"></i>
-        </button>
-        <button type="button" class="btn btn-light btn-outline-secondary btn-sm" data-bs-toggle="modal"
-                data-bs-target="#exampleModal">
-          <i class="fa-regular fa-trash-can"></i>
-        </button>
-      </td>
-    </tr>
-    <tr>
-      <td>S-02</td>
-      <td>Bán</td>
-      <td>Nguyễn Duy Dũng</td>
-      <td>Động Phong Nha, Quảng Bình</td>
-      <td>090556527</td>
-      <td>
-        <button type="button" class="btn btn-light btn-outline-secondary btn-sm" data-bs-toggle="modal"
-                data-bs-target="#confirmModal">
-          Duyệt
-        </button>
-      </td>
-      <td>
-        <button type="button" class="btn btn-light btn-outline-secondary btn-sm">
-          Chi tiết<i class="fa-solid fa-thin fa-circle-info  h6 m-auto px-2"></i>
-        </button>
-      </td>
-      <td>
-        <button type="button" class="btn btn-light btn-outline-secondary btn-sm">
-          <i class="fa-regular fa-pen-to-square"></i>
-        </button>
-        <button type="button" class="btn btn-light btn-outline-secondary btn-sm" data-bs-toggle="modal"
-                data-bs-target="#exampleModal">
-          <i class="fa-regular fa-trash-can"></i>
-        </button>
-      </td>
-    </tr>
-    <tr>
-      <td>B-03</td>
-      <td>Mua</td>
-      <td>Đỗ Đức Uy</td>
-      <td>Đông Hà, Quảng Trị</td>
-      <td>090513621</td>
-      <td>Đã duyệt</td>
-      <td>
-        <button type="button" class="btn btn-light btn-outline-secondary btn-sm">
-          Chi tiết<i class="fa-solid fa-thin fa-circle-info  h6 m-auto px-2"></i>
+          Chi tiết <i class="fa-solid fa-thin fa-circle-info"></i>
         </button>
       </td>
       <td>
