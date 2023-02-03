@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {TokenService} from "../../service/token.service";
-import {Router} from "@angular/router";
-import {ToastrService} from "ngx-toastr";
+import {Component, OnInit} from '@angular/core';
+import {TokenService} from '../../service/token.service';
+import {Router} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-header',
@@ -13,6 +13,7 @@ export class HeaderComponent implements OnInit {
   checkLogin = false;
   name: string | null | undefined;
   roles: string[] = [];
+  idAccount: string | null | undefined;
 
   constructor(private tokenService: TokenService,
               private router: Router,
@@ -25,6 +26,7 @@ export class HeaderComponent implements OnInit {
       this.checkLogin = true;
       this.name = this.tokenService.getName();
       this.roles = this.tokenService.getRole();
+      this.idAccount = this.tokenService.getIdAccount();
     }
   }
 
