@@ -43,7 +43,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let item of customer; let i = index">
+    <tr *ngFor="let item of customer.content; let i = index">
       <td>{{(i + 1)}}</td>
       <td>{{item.code_customer}}</td>
       <td>{{item.name_customer}}</td>
@@ -78,19 +78,80 @@
     </tbody>
   </table>
 
-  <nav aria-label="Page navigation example">
-    <ul class="pagination justify-content-end">
-      <li class="page-item disabled">
-        <a class="page-link">Trước</a>
-      </li>
-      <li class="page-item active"><a class="page-link" href="#">1</a></li>
-      <li class="page-item"><a class="page-link" href="#">2</a></li>
-      <li class="page-item"><a class="page-link" href="#">3</a></li>
-      <li class="page-item">
-        <a class="page-link" href="#">Sau</a>
-      </li>
-    </ul>
-  </nav>
+<!--  <nav aria-label="Page navigation example">-->
+<!--    <ul class="pagination justify-content-end">-->
+<!--      <li class="page-item disabled">-->
+<!--        <a class="page-link">Trước</a>-->
+<!--      </li>-->
+<!--      <li class="page-item active"><a class="page-link" href="#">1</a></li>-->
+<!--      <li class="page-item"><a class="page-link" href="#">2</a></li>-->
+<!--      <li class="page-item"><a class="page-link" href="#">3</a></li>-->
+<!--      <li class="page-item">-->
+<!--        <a class="page-link" href="#">Sau</a>-->
+<!--      </li>-->
+<!--    </ul>-->
+<!--  </nav>-->
+
+  <!--  Phân trang + Nút xóa-->
+  <div *ngIf="customer" class="d-flex justify-content-between" id="last-row">
+    <div>
+    </div>
+    <div>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item" [ngClass]="customer.first ? 'disabled': ''">
+            <a role="button" class="page-link" (click)="gotoPage(0)">Trang đầu</a>
+          </li>
+          <li class="page-item" [ngClass]="customer.first ? 'disabled': ''">
+            <a role="button" class="page-link" (click)="gotoPage(customer.number - 1)"><</a>
+          </li>
+          <li class="page-item" *ngIf="customer.number - 3 > 0">
+            <a role="button" class="page-link"
+               (click)="gotoPage(customer.number - 4)">{{customer.number - 3}}</a>
+          </li>
+          <li class="page-item" *ngIf="customer.number - 2 > 0">
+            <a role="button" class="page-link"
+               (click)="gotoPage(customer.number - 3)">{{customer.number - 2}}</a>
+          </li>
+          <li class="page-item" *ngIf="customer.number - 1 > 0">
+            <a role="button" class="page-link"
+               (click)="gotoPage(customer.number - 2)">{{customer.number - 1}}</a>
+          </li>
+          <li class="page-item" *ngIf="customer.number > 0">
+            <a role="button" class="page-link"
+               (click)="gotoPage(customer.number - 1)">{{customer.number}}</a>
+          </li>
+
+          <li class="page-item active"><a class="page-link">{{customer.number + 1}}</a></li>
+
+          <li class="page-item" *ngIf="customer.number + 2 <= customer.totalPages">
+            <a role="button" class="page-link"
+               (click)="gotoPage(customer.number + 1)">{{customer.number + 2}}</a>
+          </li>
+          <li class="page-item" *ngIf="customer.number + 3 <= customer.totalPages">
+            <a role="button" class="page-link"
+               (click)="gotoPage(customer.number + 2)">{{customer.number + 3}}</a>
+          </li>
+          <li class="page-item" *ngIf="customer.number + 4 <= customer.totalPages">
+            <a role="button" class="page-link"
+               (click)="gotoPage(customer.number + 3)">{{customer.number + 4}}</a>
+          </li>
+          <li class="page-item" *ngIf="customer.number + 5 <= customer.totalPages">
+            <a role="button" class="page-link"
+               (click)="gotoPage(customer.number + 4)">{{customer.number + 5}}</a>
+          </li>
+          <li class="page-item" [ngClass]="customer.last ? 'disabled': ''">
+            <a role="button" class="page-link" (click)="gotoPage(customer.number + 1)">></a>
+          </li>
+          <li class="page-item" [ngClass]="customer.last ? 'disabled': ''">
+            <a role="button" class="page-link" (click)="gotoPage(customer.totalPages - 1)">Trang cuối</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div>
+    </div>
+  </div>
 </div>
 <div>
   <p style="width: 100%; height: 100px; background-color: lightpink">
