@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {SecurityService} from "../../service/security.service";
-import {TokenService} from "../../service/token.service";
-import {Router} from "@angular/router";
-import {ToastrService} from "ngx-toastr";
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {SecurityService} from '../../service/security.service';
+import {TokenService} from '../../service/token.service';
+import {Router} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-login-modal',
@@ -15,13 +15,15 @@ export class LoginModalComponent implements OnInit {
   statusRole: any[] = [];
   // @ts-ignore
   signInForm: FormGroup;
+
   constructor(
     private securityService: SecurityService,
     private tokenService: TokenService,
     private router: Router,
     private toast: ToastrService,
     private formBuilder: FormBuilder
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.getFormLogin();
@@ -45,9 +47,9 @@ export class LoginModalComponent implements OnInit {
    * Date: 02/02/2023
    * Function: login using Account
    */
-  login() {
+  login(): void {
     const signInForm = this.signInForm?.value;
-      this.securityService.signIn(signInForm).subscribe(data => {
+    this.securityService.signIn(signInForm).subscribe(data => {
         console.log('data -----> ', data);
         if (data.token !== undefined) {
           console.log(this.signInForm?.value.rememberMe);
@@ -58,6 +60,9 @@ export class LoginModalComponent implements OnInit {
             this.tokenService.setToken(data.token);
             this.tokenService.setName(data.name);
             this.tokenService.setRole(data.roles);
+            this.tokenService.setEmail(data.email);
+            this.tokenService.setIdAccount(data.idAccount);
+            this.tokenService.setUsernameAccount(data.usernameAccount);
             this.statusRole = data.roles;
             // this.router.navigateByUrl('/home');
             location.reload();
