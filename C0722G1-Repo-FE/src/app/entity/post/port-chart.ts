@@ -1,3 +1,7 @@
+/**
+ * Create data type: PortChart
+ * Author: DatTQ  ;  Date:02/02/2023
+ */
 export interface PortChart {
   idPost?: number;
   dateCreation?: string;
