@@ -1,12 +1,12 @@
 export interface PortChart {
-  idPost?: number;
-  dateCreation?: string;
-  price?: number;
-  statusPost?: number;
-  numberAddress?: string;
-  nameWard?: string;
-  nameDistrict?: string;
-  nameCity?: string;
-  yearPost?: number;
-  monthPost?: number;
+  idPost?: number | undefined;
+  dateCreation?: string | undefined;
+  price?: number | undefined;
+  statusPost?: number | undefined;
+  numberAddress?: string | undefined;
+  nameWard?: string | undefined;
+  nameDistrict?: string | undefined;
+  nameCity?: string | undefined;
+  yearPost?: number | undefined;
+  monthPost?: number | undefined;
 }
