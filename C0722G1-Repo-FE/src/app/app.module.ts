@@ -7,10 +7,12 @@ import {HomeModule} from './home/home.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToastrModule} from 'ngx-toastr';
 import {HttpClientModule} from '@angular/common/http';
+import { PostListApprovalComponent } from './post/post-list-approval/post-list-approval.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PostListApprovalComponent
   ],
   imports: [
     BrowserModule,
