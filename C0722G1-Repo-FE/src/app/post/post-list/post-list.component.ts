@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Post} from "../../entity/post/post";
 import {PostService} from "../post.service";
 import {ToastrService} from "ngx-toastr";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-post-list',
@@ -10,53 +11,20 @@ import {ToastrService} from "ngx-toastr";
 })
 export class PostListComponent implements OnInit {
   page: number = 1;
-  // postList: Post[] | undefined;
-postList: Post[]= [
-  {
-    idPost:1,
-    area: 32
-  },
-  {
-    idPost:2,
-    area: 32
-  },
-  {
-    idPost:3,
-    area: 32
-  },
-  {
-    idPost:4,
-    area: 32
-  },
-  {
-    idPost:5,
-    area: 32
-  },
-  {
-    idPost:5,
-    area: 32
-  },
-  {
-    idPost:5,
-    area: 32
-  },
-  {
-    idPost:5,
-    area: 32
-  },
-  {
-    idPost:5,
-    area: 32
-  }
-]
-  constructor(private _postService: PostService) {
+  postList: Post[] | undefined;
+  userNameAccount: string = "";
+
+  constructor(private _postService: PostService, private _router: Router) {
+    this._postService.findPostListByUserNameAccount(this.userNameAccount).subscribe(data => {
+      this.postList = data;
+    });
   }
 
   ngOnInit(): void {
   }
 
-  findPostListByUserNameAccount(userNameAccount: string) {
-    this._postService.findPostListByUserNameAccount(userNameAccount).subscribe(data => {
+  searchByNameDemandType(value: string) {
+    this._postService.findByNameDemandType(value).subscribe(data => {
       this.postList = data;
     })
   }
