@@ -45,12 +45,13 @@ export class PostChartComponent implements OnInit {
   }
 
   /**
-   * Initialize the value of the variable: postList through the displayListChart() method in PostService
+   * Initialize the value of the variable: postList through the displayListChart() method in PostService &&
+          Register to listen to the event: subscribe
    * Initialize the value of the variable: totalTransaction through the getTotalTransaction() method
    * Initialize the value of the variable: countSuccess,countTotal through the getTotalPostSuccess() method
    * Initialize the value of the variable: count1,count2,count3,count4,count5,count6,
    count7,count8,count9,count10,count11,count12
-   * Initialize post chart value at current year
+   * Initialize post chart value at current year with method createChart();
    * Author: DatTQ  ;  Date:02/02/2023
    */
   ngOnInit(): void {
@@ -94,30 +95,14 @@ export class PostChartComponent implements OnInit {
           this.count12 += 1;
         }
       }
-
-      /*===CREATE CHART*/
-      new Chart('myChart', {
-        type: 'line',
-        data: {
-          labels: ['Tháng1', 'Tháng2', 'Tháng3', 'Tháng4', 'Tháng5', 'Tháng6',
-            'Tháng7', 'Tháng8', 'Tháng9', 'Tháng10', 'Tháng11', 'Tháng12'],
-          datasets: [{
-            label: 'Tổng bài đăng',
-            data: [this.count1, this.count2, this.count3, this.count4, this.count5, this.count6,
-              this.count7, this.count8, this.count9, this.count10, this.count11, this.count12],
-            backgroundColor: '#02165f',
-            borderColor: '#02165f',
-            borderWidth: 2,
-            fill: false,
-          }]
-        },
-      });
+      this.createChart();
     })
   }
 
   /**
    * Function of event (click)="searchChart(month.value,year.value)
    * Get the value of the variable: postCharList through the searchChart() method in PostService
+          && Register to listen to the event: subscribe
    * Get the value of the variable: totalTransaction,countSuccess,countTotal
    * @param month
    * @param year
@@ -144,82 +129,84 @@ export class PostChartComponent implements OnInit {
    * Function of event (change)="changeYear(yearChange.value);
    * Get the value of the variable: postCharList through the displayListChart() method in PostService;
    * Get the value of the variable: totalTransaction,countSuccess,countTotal;
-   * Create Chart corresponding to param (yearChange)
+   * Create Chart corresponding to param (yearChange) with method createChart();
    * @param yearChange;
    * Author: DatTQ  ;  Date:02/02/2023;
    */
   changeYear(yearChange: string) {
-    this.postService.displayListChart().subscribe(data => {
-      this.postCharList = data;
-      this.count1 = 0;
-      this.count2 = 0;
-      this.count3 = 0;
-      this.count4 = 0;
-      this.count5 = 0;
-      this.count6 = 0;
-      this.count7 = 0;
-      this.count8 = 0;
-      this.count9 = 0;
-      this.count10 = 0;
-      this.count11 = 0;
-      this.count12 = 0;
-      let posts = this.postCharList.length;
-      for (let i = 0; i < posts; i++) {
-        if (this.postCharList[i].monthPost == 1 && this.postCharList[i].yearPost == +yearChange) {
-          this.count1 += 1;
-        }
-        if (this.postCharList[i].monthPost == 2 && this.postCharList[i].yearPost == +yearChange) {
-          this.count2 += 1;
-        }
-        if (this.postCharList[i].monthPost == 3 && this.postCharList[i].yearPost == +yearChange) {
-          this.count3 += 1;
-        }
-        if (this.postCharList[i].monthPost == 4 && this.postCharList[i].yearPost == +yearChange) {
-          this.count4 += 1;
-        }
-        if (this.postCharList[i].monthPost == 5 && this.postCharList[i].yearPost == +yearChange) {
-          this.count5 += 1;
-        }
-        if (this.postCharList[i].monthPost == 6 && this.postCharList[i].yearPost == +yearChange) {
-          this.count6 += 1;
-        }
-        if (this.postCharList[i].monthPost == 7 && this.postCharList[i].yearPost == +yearChange) {
-          this.count7 += 1;
-        }
-        if (this.postCharList[i].monthPost == 8 && this.postCharList[i].yearPost == +yearChange) {
-          this.count8 += 1;
-        }
-        if (this.postCharList[i].monthPost == 10 && this.postCharList[i].yearPost == +yearChange) {
-          this.count10 += 1;
-        }
-        if (this.postCharList[i].monthPost == 11 && this.postCharList[i].yearPost == +yearChange) {
-          this.count11 += 1;
-        }
-        if (this.postCharList[i].monthPost == 12 && this.postCharList[i].yearPost == +yearChange) {
-          this.count12 += 1;
-        }
+    this.count1 = 0;
+    this.count2 = 0;
+    this.count3 = 0;
+    this.count4 = 0;
+    this.count5 = 0;
+    this.count6 = 0;
+    this.count7 = 0;
+    this.count8 = 0;
+    this.count9 = 0;
+    this.count10 = 0;
+    this.count11 = 0;
+    this.count12 = 0;
+    let posts = this.postCharList.length;
+    for (let i = 0; i < posts; i++) {
+      if (this.postCharList[i].monthPost == 1 && this.postCharList[i].yearPost == +yearChange) {
+        this.count1 += 1;
       }
+      if (this.postCharList[i].monthPost == 2 && this.postCharList[i].yearPost == +yearChange) {
+        this.count2 += 1;
+      }
+      if (this.postCharList[i].monthPost == 3 && this.postCharList[i].yearPost == +yearChange) {
+        this.count3 += 1;
+      }
+      if (this.postCharList[i].monthPost == 4 && this.postCharList[i].yearPost == +yearChange) {
+        this.count4 += 1;
+      }
+      if (this.postCharList[i].monthPost == 5 && this.postCharList[i].yearPost == +yearChange) {
+        this.count5 += 1;
+      }
+      if (this.postCharList[i].monthPost == 6 && this.postCharList[i].yearPost == +yearChange) {
+        this.count6 += 1;
+      }
+      if (this.postCharList[i].monthPost == 7 && this.postCharList[i].yearPost == +yearChange) {
+        this.count7 += 1;
+      }
+      if (this.postCharList[i].monthPost == 8 && this.postCharList[i].yearPost == +yearChange) {
+        this.count8 += 1;
+      }
+      if (this.postCharList[i].monthPost == 10 && this.postCharList[i].yearPost == +yearChange) {
+        this.count10 += 1;
+      }
+      if (this.postCharList[i].monthPost == 11 && this.postCharList[i].yearPost == +yearChange) {
+        this.count11 += 1;
+      }
+      if (this.postCharList[i].monthPost == 12 && this.postCharList[i].yearPost == +yearChange) {
+        this.count12 += 1;
+      }
+    }
+    this.createChart();
+  }
 
-      /*===CREATE CHART*/
-      new Chart('myChart', {
-        type: 'radar',
-        data: {
-          labels: ['Tháng1', 'Tháng2', 'Tháng3', 'Tháng4', 'Tháng5', 'Tháng6',
-            'Tháng7', 'Tháng8', 'Tháng9', 'Tháng10', 'Tháng11', 'Tháng12'],
-          datasets: [{
-            label: 'Tổng bài đăng năm ' + yearChange,
-            data: [this.count1, this.count2, this.count3, this.count4, this.count5, this.count6,
-              this.count7, this.count8, this.count9, this.count10, this.count11, this.count12],
-            backgroundColor: '#ec0326',
-            borderColor: '#ec0326',
-            borderWidth: 1,
-            fill: false,
-          }]
-        }
-      });
-
-    })
-
+  /**
+   * Function creat chart
+   * Author: DatTQ  ;  Date:02/02/2023;
+   */
+  createChart() {
+    // tslint:disable-next-line:no-unused-expression
+    new Chart('myChart', {
+      type: 'line',
+      data: {
+        labels: ['Tháng1', 'Tháng2', 'Tháng3', 'Tháng4', 'Tháng5', 'Tháng6',
+          'Tháng7', 'Tháng8', 'Tháng9', 'Tháng10', 'Tháng11', 'Tháng12'],
+        datasets: [{
+          label: 'Tổng bài đăng',
+          data: [this.count1, this.count2, this.count3, this.count4, this.count5, this.count6,
+            this.count7, this.count8, this.count9, this.count10, this.count11, this.count12],
+          backgroundColor: '#02165f',
+          borderColor: '#02165f',
+          borderWidth: 2,
+          fill: false,
+        }]
+      }
+    });
   }
 
   /**

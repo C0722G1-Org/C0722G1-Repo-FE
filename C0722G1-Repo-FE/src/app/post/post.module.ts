@@ -10,7 +10,8 @@ import { PostDetailComponent } from './post-detail/post-detail.component';
 import { PostChartComponent } from './post-chart/post-chart.component';
 import {FormsModule} from '@angular/forms';
 import { PostApprovalComponent } from './post-approval/post-approval.component';
-
+import {FormsModule} from "@angular/forms";
+import {NgxPaginationModule} from "ngx-pagination";
 
 @NgModule({
   // tslint:disable-next-line:max-line-length
@@ -22,7 +23,8 @@ import { PostApprovalComponent } from './post-approval/post-approval.component';
     imports: [
         CommonModule,
         PostRoutingModule,
-        FormsModule
+        FormsModule,
+        NgxPaginationModule
     ]
 })
 export class PostModule { }

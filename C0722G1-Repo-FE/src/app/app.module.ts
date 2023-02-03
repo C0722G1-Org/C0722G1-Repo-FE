@@ -9,6 +9,8 @@ import {ToastrModule} from 'ngx-toastr';
 import {HttpClientModule} from '@angular/common/http';
 import { PostListApprovalComponent } from './post/post-list-approval/post-list-approval.component';
 import {PostModule} from './post/post.module';
+import {NgxPaginationModule} from "ngx-pagination";
+
 
 @NgModule({
   declarations: [
@@ -20,6 +22,7 @@ import {PostModule} from './post/post.module';
     AppRoutingModule,
     HttpClientModule,
     HomeModule,
+    NgxPaginationModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     PostModule
