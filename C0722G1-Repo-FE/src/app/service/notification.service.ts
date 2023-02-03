@@ -1,10 +1,10 @@
-
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {PageNotificationDto} from '../dto/notification/page-notification-dto';
 import {NotificationDeleteDto} from '../dto/notification/notification-delete-dto';
 import {ToastrService} from 'ngx-toastr';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -40,6 +40,7 @@ export class NotificationService {
   delete(deleteIds: number[]): Observable<any> {
     return this.httpClient.post<any>(this.URL_API_NOTIFICATION + '/remove', deleteIds);
   }
+
   /**
    * Created: NhanUQ
    * Function: notification success
@@ -49,6 +50,7 @@ export class NotificationService {
   showSuccess(message: string): void {
     this.toast.success(message);
   }
+
   /**
    * Created: NhanUQ
    * Function: notification error

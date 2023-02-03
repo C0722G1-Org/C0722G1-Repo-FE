@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {SecurityService} from "../../service/security.service";
-import {TokenService} from "../../service/token.service";
-import {Router} from "@angular/router";
-import {Toast, ToastrService} from "ngx-toastr";
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {SecurityService} from '../../service/security.service';
+import {TokenService} from '../../service/token.service';
+import {Router} from '@angular/router';
+import {Toast, ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -26,6 +26,11 @@ export class LoginComponent implements OnInit {
   ) {
   }
 
+  /**
+   * Created by: PhuongLTH
+   * Date: 02/02/2023
+   * Function: get formLogin from signInForm
+   */
   getFormLogin(): void {
     this.signInForm = this.formBuilder.group({
       username: ['', [Validators.required, Validators.minLength(3)]],
@@ -38,7 +43,13 @@ export class LoginComponent implements OnInit {
     this.getFormLogin();
   }
 
-  login() {
+  /**
+   * Created by: PhuongLTH
+   * Date: 02/02/2023
+   * Function: login using Account
+   */
+  login(): void
+  {
     const signInForm = this.signInForm?.value;
     this.securityService.signIn(signInForm).subscribe(data => {
         console.log('data -----> ', data);
@@ -51,8 +62,11 @@ export class LoginComponent implements OnInit {
             this.tokenService.setToken(data.token);
             this.tokenService.setName(data.name);
             this.tokenService.setRole(data.roles);
+            this.tokenService.setEmail(data.email);
+            this.tokenService.setIdAccount(data.idAccount);
+            this.tokenService.setUsernameAccount(data.usernameAccount);
             this.statusRole = data.roles;
-            this.router.navigateByUrl('/');
+            this.router.navigateByUrl('/home');
             this.toast.info('Đăng nhập thành công', 'Thông báo');
           }
         }
