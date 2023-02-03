@@ -19,7 +19,7 @@ export class PostDetailComponent implements OnInit {
   //   {idStatusPost: 2, nameStatusPost: 'Đã giao dịch'},
   //   {idStatusPost: 3, nameStatusPost: 'Giao dịch thất bại'}];
   // postDetail: PostDetail = {
-  //   idPost: 1, price: 500, area: 500, note: 'alo',
+  //   idPost: 1, price: 56000000000, area: 500, note: 'alo',
   //   customer: {
   //     idCustomer: 1,
   //     nameCustomer: 'Đặng Nhật Huy',
@@ -27,17 +27,17 @@ export class PostDetailComponent implements OnInit {
   //     genderCustomer: 1,
   //     emailCustomer: 'b77cwalk@gmail.com'
   //   },
-  //   demandType: {idDemandType: 3, nameDemandType: 'Cho thuê'}, landType: {idLandType: 1, nameLandType: 'Căn hộ'},
+  //   demandType: {idDemandType: 2, nameDemandType: 'Bán'}, landType: {idLandType: 1, nameLandType: 'Căn hộ'},
   //   statusPost: this.statusPost[0],
   //   direction: {idDirection: 1, nameDirection: 'Đông Bắc'},
-  //   dateCreation: '2023/02/03'
+  //   dateCreation: '2023/02/03',
   // };
   postDetail: PostDetail = {};
 
   // @ts-ignore
   phoneNumber: string | undefined = this.postDetail?.customer?.phoneCustomer1.slice(0, 6) + '*** · Hiện số';
   accountId = 1;
-  price = '';
+  price = this.postDetail.price;
   million = 1000000;
   billion = 1000000000;
   Slide = 'Slide ';
@@ -75,7 +75,7 @@ export class PostDetailComponent implements OnInit {
     //   this.accountId = this.tokenService.getIdAccount();
     // }
     if (this.postDetail.price != null) {
-      this.convertToMillion(this.postDetail.price);
+      this.convertToMillion();
     }
     this.convertToBillion();
   }
@@ -119,30 +119,31 @@ export class PostDetailComponent implements OnInit {
     this.toastr.success('Xác nhận giao dịch', 'Thành công!');
   }
 
-  convertToMillion(price: number): void {
+  /**
+   * In order to change display of price from number to text
+   * Use for million unit
+   * Created by HuyDN
+   * Created Date: 03/02/2023
+   */
+
+  convertToMillion(): void {
     // @ts-ignore
-    if (price >= this.million && price % this.million === 0) {
+    if (this.postDetail.price >= this.million) {
       // @ts-ignore
-      this.price = price / this.million + ' Triệu';
-    } else { // @ts-ignore
-      if (price >= this.million && price % this.million !== 0) {
-        // @ts-ignore
-        this.price = price / this.million + ' Triệu ' + price % this.million;
-      }
+      this.price = this.postDetail.price / this.million + ' Triệu';
     }
   }
-
+  /**
+   * In order to change display of price from number to text
+   * Use for billion unit
+   * Created by HuyDN
+   * Created Date: 03/02/2023
+   */
   convertToBillion(): void {
     // @ts-ignore
-    if (this.postDetail.price >= this.billion && this.postDetail.price % this.billion === 0) {
+    if (this.postDetail.price >= this.billion) {
       // @ts-ignore
       this.price = this.postDetail.price / this.billion + ' Tỷ';
-    } else {
-      // @ts-ignore
-      if (this.postDetail.price >= this.billion && this.postDetail.price % this.billion !== 0) {
-        // @ts-ignore
-        this.price = this.postDetail.price / this.billion + ' Tỷ ' + this.convertToMillion(this.postDetail.price % this.million);
-      }
     }
   }
 }
