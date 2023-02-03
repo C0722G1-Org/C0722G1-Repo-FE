@@ -22,8 +22,12 @@ export class EmployeeDeleteComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+   * Create by: NhanUQ
+   * Date created: 03/02/2023
+   * Function: delete employee
+   */
   deleteEmployee(): void {
-    console.log(this.employee.idEmployee);
     this.employeeService.deleteEmployee(this.employee.idEmployee).subscribe(() => {
       this.eventDelete.emit();
       this.showToastrSuccess();
@@ -32,10 +36,20 @@ export class EmployeeDeleteComponent implements OnInit {
     }, () => {});
   }
 
+  /**
+   * Create by: NhanUQ
+   * Date created: 03/02/2023
+   * Function: show message notification delete success
+   */
   private showToastrSuccess(): void {
     this.notificationService.showSuccess('Xóa nhân viên thành công');
   }
 
+  /**
+   * Create by: NhanUQ
+   * Date created: 03/02/2023
+   * Function: show message notification delete error
+   */
   private showToastrError(): void {
     this.notificationService.showError('Có lỗi khi thực hiện');
   }

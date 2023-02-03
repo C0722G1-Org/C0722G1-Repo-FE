@@ -1,6 +1,4 @@
-import {Division} from './division';
-
-export interface Employee {
+export interface EmployeeInfo {
   idEmployee?: number;
   codeEmployee?: string;
   nameEmployee?: string;
@@ -8,8 +6,5 @@ export interface Employee {
   genderEmployee?: boolean;
   phoneEmployee?: string;
   emailEmployee?: string;
-  addressEmployee?: string;
-  flagDeleted?: string;
-  division?: Division;
-  // account?: Account;
+  nameDivision?: string;
 }
