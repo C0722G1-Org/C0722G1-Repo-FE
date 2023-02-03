@@ -10,7 +10,6 @@ export interface Employee {
   emailEmployee?: string;
   addressEmployee?: string;
   flagDeleted?: string;
-  nameDivision?: string;
   division?: Division;
-  account?: Account;
+  // account?: Account;
 }
