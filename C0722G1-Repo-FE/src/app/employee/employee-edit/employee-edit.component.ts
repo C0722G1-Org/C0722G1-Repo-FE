@@ -17,6 +17,11 @@ export class EmployeeEditComponent implements OnInit {
   divisions: Division[] = [];
   formUpdateEmployee: FormGroup = new FormGroup({});
 
+  /**
+   * Create bt: LongPT
+   * Date created: 03/02/2023
+   * Function: form create employee
+   */
   constructor(private employeeService: EmployeeService,
               private divisionService: DivisionService,
               private router: Router,
@@ -30,15 +35,16 @@ export class EmployeeEditComponent implements OnInit {
       addressEmployee: new FormControl(this.employee.addressEmployee, Validators.required),
       genderEmployee: new FormControl(this.employee.genderEmployee, Validators.required),
       dateOfBirth: new FormControl(this.employee.dateOfBirth, Validators.required),
-      division: new FormGroup({
-        idDivision: new FormControl(),
-        nameDivision: new FormControl()
-      }),
-      flagDeleted: new FormControl(this.employee.flagDeleted),
-      // account: new FormControl('', Validators.required)
+      division: new FormControl(''),
+      flagDeleted: new FormControl(this.employee.flagDeleted)
     });
   }
 
+  /**
+   * Create bt: LongPT
+   * Date created: 03/02/2023
+   * Function: compare with
+   */
   compareCate(item1: Employee, item2: Employee): boolean {
     return item1 && item2 ? item1.idEmployee === item2.idEmployee : item1 === item2;
   }
@@ -47,6 +53,12 @@ export class EmployeeEditComponent implements OnInit {
     this.getAllDivision();
   }
 
+  /**
+   * Create bt: LongPT
+   * Date created: 03/02/2023
+   * Function: get employee by id
+   * @param id
+   */
   getEmployee(id: number): void {
     this.employeeService.findById(id).subscribe(data => {
       this.formUpdateEmployee.patchValue(data);
@@ -54,6 +66,11 @@ export class EmployeeEditComponent implements OnInit {
     });
   }
 
+  /**
+   * Create bt: LongPT
+   * Date created: 03/02/2023
+   * Function: get all list division
+   */
   getAllDivision(): void {
     this.divisionService.getAllDivision().subscribe(data => {
       this.divisions = data;
@@ -62,6 +79,11 @@ export class EmployeeEditComponent implements OnInit {
     });
   }
 
+  /**
+   * Create bt: LongPT
+   * Date created: 03/02/2023
+   * Function: update employee
+   */
   updateEmployee(): void {
     this.employeeService.updateCustomer(this.formUpdateEmployee.value).subscribe(data => {
       if (data != null) {

@@ -11,6 +11,11 @@ export class DivisionService {
   URL_DIVISION = 'http://localhost:8080/api/divisions';
   constructor(private httpClient: HttpClient) { }
 
+  /**
+   * Create bt: LongPT
+   * Date created: 03/02/2023
+   * Function: get all list division
+   */
   getAllDivision(): Observable<Division[]> {
     return this.httpClient.get<Division[]>(this.URL_DIVISION);
   }

@@ -13,6 +13,11 @@ import {ToastrService} from 'ngx-toastr';
 })
 export class EmployeeCreateComponent implements OnInit {
   divisions: Division[] = [];
+  /**
+   * Create bt: LongPT
+   * Date created: 03/02/2023
+   * Function: form update employee
+   */
   formCreateEmployee = new FormGroup({
     idEmployee: new FormControl(),
     codeEmployee: new FormControl('', [Validators.required, Validators.pattern('^NV-[0-9]{4}$')]),
@@ -27,7 +32,14 @@ export class EmployeeCreateComponent implements OnInit {
       nameDivision: new FormControl()
     }),
     flagDeleted: new FormControl(),
-    // account: new FormControl('', Validators.required)
+    account: new FormGroup({
+      idAccount: new FormControl(),
+      name: new FormControl(),
+      usernameAccount: new FormControl(),
+      email: new FormControl(),
+      encryptPassword: new FormControl(),
+      flagDelete: new FormControl()
+    })
   });
 
 
@@ -37,10 +49,15 @@ export class EmployeeCreateComponent implements OnInit {
               private toastrService: ToastrService) {
   }
 
+  /**
+   * Create bt: LongPT
+   * Date created: 03/02/2023
+   * Function: create employee
+   */
   createEmployee(): void {
     const employee = this.formCreateEmployee.value;
     this.employeeService.saveEmployee(employee).subscribe(data => {
-      if (data != null) {
+      if (data == null) {
         this.toastrService.error('Thêm mới không thành công.', 'Thông báo');
       } else {
         this.toastrService.success('Thêm mới thành công!', 'Thông báo');
@@ -55,6 +72,11 @@ export class EmployeeCreateComponent implements OnInit {
     this.getAllDivision();
   }
 
+  /**
+   * Create bt: LongPT
+   * Date created: 03/02/2023
+   * Function: get all list division
+   */
   getAllDivision(): void {
   this.divisionService.getAllDivision().subscribe(data => {
     this.divisions = data;
@@ -62,5 +84,4 @@ export class EmployeeCreateComponent implements OnInit {
     console.log(error);
   });
   }
-
 }
