@@ -4,10 +4,11 @@ import {CustomerEditComponent} from './customer-edit/customer-edit.component';
 import {CustomerCreateComponent} from './customer-create/customer-create.component';
 import {CustomerDetailComponent} from './customer-detail/customer-detail.component';
 import {CustomerAddComponent} from './customer-add/customer-add.component';
+import {CustomerListComponent} from './customer-list/customer-list.component';
 
 const routes: Routes = [
   {
-    path: '', component: CustomerEditComponent
+    path: '', component: CustomerListComponent
   },
   {
     path: 'create', component: CustomerCreateComponent
@@ -19,7 +20,7 @@ const routes: Routes = [
     path: 'add', component: CustomerAddComponent
   },
   {
-    path: 'edit', component: CustomerEditComponent
+    path: 'edit/:idCustomer', component: CustomerEditComponent
   }
 ];
 

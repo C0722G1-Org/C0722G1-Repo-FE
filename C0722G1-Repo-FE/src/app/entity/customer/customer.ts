@@ -15,4 +15,3 @@ export interface Customer {
   phoneCustomer2?: string;
   account?: Account;
 }
-
