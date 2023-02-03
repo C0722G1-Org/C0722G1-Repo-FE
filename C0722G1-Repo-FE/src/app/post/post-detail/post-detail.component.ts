@@ -1,4 +1,4 @@
-import {Component, DoBootstrap, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {PostDetail} from '../../entity/post/post-detail';
 import {PostService} from '../post.service';
 import {ActivatedRoute} from '@angular/router';
@@ -14,25 +14,25 @@ import {TokenService} from '../../service/token.service';
 export class PostDetailComponent implements OnInit {
   // @ts-ignore
   @ViewChild(ToastContainerDirective, {static: true}) toastContainer: ToastContainerDirective;
-  // statusPost: StatusPost[] = [
-  //   {idStatusPost: 1, nameStatusPost: 'Chờ giao dịch'},
-  //   {idStatusPost: 2, nameStatusPost: 'Đã giao dịch'},
-  //   {idStatusPost: 3, nameStatusPost: 'Giao dịch thất bại'}];
-  // postDetail: PostDetail = {
-  //   idPost: 1, price: 56000000000, area: 500, note: 'alo',
-  //   customer: {
-  //     idCustomer: 1,
-  //     nameCustomer: 'Đặng Nhật Huy',
-  //     phoneCustomer1: '0799440683',
-  //     genderCustomer: 1,
-  //     emailCustomer: 'b77cwalk@gmail.com'
-  //   },
-  //   demandType: {idDemandType: 2, nameDemandType: 'Bán'}, landType: {idLandType: 1, nameLandType: 'Căn hộ'},
-  //   statusPost: this.statusPost[0],
-  //   direction: {idDirection: 1, nameDirection: 'Đông Bắc'},
-  //   dateCreation: '2023/02/03',
-  // };
-  postDetail: PostDetail = {};
+  statusPost: StatusPost[] = [
+    {idStatusPost: 1, nameStatusPost: 'Chờ giao dịch'},
+    {idStatusPost: 2, nameStatusPost: 'Đã giao dịch'},
+    {idStatusPost: 3, nameStatusPost: 'Giao dịch thất bại'}];
+  postDetail: PostDetail = {
+    idPost: 1, price: 56000000000, area: 500, note: 'alo',
+    customer: {
+      idCustomer: 1,
+      nameCustomer: 'Đặng Nhật Huy',
+      phoneCustomer1: '0799440683',
+      genderCustomer: 1,
+      emailCustomer: 'b77cwalk@gmail.com'
+    },
+    demandType: {idDemandType: 2, nameDemandType: 'Bán'}, landType: {idLandType: 1, nameLandType: 'Căn hộ'},
+    statusPost: this.statusPost[0],
+    direction: {idDirection: 1, nameDirection: 'Đông Bắc'},
+    dateCreation: '2023/02/03',
+  };
+  // postDetail: PostDetail = {};
 
   // @ts-ignore
   phoneNumber: string | undefined = this.postDetail?.customer?.phoneCustomer1.slice(0, 6) + '*** · Hiện số';
