@@ -26,6 +26,11 @@ export class LoginComponent implements OnInit {
   ) {
   }
 
+  /**
+   * Created by: PhuongLTH
+   * Date: 02/02/2023
+   * Function: get formLogin from signInForm
+   */
   getFormLogin(): void {
     this.signInForm = this.formBuilder.group({
       username: ['', [Validators.required, Validators.minLength(3)]],
@@ -38,6 +43,11 @@ export class LoginComponent implements OnInit {
     this.getFormLogin();
   }
 
+  /**
+   * Created by: PhuongLTH
+   * Date: 02/02/2023
+   * Function: login using Account
+   */
   login() {
     const signInForm = this.signInForm?.value;
     this.securityService.signIn(signInForm).subscribe(data => {
@@ -52,7 +62,7 @@ export class LoginComponent implements OnInit {
             this.tokenService.setName(data.name);
             this.tokenService.setRole(data.roles);
             this.statusRole = data.roles;
-            this.router.navigateByUrl('/');
+            this.router.navigateByUrl('/home');
             this.toast.info('Đăng nhập thành công', 'Thông báo');
           }
         }

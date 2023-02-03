@@ -9,11 +9,18 @@ import {JwtResponse} from "../entity/account/JwtResponse";
   providedIn: 'root'
 })
 export class SecurityService {
-  private API_SIGNIN = environment.API_LOCAL + '/signin'
+  private API_SIGNIN = environment.API_LOCAL + '/signin';
 
   constructor(private httpClient: HttpClient) {
   }
 
+  /**
+   * Create by: PhuongLTH
+   * Date created: 02/02/2023,
+   * Function: signIn
+   * @param signInForm
+   * @return HttpStatus.OK if signInForm(username) has in database or HttpStatus.BAD_REQUEST if signInForm(username) not found in database
+   */
   signIn(signInForm: SignInForm): Observable<any> {
     return this.httpClient.post<JwtResponse>(this.API_SIGNIN, signInForm);
   }
