@@ -1,0 +1,141 @@
+<div class="row m-0">
+  <div class=" d-flex justify-content-center align-items-center mt-2 mb-2">
+    <div class="boxed shadow h-100">
+      <form *ngIf="rfAddCustomer" class="form" [formGroup]="rfAddCustomer" (ngSubmit)="addCustomer()">
+        <fieldset>
+          <legend>
+            <div>
+              <div style="margin-left: 15px; margin-top: 15px">
+                <a href="#" type="button"><i class="fa-solid fa-arrow-left"></i></a>
+                <span style="font-size: 35px; margin-left: 180px">Thêm khách hàng</span>
+              </div>
+            </div>
+          </legend>
+        </fieldset>
+        <div class="mb-2 row">
+          <div class="d-flex align-items-center mb-2">
+            <div class="col-4">
+              <label for="name" class="form-label ms-2">Tên khách hàng<span style="color: red">(*)</span>:</label>
+            </div>
+            <div class="col-8">
+              <input type="text" class="form-control" formControlName="nameCustomer"/>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-2">
+          <div class="d-flex align-items-center mb-2">
+            <div class="col-4">
+              <label for="initialPrice" class="form-label ms-2">Ngày sinh<span style="color: red">(*)</span>:</label>
+            </div>
+            <div class="col-8">
+              <input id="initialPrice" type="date" class="form-control" formControlName="dateOfBirth"/>
+            </div>
+          </div>
+        </div>
+        <div class="mb-2">
+          <div class="d-flex mb-2 mt-3 w-100">
+            <div class="col-4">
+              <label class="form-label ms-2">Giới tính<span style="color: red">(*)</span>:</label>
+            </div>
+            <div class="d-flex align-items-center mb-2 col-8">
+              <div class="col-4">
+                <input type="radio" name="fav_language" value="HTML">
+                  <label>Nam</label><br>
+              </div>
+              <div class="col-4">
+                <input type="radio" name="fav_language" value="HTML">
+                  <label>Nữ</label><br>
+              </div>
+              <div class="col-4">
+                <input type="radio" name="fav_language" value="HTML">
+                  <label>Khác</label><br>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mb-2 row">
+          <div class="d-flex align-items-center mb-2">
+            <div class="col-4">
+              <label for="name" class="form-label ms-2">Địa chỉ<span style="color: red">(*)</span>:</label>
+            </div>
+            <div class="col-8">
+              <input type="text" class="form-control" formControlName="addressCustomer"/>
+            </div>
+          </div>
+        </div>
+        <div class="mb-2 row">
+          <div class="d-flex align-items-center mb-2">
+            <div class="col-4">
+              <label for="name" class="form-label ms-2">Số điện thoại<span style="color: red">(*)</span>:</label>
+            </div>
+            <div class="col-8">
+              <input type="text" class="form-control" formControlName="phoneCustomer1"/>
+            </div>
+          </div>
+        </div>
+        <div class="mb-2 row">
+          <div class="d-flex align-items-center mb-2">
+            <div class="col-4">
+              <label for="name" class="form-label ms-2">Số điện thoại (2):</label>
+            </div>
+            <div class="col-8">
+              <input type="text" class="form-control" formControlName="phoneCustomer2"/>
+            </div>
+          </div>
+        </div>
+        <div class="mb-2 row">
+          <div class="d-flex align-items-center mb-2">
+            <div class="col-4">
+              <label for="name" class="form-label ms-2">Email<span style="color: red">(*)</span>:</label>
+            </div>
+            <div class="col-8">
+              <input type="text" class="form-control" formControlName="usernameAccount"/>
+            </div>
+          </div>
+        </div>
+        <div class="mb-2 row">
+          <div class="d-flex align-items-center mb-2">
+            <div class="col-4">
+              <label for="name" class="form-label ms-2">Mật khẩu<span style="color: red">(*)</span>:</label>
+            </div>
+            <div class="col-8">
+              <input type="password" class="form-control" formControlName="encryptPassword"/>
+            </div>
+          </div>
+        </div>
+        <div class="mb-2 row">
+          <div class="d-flex align-items-center mb-2">
+            <div class="col-4">
+              <label for="name" class="form-label ms-2">CCCD<span style="color: red">(*)</span>:</label>
+            </div>
+            <div class="col-8">
+              <input id="name" type="text" class="form-control" formControlName="idCardCustomer"/>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="d-flex mt-3 mb-2 w-100">
+          <button type="button" style="margin-right: 33px"
+                  class="btn btn-outline btn-outline-primary ms-auto d-flex justify-content-center">
+            <p>Nhập lại</p>
+          </button>
+          <button type="submit" style="margin-right: 0"
+                  class="btn btn-primary d-flex justify-content-center">
+            <p>Thêm</p>
+          </button>
+        </div>
+
+      </form>
+
+      <div class="mb-2">
+            <span style="font-size: 15px" class="fst-italic">
+              Trường có dấu <span style="color: red"> (*)</span> là bắt
+              buộc,không được bỏ trống
+            </span>
+      </div>
+
+    </div>
+  </div>
+</div>

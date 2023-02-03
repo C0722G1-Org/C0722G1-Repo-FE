@@ -1,3 +1,5 @@
+import {Account} from '../account/account';
+
 export interface Customer {
   idCustomer?: number;
   nameCustomer?: string;

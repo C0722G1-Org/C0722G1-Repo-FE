@@ -1,8 +1,8 @@
 export interface Account {
-  idAccount?: string;
+  idAccount?: number;
   name?: string;
-  usernameAccount?: string;
   email?: string;
   encryptPassword?: string;
+  usernameAccount?: string;
   flagDelete?: boolean;
 }
