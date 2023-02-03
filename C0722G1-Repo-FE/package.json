@@ -25,7 +25,6 @@
     "bootstrap-icons": "^1.10.3",
     "chart.js": "^2.9.4",
     "moment": "^2.29.4",
-    "ngx-pagination": "^5.1.1",
     "ngx-toastr": "^11.3.3",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
