@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {environment} from 'src/environments/environment.prod';
-import {HttpClient} from "@angular/common/http";
-import {SignInForm} from "../entity/account/SignInForm";
-import {Observable} from "rxjs";
-import {JwtResponse} from "../entity/account/JwtResponse";
+import {HttpClient} from '@angular/common/http';
+import {SignInForm} from '../entity/account/SignInForm';
+import {Observable} from 'rxjs';
+import {JwtResponse} from '../entity/account/JwtResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,7 @@ export class SecurityService {
    * Create by: PhuongLTH
    * Date created: 02/02/2023,
    * Function: signIn
-   * @param signInForm
+   * @Param signInForm
    * @return HttpStatus.OK if signInForm(username) has in database or HttpStatus.BAD_REQUEST if signInForm(username) not found in database
    */
   signIn(signInForm: SignInForm): Observable<any> {
