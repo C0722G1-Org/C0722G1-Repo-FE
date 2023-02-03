@@ -23,7 +23,7 @@ export class ChangePasswordComponent implements OnInit {
       encryptPassword: new FormControl()
     });
 
-    this.activatedRoute.paramMap
+    // this.activatedRoute.paramMap
   }
 
   ngOnInit(): void {

@@ -57,10 +57,10 @@ export class CustomerEditComponent implements OnInit {
    * Create by: VanNTC
    * Date created: 31/01/2023
    */
-  // tslint:disable-next-line:typedef
-  updateCustomer() {
+
+  updateCustomer(): void {
     const customer = this.editForm.value;
-    console.log(this.editForm);
+    console.log(this.editForm.value);
     this.customerService.updateCustomer(customer).subscribe(data => {
       this.router.navigateByUrl('');
     });

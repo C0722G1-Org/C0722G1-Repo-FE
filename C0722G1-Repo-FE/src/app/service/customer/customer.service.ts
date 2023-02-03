@@ -1,24 +1,25 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Customer} from '../entity/customer/customer';
 import {Observable} from 'rxjs';
+import {Customer} from '../../entity/customer/customer';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CustomerService {
 
-  CUSTOMER_URL = 'http://localhost:8080/api/customers';
+  CUSTOMER_URL = 'http://localhost:8080/api/customer';
 
   constructor(private httpClient: HttpClient) {
   }
 
   findById(idCustomer: number): Observable<any> {
+    console.log(idCustomer);
     return this.httpClient.get(this.CUSTOMER_URL + '/' + idCustomer);
   }
 
   updateCustomer(customer: Customer): Observable<any> {
-    return this.httpClient.patch(this.CUSTOMER_URL + '/' + customer.idCustomer, customer);
+    console.log(customer);
+    return this.httpClient.patch(this.CUSTOMER_URL, customer);
   }
-
 }

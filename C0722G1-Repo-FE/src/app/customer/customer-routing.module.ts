@@ -2,17 +2,16 @@ import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {CustomerEditComponent} from './customer-edit/customer-edit.component';
 import {CustomerCreateComponent} from './customer-create/customer-create.component';
-import {CustomerListComponent} from './customer-list/customer-list.component';
 
 const routes: Routes = [
   {
-    path: '', component: CustomerListComponent
+    path: '', component: CustomerEditComponent
   },
   {
     path: 'create', component: CustomerCreateComponent
   },
   {
-    path: 'edit/:id', component: CustomerEditComponent
+    path: 'edit/:idCustomer', component: CustomerEditComponent
   }
 ];
 

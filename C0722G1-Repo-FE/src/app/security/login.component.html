@@ -1,0 +1,143 @@
+<!--<div class="row m-0">-->
+<!--  <div class="col-lg-3"></div>-->
+<!--  <div class="col-lg-6">-->
+<!--    <div class="row rounded-3 mt-5" >-->
+<!--      <div class="col-lg-2"></div>-->
+<!--      <div class="col-lg-8 mb-5">-->
+<!--        <br>-->
+<!--        <div class="row container">-->
+<!--          <div class="col-lg-2"></div>-->
+<!--          <div class="col-lg-8">-->
+<!--            <br>-->
+<!--            <h5>Xin chào bạn</h5>-->
+<!--            <h3>Đăng nhập để tiếp tục</h3>-->
+<!--            <br>-->
+<!--            <form [formGroup]="signInForm" (ngSubmit)="login()">-->
+<!--              &lt;!&ndash; username input &ndash;&gt;-->
+<!--              <div class="form-outline mb-4">-->
+<!--                <label class="form-label" for="username">Tên tài khoản<small> *</small></label>-->
+<!--                <input type="email" id="username" class="form-control" formControlName="username"/>-->
+<!--                <div class="text-danger"-->
+<!--                     *ngIf="signInForm.controls.username.invalid && signInForm.controls.username.touched else elseBlock">-->
+<!--                  <span *ngIf="signInForm.controls.username.hasError('required')">Tên tài khoản không được để trống.</span>-->
+<!--                  <span *ngIf="signInForm.controls.username.hasError('minlength')">Tên tài khoản Không nhỏ hơn 3 ký tự.</span>-->
+<!--                </div>-->
+<!--                <ng-template #elseBlock><br></ng-template>-->
+<!--              </div>-->
+
+<!--              &lt;!&ndash; Password input &ndash;&gt;-->
+<!--              <div class="form-outline mb-4">-->
+<!--                <label class="form-label" for="password">Mật Khẩu<small> *</small></label>-->
+<!--                <input type="password" id="password" class="form-control" formControlName="password"/>-->
+<!--                <div class="text-danger"-->
+<!--                     *ngIf="signInForm.controls.password.invalid && signInForm.controls.password.touched else elseBlock">-->
+<!--                  <span *ngIf="signInForm.controls.password.hasError('required')">Mật khẩu không được để trống.</span>-->
+<!--                  <span *ngIf="signInForm.controls.password.hasError('minlength')">Mật khẩu Không nhỏ hơn 5 ký tự.</span>-->
+<!--                </div>-->
+<!--                <ng-template #elseBlock><br></ng-template>-->
+<!--              </div>-->
+
+<!--              &lt;!&ndash; 2 column grid layout for inline styling &ndash;&gt;-->
+<!--              <div class="row mb-4">-->
+<!--                <div class="col d-flex justify-content-center">-->
+<!--                  &lt;!&ndash; Checkbox &ndash;&gt;-->
+<!--                  <div class="form-check">-->
+<!--                    <input class="form-check-input" type="checkbox" value="" id="rememberMe" formControlName="rememberMe"  />-->
+<!--                    <label class="form-check-label" for="rememberMe">Nhớ mật khẩu </label>-->
+<!--                  </div>-->
+<!--                </div>-->
+
+<!--                <div class="col">-->
+<!--                  &lt;!&ndash; Simple link &ndash;&gt;-->
+<!--                  <a class="me-5 "  href="#!">Quên mật khẩu?</a>-->
+<!--                </div>-->
+<!--              </div>-->
+
+<!--              &lt;!&ndash; Submit button &ndash;&gt;-->
+<!--              <div class="row align-items-center me-1 ms-1">-->
+<!--                <button [disabled]="signInForm.invalid" type="submit" class="btn btn-primary btn-block mb-4 " >Đăng nhập</button>-->
+<!--              </div>-->
+
+<!--              &lt;!&ndash; Register buttons &ndash;&gt;-->
+<!--              <div class="text-center">-->
+<!--                <p>Chưa có tài khoản? <a href="#!">Đăng ký</a></p>-->
+<!--              </div>-->
+<!--            </form>-->
+<!--          </div>-->
+<!--          <div class="col-lg-2"></div>-->
+
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="col-lg-2"></div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="col-lg-3"></div>-->
+<!--</div>-->
+<div style="height: 100vh; display: flex; justify-content: center; align-items: center">
+  <div class="container h-100">
+    <div class="row h-100" style="display: flex; justify-content: center; align-items: center; box-sizing: border-box">
+      <div class="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
+        <div class="card shadow-lg" style="box-sizing: border-box">
+          <div class="card-body">
+            <h1 class="mb-5 mt-2 text-primary h2 text-center">Đăng Nhập</h1>
+            <form [formGroup]="signInForm" (ngSubmit)="login()">
+              <div class="form-floating mb-4">
+                <input formControlName="username" type="text" class="form-control" id="floatingInput"
+                       placeholder="name@example.com">
+                <label for="floatingInput">Tên tài khoản<small> *</small></label>
+                <div class="text-danger"
+                     *ngIf="signInForm.controls.username.invalid && signInForm.controls.username.touched else elseBlock">
+                  <span *ngIf="signInForm.controls.username.hasError('required')">Tên tài khoản không được để trống.</span>
+                  <span *ngIf="signInForm.controls.username.hasError('minlength')">Tên tài khoản Không nhỏ hơn 3 ký tự.</span>
+                </div>
+                <ng-template #elseBlock><br></ng-template>
+              </div>
+
+              <div class="form-floating mb-4">
+                <input formControlName="password" type="password" class="form-control" id="floatingPassword"
+                       placeholder="name@example.com">
+                <label for="floatingPassword">Mật khẩu<small> *</small></label>
+                <div class="text-danger"
+                     *ngIf="signInForm.controls.password.invalid && signInForm.controls.password.touched else elseBlock">
+                  <span *ngIf="signInForm.controls.password.hasError('required')">Mật khẩu không được để trống.</span>
+                  <span *ngIf="signInForm.controls.password.hasError('minlength')">Mật khẩu Không nhỏ hơn 5 ký tự.</span>
+                </div>
+                <ng-template #elseBlock><br></ng-template>
+              </div>
+
+              <div class="row form-floating mb-4">
+                <div class="col-7">
+                  <input type="checkbox" formControlName="rememberMe" name="remember" id="remember"
+                         class="form-check-input">
+                  <label style="margin-left: 3px" for="remember" class="form-check-label">Ghi nhớ đăng nhập</label>
+                </div>
+                <div class="col-5">
+                  <a href="#" class="float-end mb-1">
+                    Quên mật khẩu?
+                  </a>
+                </div>
+              </div>
+
+              <div class="row form-floating mb-4">
+                <div class="col-12">
+                  <button [disabled]="signInForm.invalid" type="submit" class="btn btn-primary" style="width: 100%">
+                    Đăng Nhập
+                  </button>
+                </div>
+              </div>
+
+              <div class="mt-5 bordert">
+
+              </div>
+            </form>
+          </div>
+          <div class="card-footer py-3 border-1">
+            <div class="text-center">
+              Bạn chưa có tài khoản? <a href="#" class="abc">Đăng ký ngay</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
