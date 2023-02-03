@@ -37,6 +37,9 @@ export class PostDetailComponent implements OnInit {
   // @ts-ignore
   phoneNumber: string | undefined = this.postDetail?.customer?.phoneCustomer1.slice(0, 6) + '*** · Hiện số';
   accountId = 1;
+  price = '';
+  million = 1000000;
+  billion = 1000000000;
   Slide = 'Slide ';
 
   constructor(private postService: PostService,
@@ -71,6 +74,10 @@ export class PostDetailComponent implements OnInit {
     // if (this.tokenService.getToken()){
     //   this.accountId = this.tokenService.getIdAccount();
     // }
+    if (this.postDetail.price != null) {
+      this.convertToMillion(this.postDetail.price);
+    }
+    this.convertToBillion();
   }
 
   /**
@@ -81,6 +88,7 @@ export class PostDetailComponent implements OnInit {
   showPhoneNumber(): void {
     this.phoneNumber = this.postDetail.customer?.phoneCustomer1;
   }
+
   /**
    * In order to copy a Post's link
    * Created by HuyDN
@@ -90,6 +98,7 @@ export class PostDetailComponent implements OnInit {
     navigator.clipboard.writeText('http://localhost:4200/post/detail/' + this.postDetail.idPost);
     this.toastr.info('Đã copy đường dẫn');
   }
+
   /**
    * In order to report a bad Post
    * Created by HuyDN
@@ -98,6 +107,7 @@ export class PostDetailComponent implements OnInit {
   showSucceedReport(): void {
     this.toastr.error('Đã báo xấu bài đăng');
   }
+
   /**
    * In order to change Post's status to Succeed
    * Created by HuyDN
@@ -107,5 +117,32 @@ export class PostDetailComponent implements OnInit {
     // @ts-ignore
     this.postDetail.statusPost?.idStatusPost = 2;
     this.toastr.success('Xác nhận giao dịch', 'Thành công!');
+  }
+
+  convertToMillion(price: number): void {
+    // @ts-ignore
+    if (price >= this.million && price % this.million === 0) {
+      // @ts-ignore
+      this.price = price / this.million + ' Triệu';
+    } else { // @ts-ignore
+      if (price >= this.million && price % this.million !== 0) {
+        // @ts-ignore
+        this.price = price / this.million + ' Triệu ' + price % this.million;
+      }
+    }
+  }
+
+  convertToBillion(): void {
+    // @ts-ignore
+    if (this.postDetail.price >= this.billion && this.postDetail.price % this.billion === 0) {
+      // @ts-ignore
+      this.price = this.postDetail.price / this.billion + ' Tỷ';
+    } else {
+      // @ts-ignore
+      if (this.postDetail.price >= this.billion && this.postDetail.price % this.billion !== 0) {
+        // @ts-ignore
+        this.price = this.postDetail.price / this.billion + ' Tỷ ' + this.convertToMillion(this.postDetail.price % this.million);
+      }
+    }
   }
 }
