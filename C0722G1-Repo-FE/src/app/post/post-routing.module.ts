@@ -7,7 +7,7 @@ import {PostDetailComponent} from './post-detail/post-detail.component';
 
 const routes: Routes = [
   {
-    path: '', component: PostComponentComponent
+    path: '', component: PostListComponent
   },
   {
     path: 'create', component: PostCreateComponent
