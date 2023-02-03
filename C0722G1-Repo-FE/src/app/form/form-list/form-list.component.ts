@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {DataForm} from '../../dto/data-form';
 import {DataFormService} from '../../service/data-form.service';
-
 @Component({
   selector: 'app-form-list',
   templateUrl: './form-list.component.html',

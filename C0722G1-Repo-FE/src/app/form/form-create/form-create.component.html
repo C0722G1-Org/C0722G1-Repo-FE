@@ -102,7 +102,7 @@
   }
 
 </style>
-<body>
+<form [formGroup]="dataFormCreate" (ngSubmit)="saveDataForm()">
 <div style="text-align: center;">
   <div class="row m-0">
     <div class=" d-flex justify-content-center align-items-center mt-2 mb-2 " >
@@ -125,13 +125,19 @@
         <div class="mb-2 row">
           <div class="d-flex align-items-center mb-2">
             <div class="col-4">
-              <label for="content" class="form-label ms-2" style="margin-bottom: 40px">Nội Dung<span style="color: red">(*)</span>:</label>
+              <label  class="form-label ms-2" style="margin-bottom: 40px">Nội Dung<span style="color: red">(*)</span>:</label>
             </div>
             <div class="col-8">
-              <!--                    <input id="content" type="text" class="form-control"/>-->
-              <textarea id="content" style="border: solid 1px cornflowerblue" class="form-control"  rows="4" cols="50" ></textarea>
-              <br><br>
+<!--              <ckeditor tagName="textarea" ...></ckeditor>-->
 
+<!--                            <ckeditor tagName="textarea" formControlName="contentDataForm"  ></ckeditor>-->
+              <textarea formControlName = "contentDataForm"  style="border: solid 1px cornflowerblue" class="form-control" rows="4" cols="50" ></textarea>
+              <div class="text-danger" *ngFor="let validation of validationMessages.contentDataForm">
+                <div class="error-message"
+                     *ngIf="dataFormCreate.get('contentDataForm')?.hasError(validation.type) && (dataFormCreate.get('contentDataForm')?.dirty || dataFormCreate.get('contentDataForm')?.touched)">
+                  {{validation.message}}</div>
+              </div>
+              <br><br>
             </div>
           </div>
         </div>
@@ -141,10 +147,12 @@
               <label for="file" class="form-label ms-2">Tập tin văn bản<span style="color: red">(*)</span>:</label>
             </div>
             <div class="col-6">
-              <input id="file" type="text" class="form-control"  />
+              <input id="file" class="form-control"  />
             </div>
             <div>
-              <i class="fa-solid fa-file fa-2x" style="margin: 10px"></i>
+              <input type="file" class="form-control-file" (change)="showPreview($event)">
+<!--              <input id="imgvac-xin" type="file" class="fa-solid fa-file fa-2x" style="margin: 10px" (change)="showPreview($event)">-->
+<!--            <input  type="file" class="fa-solid fa-file fa-2x" style="margin: 10px" (change)="showPreview($event)">-->
             </div>
 
           </div>
@@ -158,7 +166,7 @@
         </div>
 
         <div class="d-flex mt-3 mb-2 w-100">
-          <button type="submit" style="margin-right: 5px ;height: 20%;width: 20%"
+          <button type="submit" [disabled]="dataFormCreate.invalid" style="margin-right: 5px ;height: 20%;width: 20%"
                   class="btn btn-primary d-flex justify-content-center">
             <p>Thêm</p>
           </button>
@@ -174,5 +182,5 @@
     </div>
   </div>
 </div>
-
+</form>
 

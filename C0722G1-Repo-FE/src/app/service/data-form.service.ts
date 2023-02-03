@@ -20,13 +20,13 @@ export class DataFormService {
   // }
   searchByContent(contentDataForm: string, page: number): Observable<any> {
     if (contentDataForm === '') {
-      return this.httpClient.get<any>('http://localhost:8080/data-form?page=' + page);
+      return this.httpClient.get<any>('http://localhost:8080/api/form?page=' + page);
     } else {
-      return this.httpClient.get<any>('http://localhost:8080/data-form?contentDataForm=' + contentDataForm + '&page=' + page);
+      return this.httpClient.get<any>('http://localhost:8080/api/form?contentDataForm=' + contentDataForm + '&page=' + page);
     }
   }
 
   createDataFormDTO(dataForm: DataForm): Observable<DataForm> {
-    return this.httpClient.post<DataForm>('http://localhost:8080/data-form/save', JSON.stringify(dataForm), this.httpOptions);
+    return this.httpClient.post<DataForm>('http://localhost:8080/api/form/save', JSON.stringify(dataForm), this.httpOptions);
   }
 }
