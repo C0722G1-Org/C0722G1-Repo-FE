@@ -23,16 +23,43 @@
           <a style="margin-left: 8px;color: #FFFFFF" href="#" title="Quay lại trang danh sách"><i class="fa-solid fa-arrow-left"></i></a>
         </div>
         <h2 class="text-center">Chỉnh  thông báo</h2>
-        <form class="form">
-          <div class=" input-group ">
-            <div class=" form-floating flex-grow-1">
-              <input  type="t" class="form-control" id="floatingDay"
-                      placeholder="Name" formControlName="lastName">
-              <label for="floatingDay">12/2/2023</label>
+
+        <form class="form" novalidate = "novalidate" [formGroup]="notificationForm" (ngSubmit)="submit(id)">
+
+<!--          <div class="input-group">-->
+<!--            <div class=" input-group ">-->
+<!--              <div class=" form-floating flex-grow-1">-->
+<!--                <input type="text" class="form-control" id="title" required-->
+<!--                       formControlName="title"-->
+<!--                       [ngClass]="(notificationForm.controls['title'].touched) ?-->
+<!--                               (notificationForm.controls['title'].errors ? 'is-invalid' : 'is-valid') : '' ">-->
+<!--                <label for="floatingName">Tiêu đề</label>-->
+<!--              </div>-->
+<!--              <span class="input-group-text" id="basic-addon"><i-->
+<!--                class="fa-solid fa-user"></i></span>-->
+<!--            </div>-->
+<!--            <div *ngIf="notificationForm.controls['title'].hasError('required')-->
+<!--                             && notificationForm.controls['title'].touched" style="color: red">-->
+<!--              Tiêu đề không được bỏ trống.-->
+<!--            </div>-->
+<!--          </div>-->
+
+          <div class="form-group">
+            <label for="title" class="h6">Điểm Đi:</label>
+            <div class="alert alert-danger" role="alert"
+                 *ngIf="notificationForm.controls.title.hasError('required') &&
+                      notificationForm.controls.title.touched">
+              Điểm ĐI không được để trống!
             </div>
-            <span class="input-group-text" id="basic-addon4"><i
-              class="fa-regular fa-calendar"></i></span>
-          </div><br>
+            <div class="input-group">
+              <input type="text" id="title" class="form-control" placeholder="Nhập Điểm Xuất Phát.."
+                     formControlName="title"/>
+              <span class="input-group-text"><i class="fa-solid fa-person-circle-question"></i></span>
+            </div>
+          </div>
+
+          <br>
+
           <div class=" input-group">
             <div class=" form-floating flex-grow-1">
               <input type="text" class="form-control" id="floatingName"
@@ -70,3 +97,4 @@
     </div>
   </div>
 </section>
+

@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {FormGroup} from '@angular/forms';
+import {NotificationServiceService} from '../../service/notification-service.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Notification} from '../../entity/notification/notification';
 
 @Component({
   selector: 'app-notification-create',
@@ -7,9 +11,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NotificationCreateComponent implements OnInit {
 
-  constructor() { }
+  notificationForm: FormGroup = new FormGroup({});
+  notification: Notification | null = {};
+
+  constructor(private contificationService: NotificationServiceService,
+              private activatedRoute: ActivatedRoute,
+              private router: Router) { }
 
   ngOnInit(): void {
+    this.getCreateNotification();
   }
 
+  getCreateNotification() {
+
+  }
 }
