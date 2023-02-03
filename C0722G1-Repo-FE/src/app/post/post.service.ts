@@ -11,12 +11,16 @@ import {PostDetail} from '../entity/post/post-detail';
 })
 export class PostService {
   URL_POST_LIST = "http://localhost:8080/api/post"
+  /**
+   * URL connect to spring boot to get list of posts and search for posts
+   * Author: DatTQ  ;  Date:02/02/2023
+   */
   urlPortChartSearch = 'http://localhost:8080/api/post/search';
   urlPortChartList = 'http://localhost:8080/api/post';
   
   constructor(private httpClient: HttpClient) {
   }
-
+  
   findPostListByUserNameAccount(userNameAccount: string): Observable<Post[]> {
     return this._httpClient.get<Post[]>(this.URL_POST_LIST + "?customer.accountCustomer.userNameAccount_like=" + userNameAccount);
   }
@@ -24,10 +28,23 @@ export class PostService {
   findByNameDemandType(value: string): Observable<Post[]> {
     return this._httpClient.get<Post[]>(this.URL_POST_LIST + "?demandType.nameDemandType_like=" + value);
 
+/**
+   * Function display list PortChart.Method use: GET
+   * Use Observable && Service Module: HttpClient to execute the method
+   * Send request from Angular to Spring Boot to get down checked and return the List PortChart displayed in HTML
+   * @param: NO
+   * Author: DatTQ  ;  Date:02/02/2023;
+   */
   displayListChart(): Observable<PortChart[]> {
     return this.httpClient.get<PortChart[]>(this.urlPortChartList);
   }
-
+  /**
+   * Function search list PortChart by year and month.Method use: GET
+   * Use Observable && Service Module: HttpClient to execute the method
+   * Send request from Angular to Spring Boot to get down checked and return the List PortChart displayed in HTML
+   * @param: month: string, year: string
+   * Author: DatTQ  ;  Date:02/02/2023;
+   */
   searchChart(month: string, year: string): Observable<PortChart[]> {
     return this.httpClient.get<PortChart[]>(this.urlPortChartSearch + '?year=' + year + '&month=' + month);
     
