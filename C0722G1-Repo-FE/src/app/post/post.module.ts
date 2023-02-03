@@ -7,13 +7,16 @@ import { PostEditComponent } from './post-edit/post-edit.component';
 import { PostListComponent } from './post-list/post-list.component';
 import { PostDeleteComponent } from './post-delete/post-delete.component';
 import { PostDetailComponent } from './post-detail/post-detail.component';
+import { PostChartComponent } from './post-chart/post-chart.component';
+import {FormsModule} from "@angular/forms";
 
 
 @NgModule({
-  declarations: [PostCreateComponent, PostEditComponent, PostListComponent, PostDeleteComponent, PostDetailComponent],
-  imports: [
-    CommonModule,
-    PostRoutingModule
-  ]
+  declarations: [PostCreateComponent, PostEditComponent, PostListComponent, PostDeleteComponent, PostDetailComponent, PostChartComponent],
+    imports: [
+        CommonModule,
+        PostRoutingModule,
+        FormsModule
+    ]
 })
 export class PostModule { }

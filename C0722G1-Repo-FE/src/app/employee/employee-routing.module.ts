@@ -7,24 +7,24 @@ import {EmployeeEditComponent} from './employee-edit/employee-edit.component';
 const routes: Routes = [
   {
     path: '', component: EmployeeListComponent
-    , canActivate: [AuthGuard],
-    data: {
-      roles: ['ADMIN' && 'EMPLOYEE']
-    }
+    // , canActivate: [AuthGuard],
+    // data: {
+    //   roles: ['ADMIN' && 'EMPLOYEE']
+    // }
   },
   {
     path: 'create', component: EmployeeCreateComponent
-    , canActivate: [AuthGuard],
-    data: {
-      roles: ['ADMIN' && 'EMPLOYEE']
-    }
+    // , canActivate: [AuthGuard],
+    // data: {
+    //   roles: ['ADMIN' && 'EMPLOYEE']
+    // }
   },
   {
     path: 'edit/:id', component: EmployeeEditComponent
-    , canActivate: [AuthGuard],
-    data: {
-      roles: ['ADMIN' && 'EMPLOYEE']
-    }
+    // , canActivate: [AuthGuard],
+    // data: {
+    //   roles: ['ADMIN' && 'EMPLOYEE']
+    // }
   }
 ];
 
