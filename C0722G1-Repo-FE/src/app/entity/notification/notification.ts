@@ -1,7 +1,6 @@
 export interface Notification {
-  idNotification: number;
-  postingDate: string;
-  title: string;
-  content: string;
-  flagDelete?: number;
+  idNotification?: number;
+  postingDate?: string;
+  title?: string;
+  conten?: string;
 }
