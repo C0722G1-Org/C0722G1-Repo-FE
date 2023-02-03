@@ -9,10 +9,6 @@ import {PagePostDto} from '../../entity/post/page-post-dto';
   providedIn: 'root'
 })
 export class PostListApprovalService {
-  //getPageNotifications(searchNotification: any, pageNumber: any): Observable<PageNotificationDto> {
-  //   return this.httpClient.post<PageNotificationDto>(this.URL_API_NOTIFICATION +
-  //     '/search?page=' + pageNumber, searchNotification);
-  // }
   constructor(private httpClient: HttpClient) {}
   getAllPostApproval(pageNumber: any): Observable<PagePostDto>{
     return this.httpClient.get<PagePostDto>('http://localhost:8080/api/posts?page=' + pageNumber);

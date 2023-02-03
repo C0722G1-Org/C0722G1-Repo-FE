@@ -10,27 +10,12 @@ import {ToastrService} from 'ngx-toastr';
   styleUrls: ['./post-list-approval.component.css']
 })
 export class PostListApprovalComponent implements OnInit {
-  // searchNotification(pageNumber: number): void {
-  //   this.notificationService.getPageNotifications(this.rfSearch.value, pageNumber).subscribe(next => {
-  //     this.pageNotifications = next;
-  //   }, error => {
-  //     console.log('Lỗi truy xuất dữ liệu.');
-  //   });
-  // }
-
   postApprovalList!: PagePostDto;
   temp: PostApproval = {};
 
   constructor(private postListApprovalService: PostListApprovalService,
               private toastrService: ToastrService) {
   }
-  //ngOnInit(): void {
-  //   this.createSearchForm();
-  //   this.searchNotification(0);
-  //   this.deleteIds = [];
-  //   this.checkedAll = false;
-  //   console.log('test date: ' + this.testDate);
-  // }
   ngOnInit(): void {
     this.getPagePost(0);
   }
@@ -49,8 +34,5 @@ export class PostListApprovalComponent implements OnInit {
   // tslint:disable-next-line:typedef
   reload() {
     this.getPagePost(0);
-
   }
-
-
 }

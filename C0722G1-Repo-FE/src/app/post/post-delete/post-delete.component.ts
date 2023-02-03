@@ -23,7 +23,7 @@ export class PostDeleteComponent implements OnInit {
   deletePost(){
     this.postListApprovalService.deletePostById(this.postApproval.idPost).subscribe(data => {
       this.emiter.emit('');
-        this.toastrService.success('Xóa thành công', 'Thông báo', {
+      this.toastrService.success('Xóa thành công', 'Thông báo', {
           timeOut: 2000,
           progressBar: true,
           positionClass: 'toast-top-right',
