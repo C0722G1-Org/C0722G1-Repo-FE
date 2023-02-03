@@ -8,6 +8,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToastrModule} from 'ngx-toastr';
 import {HttpClientModule} from '@angular/common/http';
 import { PostListApprovalComponent } from './post/post-list-approval/post-list-approval.component';
+import {PostModule} from './post/post.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { PostListApprovalComponent } from './post/post-list-approval/post-list-a
     HttpClientModule,
     HomeModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    PostModule
   ],
   providers: [],
   bootstrap: [AppComponent]

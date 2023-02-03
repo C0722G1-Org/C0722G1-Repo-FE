@@ -4,26 +4,29 @@ import {PostListApprovalService} from '../post-list-approval/post-list-approval.
 import {ToastrService} from 'ngx-toastr';
 
 @Component({
-  selector: 'app-post-delete',
-  templateUrl: './post-delete.component.html',
-  styleUrls: ['./post-delete.component.css']
+  selector: 'app-post-approval',
+  templateUrl: './post-approval.component.html',
+  styleUrls: ['./post-approval.component.css']
 })
-export class PostDeleteComponent implements OnInit {
+export class PostApprovalComponent implements OnInit {
+
   @Input()
-   postApproval: PostApproval = {};
+  postApproval: PostApproval = {};
   @Output()
-   emiter = new EventEmitter();
+  emiter = new EventEmitter();
 
   constructor(private postListApprovalService: PostListApprovalService,
-              private toastrService: ToastrService) { }
+              private toastrService: ToastrService) {
+  }
 
   ngOnInit(): void {
   }
+
   // tslint:disable-next-line:typedef
-  deletePost(){
-    this.postListApprovalService.deletePostById(this.postApproval.idPost).subscribe(data => {
+  approvalPost() {
+    this.postListApprovalService.approvalPostById(this.postApproval.idPost).subscribe(data => {
       this.emiter.emit('');
-        this.toastrService.success('Xóa thành công', 'Thông báo', {
+      this.toastrService.success('Duyệt thành công', 'Thông báo', {
           timeOut: 2000,
           progressBar: true,
           positionClass: 'toast-top-right',
@@ -31,7 +34,7 @@ export class PostDeleteComponent implements OnInit {
         });
       }
       , error => {
-        this.toastrService.error('Đã xảy ra lỗi khi xóa', 'Lỗi', {
+        this.toastrService.error('Đã xảy ra lỗi khi duyệt', 'Lỗi', {
           timeOut: 2000,
           progressBar: true,
           positionClass: 'toast-top-right',

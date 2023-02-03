@@ -1,20 +1,19 @@
-
 <form >
-  <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="approvalModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Xóa</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Phê duyệt</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <span>Bạn đã chắc chắn muốn xóa nhu cầu: </span>
+          <span>Bạn đã chắc chắn muốn phê duyệt cho nhu cầu: </span>
           <span>{{postApproval.idPost}} </span>
           <span>Lưu ý: Hành động này không thể hoàn tác !</span>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-          <button type="button" (click)="deletePost()" class="btn btn-primary" data-bs-dismiss="modal">Xóa</button>
+          <button type="button" (click)="approvalPost()" class="btn btn-primary" data-bs-dismiss="modal">Phê Duyệt</button>
         </div>
       </div>
     </div>

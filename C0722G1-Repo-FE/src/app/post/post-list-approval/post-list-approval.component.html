@@ -10,7 +10,7 @@
       <label class="search"> Tìm kiếm </label>
       <div class="row" style="margin: 0 5px">
         <div class="col-md-12">
-          <span >DIỆN TÍCH: </span>
+          <span>DIỆN TÍCH: </span>
           <span> <input type="text" style="width: 5rem" id="area" name="area"></span> -
           <span><input type="text" style="width: 5rem"> </span>
           <span style="position: absolute; right: 4rem"><button class="btn btn-outline-danger">Tìm kiếm</button> </span>
@@ -49,6 +49,7 @@
   <div class="row g-0" style="border: black 1px solid; min-height: 200px; margin-top: 20px">
     <table class="table table-light table-striped">
       <thead>
+      <th>STT</th>
       <th>Mã NC</th>
       <th>Mã KH</th>
       <th>Loại NC</th>
@@ -58,92 +59,95 @@
       <th>Ghi chú</th>
       <th colspan="2" style="text-align: center">Chức năng</th>
       </thead>
-      <tbody>
+      <tbody *ngFor="let postApproval of postApprovalList.content; index as i">
       <tr>
-        <td>NC001</td>
-        <td>KH054</td>
-        <td>Mua</td>
-        <td>Nhà</td>
-        <td>Ngoại ô</td>
+        <td class="text-center align-middle">{{i + 1 + postApprovalList.number * 5}}</td>
+        <td>NC{{postApproval.idPost}}</td>
+        <td>{{postApproval.codeCustomer}}</td>
+        <td>{{postApproval.demandType}}</td>
+        <td>{{postApproval.landType}}</td>
+        <td></td>
         <td>500-750 m<sup>2</sup></td>
         <td>Mua nhà ngoại ô</td>
         <td>
-          <div class="dropdown">
-            <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <span *ngIf="postApproval.approval == true; else elseApproval">Đã duyệt</span>
+          <ng-template #elseApproval>
+            <button type="button" class="btn btn-light btn-outline-secondary btn-sm" data-bs-toggle="modal"
+                    data-bs-target="#approvalModal" (click)="temp = postApproval">
               Duyệt
-            </button>
-            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
-              <li><a class="dropdown-item active" href="#">Chấp thuận</a></li>
-              <li><a class="dropdown-item" href="#">Từ chối</a></li>
-            </ul>
-          </div>
+            </button></ng-template>
         </td>
-        <td><button class="btn" data-bs-toggle="modal" data-bs-target="#deleteModal"><a class="btn btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#deleteModal"><i
-          class="fa-regular fa-trash-can fa-1.5x"></i></a></button> </td>
-      </tr>
-
-      <tr>
-        <td>NC007</td>
-        <td>KH079</td>
-        <td>Mua</td>
-        <td>Nhà</td>
-        <td>Ngoại ô</td>
-        <td>650-870 m<sup>2</sup></td>
-        <td>Mua nhà vùng ngoại</td>
         <td>
-          <div class="dropdown">
-            <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Duyệt
-            </button>
-            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
-              <li><a class="dropdown-item active" href="#">Chấp thuận</a></li>
-              <li><a class="dropdown-item" href="#">Từ chối</a></li>
-            </ul>
-          </div>
+          <button class="btn" data-bs-toggle="modal" data-bs-target="#deleteModal" (click)="temp = postApproval">
+            <i class="bi bi-trash3"></i></button>
         </td>
-        <td><button class="btn" data-bs-toggle="modal" data-bs-target="#deleteModal"><a class="btn btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#deleteModal"><i
-          class="fa-regular fa-trash-can fa-1.5x"></i></a></button> </td>
-      </tr>
-
-      <tr>
-        <td>NC001</td>
-        <td>KH054</td>
-        <td>Mua</td>
-        <td>Nhà</td>
-        <td>Ngoại ô</td>
-        <td>500-750 m<sup>2</sup></td>
-        <td>Mua nhà ngoại ô</td>
-        <td>
-          <div class="dropdown">
-            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-              Duyệt
-            </button>
-            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
-              <li><a class="dropdown-item active" href="#">Chấp thuận</a></li>
-              <li><a class="dropdown-item" href="#">Từ chối</a></li>
-            </ul>
-          </div>
-        </td>
-        <td><button class="btn" data-bs-toggle="modal" data-bs-target="#deleteModal"><a class="btn btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#deleteModal"><i
-          class="fa-regular fa-trash-can fa-1.5x"></i></a></button> </td>
       </tr>
       </tbody>
 
     </table>
-    <nav aria-label="Page navigation example">
-      <ul class="pagination justify-content-end me-4">
-        <li class="page-item">
-          <a class="page-link" href="#">Trước</a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item">
-          <a class="page-link" href="#">Sau</a>
-        </li>
-      </ul>
-    </nav>
 
+
+    <!--  Phân trang -->
+    <div *ngIf="postApprovalList" class="d-flex justify-content-center" id="last-row">
+      <div>
+      </div>
+      <div>
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+            <li class="page-item" [ngClass]="postApprovalList.first ? 'disabled': ''">
+              <a role="button" class="page-link" (click)="gotoPage(0)">Trang đầu</a>
+            </li>
+            <li class="page-item" [ngClass]="postApprovalList.first ? 'disabled': ''">
+              <a role="button" class="page-link" (click)="gotoPage(postApprovalList.number - 1)"><</a>
+            </li>
+            <li class="page-item" *ngIf="postApprovalList.number - 3 > 0">
+              <a role="button" class="page-link"
+                 (click)="gotoPage(postApprovalList.number - 4)">{{postApprovalList.number - 3}}</a>
+            </li>
+            <li class="page-item" *ngIf="postApprovalList.number - 2 > 0">
+              <a role="button" class="page-link"
+                 (click)="gotoPage(postApprovalList.number - 3)">{{postApprovalList.number - 2}}</a>
+            </li>
+            <li class="page-item" *ngIf="postApprovalList.number - 1 > 0">
+              <a role="button" class="page-link"
+                 (click)="gotoPage(postApprovalList.number - 2)">{{postApprovalList.number - 1}}</a>
+            </li>
+            <li class="page-item" *ngIf="postApprovalList.number > 0">
+              <a role="button" class="page-link"
+                 (click)="gotoPage(postApprovalList.number - 1)">{{postApprovalList.number}}</a>
+            </li>
+
+            <li class="page-item active"><a class="page-link">{{postApprovalList.number + 1}}</a></li>
+
+            <li class="page-item" *ngIf="postApprovalList.number + 2 <= postApprovalList.totalPages">
+              <a role="button" class="page-link"
+                 (click)="gotoPage(postApprovalList.number + 1)">{{postApprovalList.number + 2}}</a>
+            </li>
+            <li class="page-item" *ngIf="postApprovalList.number + 3 <= postApprovalList.totalPages">
+              <a role="button" class="page-link"
+                 (click)="gotoPage(postApprovalList.number + 2)">{{postApprovalList.number + 3}}</a>
+            </li>
+            <li class="page-item" *ngIf="postApprovalList.number + 4 <= postApprovalList.totalPages">
+              <a role="button" class="page-link"
+                 (click)="gotoPage(postApprovalList.number + 3)">{{postApprovalList.number + 4}}</a>
+            </li>
+            <li class="page-item" *ngIf="postApprovalList.number + 5 <= postApprovalList.totalPages">
+              <a role="button" class="page-link"
+                 (click)="gotoPage(postApprovalList.number + 4)">{{postApprovalList.number + 5}}</a>
+            </li>
+            <li class="page-item" [ngClass]="postApprovalList.last ? 'disabled': ''">
+              <a role="button" class="page-link" (click)="gotoPage(postApprovalList.number + 1)">></a>
+            </li>
+            <li class="page-item" [ngClass]="postApprovalList.last ? 'disabled': ''">
+              <a role="button" class="page-link" (click)="gotoPage(postApprovalList.totalPages - 1)">Trang cuối</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
   </div>
 
 </div>
+
+<app-post-delete [postApproval] = "temp" (emiter)="reload()"></app-post-delete>
+<app-post-approval [postApproval]="temp" (emiter)="reload()"></app-post-approval>

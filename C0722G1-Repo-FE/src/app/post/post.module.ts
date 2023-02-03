@@ -8,11 +8,17 @@ import { PostListComponent } from './post-list/post-list.component';
 import { PostDeleteComponent } from './post-delete/post-delete.component';
 import { PostDetailComponent } from './post-detail/post-detail.component';
 import { PostChartComponent } from './post-chart/post-chart.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule} from '@angular/forms';
+import { PostApprovalComponent } from './post-approval/post-approval.component';
 
 
 @NgModule({
-  declarations: [PostCreateComponent, PostEditComponent, PostListComponent, PostDeleteComponent, PostDetailComponent, PostChartComponent],
+  // tslint:disable-next-line:max-line-length
+    declarations: [PostCreateComponent, PostEditComponent, PostListComponent, PostDeleteComponent, PostDetailComponent, PostChartComponent, PostApprovalComponent],
+  exports: [
+    PostDeleteComponent,
+    PostApprovalComponent
+  ],
     imports: [
         CommonModule,
         PostRoutingModule,
