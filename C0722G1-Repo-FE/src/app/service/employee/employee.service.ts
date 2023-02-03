@@ -23,7 +23,7 @@ export class EmployeeService {
    * Create bt: LongPT
    * Date created: 03/02/2023
    * Function: get employee by id
-   * @param id
+   * @param id: number
    */
   findById(id: number ): Observable<Employee> {
     return this.httpClient.get<Employee>(`${(this.URL_EMPLOYEE)}/${id}`);
@@ -33,7 +33,7 @@ export class EmployeeService {
    * Create bt: LongPT
    * Date created: 03/02/2023
    * Function: update employee
-   * @param employee
+   * @param employee: any
    */
   updateCustomer(employee: Employee): Observable<Employee> {
     return this.httpClient.patch<Employee>(`${(this.URL_EMPLOYEE)}/${employee.idEmployee}`, employee);
