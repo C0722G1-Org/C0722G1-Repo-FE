@@ -15,6 +15,10 @@ const routes: Routes = [
   {
     path: 'edit', component: PostEditComponent
   },
+  /**
+   * URL to view post stats and chart page
+   * Author: DatTQ  ;  Date:02/02/2023
+   */
   {
     path: 'chart', component: PostChartComponent
   }

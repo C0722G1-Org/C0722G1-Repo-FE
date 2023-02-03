@@ -54,12 +54,13 @@
         <td *ngIf="post.statusPost==2,else block1">{{0|currency: "VND"}}</td>
 
         <ng-template #block1>
-          <div *ngIf="post.price!= undefined">
-            <td *ngIf="0<post.price && post.price<2000000000">{{post.price * 0.02|currency: "VND"}}</td>
-            <td *ngIf="2000000000<=post.price && post.price<3000000000">{{post.price * 0.03 |currency: "VND"}}</td>
-            <td
-              *ngIf="3000000000<=post.price && post.statusPost==1">{{ post.price * 0.05|currency: "VND"}}</td>
-          </div>
+          <td *ngIf="post.price!= undefined && 0 <=post.price && post.price<2000000000 ">
+            {{post.price * 0.02 |currency: "VND"}}</td>
+          <td
+            *ngIf="post.price!= undefined && 2000000000 <=post.price && post.price<3000000000 ">
+            {{post.price * 0.03 |currency: "VND"}}</td>
+          <td *ngIf="post.price != undefined && 3000000000<=post.price">
+            {{post.price * 0.05 |currency: "VND"}}</td>
         </ng-template>
       <tr>
       <tr>
