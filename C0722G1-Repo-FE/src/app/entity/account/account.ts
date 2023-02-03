@@ -1,5 +1,5 @@
 export interface Account {
-  idAccount?: string;
+  idAccount?: number;
   name?: string;
   email?: string;
   encryptPassword?: string;
