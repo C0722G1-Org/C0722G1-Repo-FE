@@ -46,6 +46,14 @@ export class PostDetailComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe(data => {
       const id = data.get('id');
       if (id != null) {
+        /**
+         * Method uses:
+         * Send a request to backend API to get a Post by parameter Id
+         * Created by: HuyDN
+         * Created date: 02/02/2023
+         * @param id: a Post' id
+         * @return a Observable that contain a Post object can be showed on Post detail screen
+         */
         this.postService.findPostById(Number(id)).subscribe(data1 => {
           this.postDetail = data1;
         });
@@ -53,6 +61,11 @@ export class PostDetailComponent implements OnInit {
     });
   }
 
+  /**
+   * In order to use toast's message
+   * Edit by HuyDN
+   * Created Date: 03/02/2023
+   */
   ngOnInit(): void {
     this.toastr.overlayContainer = this.toastContainer;
     // if (this.tokenService.getToken()){
@@ -60,19 +73,36 @@ export class PostDetailComponent implements OnInit {
     // }
   }
 
+  /**
+   * In order to show full Customer's PhoneNumber
+   * Created by HuyDN
+   * Created Date: 03/02/2023
+   */
   showPhoneNumber(): void {
     this.phoneNumber = this.postDetail.customer?.phoneCustomer1;
   }
-
+  /**
+   * In order to copy a Post's link
+   * Created by HuyDN
+   * Created Date: 03/02/2023
+   */
   showSucceedCopyLink(): void {
     navigator.clipboard.writeText('http://localhost:4200/post/detail/' + this.postDetail.idPost);
     this.toastr.info('Đã copy đường dẫn');
   }
-
+  /**
+   * In order to report a bad Post
+   * Created by HuyDN
+   * Created Date: 03/02/2023
+   */
   showSucceedReport(): void {
     this.toastr.error('Đã báo xấu bài đăng');
   }
-
+  /**
+   * In order to change Post's status to Succeed
+   * Created by HuyDN
+   * Created Date: 03/02/2023
+   */
   showSucceedConfirmation(): void {
     // @ts-ignore
     this.postDetail.statusPost?.idStatusPost = 2;
