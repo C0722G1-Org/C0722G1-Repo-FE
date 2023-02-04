@@ -9,6 +9,7 @@ import {ToastrModule} from 'ngx-toastr';
 import {HttpClientModule} from '@angular/common/http';
 import {AngularFireModule} from '@angular/fire';
 import {environment} from "../environments/environment";
+import {NgxPaginationModule} from "ngx-pagination";
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import {environment} from "../environments/environment";
     AppRoutingModule,
     HttpClientModule,
     HomeModule,
+    NgxPaginationModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebaseConfig)
