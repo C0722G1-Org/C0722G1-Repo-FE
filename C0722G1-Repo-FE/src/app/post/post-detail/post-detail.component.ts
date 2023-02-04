@@ -5,6 +5,7 @@ import {ActivatedRoute} from '@angular/router';
 import {ToastContainerDirective, ToastrService} from 'ngx-toastr';
 import {StatusPost} from '../../entity/post/status-post';
 import {TokenService} from '../../service/token.service';
+import {Image} from '../../entity/post/image';
 
 @Component({
   selector: 'app-post-detail',
@@ -41,6 +42,7 @@ export class PostDetailComponent implements OnInit {
   million = 1000000;
   billion = 1000000000;
   Slide = 'Slide ';
+  imageList: Image[] = [];
 
   constructor(private postService: PostService,
               private activatedRoute: ActivatedRoute,
@@ -57,8 +59,19 @@ export class PostDetailComponent implements OnInit {
          * @param id: a Post' id
          * @return a Observable that contain a Post object can be showed on Post detail screen
          */
-        this.postService.findPostById(Number(id)).subscribe(data1 => {
-          this.postDetail = data1;
+        this.postService.findPostById(Number(id)).subscribe(dataPost => {
+          this.postDetail = dataPost;
+          /**
+           * Method uses:
+           * Send a request to backend API to get a ImageSet by parameter Id
+           * Created by: HuyDN
+           * Created date: 04/02/2023
+           * @param id: a Post' id
+           * @return a Observable that contain a ImageSet object can be showed on Post detail screen
+           */
+          this.postService.findImageByIdPost(Number(id)).subscribe(dataImage => {
+            this.imageList = dataImage;
+          });
         });
       }
     });
@@ -133,6 +146,7 @@ export class PostDetailComponent implements OnInit {
       this.price = this.postDetail.price / this.million + ' Triệu';
     }
   }
+
   /**
    * In order to change display of price from number to text
    * Use for billion unit
