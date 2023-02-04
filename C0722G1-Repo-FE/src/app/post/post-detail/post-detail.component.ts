@@ -1,10 +1,11 @@
-import {Component, DoBootstrap, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {PostDetail} from '../../entity/post/post-detail';
 import {PostService} from '../post.service';
 import {ActivatedRoute} from '@angular/router';
 import {ToastContainerDirective, ToastrService} from 'ngx-toastr';
 import {StatusPost} from '../../entity/post/status-post';
 import {TokenService} from '../../service/token.service';
+import {Image} from '../../entity/post/image';
 
 @Component({
   selector: 'app-post-detail',
@@ -14,33 +15,34 @@ import {TokenService} from '../../service/token.service';
 export class PostDetailComponent implements OnInit {
   // @ts-ignore
   @ViewChild(ToastContainerDirective, {static: true}) toastContainer: ToastContainerDirective;
-  // statusPost: StatusPost[] = [
-  //   {idStatusPost: 1, nameStatusPost: 'Chờ giao dịch'},
-  //   {idStatusPost: 2, nameStatusPost: 'Đã giao dịch'},
-  //   {idStatusPost: 3, nameStatusPost: 'Giao dịch thất bại'}];
-  // postDetail: PostDetail = {
-  //   idPost: 1, price: 500, area: 500, note: 'alo',
-  //   customer: {
-  //     idCustomer: 1,
-  //     nameCustomer: 'Đặng Nhật Huy',
-  //     phoneCustomer1: '0799440683',
-  //     genderCustomer: 1,
-  //     emailCustomer: 'b77cwalk@gmail.com'
-  //   },
-  //   demandType: {idDemandType: 3, nameDemandType: 'Cho thuê'}, landType: {idLandType: 1, nameLandType: 'Căn hộ'},
-  //   statusPost: this.statusPost[0],
-  //   direction: {idDirection: 1, nameDirection: 'Đông Bắc'},
-  //   dateCreation: '2023/02/03'
-  // };
-  postDetail: PostDetail = {};
+  statusPost: StatusPost[] = [
+    {idStatusPost: 1, nameStatusPost: 'Chờ giao dịch'},
+    {idStatusPost: 2, nameStatusPost: 'Đã giao dịch'},
+    {idStatusPost: 3, nameStatusPost: 'Giao dịch thất bại'}];
+  postDetail: PostDetail = {
+    idPost: 1, price: 56000000000, area: 500, note: 'alo',
+    customer: {
+      idCustomer: 1,
+      nameCustomer: 'Đặng Nhật Huy',
+      phoneCustomer1: '0799440683',
+      genderCustomer: 1,
+      emailCustomer: 'b77cwalk@gmail.com'
+    },
+    demandType: {idDemandType: 2, nameDemandType: 'Bán'}, landType: {idLandType: 1, nameLandType: 'Căn hộ'},
+    statusPost: this.statusPost[0],
+    direction: {idDirection: 1, nameDirection: 'Đông Bắc'},
+    dateCreation: '2023/02/03',
+  };
+  // postDetail: PostDetail = {};
 
   // @ts-ignore
   phoneNumber: string | undefined = this.postDetail?.customer?.phoneCustomer1.slice(0, 6) + '*** · Hiện số';
   accountId = 1;
-  price = '';
+  price = this.postDetail.price;
   million = 1000000;
   billion = 1000000000;
   Slide = 'Slide ';
+  imageList: Image[] = [];
 
   constructor(private postService: PostService,
               private activatedRoute: ActivatedRoute,
@@ -57,8 +59,19 @@ export class PostDetailComponent implements OnInit {
          * @param id: a Post' id
          * @return a Observable that contain a Post object can be showed on Post detail screen
          */
-        this.postService.findPostById(Number(id)).subscribe(data1 => {
-          this.postDetail = data1;
+        this.postService.findPostById(Number(id)).subscribe(dataPost => {
+          this.postDetail = dataPost;
+          /**
+           * Method uses:
+           * Send a request to backend API to get a ImageSet by parameter Id
+           * Created by: HuyDN
+           * Created date: 04/02/2023
+           * @param id: a Post' id
+           * @return a Observable that contain a ImageSet object can be showed on Post detail screen
+           */
+          this.postService.findImageByIdPost(Number(id)).subscribe(dataImage => {
+            this.imageList = dataImage;
+          });
         });
       }
     });
@@ -75,7 +88,7 @@ export class PostDetailComponent implements OnInit {
     //   this.accountId = this.tokenService.getIdAccount();
     // }
     if (this.postDetail.price != null) {
-      this.convertToMillion(this.postDetail.price);
+      this.convertToMillion();
     }
     this.convertToBillion();
   }
@@ -119,30 +132,32 @@ export class PostDetailComponent implements OnInit {
     this.toastr.success('Xác nhận giao dịch', 'Thành công!');
   }
 
-  convertToMillion(price: number): void {
+  /**
+   * In order to change display of price from number to text
+   * Use for million unit
+   * Created by HuyDN
+   * Created Date: 03/02/2023
+   */
+
+  convertToMillion(): void {
     // @ts-ignore
-    if (price >= this.million && price % this.million === 0) {
+    if (this.postDetail.price >= this.million) {
       // @ts-ignore
-      this.price = price / this.million + ' Triệu';
-    } else { // @ts-ignore
-      if (price >= this.million && price % this.million !== 0) {
-        // @ts-ignore
-        this.price = price / this.million + ' Triệu ' + price % this.million;
-      }
+      this.price = this.postDetail.price / this.million + ' Triệu';
     }
   }
 
+  /**
+   * In order to change display of price from number to text
+   * Use for billion unit
+   * Created by HuyDN
+   * Created Date: 03/02/2023
+   */
   convertToBillion(): void {
     // @ts-ignore
-    if (this.postDetail.price >= this.billion && this.postDetail.price % this.billion === 0) {
+    if (this.postDetail.price >= this.billion) {
       // @ts-ignore
       this.price = this.postDetail.price / this.billion + ' Tỷ';
-    } else {
-      // @ts-ignore
-      if (this.postDetail.price >= this.billion && this.postDetail.price % this.billion !== 0) {
-        // @ts-ignore
-        this.price = this.postDetail.price / this.billion + ' Tỷ ' + this.convertToMillion(this.postDetail.price % this.million);
-      }
     }
   }
 }

@@ -20,6 +20,10 @@ export class PostService {
    * @return a Observable that contain a Post object can be showed on Post detail screen
    */
   findPostById(id: number): Observable<any> {
-    return this.httpClient.get<PostDetail>('http://localhost:8080/api/post/detail?id=' + id);
+    return this.httpClient.get<any>('http://localhost:8080/api/post/detail?id=' + id);
+  }
+
+  findImageByIdPost(idPost: number): Observable<any>{
+    return this.httpClient.get<any>('http://localhost:8080/api/images?id=' + idPost);
   }
 }
