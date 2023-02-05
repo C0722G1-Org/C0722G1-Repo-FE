@@ -10,7 +10,8 @@ import {HttpClientModule} from '@angular/common/http';
 import {environment} from '../environments/environment';
 import {AngularFireModule} from '@angular/fire';
 import {FormsModule} from '@angular/forms';
-import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
+import {NgxPaginationModule} from "ngx-pagination";
+
 
 @NgModule({
   declarations: [
@@ -21,11 +22,13 @@ import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
     AppRoutingModule,
     HttpClientModule,
     HomeModule,
+    NgxPaginationModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     FormsModule,
     CKEditorModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]
