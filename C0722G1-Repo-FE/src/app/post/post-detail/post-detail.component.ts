@@ -25,7 +25,7 @@ export class PostDetailComponent implements OnInit {
       idCustomer: 1,
       nameCustomer: 'Đặng Nhật Huy',
       phoneCustomer1: '0799440683',
-      genderCustomer: 1,
+      genderCustomer: 3,
       emailCustomer: 'b77cwalk@gmail.com'
     },
     demandType: {idDemandType: 2, nameDemandType: 'Bán'}, landType: {idLandType: 1, nameLandType: 'Căn hộ'},
@@ -128,7 +128,7 @@ export class PostDetailComponent implements OnInit {
    */
   showSucceedConfirmation(): void {
     // @ts-ignore
-    this.postDetail.statusPost?.idStatusPost = 2;
+    this.postService.succeedConfirm(this.postDetail.idPost);
     this.toastr.success('Xác nhận giao dịch', 'Thành công!');
   }
 
