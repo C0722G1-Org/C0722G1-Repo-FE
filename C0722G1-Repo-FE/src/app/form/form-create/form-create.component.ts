@@ -6,6 +6,7 @@ import {AngularFireStorage} from '@angular/fire/storage';
 import {formatDate} from '@angular/common';
 import {finalize, timeout} from 'rxjs/operators';
 import {ToastrService} from 'ngx-toastr';
+
 @Component({
   selector: 'app-form-create',
   templateUrl: './form-create.component.html',
@@ -36,7 +37,14 @@ export class FormCreateComponent implements OnInit {
     fileForm: new FormControl('', [Validators.required])
   });
 
-  ngOnInit(): void {
+
+
+  constructor() {
+  }
+
+
+  ngOnInit() {
+
   }
   /**
    * Create by: KhanhLB
@@ -82,5 +90,7 @@ export class FormCreateComponent implements OnInit {
   getCurrentDateTime(): string {
     return formatDate(new Date(), 'dd-MM-yyyyhhmmssa', 'en-US');
   }
+
+
 
 }

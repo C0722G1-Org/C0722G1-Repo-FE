@@ -4,12 +4,19 @@ import {DataFormService} from '../../service/data-form.service';
 import {ToastContainerDirective, ToastrService} from 'ngx-toastr';
 import {DataFormJson} from '../../dto/form/data-form-json';
 
+
 @Component({
   selector: 'app-form-list',
   templateUrl: './form-list.component.html',
   styleUrls: ['./form-list.component.css']
 })
 export class FormListComponent implements OnInit {
+  page = 0;
+  contentDataForm = '';
+  totalElement = 0;
+  totalPage = 0;
+  dataFormPage: DataForm[] = [];
+  dataForm: DataForm = {};
 
   constructor(private dataFormService: DataFormService, private toastrService: ToastrService) {
   }
@@ -51,7 +58,18 @@ export class FormListComponent implements OnInit {
         this.showToastrError();
       }
       console.log(error);
+
     });
+  }
+  /**
+   * Create by: DungND
+   * Date created: 03/02/2023
+   * Function: reloadList
+   *
+   */
+  //load lại list
+  reloadList() {
+  this.searchByContent("");
   }
 
   /**
@@ -66,5 +84,6 @@ export class FormListComponent implements OnInit {
   gotoPage(pageNumber: number): void {
     this.page = pageNumber;
     this.ngOnInit();
+
   }
 }
