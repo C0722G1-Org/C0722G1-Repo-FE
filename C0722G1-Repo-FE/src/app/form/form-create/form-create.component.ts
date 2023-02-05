@@ -7,10 +7,7 @@ import {Component, Inject, OnInit} from '@angular/core';
   styleUrls: ['./form-create.component.css']
 })
 export class FormCreateComponent implements OnInit {
-  selectedImage: any = null;
-  url: string | undefined;
-  id: string | undefined;
-  file: string | undefined;
+
 
 
   constructor() {
