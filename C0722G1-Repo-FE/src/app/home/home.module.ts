@@ -12,9 +12,10 @@ import {SecurityModule} from "../security/security.module";
 
 @NgModule({
     declarations: [FooterComponent, HeaderComponent, NavComponent, HomeComponent],
-  exports: [
-    HomeComponent
-  ],
+    exports: [
+        HomeComponent,
+        HeaderComponent
+    ],
   imports: [
     CommonModule,
     HomeRoutingModule,
