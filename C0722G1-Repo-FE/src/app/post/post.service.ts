@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {PostDetail} from '../entity/post/post-detail';
 import {HttpClient} from '@angular/common/http';
@@ -8,7 +8,8 @@ import {HttpClient} from '@angular/common/http';
 })
 export class PostService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {
+  }
 
   /**
    * Method uses:
@@ -20,10 +21,14 @@ export class PostService {
    * @return a Observable that contain a Post object can be showed on Post detail screen
    */
   findPostById(id: number): Observable<any> {
-    return this.httpClient.get<any>('http://localhost:8080/api/post/detail?id=' + id);
+    return this.httpClient.get<any>('http://localhost:8080/api/public/home/detail?id=' + id);
   }
 
-  findImageByIdPost(idPost: number): Observable<any>{
-    return this.httpClient.get<any>('http://localhost:8080/api/images?id=' + idPost);
+  findImageByIdPost(idPost: number): Observable<any> {
+    return this.httpClient.get<any>('http://localhost:8080/api/public/home/image?id=' + idPost);
+  }
+
+  succeedConfirm(idPost: number | undefined): Observable<any> {
+    return this.httpClient.patch('http://localhost:8080/api/post/confirm?id=', idPost);
   }
 }
