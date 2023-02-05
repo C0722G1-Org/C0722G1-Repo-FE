@@ -20,7 +20,7 @@ export class PostDetailComponent implements OnInit {
     {idStatusPost: 2, nameStatusPost: 'Đã giao dịch'},
     {idStatusPost: 3, nameStatusPost: 'Giao dịch thất bại'}];
   postDetail: PostDetail = {
-    idPost: 1, price: 56000000000, area: 500, note: 'alo',
+    idPost: 1, price: 5656700000, area: 500, note: 'alo',
     customer: {
       idCustomer: 1,
       nameCustomer: 'Đặng Nhật Huy',
@@ -37,10 +37,10 @@ export class PostDetailComponent implements OnInit {
   imageList: Image[] = [
     {
       idImage: 1,
-      url: 'https://images.pexels.com/photos/440731/pexels-photo-440731.jpeg?cs=srgb&dl=pexels-%C3%A1kos-szab%C3%B3-440731.jpg&fm=jpg'
+      url: 'https://file4.batdongsan.com.vn/resize/1275x717/2023/02/02/20230202154431-b87f_wm.jpg'
     },
-    {idImage: 2, url: 'https://www.shutterstock.com/image-photo/land-plot-aerial-view-gps-260nw-1970998805.jpg'},
-    {idImage: 3, url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDGUd2bl4Is0982KMXwNidDIpN-OunVsdDmsWAToukBA&s'}];
+    {idImage: 2, url: 'https://file4.batdongsan.com.vn/resize/1275x717/2023/02/02/20230202154431-fb0b_wm.jpg'},
+    {idImage: 3, url: 'https://file4.batdongsan.com.vn/resize/1275x717/2023/02/02/20230202154432-aded_wm.jpg'}];
   // @ts-ignore
   phoneNumber: string | undefined = this.postDetail?.customer?.phoneCustomer1.slice(0, 6) + '*** · Hiện số';
   accountId = 1;
