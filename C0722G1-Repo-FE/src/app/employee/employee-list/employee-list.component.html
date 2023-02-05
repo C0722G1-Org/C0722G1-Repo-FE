@@ -1,3 +1,4 @@
+<app-header></app-header>
 <div class="container-fluid main-content">
 
   <div class="row mt-3">
@@ -12,11 +13,10 @@
 
   <div class="row">
     <div class="col-2">
-      <button class="btn btn-primary button-css col-md-1" type="button" routerLink="/employee/create">Thêm mới</button>
+      <button class="btn btn-outline-primary button-css col-md-1" type="button" routerLink="/employee/create">Thêm mới</button>
     </div>
     <div class="col-10"></div>
   </div>
-
 
   <form>
     <div class="row mt-2">
@@ -56,26 +56,26 @@
     </div>
   </form>
 
-  <div *ngIf="employees.length != 0; else elseBlock">
+  <div *ngIf="employeeInfo.length != 0; else elseBlock">
     <div class="row">
       <div class="col col-md-12">
         <table class="table table-light table-striped mt-3">
           <thead class="text-center">
           <tr>
-            <th scope="col">STT</th>
-            <th scope="col">Mã nhân viên</th>
-            <th scope="col">Họ tên</th>
-            <th scope="col">Ngày sinh</th>
-            <th scope="col">Giới tính</th>
-            <th scope="col">Số điện thoại</th>
-            <th scope="col">Email</th>
-            <th scope="col">Chức vụ</th>
-            <th scope="col">Xóa</th>
-            <th scope="col">Sửa</th>
+            <th scope="col" style="width: 4%">STT</th>
+            <th scope="col" style="width: 10%">Mã nhân viên</th>
+            <th scope="col" style="width: 10%">Họ tên</th>
+            <th scope="col" style="width: 8%">Ngày sinh</th>
+            <th scope="col" style="width: 4%">Giới tính</th>
+            <th scope="col" style="width: 10%">Số điện thoại</th>
+            <th scope="col" style="width: 12%">Email</th>
+            <th scope="col" style="width: 8%">Chức vụ</th>
+            <th scope="col" style="width: 4%">Xóa</th>
+            <th scope="col" style="width: 4%">Sửa</th>
           </tr>
           </thead>
           <tbody class="text-center">
-          <tr *ngFor="let employee of employees; let i = index">
+          <tr *ngFor="let employee of employeeInfo; let i = index">
             <td>{{(i + 1) + (request.page * request.size)}}</td>
             <td>{{employee.codeEmployee}}</td>
             <td>{{employee.nameEmployee}}</td>
@@ -101,37 +101,64 @@
       </div>
     </div>
 
-    <nav aria-label="Page navigation example">
-      <ul class="pagination d-flex justify-content-md-end justify-content-center">
-        <li class="page-item">
-          <button class="page-link" [hidden]="pageNumber == 0" type="button"
-                  (click)="changePage(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value,pageNumber - 1)">Trang trước
-          </button>
-        </li>
-        <li class="page-item px-0">
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text">{{pageNumber + 1}}</span>
-            </div>
-            <div class="input-group-prepend">
-              <span class="input-group-text">/</span>
-            </div>
-            <div class="input-group-prepend" style="float: left">
-              <span class="input-group-text"  id="basic-addon1">{{totalPages}}</span>
-            </div>
-          </div>
-        </li>
-        <li class="page-item">
-          <button class="page-link" [hidden]="pageNumber >= totalPages - 1" type="button"
-                  (click)="changePage(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value,pageNumber + 1)">Trang sau
-          </button>
-        </li>
-      </ul>
-    </nav>
-
+    <!--  Phân trang -->
+    <div *ngIf="employeeList" class="d-flex justify-content-end" id="last-row">
+      <div>
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+            <li class="page-item" [ngClass]="employeeList.first ? 'disabled': ''">
+              <a role="button" class="page-link" (click)="changePage(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value,0)">Trang đầu</a>
+            </li>
+            <li class="page-item" [ngClass]="employeeList.first ? 'disabled': ''">
+              <a role="button" class="page-link" (click)="changePage(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value,employeeList.number - 1)"><</a>
+            </li>
+            <li class="page-item" *ngIf="employeeList.number - 3 > 0">
+              <a role="button" class="page-link"
+                 (click)="changePage(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value,employeeList.number - 4)">{{employeeList.number - 3}}</a>
+            </li>
+            <li class="page-item" *ngIf="employeeList.number - 2 > 0">
+              <a role="button" class="page-link"
+                 (click)="changePage(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value,employeeList.number - 3)">{{employeeList.number - 2}}</a>
+            </li>
+            <li class="page-item" *ngIf="employeeList.number - 1 > 0">
+              <a role="button" class="page-link"
+                 (click)="changePage(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value,employeeList.number - 2)">{{employeeList.number - 1}}</a>
+            </li>
+            <li class="page-item" *ngIf="employeeList.number > 0">
+              <a role="button" class="page-link"
+                 (click)="changePage(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value,employeeList.number - 1)">{{employeeList.number}}</a>
+            </li>
+            <li class="page-item active"><a class="page-link">{{employeeList.number + 1}}</a></li>
+            <li class="page-item" *ngIf="employeeList.number + 2 <= employeeList.totalPages">
+              <a role="button" class="page-link"
+                 (click)="changePage(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value,employeeList.number + 1)">{{employeeList.number + 2}}</a>
+            </li>
+            <li class="page-item" *ngIf="employeeList.number + 3 <= employeeList.totalPages">
+              <a role="button" class="page-link"
+                 (click)="changePage(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value,employeeList.number + 2)">{{employeeList.number + 3}}</a>
+            </li>
+            <li class="page-item" *ngIf="employeeList.number + 4 <= employeeList.totalPages">
+              <a role="button" class="page-link"
+                 (click)="changePage(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value,employeeList.number + 3)">{{employeeList.number + 4}}</a>
+            </li>
+            <li class="page-item" *ngIf="employeeList.number + 5 <= employeeList.totalPages">
+              <a role="button" class="page-link"
+                 (click)="changePage(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value,employeeList.number + 4)">{{employeeList.number + 5}}</a>
+            </li>
+            <li class="page-item" [ngClass]="employeeList.last ? 'disabled': ''">
+              <a role="button" class="page-link" (click)="changePage(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value,employeeList.number + 1)">></a>
+            </li>
+            <li class="page-item" [ngClass]="employeeList.last ? 'disabled': ''">
+              <a role="button" class="page-link"
+                 (click)="changePage(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value,employeeList.totalPages - 1)"
+              >Trang cuối</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
   </div>
   <ng-template #elseBlock><h2 style="color: red; text-align: center">Không có dữ liệu.</h2></ng-template>
-
 
 </div>
 <app-employee-delete [employee]="temp" (eventDelete)="reload()"></app-employee-delete>

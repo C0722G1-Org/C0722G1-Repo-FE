@@ -1,11 +1,11 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {Employee} from '../../entity/employee/employee';
 import {Division} from '../../entity/employee/division';
 import {EmployeeService} from '../../service/employee.service';
 import {DivisionService} from '../../service/division.service';
-import {NotificationService} from '../../service/notification.service';
-import {EmployeeInfo} from '../../dto/employee-info';
+import {EmployeeInfoJson} from '../../dto/employee/employee-info-json';
+import {EmployeeInfo} from '../../dto/employee/employee-info';
 
 @Component({
   selector: 'app-employee-list',
@@ -13,7 +13,8 @@ import {EmployeeInfo} from '../../dto/employee-info';
   styleUrls: ['./employee-list.component.css']
 })
 export class EmployeeListComponent implements OnInit {
-  employees: EmployeeInfo[] = [];
+  employeeInfo: EmployeeInfo[] = [];
+  employeeList!: EmployeeInfoJson;
   divisions: Division[] = [];
   temp: Employee = {};
   codeEmployeeSearch = '';
@@ -26,8 +27,7 @@ export class EmployeeListComponent implements OnInit {
 
   constructor(private employeeService: EmployeeService,
               private divisionService: DivisionService,
-              private route: Router,
-              private notificationService: NotificationService) {
+              private route: Router) {
     this.getAllDivisionListComponent();
   }
 
@@ -56,9 +56,9 @@ export class EmployeeListComponent implements OnInit {
     this.emailEmployeeSearch = '';
     this.divisionSearch = '';
     this.employeeService.getAllEmployee(request).subscribe(data => {
-      console.log(data);
-      // @ts-ignore
-      this.employees = data.content;
+      this.employeeList = data;
+      this.employeeInfo = data.content;
+      console.log(this.employeeInfo);
       // @ts-ignore
       this.totalPages = data.totalPages;
       // @ts-ignore
@@ -69,7 +69,7 @@ export class EmployeeListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.searchEmployee(this.codeEmployeeSearch, this.nameEmployeeSearch, this.emailEmployeeSearch, this.divisionSearch);
+    this.searchEmployeeChangePage(this.codeEmployeeSearch, this.nameEmployeeSearch, this.emailEmployeeSearch, this.divisionSearch);
   }
 
   /**
@@ -89,14 +89,54 @@ export class EmployeeListComponent implements OnInit {
    */
   editEmployee(idEmployee: number | undefined): void {
     this.route.navigate(['/employee/edit', idEmployee]).then(r => {
-      console.log(r);
     });
   }
 
   /**
    * Create by: NhanUQ
    * Date created: 03/02/2023
-   * Function: search employee with parameter from list html
+   * Function: search employee with parameter from list html when change page
+   * @param codeEmployeeSearch: string,
+   * @param nameEmployeeSearch: string,
+   * @param emailEmployeeSearch: string,
+   * @param divisionSearch: string
+   */
+  searchEmployeeChangePage(codeEmployeeSearch: string,
+                           nameEmployeeSearch: string,
+                           emailEmployeeSearch: string,
+                           divisionSearch: string): void {
+
+    codeEmployeeSearch =
+      codeEmployeeSearch === '' ||
+      codeEmployeeSearch === ' ' ||
+      codeEmployeeSearch === undefined ||
+      codeEmployeeSearch == null ? '' : codeEmployeeSearch;
+
+    nameEmployeeSearch =
+      nameEmployeeSearch === '' ||
+      nameEmployeeSearch === ' ' ||
+      nameEmployeeSearch === undefined ||
+      nameEmployeeSearch == null ? '' : nameEmployeeSearch;
+
+    emailEmployeeSearch =
+      emailEmployeeSearch === '' ||
+      emailEmployeeSearch === ' ' ||
+      emailEmployeeSearch === undefined ||
+      emailEmployeeSearch == null ? '' : emailEmployeeSearch;
+
+    divisionSearch =
+      divisionSearch === '' ||
+      divisionSearch === ' ' ||
+      divisionSearch === undefined ||
+      divisionSearch == null ? '' : divisionSearch;
+
+    this.searchEmployeeListComponent(codeEmployeeSearch, nameEmployeeSearch, emailEmployeeSearch, divisionSearch, this.request);
+  }
+
+  /**
+   * Create by: NhanUQ
+   * Date created: 03/02/2023
+   * Function: search employee with parameter from list html when search employee
    * @param codeEmployeeSearch: string,
    * @param nameEmployeeSearch: string,
    * @param emailEmployeeSearch: string,
@@ -131,8 +171,8 @@ export class EmployeeListComponent implements OnInit {
       divisionSearch === undefined ||
       divisionSearch == null ? '' : divisionSearch;
 
+    this.request.page = 0;
     this.searchEmployeeListComponent(codeEmployeeSearch, nameEmployeeSearch, emailEmployeeSearch, divisionSearch, this.request);
-
   }
 
   /**
@@ -159,15 +199,26 @@ export class EmployeeListComponent implements OnInit {
       divisionSearch.trim(),
       request).subscribe(data => {
       console.log(data);
-      // @ts-ignore
-      this.employees = data.content;
+      this.employeeList = data;
+      this.employeeInfo = data.content;
+      console.log(this.employeeInfo);
       // @ts-ignore
       this.totalPages = data.totalPages;
       // @ts-ignore
       this.pageNumber = data.pageable.pageNumber;
-      console.log(this.pageNumber);
     }, error => {
-      this.showToastrError();
+      this.getAllEmployeeListComponent(this.request);
+      this.codeEmployeeSearch = '';
+      this.nameEmployeeSearch = '';
+      this.emailEmployeeSearch = '';
+      this.divisionSearch = '';
+      // if (this.employeeList != null) {
+      //   this.showToastrError();
+      // }
+      if (error.status === 404) {
+        this.showToastrError();
+      }
+    }, () => {
     });
   }
 
@@ -187,7 +238,8 @@ export class EmployeeListComponent implements OnInit {
              divisionSearch: string,
              pageNumber: number): void {
     this.request.page = pageNumber;
-    this.searchEmployee(codeEmployeeSearch, nameEmployeeSearch, emailEmployeeSearch, divisionSearch);
+    this.searchEmployeeChangePage(codeEmployeeSearch, nameEmployeeSearch, emailEmployeeSearch, divisionSearch);
+    // this.ngOnInit();
   }
 
   /**
@@ -196,7 +248,7 @@ export class EmployeeListComponent implements OnInit {
    * Function: show message toastr when search error
    */
   private showToastrError(): void {
-    this.notificationService.showError('Không có kết quả cần tìm');
+    this.employeeService.showError('Không có kết quả cần tìm', 'Thông báo!');
   }
 }
 
