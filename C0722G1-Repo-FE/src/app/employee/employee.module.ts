@@ -8,14 +8,16 @@ import { EmployeeDeleteComponent } from './employee-delete/employee-delete.compo
 import { EmployeeListComponent } from './employee-list/employee-list.component';
 import { EmployeeDetailComponent } from './employee-detail/employee-detail.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import {HomeModule} from '../home/home.module';
 
 
 @NgModule({
   declarations: [EmployeeCreateComponent, EmployeeEditComponent, EmployeeDeleteComponent, EmployeeListComponent, EmployeeDetailComponent],
-  imports: [
-    CommonModule,
-    EmployeeRoutingModule,
-    ReactiveFormsModule
-  ]
+    imports: [
+        CommonModule,
+        EmployeeRoutingModule,
+        ReactiveFormsModule,
+        HomeModule
+    ]
 })
 export class EmployeeModule { }
