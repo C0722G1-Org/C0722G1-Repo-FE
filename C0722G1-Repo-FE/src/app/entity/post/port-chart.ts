@@ -8,7 +8,7 @@ export interface PortChart {
   price?: number;
   statusPost?: number;
   numberAddress?: string;
-  nameWard?: string;
+  nameWards?: string;
   nameDistrict?: string;
   nameCity?: string;
   yearPost?: number;
