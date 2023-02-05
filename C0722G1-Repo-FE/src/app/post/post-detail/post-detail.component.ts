@@ -34,15 +34,19 @@ export class PostDetailComponent implements OnInit {
     dateCreation: '2023/02/03',
   };
   // postDetail: PostDetail = {};
-
+  imageList: Image[] = [
+    {
+      idImage: 1,
+      url: 'https://images.pexels.com/photos/440731/pexels-photo-440731.jpeg?cs=srgb&dl=pexels-%C3%A1kos-szab%C3%B3-440731.jpg&fm=jpg'
+    },
+    {idImage: 2, url: 'https://www.shutterstock.com/image-photo/land-plot-aerial-view-gps-260nw-1970998805.jpg'},
+    {idImage: 3, url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDGUd2bl4Is0982KMXwNidDIpN-OunVsdDmsWAToukBA&s'}];
   // @ts-ignore
   phoneNumber: string | undefined = this.postDetail?.customer?.phoneCustomer1.slice(0, 6) + '*** · Hiện số';
   accountId = 1;
   price = this.postDetail.price;
   million = 1000000;
   billion = 1000000000;
-  Slide = 'Slide ';
-  imageList: Image[] = [];
 
   constructor(private postService: PostService,
               private activatedRoute: ActivatedRoute,
