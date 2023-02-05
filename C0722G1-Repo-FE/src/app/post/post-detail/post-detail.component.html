@@ -41,7 +41,7 @@
                    class="d-block w-100" alt="...">
             </div>
             <div class="carousel-item">
-              <img src="{{imageList[2].url}}}"
+              <img src="{{imageList[2].url}}"
                    class="d-block w-100" alt="...">
             </div>
           </div>
@@ -106,7 +106,7 @@
             <div class="card-body">
 
               <p style="text-align: center"><span>Được đăng bởi</span> <br>
-                <span class="hr_value" id="customerName">{{postDetail?.customer?.nameCustomer}}</span></p>
+                <span class="hr_value" id="customerName" [routerLink]="['customer/detail', postDetail?.customer?.idCustomer]">{{postDetail?.customer?.nameCustomer}}</span></p>
 
               <p style="font-size: smaller; text-align: center; margin-top: -0.6rem">
                 <span class="hl_value"> Ngày đăng: </span><span>{{postDetail?.dateCreation}}</span>
