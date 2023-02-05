@@ -128,34 +128,34 @@
               <label  class="form-label ms-2" style="margin-bottom: 40px">Nội Dung<span style="color: red">(*)</span>:</label>
             </div>
             <div class="col-8">
-<!--              <ckeditor tagName="textarea" ...></ckeditor>-->
-
-<!--                            <ckeditor tagName="textarea" formControlName="contentDataForm"  ></ckeditor>-->
-              <textarea formControlName = "contentDataForm"  style="border: solid 1px cornflowerblue" class="form-control" rows="4" cols="50" ></textarea>
+              <label>
+                <textarea formControlName = "contentDataForm"  style="border: solid 1px cornflowerblue" class="form-control" rows="4" cols="50" ></textarea>
+              </label>
               <div class="text-danger" *ngFor="let validation of validationMessages.contentDataForm">
                 <div class="error-message"
-                     *ngIf="dataFormCreate.get('contentDataForm')?.hasError(validation.type) && (dataFormCreate.get('contentDataForm')?.dirty || dataFormCreate.get('contentDataForm')?.touched)">
+                     *ngIf="dataFormCreate.get('contentDataForm')?.hasError(validation.type) && (dataFormCreate.get('contentDataForm')?.dirty || dataFormCreate.get('contentDataForm')?.touched)else elseBlock" >
                   {{validation.message}}</div>
               </div>
-              <br><br>
+
             </div>
           </div>
         </div>
         <div class="mb-2 row">
-          <div class="d-flex align-items-center mb-2">
+          <div class="d-flex align-items-center mb-2 row" >
             <div class="col-4">
-              <label for="file" class="form-label ms-2">Tập tin văn bản<span style="color: red">(*)</span>:</label>
+              <label  class="form-label ms-2">Tập tin văn bản<span style="color: red">(*)</span>:</label>
             </div>
-            <div class="col-6">
-              <input id="file" class="form-control"  />
+            <div class="col-8" style="text-align: left">
+              <input type="file" class="form-control-file" (change)="showPreview($event)" accept=".doc,.docx,.xml" formControlName="fileForm">
             </div>
-            <div>
-              <input type="file" class="form-control-file" (change)="showPreview($event)">
-<!--              <input id="imgvac-xin" type="file" class="fa-solid fa-file fa-2x" style="margin: 10px" (change)="showPreview($event)">-->
-<!--            <input  type="file" class="fa-solid fa-file fa-2x" style="margin: 10px" (change)="showPreview($event)">-->
+            <div class="text-danger" *ngFor="let validation of validationMessages.fileForm">
+              <div class="error-message"
+                   *ngIf="dataFormCreate.get('fileForm')?.hasError(validation.type) && (dataFormCreate.get('fileForm')?.dirty || dataFormCreate.get('fileForm')?.touched) else elseBlock">
+                {{validation.message}}</div>
             </div>
-
+            <ng-template #elseBlock><br></ng-template>
           </div>
+
         </div>
 
         <div class="mb-2">
@@ -168,14 +168,14 @@
         <div class="d-flex mt-3 mb-2 w-100">
           <button type="submit" [disabled]="dataFormCreate.invalid" style="margin-right: 5px ;height: 20%;width: 20%"
                   class="btn btn-primary d-flex justify-content-center">
-            <p>Thêm</p>
+            Thêm
           </button>
-          <button type="button" style="margin-right: 5px;height: 20%;width: 20%"
+          <button type="reset" style="margin-right: 5px;height: 20%;width: 20%"
                   class="btn btn-outline btn-outline-primary ms-auto d-flex justify-content-center">
-            <p>Nhập lại</p>
+            Nhập lại
           </button>
-          <button type="button" style="margin-right: 5px;height: 20%;width: 20%" class="btn btn-outline btn-outline-danger ms-auto d-flex justify-content-center">
-            <p>Hủy</p>
+          <button type="button" style="margin-right: 5px;height: 20%;width: 20%" class="btn btn-outline btn-outline-danger ms-auto d-flex justify-content-center" routerLink="/form">
+            Hủy
           </button>
         </div>
       </div>
@@ -183,4 +183,3 @@
   </div>
 </div>
 </form>
-
