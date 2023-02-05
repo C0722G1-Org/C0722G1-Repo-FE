@@ -70,6 +70,7 @@ export class TokenService {
 
 
   public getRole(): string[] {
+    this.roles = [];
     if (this.getToken()) {
       // @ts-ignore
       JSON.parse(localStorage.getItem(ROLE_KEY)).forEach(role => {
