@@ -5,6 +5,8 @@ import {DataForm} from '../entity/form/data-form';
 import {DataFormDto} from '../dto/form/data-form-dto';
 import {environment} from 'src/environments/environment';
 import {AngularFireDatabase, AngularFireList} from '@angular/fire/database';
+import {DataForm} from '../dto/form/data-form';
+import {ToastrService} from 'ngx-toastr';
 
 
 @Injectable({
@@ -28,12 +30,7 @@ export class DataFormService {
     return this.httpClient.get<DataForm>(this.url + '/' + id);
   }
 
-  // updateDataForm(id: number, dataFormDto: DataFormDto):Observable<DataFormDto> {
-  //
-  //   // @ts-ignore
-  //   return this.httpClient.put<DataFormDto>(this.url+"/update/"+id,dataFormDto, JSON.stringify(dataFormDto), this.httpOptions);
-  // }
-  updateDataForm(dataForm: DataForm): Observable<DataForm> {
+ updateDataForm(dataForm: DataForm): Observable<DataForm> {
 
     console.log(this.url + '/update/' + dataForm.idDataForm, dataForm);
     return this.httpClient.put<DataForm>(this.url + '/update/' + dataForm.idDataForm, dataForm);
@@ -44,6 +41,14 @@ export class DataFormService {
     return this.httpClient.delete<DataForm>(this.url+"/delete/"+id);
   }
 
+  /**
+   * Create by: KhanhLB
+   * Date created: 03/02/2023
+   * Function: get list dataForm from BE
+   * @param contentDataForm,page
+   * @return pageDataForm
+   */
+
   searchByContent(contentDataForm: string, page: number): Observable<any> {
     if (contentDataForm === '') {
       return this.httpClient.get<any>('http://localhost:8080/api/form?page=' + page);
@@ -51,4 +56,15 @@ export class DataFormService {
       return this.httpClient.get<any>('http://localhost:8080/api/form?contentDataForm=' + contentDataForm + '&page=' + page);
     }
   }
+
+  /**
+   * Create bt: KhanhLB
+   * Date created: 03/02/2023
+   * Function: save dataForm in database
+   * @param: dataForm
+   */
+  createDataFormDTO(dataForm: DataForm): Observable<DataForm> {
+    return this.httpClient.post<DataForm>('http://localhost:8080/api/form/save', JSON.stringify(dataForm), this.httpOptions);
+  }
+
 }

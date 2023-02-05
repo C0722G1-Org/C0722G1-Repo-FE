@@ -7,6 +7,8 @@ import { FormListComponent } from './form-list/form-list.component';
 import { FormEditComponent } from './form-edit/form-edit.component';
 import { FormDeleteComponent } from './form-delete/form-delete.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
+
 
 
 @NgModule({
@@ -14,6 +16,7 @@ import {ReactiveFormsModule} from '@angular/forms';
     imports: [
         CommonModule,
         FormRoutingModule,
+
         ReactiveFormsModule
     ]
 })
