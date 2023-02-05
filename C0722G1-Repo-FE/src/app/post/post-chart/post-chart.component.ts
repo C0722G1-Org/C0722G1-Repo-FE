@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {PortChart} from '../../entity/post/port-chart';
 import {PostService} from '../post.service';
 import {Chart} from 'chart.js';
+import {ToastContainerDirective, ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-post-chart',
@@ -30,6 +31,8 @@ export class PostChartComponent implements OnInit {
   count10 = 0;
   count11 = 0;
   count12 = 0;
+  // @ts-ignore
+  @ViewChild(ToastContainerDirective, {static: true}) toastContainer: ToastContainerDirective;
 
   /** Constructor initialization
    *  Dependency Injection PostService
@@ -37,7 +40,7 @@ export class PostChartComponent implements OnInit {
    *  Use method getYearList() to create yearList[]
    *  Author:DatTQ ; Date:02/02/2023
    */
-  constructor(private postService: PostService) {
+  constructor(private postService: PostService, private toastr: ToastrService) {
     this.currentMonth = new Date().getMonth() + 1;
     this.currentYear = new Date().getFullYear();
     this.monthList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
@@ -46,11 +49,11 @@ export class PostChartComponent implements OnInit {
 
   /**
    * Initialize the value of the variable: postList through the displayListChart() method in PostService &&
-          Register to listen to the event: subscribe
+   * Register to listen to the event: subscribe
    * Initialize the value of the variable: totalTransaction through the getTotalTransaction() method
    * Initialize the value of the variable: countSuccess,countTotal through the getTotalPostSuccess() method
    * Initialize the value of the variable: count1,count2,count3,count4,count5,count6,
-   count7,count8,count9,count10,count11,count12
+   * count7,count8,count9,count10,count11,count12
    * Initialize post chart value at current year with method createChart();
    * Author: DatTQ  ;  Date:02/02/2023
    */
@@ -59,62 +62,78 @@ export class PostChartComponent implements OnInit {
       this.postCharList = data;
       this.getTotalTransaction();
       this.getTotalPostSuccess();
-      let posts = this.postCharList.length;
+      const posts = this.postCharList.length;
       for (let i = 0; i < posts; i++) {
-        if (this.postCharList[i].monthPost == 1 && this.postCharList[i].yearPost == this.currentYear) {
+        // tslint:disable-next-line:triple-equals
+        if (this.postCharList[i].monthPost == 1) {
           this.count1 += 1;
         }
-        if (this.postCharList[i].monthPost == 2 && this.postCharList[i].yearPost == this.currentYear) {
+        // tslint:disable-next-line:triple-equals
+        if (this.postCharList[i].monthPost == 2) {
           this.count2 += 1;
         }
-        if (this.postCharList[i].monthPost == 3 && this.postCharList[i].yearPost == this.currentYear) {
+        // tslint:disable-next-line:triple-equals
+        if (this.postCharList[i].monthPost == 3) {
           this.count3 += 1;
         }
-        if (this.postCharList[i].monthPost == 4 && this.postCharList[i].yearPost == this.currentYear) {
+        // tslint:disable-next-line:triple-equals
+        if (this.postCharList[i].monthPost == 4) {
           this.count4 += 1;
         }
-        if (this.postCharList[i].monthPost == 5 && this.postCharList[i].yearPost == this.currentYear) {
+        // tslint:disable-next-line:triple-equals
+        if (this.postCharList[i].monthPost == 5) {
           this.count5 += 1;
         }
-        if (this.postCharList[i].monthPost == 6 && this.postCharList[i].yearPost == this.currentYear) {
+        // tslint:disable-next-line:triple-equals
+        if (this.postCharList[i].monthPost == 6) {
           this.count6 += 1;
         }
-        if (this.postCharList[i].monthPost == 7 && this.postCharList[i].yearPost == this.currentYear) {
+        // tslint:disable-next-line:triple-equals
+        if (this.postCharList[i].monthPost == 7) {
           this.count7 += 1;
         }
-        if (this.postCharList[i].monthPost == 8 && this.postCharList[i].yearPost == this.currentYear) {
+        // tslint:disable-next-line:triple-equals
+        if (this.postCharList[i].monthPost == 8) {
           this.count8 += 1;
         }
-        if (this.postCharList[i].monthPost == 10 && this.postCharList[i].yearPost == this.currentYear) {
+        // tslint:disable-next-line:triple-equals
+        if (this.postCharList[i].monthPost == 9) {
+          this.count9 += 1;
+        }
+        // tslint:disable-next-line:triple-equals
+        if (this.postCharList[i].monthPost == 10) {
           this.count10 += 1;
         }
-        if (this.postCharList[i].monthPost == 11 && this.postCharList[i].yearPost == this.currentYear) {
+        // tslint:disable-next-line:triple-equals
+        if (this.postCharList[i].monthPost == 11) {
           this.count11 += 1;
         }
-        if (this.postCharList[i].monthPost == 12 && this.postCharList[i].yearPost == this.currentYear) {
+        // tslint:disable-next-line:triple-equals
+        if (this.postCharList[i].monthPost == 12) {
           this.count12 += 1;
         }
       }
       this.createChart();
-    })
+    });
   }
 
   /**
    * Function of event (click)="searchChart(month.value,year.value)
    * Get the value of the variable: postCharList through the searchChart() method in PostService
-          && Register to listen to the event: subscribe
+   * && Register to listen to the event: subscribe
    * Get the value of the variable: totalTransaction,countSuccess,countTotal
-   * @param month
-   * @param year
+   * @param year,month
    * Author: DatTQ  ;  Date:02/02/2023
    */
-  searchChart(month: string, year: string) {
+  searchChart(month: string, year: string): void {
     this.postService.searchChart(month, year).subscribe(data => {
       this.postCharList = data;
       this.totalTransaction = 0;
       this.countSuccess = 0;
       this.countTotal = 0;
+      // tslint:disable-next-line:prefer-for-of
       for (let i = 0; i < data.length; i++) {
+        // tslint:disable-next-line:triple-equals
         if (data[i].statusPost == 1) {
           // @ts-ignore
           this.totalTransaction += data[i].price;
@@ -122,7 +141,7 @@ export class PostChartComponent implements OnInit {
           this.countTotal = this.postCharList.length;
         }
       }
-    })
+    });
   }
 
   /**
@@ -133,7 +152,7 @@ export class PostChartComponent implements OnInit {
    * @param yearChange;
    * Author: DatTQ  ;  Date:02/02/2023;
    */
-  changeYear(yearChange: string) {
+  changeYear(yearChange: string): void {
     this.count1 = 0;
     this.count2 = 0;
     this.count3 = 0;
@@ -146,42 +165,58 @@ export class PostChartComponent implements OnInit {
     this.count10 = 0;
     this.count11 = 0;
     this.count12 = 0;
-    let posts = this.postCharList.length;
+    const posts = this.postCharList.length;
     for (let i = 0; i < posts; i++) {
+      // tslint:disable-next-line:triple-equals
       if (this.postCharList[i].monthPost == 1 && this.postCharList[i].yearPost == +yearChange) {
         this.count1 += 1;
       }
+      // tslint:disable-next-line:triple-equals
       if (this.postCharList[i].monthPost == 2 && this.postCharList[i].yearPost == +yearChange) {
         this.count2 += 1;
       }
+      // tslint:disable-next-line:triple-equals
       if (this.postCharList[i].monthPost == 3 && this.postCharList[i].yearPost == +yearChange) {
         this.count3 += 1;
       }
+      // tslint:disable-next-line:triple-equals
       if (this.postCharList[i].monthPost == 4 && this.postCharList[i].yearPost == +yearChange) {
         this.count4 += 1;
       }
+      // tslint:disable-next-line:triple-equals
       if (this.postCharList[i].monthPost == 5 && this.postCharList[i].yearPost == +yearChange) {
         this.count5 += 1;
       }
+      // tslint:disable-next-line:triple-equals
       if (this.postCharList[i].monthPost == 6 && this.postCharList[i].yearPost == +yearChange) {
         this.count6 += 1;
       }
+      // tslint:disable-next-line:triple-equals
       if (this.postCharList[i].monthPost == 7 && this.postCharList[i].yearPost == +yearChange) {
         this.count7 += 1;
       }
+      // tslint:disable-next-line:triple-equals
       if (this.postCharList[i].monthPost == 8 && this.postCharList[i].yearPost == +yearChange) {
         this.count8 += 1;
       }
+      // tslint:disable-next-line:triple-equals
+      if (this.postCharList[i].monthPost == 9 && this.postCharList[i].yearPost == +yearChange) {
+        this.count9 += 1;
+      }
+      // tslint:disable-next-line:triple-equals
       if (this.postCharList[i].monthPost == 10 && this.postCharList[i].yearPost == +yearChange) {
         this.count10 += 1;
       }
+      // tslint:disable-next-line:triple-equals
       if (this.postCharList[i].monthPost == 11 && this.postCharList[i].yearPost == +yearChange) {
         this.count11 += 1;
       }
+      // tslint:disable-next-line:triple-equals
       if (this.postCharList[i].monthPost == 12 && this.postCharList[i].yearPost == +yearChange) {
         this.count12 += 1;
       }
     }
+
     this.createChart();
   }
 
@@ -189,7 +224,7 @@ export class PostChartComponent implements OnInit {
    * Function creat chart
    * Author: DatTQ  ;  Date:02/02/2023;
    */
-  createChart() {
+  createChart(): void {
     // tslint:disable-next-line:no-unused-expression
     new Chart('myChart', {
       type: 'line',
@@ -226,7 +261,9 @@ export class PostChartComponent implements OnInit {
    */
   getTotalTransaction(): void {
     for (let i = 0; i <= this.postCharList.length; i++) {
-      if (this.postCharList[i].statusPost == 1) {
+      console.log(this.postCharList);
+      // tslint:disable-next-line:triple-equals
+      if (this.postCharList[i]?.statusPost == 1) {
         // @ts-ignore
         this.totalTransaction += this.postCharList[i].price;
       }
@@ -239,10 +276,12 @@ export class PostChartComponent implements OnInit {
    */
   getTotalPostSuccess(): void {
     for (let i = 0; i <= this.postCharList.length; i++) {
-      if (this.postCharList[i].statusPost == 1) {
+      // tslint:disable-next-line:triple-equals
+      if (this.postCharList[i]?.statusPost == 1) {
         this.countSuccess += 1;
       }
       this.countTotal = this.postCharList.length;
+      console.log(this.countTotal, this.countSuccess);
     }
   }
 }
