@@ -1,4 +1,5 @@
 import {Division} from './division';
+import {Account} from '../account/account';
 
 export interface Employee {
   idEmployee?: number;
@@ -11,5 +12,5 @@ export interface Employee {
   addressEmployee?: string;
   flagDeleted?: string;
   division?: Division;
-  // account?: Account;
+  account?: Account;
 }

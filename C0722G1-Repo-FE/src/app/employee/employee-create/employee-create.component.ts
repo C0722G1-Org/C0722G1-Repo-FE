@@ -31,6 +31,7 @@ export class EmployeeCreateComponent implements OnInit {
       idDivision: new FormControl(''),
       nameDivision: new FormControl('')
     }),
+
     flagDeleted: new FormControl(false),
     account: new FormGroup({
       idAccount: new FormControl(''),
@@ -41,7 +42,6 @@ export class EmployeeCreateComponent implements OnInit {
       flagDelete: new FormControl('')
     })
   });
-
 
   constructor(private employeeService: EmployeeService,
               private divisionService: DivisionService,

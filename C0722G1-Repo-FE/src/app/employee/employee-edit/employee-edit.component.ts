@@ -45,6 +45,7 @@ export class EmployeeEditComponent implements OnInit {
       if (id != null) {
         this.getEmployee(+id);
       }
+
     });
   }
 
