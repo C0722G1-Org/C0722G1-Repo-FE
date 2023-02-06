@@ -10,13 +10,14 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
 
 
+
 @NgModule({
   declarations: [FormCreateComponent, FormListComponent, FormEditComponent, FormDeleteComponent],
     imports: [
         CommonModule,
         FormRoutingModule,
-        ReactiveFormsModule,
-        CKEditorModule
+
+        ReactiveFormsModule
     ]
 })
 export class FormModule { }

@@ -6,6 +6,7 @@ import {AngularFireStorage} from '@angular/fire/storage';
 import {formatDate} from '@angular/common';
 import {finalize, timeout} from 'rxjs/operators';
 import {ToastrService} from 'ngx-toastr';
+
 @Component({
   selector: 'app-form-create',
   templateUrl: './form-create.component.html',
@@ -17,6 +18,7 @@ export class FormCreateComponent implements OnInit {
   constructor(private dataFormService: DataFormService, private route: Router,
               @Inject(AngularFireStorage) private storage: AngularFireStorage, private toastrService: ToastrService) {
   }
+
   /**
    * Create by: KhanhLB
    * Date created: 03/02/2023
@@ -38,6 +40,7 @@ export class FormCreateComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
   /**
    * Create by: KhanhLB
    * Date created: 03/02/2023
@@ -49,6 +52,7 @@ export class FormCreateComponent implements OnInit {
       this.selectedFile = event.target.files[0];
     }
   }
+
   /**
    * Create by: KhanhLB
    * Date created: 03/02/2023
@@ -74,6 +78,7 @@ export class FormCreateComponent implements OnInit {
       })
     ).subscribe();
   }
+
   /**
    * Create by: KhanhLB
    * Date created: 03/02/2023
@@ -82,5 +87,6 @@ export class FormCreateComponent implements OnInit {
   getCurrentDateTime(): string {
     return formatDate(new Date(), 'dd-MM-yyyyhhmmssa', 'en-US');
   }
+
 
 }

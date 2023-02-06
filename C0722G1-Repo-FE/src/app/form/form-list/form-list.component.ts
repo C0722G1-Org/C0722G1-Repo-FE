@@ -1,8 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {DataForm} from '../../dto/form/data-form';
+import {DataForm} from '../../entity/form/data-form';
 import {DataFormService} from '../../service/data-form.service';
 import {ToastContainerDirective, ToastrService} from 'ngx-toastr';
-import {DataFormJson} from '../../dto/form/data-form-json';
+import {DataFormJson} from '../../entity/form/data-form-json';
+
 
 @Component({
   selector: 'app-form-list',
@@ -11,21 +12,18 @@ import {DataFormJson} from '../../dto/form/data-form-json';
 })
 export class FormListComponent implements OnInit {
 
+
   constructor(private dataFormService: DataFormService, private toastrService: ToastrService) {
   }
 
   page = 0;
   contentDataForm = '';
-  totalElement = 0;
-  totalPage = 0;
   dataFormPage!: DataFormJson;
   dataForm: DataForm = {};
-  dataIsEmpty = true;
   @ViewChild(ToastContainerDirective, {static: true}) toastContainer: ToastContainerDirective | undefined;
 
   ngOnInit(): void {
     this.searchByContent(this.contentDataForm, true);
-    // this.dataIsEmpty = this.dataFormPage?.content.length !== 0;
   }
 
   /**
@@ -51,7 +49,19 @@ export class FormListComponent implements OnInit {
         this.showToastrError();
       }
       console.log(error);
+
     });
+  }
+
+  /**
+   * Create by: DungND
+   * Date created: 03/02/2023
+   * Function: reloadList
+   *
+   */
+  // load lại list
+  reloadList(): void {
+    this.searchByContent('', true);
   }
 
   /**
@@ -66,5 +76,6 @@ export class FormListComponent implements OnInit {
   gotoPage(pageNumber: number): void {
     this.page = pageNumber;
     this.ngOnInit();
+
   }
 }
