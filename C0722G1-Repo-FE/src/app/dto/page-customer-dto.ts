@@ -1,4 +1,4 @@
-import {Customer} from "../entity/customer/customer";
+import {Customer} from "../entity/customer/customer/customer";
 
 export interface PageCustomerDto {
   content: Customer[],

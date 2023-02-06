@@ -1,31 +1,21 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Customer} from '../entity/customer/customer';
-import {Observable} from 'rxjs';
-import {environment} from '../../environments/environment';
+import { Injectable } from '@angular/core';
+import {HttpClient} from "@angular/common/http";
+import {Observable} from "rxjs";
+import {PageCustomerDto} from "../dto/page-customer-dto";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CustomerService {
+  URL_CUSTOMER = 'http://localhost:8080';
 
-  CUSTOMER_URL = 'http://localhost:8080/api/customers';
-
-  constructor(private httpClient: HttpClient) {
-  }
-  createCustomer(customer: Customer): Observable<Customer> {
-    return this.httpClient.post<Customer>(environment.customerURL, customer);
-  }
-
-  detailCustomerById(idCustomer: number | undefined): Observable<Customer> {
-    return this.httpClient.get<Customer>(environment.detailCustomerURL + '/detail/' + 2);
-  }
-
-  findById(idCustomer: number): Observable<any> {
-    return this.httpClient.get(this.CUSTOMER_URL + '/' + idCustomer);
-  }
-
-  updateCustomer(customer: Customer): Observable<any> {
-    return this.httpClient.patch(this.CUSTOMER_URL + '/' + customer.idCustomer, customer);
+  /**
+   * Create by: HocHH
+   * @param httpClient
+   */
+  constructor(private httpClient: HttpClient) { }
+  getAllCustomerPaging(pageable: any, allSearch: any): Observable<PageCustomerDto>{
+    console.log(this.URL_CUSTOMER + '/api/customer?allSearch='+ allSearch +'&page=' + pageable)
+    return this.httpClient.get<PageCustomerDto>(this.URL_CUSTOMER + '/api/customer?allSearch='+ allSearch +'&page=' + pageable);
   }
 }
