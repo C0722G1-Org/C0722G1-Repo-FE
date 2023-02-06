@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Account} from '../entity/account/account';
+import {AccountDto} from '../dto/AccountDto';
 
 @Injectable({
   providedIn: 'root'
@@ -12,12 +12,11 @@ export class AccountService {
 
   constructor(private httpClient: HttpClient) {
   }
-
   findById(idAccount: number): Observable<any> {
     return this.httpClient.get(this.ACCOUNT_URL + '/' + idAccount);
   }
 
-  updatePassword(account: Account): Observable<any> {
-    return this.httpClient.patch(this.ACCOUNT_URL + '/' + account.idAccount, account);
+  updatePassword(accountDto: AccountDto): Observable<any> {
+    return this.httpClient.patch(this.ACCOUNT_URL , accountDto);
   }
 }

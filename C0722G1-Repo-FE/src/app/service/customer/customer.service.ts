@@ -14,7 +14,6 @@ export class CustomerService {
   }
 
   findById(idCustomer: number): Observable<any> {
-    console.log(idCustomer);
     return this.httpClient.get(this.CUSTOMER_URL + '/' + idCustomer);
   }
 
