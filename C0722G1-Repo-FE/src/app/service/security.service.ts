@@ -10,18 +10,17 @@ import {JwtResponse} from '../entity/account/JwtResponse';
 })
 export class SecurityService {
   private API_SIGNIN = environment.API_LOCAL + '/signin';
-  httpOptions: any;
 
   constructor(private httpClient: HttpClient) {
-    this.httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      }),
-      'Access-Control-Allow-Origin': 'http://localhost:4200',
-      'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
-    };
-    console.log('-->' + this.httpOptions.value);
   }
+
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    }),
+    'Access-Control-Allow-Origin': 'http://localhost:4200',
+    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+  };
 
   /**
    * Create by: PhuongLTH

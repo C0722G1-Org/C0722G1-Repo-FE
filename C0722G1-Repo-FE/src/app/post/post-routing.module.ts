@@ -17,7 +17,7 @@ const routes: Routes = [
     path: 'edit', component: PostEditComponent
   },
   {
-    path: 'chart', component: PostChartComponent
+    path: 'charts', component: PostChartComponent
   }
 ];
 

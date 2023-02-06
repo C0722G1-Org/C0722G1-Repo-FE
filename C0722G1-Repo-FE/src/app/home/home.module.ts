@@ -14,7 +14,8 @@ import {SecurityModule} from "../security/security.module";
     declarations: [FooterComponent, HeaderComponent, NavComponent, HomeComponent],
     exports: [
         HomeComponent,
-        HeaderComponent
+        HeaderComponent,
+        FooterComponent
     ],
   imports: [
     CommonModule,
