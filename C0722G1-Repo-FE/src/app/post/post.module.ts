@@ -8,15 +8,24 @@ import { PostListComponent } from './post-list/post-list.component';
 import { PostDeleteComponent } from './post-delete/post-delete.component';
 import { PostDetailComponent } from './post-detail/post-detail.component';
 import { PostChartComponent } from './post-chart/post-chart.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { PostApprovalComponent } from './post-approval/post-approval.component';
+import { PostListApprovalComponent } from './post-list-approval/post-list-approval.component';
 
 
 @NgModule({
-  declarations: [PostCreateComponent, PostEditComponent, PostListComponent, PostDeleteComponent, PostDetailComponent, PostChartComponent],
+  declarations: [PostCreateComponent, PostEditComponent, PostListComponent, PostDeleteComponent, PostDetailComponent, PostChartComponent,
+    PostApprovalComponent, PostListApprovalComponent],
+  exports: [
+    PostDeleteComponent,
+    PostApprovalComponent
+  ]
+  ,
     imports: [
         CommonModule,
         PostRoutingModule,
-        FormsModule
+        FormsModule,
+        ReactiveFormsModule
     ]
 })
 export class PostModule { }
