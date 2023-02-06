@@ -14,6 +14,14 @@ export class PostListCustomerService {
   constructor(private _httpClient: HttpClient) {
   }
 
+  /**
+   * Created by: UyDD
+   * Date Created: 03/02/2023
+   * @param idAccount
+   * @param nameDemandTypeSearch
+   * @param pageNumber
+   * @return PagePostDto
+   */
   getAllAndSearch(idAccount: string|null|undefined, nameDemandTypeSearch: string, pageNumber: number): Observable<PagePostDto> {
     return this._httpClient.get<PagePostDto>(this.URL_POST_LIST +"&nameDemandTypeSearch=" + nameDemandTypeSearch + "&idAccount=" + idAccount + "?page="+pageNumber);
   }
