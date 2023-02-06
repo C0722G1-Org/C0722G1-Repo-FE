@@ -3,11 +3,14 @@ import { CommonModule } from '@angular/common';
 
 import { SecurityRoutingModule } from './security-routing.module';
 import { LoginComponent } from './login/login.component';
-import { ChangePasswordComponent } from './change-password/change-password.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {ReactiveFormsModule} from "@angular/forms";
+import { LoginModalComponent } from './login-modal/login-modal.component';
 
 @NgModule({
-  declarations: [LoginComponent, ChangePasswordComponent],
+    declarations: [LoginComponent, LoginModalComponent],
+    exports: [
+        LoginModalComponent
+    ],
     imports: [
         CommonModule,
         SecurityRoutingModule,

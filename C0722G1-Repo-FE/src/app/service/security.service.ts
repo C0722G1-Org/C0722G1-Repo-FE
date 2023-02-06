@@ -9,7 +9,6 @@ import {JwtResponse} from '../entity/account/JwtResponse';
   providedIn: 'root'
 })
 export class SecurityService {
-  // @ts-ignore
   private API_SIGNIN = environment.API_LOCAL + '/signin';
 
   constructor(private httpClient: HttpClient) {
