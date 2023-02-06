@@ -18,6 +18,7 @@ export class FormCreateComponent implements OnInit {
   constructor(private dataFormService: DataFormService, private route: Router,
               @Inject(AngularFireStorage) private storage: AngularFireStorage, private toastrService: ToastrService) {
   }
+
   /**
    * Create by: KhanhLB
    * Date created: 03/02/2023
@@ -46,6 +47,7 @@ export class FormCreateComponent implements OnInit {
   ngOnInit() {
 
   }
+
   /**
    * Create by: KhanhLB
    * Date created: 03/02/2023
@@ -57,6 +59,7 @@ export class FormCreateComponent implements OnInit {
       this.selectedFile = event.target.files[0];
     }
   }
+
   /**
    * Create by: KhanhLB
    * Date created: 03/02/2023
@@ -82,6 +85,7 @@ export class FormCreateComponent implements OnInit {
       })
     ).subscribe();
   }
+
   /**
    * Create by: KhanhLB
    * Date created: 03/02/2023
@@ -90,7 +94,5 @@ export class FormCreateComponent implements OnInit {
   getCurrentDateTime(): string {
     return formatDate(new Date(), 'dd-MM-yyyyhhmmssa', 'en-US');
   }
-
-
 
 }

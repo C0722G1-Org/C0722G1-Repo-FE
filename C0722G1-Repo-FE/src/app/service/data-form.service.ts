@@ -1,11 +1,10 @@
 import {Inject, Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {DataForm} from '../entity/form/data-form';
 import {DataFormDto} from '../dto/form/data-form-dto';
 import {environment} from 'src/environments/environment';
 import {AngularFireDatabase, AngularFireList} from '@angular/fire/database';
-import {DataForm} from '../dto/form/data-form';
+import {DataForm} from '../entity/form/data-form';
 import {ToastrService} from 'ngx-toastr';
 
 
@@ -38,7 +37,7 @@ export class DataFormService {
 
 
   deleteById(id: any) {
-    return this.httpClient.delete<DataForm>(this.url+"/delete/"+id);
+    return this.httpClient.delete<DataForm>(this.url + '/delete/' +id);
   }
 
   /**
