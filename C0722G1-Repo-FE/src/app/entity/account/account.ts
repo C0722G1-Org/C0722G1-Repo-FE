@@ -3,6 +3,7 @@ export interface Account {
   name?: string;
   email?: string;
   encryptPassword?: string;
-  usernameAccount?: string;
   flagDelete?: boolean;
+  usernameAccount?: string;
+
 }
