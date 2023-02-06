@@ -38,7 +38,14 @@ export class FormCreateComponent implements OnInit {
     fileForm: new FormControl('', [Validators.required])
   });
 
-  ngOnInit(): void {
+
+
+  constructor() {
+  }
+
+
+  ngOnInit() {
+
   }
 
   /**
@@ -87,6 +94,5 @@ export class FormCreateComponent implements OnInit {
   getCurrentDateTime(): string {
     return formatDate(new Date(), 'dd-MM-yyyyhhmmssa', 'en-US');
   }
-
 
 }
