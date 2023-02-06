@@ -7,7 +7,13 @@ import {HomeModule} from './home/home.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToastrModule} from 'ngx-toastr';
 import {HttpClientModule} from '@angular/common/http';
+import {ReactiveFormsModule} from '@angular/forms';
+import {PostModule} from './post/post.module';
+import {environment} from '../environments/environment';
+import {AngularFireModule} from '@angular/fire';
+import {FormsModule} from '@angular/forms';
 import {NgxPaginationModule} from "ngx-pagination";
+
 
 @NgModule({
   declarations: [
@@ -20,7 +26,14 @@ import {NgxPaginationModule} from "ngx-pagination";
     HomeModule,
     NgxPaginationModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    ReactiveFormsModule,
+    PostModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    FormsModule,
+    CKEditorModule
+
+
   ],
   providers: [],
   bootstrap: [AppComponent]

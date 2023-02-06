@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { DivisionService } from './division.service';
+import { DataFormService } from './data-form.service';
 
-describe('DivisionService', () => {
-  let service: DivisionService;
+describe('DataFormService', () => {
+  let service: DataFormService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(DivisionService);
+    service = TestBed.inject(DataFormService);
   });
 
   it('should be created', () => {

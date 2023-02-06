@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="employee-create.component.css">
 <div class="row m-0">
-  <form [formGroup]="formCreateEmployee">
+  <form [formGroup]="formCreateEmployee" (ngSubmit)="createEmployee()" novalidate>
     <div class="d-flex justify-content-center align-items-center mt-2 mb-2">
       <div class="boxed shadow h-100 ">
         <fieldset>
@@ -8,19 +8,28 @@
             <div>
               <div style="margin-left: 15px; margin-top: 15px">
                 <a href="#" type="button"><i class="fa-solid fa-arrow-left"></i></a>
-                <span style="font-size: 35px; margin-left: 180px"  >Thêm Nhân viên</span>
+                <span style="font-size: 35px; margin-left: 180px">Thêm Nhân viên</span>
               </div>
             </div>
           </legend>
         </fieldset>
-        <div style="margin-top: 15px">
+        <label for="id"></label><input hidden id="id" type="text"
+                                       class="form-control form-control-lg" formControlName="idEmployee"/>
+        <div style="margin-top: 5px">
           <div class="mb-2">
             <div class="d-flex align-items-center mb-2">
               <div class="col-4">
                 <label for="code" class="form-label ms-2">Mã nhân viên<span style="color: red">(*)</span>:</label>
               </div>
               <div class="col-8">
-                <input id="code" type="text" class="form-control" placeholder="NV-XXXX (X: số nguyên dương)"/>
+                <input formControlName="codeEmployee" id="code" type="text" class="form-control"
+                       placeholder="NV-XXXX (X: số nguyên dương)"/>
+                <div class="text-danger"
+                     *ngIf="formCreateEmployee.controls.codeEmployee.invalid && formCreateEmployee.controls.codeEmployee.invalid else elseBlock">
+                  <span *ngIf="formCreateEmployee.controls.codeEmployee.hasError('required')">Mã nhân viên không được trống</span>
+                  <span *ngIf="formCreateEmployee.controls.codeEmployee.hasError('pattern')">Mã nhân viên chưa đúng định dạng</span>
+                </div>
+                <ng-template #elseBlock><br></ng-template>
               </div>
             </div>
           </div>
@@ -30,37 +39,44 @@
                 <label for="name" class="form-label ms-2">Tên nhân viên<span style="color: red">(*)</span>:</label>
               </div>
               <div class="col-8">
-                <input id="name" type="text" class="form-control" placeholder="Nhập tên nhân viên.."/>
+                <input formControlName="nameEmployee" id="name" type="text" class="form-control"
+                       placeholder="Nhập tên nhân viên.."/>
+                <div class="text-danger"
+                     *ngIf="formCreateEmployee.controls.nameEmployee.invalid && formCreateEmployee.controls.nameEmployee.invalid else elseBlock">
+                  <span
+                    *ngIf="formCreateEmployee.controls.nameEmployee.hasError('required')">Tên không được trống</span>
+                  <span
+                    *ngIf="formCreateEmployee.controls.nameEmployee.hasError('pattern')">Tên chưa đúng định dạng</span>
+                </div>
+                <ng-template #elseBlock><br></ng-template>
+
               </div>
             </div>
           </div>
-          <div class="mb-2">
-            <div class="d-flex align-items-center mb-2">
-              <div class="col-4">
-                <label for="username" class="form-label ms-2">Tài khoản đăng nhập<span style="color: red">(*)</span>:</label>
-              </div>
-              <div class="col-8">
-                <input id="username" type="text" class="form-control" placeholder="Nhập tên tài khoản nhân viên.."/>
-              </div>
-            </div>
-          </div>
-          <div class="mb-2">
-            <div class="d-flex align-items-center mb-2">
-              <div class="col-4">
-                <label for="password" class="form-label ms-2">Mật khẩu<span style="color: red">(*)</span>:</label>
-              </div>
-              <div class="col-8">
-                <input id="password" type="password" class="form-control" placeholder="Nhập mật khẩu.."/>
+          <div formGroupName="account">
+            <div class="mb-2">
+              <div class="d-flex align-items-center mb-2">
+                <div class="col-4">
+                  <label for="username" class="form-label ms-2">Tài khoản đăng nhập<span
+                    style="color: red">(*)</span>:</label>
+                </div>
+                <div class="col-8">
+                  <input formControlName="usernameAccount" required="required" id="username" type="text"
+                         class="form-control"
+                         placeholder="Nhập tên tài khoản nhân viên.."/>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="mb-2">
-            <div class="d-flex align-items-center mb-2">
-              <div class="col-4">
-                <label for="passwordConfirm" class="form-label ms-2">Xác thực mật khẩu<span style="color: red">(*)</span>:</label>
-              </div>
-              <div class="col-8">
-                <input id="passwordConfirm" type="password" class="form-control" placeholder="Nhập mật khẩu xác thực.."/>
+            <div class="mb-2">
+              <div class="d-flex align-items-center mb-2">
+                <div class="col-4">
+                  <label for="password" class="form-label ms-2">Mật khẩu<span style="color: red">(*)</span>:</label>
+                </div>
+                <div class="col-8">
+                  <input formControlName="encryptPassword" id="password" type="password" class="form-control"
+                         placeholder="Nhập mật khẩu.."/>
+                </div>
+
               </div>
             </div>
           </div>
@@ -71,7 +87,12 @@
                   style="color: red">(*)</span>:</label>
               </div>
               <div class="col-8">
-                <input id="initialPrice" type="date" class="form-control"/>
+                <input formControlName="dateOfBirth" id="initialPrice" type="date" class="form-control"/>
+                <div class="text-danger" *ngIf="formCreateEmployee.controls.dateOfBirth.invalid else elseBlock">
+                  <span
+                    *ngIf="formCreateEmployee.controls.dateOfBirth.hasError('required')">Ngày sinh không được trống</span>
+                </div>
+                <ng-template #elseBlock><br></ng-template>
               </div>
             </div>
           </div>
@@ -81,83 +102,94 @@
                 <label class="form-label ms-2">Giới tính<span style="color: red">(*)</span>:</label>
               </div>
               <div class="d-flex align-items-center mb-2 col-8">
+
                 <div class="col-4">
-                  <input type="radio" id="male" name="gender" value="male">
+                  <input type="radio" id="male" [value]="true" formControlName="genderEmployee">
                   <label for="male">Nam</label><br>
                 </div>
                 <div class="col-4">
-                  <input type="radio" id="female" name="gender" value="female">
+                  <input type="radio" id="female" [value]="false" formControlName="genderEmployee">
                   <label for="female">Nữ</label><br>
                 </div>
+
               </div>
             </div>
+            <div class="text-danger" style="margin-left: 220px" *ngIf="formCreateEmployee.controls.genderEmployee.invalid else elseBlock">
+              <p
+                *ngIf="formCreateEmployee.controls.genderEmployee.hasError('required')">Giới tính không được trống</p>
+            </div>
+            <ng-template #elseBlock><br></ng-template>
           </div>
-          <div class="mb-2 row">
+          <div class="mb-2">
             <div class="d-flex align-items-center mb-2">
               <div class="col-4">
                 <label for="address" class="form-label ms-2">Địa chỉ<span style="color: red">(*)</span>:</label>
               </div>
               <div class="col-8">
-                <input id="address" type="text" class="form-control" placeholder="Nhập địa chỉ nhân viên.."/>
+                <input formControlName="addressEmployee" id="address" type="text" class="form-control"
+                       placeholder="Nhập địa chỉ nhân viên.."/>
+                <div class="text-danger" *ngIf="formCreateEmployee.controls.addressEmployee.invalid else elseBlock">
+                  <span *ngIf="formCreateEmployee.controls.addressEmployee.hasError('required')">Địa chỉ không được trống</span>
+                </div>
+                <ng-template #elseBlock><br></ng-template>
               </div>
             </div>
           </div>
-          <div class="mb-2 row">
+          <div class="mb-2">
             <div class="d-flex align-items-center mb-2">
               <div class="col-4">
                 <label for="phone" class="form-label ms-2">Số điện thoại<span style="color: red">(*)</span>:</label>
               </div>
               <div class="col-8">
-                <input id="phone" type="text" class="form-control" placeholder="Nhập số điện thoại nhân viên.."/>
+                <input formControlName="phoneEmployee" id="phone" type="text" class="form-control"
+                       placeholder="Nhập số điện thoại nhân viên.."/>
+                <div class="text-danger"
+                     *ngIf="formCreateEmployee.controls.phoneEmployee.invalid && formCreateEmployee.controls.phoneEmployee.invalid else elseBlock">
+                  <span
+                    *ngIf="formCreateEmployee.controls.phoneEmployee.hasError('required')">SDT không được trống</span>
+                  <span
+                    *ngIf="formCreateEmployee.controls.phoneEmployee.hasError('pattern')">SDT chưa đúng định dạng</span>
+                </div>
+                <ng-template #elseBlock><br></ng-template>
               </div>
             </div>
           </div>
-          <div class="mb-2 row">
+          <div class="mb-2">
             <div class="d-flex align-items-center mb-2">
               <div class="col-4">
                 <label for="email" class="form-label ms-2">Email<span style="color: red">(*)</span>:</label>
               </div>
               <div class="col-8">
-                <input id="email" type="text" class="form-control" placeholder="Nhập email nhân viên.."/>
+                <input formControlName="emailEmployee" id="email" type="text" class="form-control"
+                       placeholder="Nhập email nhân viên.."/>
+                <div class="text-danger"
+                     *ngIf="formCreateEmployee.controls.emailEmployee.invalid && formCreateEmployee.controls.emailEmployee.invalid else elseBlock">
+                  <span
+                    *ngIf="formCreateEmployee.controls.emailEmployee.hasError('required')">Email không được trống</span>
+                  <span
+                    *ngIf="formCreateEmployee.controls.emailEmployee.hasError('email')">Email chưa đúng định dạng</span>
+                </div>
+                <ng-template #elseBlock><br></ng-template>
               </div>
             </div>
           </div>
-          <div class="mb-2 row">
+          <div class="mb-2">
             <div class="d-flex align-items-center mb-2">
               <div class="col-4">
                 <label class="form-label ms-2">Chức vụ<span style="color: red">(*)</span>:</label>
               </div>
               <div class="col-8">
-                <select class="form-select">
-                  <option value="">Trưởng phòng</option>
-                  <option value="">Kế toán</option>
-                  <option value="">Nhân viên</option>
+                <select class="form-select" formControlName="division">
+                  <option *ngFor="let i of divisions" [ngValue]="i">{{i.nameDivision}}</option>
                 </select>
-              </div>
-            </div>
-          </div>
-          <div class="mb-2">
-            <div class="d-flex mb-2 mt-3 w-100">
-              <div class="col-4">
-                <label class="form-label ms-2">Phân quyền<span style="color: red">(*)</span>:</label>
-              </div>
-              <div class="d-flex align-items-center mb-2 col-8">
-                <div class="col-4">
-                  <input type="radio" id="ad" name="pos" value="ad">
-                  <label for="ad">Admin</label><br>
-                </div>
-                <div class="col-4">
-                  <input type="radio" id="nv" name="pos" value="nv">
-                  <label for="nv">Nhân viên</label><br>
-                </div>
               </div>
             </div>
           </div>
         </div>
         <div class="d-flex justify-content-center" style="margin-bottom: 15px">
-          <button type="submit" class="btn btn-primary" (submit)="createEmployee()">Lưu thông tin</button>
+          <button type="submit" class="btn btn-primary" [disabled]="!formCreateEmployee.valid">Lưu thông tin</button>
           <input style="margin-left: 15px" type="reset" class="btn btn-light" value="Nhập lại">
-          <button style="margin-left: 15px" type="button" class="btn btn-danger">Hủy</button>
+          <button style="margin-left: 15px" type="button" class="btn btn-danger" routerLink="/employee">Hủy</button>
         </div>
       </div>
     </div>

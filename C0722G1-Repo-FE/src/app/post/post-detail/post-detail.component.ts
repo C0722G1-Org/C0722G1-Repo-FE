@@ -90,7 +90,7 @@ export class PostDetailComponent implements OnInit {
   ngOnInit(): void {
     this.toastr.overlayContainer = this.toastContainer;
     if (this.tokenService.getToken()){
-      // this.accountId = this.tokenService.getIdAccount();
+      this.accountId = this.tokenService.getIdAccount();
     }
     if (this.postDetail.price != null) {
       this.convertToMillion();

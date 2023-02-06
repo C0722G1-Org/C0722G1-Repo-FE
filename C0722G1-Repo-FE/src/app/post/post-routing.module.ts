@@ -6,6 +6,7 @@ import {PostEditComponent} from './post-edit/post-edit.component';
 import {PostChartComponent} from './post-chart/post-chart.component';
 import {PostListApprovalComponent} from './post-list-approval/post-list-approval.component';
 import {PostDetailComponent} from './post-detail/post-detail.component';
+
 const routes: Routes = [
   {
     path: '', component: PostListApprovalComponent
@@ -18,7 +19,8 @@ const routes: Routes = [
   },
   {
     path: 'detail/:id', component: PostDetailComponent
-  }
+  },
+  {path: 'charts', component: PostChartComponent}
 ];
 
 @NgModule({
