@@ -1,6 +1,6 @@
 *:not(i) {
-  font-family: "Noto Sans", sans-serif !important;
-  box-sizing: border-box !important;
+  font-family: sans-serif;
+  box-sizing: border-box;
   margin: 0;
   /*padding: 0;*/
   border: 0;
@@ -27,6 +27,7 @@ h1 {
 body {
   width: 100vw;
   height: 100vh;
+  overflow-x: hidden;
 }
 #product-model {
   display: flex;
@@ -100,5 +101,8 @@ button {
 }
 .invalid-feedback{
   font-size: 13px;
+}
+.customer-infor{
+  border: 2px solid #bdd6ec;
 }
 

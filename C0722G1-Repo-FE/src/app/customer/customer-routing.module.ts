@@ -8,6 +8,10 @@ import {CustomerGuard} from '../authGuard/customer.guard';
 import {EmployeeGuard} from '../authGuard/employee.guard';
 import {CustomerListComponent} from './customer-list/customer-list.component';
 
+import {CustomerListComponent} from "./customer-list/customer-list.component";
+import {CustomerDetailComponent} from './customer-detail/customer-detail.component';
+import {CustomerAddComponent} from './customer-add/customer-add.component';
+
 const routes: Routes = [
   {
     path: '', component: CustomerListComponent
@@ -18,8 +22,13 @@ const routes: Routes = [
     // , canActivate: [AuthGuard] && [CustomerGuard]
   },
   {
+    path: 'detail/:idCustomer', component: CustomerDetailComponent
+  },
+  {
+    path: 'add', component: CustomerAddComponent
+  },
+  {
     path: 'edit/:id', component: CustomerEditComponent
-    // , canActivate: [AuthGuard] && [CustomerGuard]
   }
 ];
 

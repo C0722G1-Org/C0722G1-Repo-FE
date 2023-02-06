@@ -4,6 +4,8 @@
 
 export const environment = {
   production: false,
+  customerURL: 'http://localhost:8080/api/customer/create',
+  detailCustomerURL: 'http://localhost:8080/api/customer',
 
   firebaseConfig : {
     apiKey: 'AIzaSyDzyfWa2xaavBCzThSeDFQi1g9SwyDxHJ4',
