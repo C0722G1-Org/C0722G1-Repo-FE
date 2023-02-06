@@ -14,6 +14,12 @@ export class AuthGuard implements CanActivate {
   ) {
   }
 
+  /**
+   * Create by: PhuongLTH
+   * Date create: 03/02/2023
+   * @param route
+   * @param state
+   */
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {

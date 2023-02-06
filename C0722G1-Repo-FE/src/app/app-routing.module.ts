@@ -11,19 +11,23 @@ const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
   {
     path: 'employee', loadChildren: () => import('./employee/employee.module').then(module => module.EmployeeModule),
-    canActivate: [AuthGuard] && [AdminGuard]
+    canActivate: [AuthGuard]
+    // && [AdminGuard]
   },
   {
     path: 'post', loadChildren: () => import('./post/post.module').then(module => module.PostModule),
-    canActivate: [AuthGuard] && [AdminGuard]
+    canActivate: [AuthGuard]
+    // && [AdminGuard]
   },
   {
     path: 'customer', loadChildren: () => import('./customer/customer.module').then(module => module.CustomerModule),
-    canActivate: [AuthGuard] && [AdminGuard]
+    canActivate: [AuthGuard]
+    // && [AdminGuard]
   },
   {
     path: 'form', loadChildren: () => import('./form/form.module').then(module => module.FormModule),
-    canActivate: [AuthGuard] && [AdminGuard]
+    canActivate: [AuthGuard]
+    // && [AdminGuard]
   },
   {
     path: 'notification', loadChildren: () => import('./notification/notification.module').then(module => module.NotificationModule),
