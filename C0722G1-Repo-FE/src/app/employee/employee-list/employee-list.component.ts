@@ -6,6 +6,7 @@ import {EmployeeService} from '../../service/employee.service';
 import {DivisionService} from '../../service/division.service';
 import {EmployeeInfoJson} from '../../dto/employee/employee-info-json';
 import {EmployeeInfo} from '../../dto/employee/employee-info';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-employee-list',
@@ -27,7 +28,9 @@ export class EmployeeListComponent implements OnInit {
 
   constructor(private employeeService: EmployeeService,
               private divisionService: DivisionService,
-              private route: Router) {
+              private route: Router,
+              private titleService: Title) {
+    this.titleService.setTitle('Danh sách nhân viên');
     this.getAllDivisionListComponent();
   }
 
@@ -69,7 +72,15 @@ export class EmployeeListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.searchEmployeeChangePage(this.codeEmployeeSearch, this.nameEmployeeSearch, this.emailEmployeeSearch, this.divisionSearch);
+    console.log(this.codeEmployeeSearch);
+    console.log(this.nameEmployeeSearch);
+    console.log(this.emailEmployeeSearch);
+    console.log(this.divisionSearch);
+    if (this.codeEmployeeSearch === '' && this.nameEmployeeSearch === '' && this.emailEmployeeSearch === '' && this.divisionSearch === '') {
+      this.getAllEmployeeListComponent(this.request);
+    }else {
+      this.searchEmployeeChangePage(this.codeEmployeeSearch, this.nameEmployeeSearch, this.emailEmployeeSearch, this.divisionSearch);
+    }
   }
 
   /**
@@ -206,15 +217,13 @@ export class EmployeeListComponent implements OnInit {
       this.totalPages = data.totalPages;
       // @ts-ignore
       this.pageNumber = data.pageable.pageNumber;
+      this.showToastrSucces();
     }, error => {
       this.getAllEmployeeListComponent(this.request);
       this.codeEmployeeSearch = '';
       this.nameEmployeeSearch = '';
       this.emailEmployeeSearch = '';
       this.divisionSearch = '';
-      // if (this.employeeList != null) {
-      //   this.showToastrError();
-      // }
       if (error.status === 404) {
         this.showToastrError();
       }
@@ -238,8 +247,11 @@ export class EmployeeListComponent implements OnInit {
              divisionSearch: string,
              pageNumber: number): void {
     this.request.page = pageNumber;
-    this.searchEmployeeChangePage(codeEmployeeSearch, nameEmployeeSearch, emailEmployeeSearch, divisionSearch);
-    // this.ngOnInit();
+    this.codeEmployeeSearch = codeEmployeeSearch;
+    this.nameEmployeeSearch = nameEmployeeSearch;
+    this.emailEmployeeSearch = emailEmployeeSearch;
+    this.divisionSearch = divisionSearch;
+    this.ngOnInit();
   }
 
   /**
@@ -249,6 +261,10 @@ export class EmployeeListComponent implements OnInit {
    */
   private showToastrError(): void {
     this.employeeService.showError('Không có kết quả cần tìm', 'Thông báo!');
+  }
+
+  private showToastrSucces(): void {
+    this.employeeService.showSuccess('Tìm kiếm thành công', 'Thông báo!');
   }
 }
 
