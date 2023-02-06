@@ -11,7 +11,7 @@ import {ToastrService} from 'ngx-toastr';
   providedIn: 'root'
 })
 export class NotificationService {
-  private URL_API_NOTIFICATION = 'http://localhost:8080/api/v1/notifications';
+  private URL_API_NOTIFICATION = 'http://localhost:8080/api/notifications';
 
   constructor(private httpClient: HttpClient, private toast: ToastrService) {
   }

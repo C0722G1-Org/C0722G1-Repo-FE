@@ -4,8 +4,8 @@ import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/form
 import {error} from 'protractor';
 import {ToastrService} from 'ngx-toastr';
 import {NotificationService} from '../../service/notification.service';
-import {PageNotificationDto} from "../../dto/notification/page-notification-dto";
-import {NotificationDeleteDto} from "../../dto/notification/notification-delete-dto";
+import {PageNotificationDto} from '../../dto/notification/page-notification-dto';
+import {NotificationDeleteDto} from '../../dto/notification/notification-delete-dto';
 
 @Component({
   selector: 'app-notification-list',
@@ -23,7 +23,7 @@ export class NotificationListComponent implements OnInit {
   pageNotifications!: PageNotificationDto;
   rfSearch!: FormGroup;
   deleteIds!: number[];
-  deleteNotifications!: NotificationDeleteDto[];
+  deleteNotifications: NotificationDeleteDto[] = [];
   checkedAll!: boolean;
   orderNumber!: number;
   testDate = (new Date()).getTime();

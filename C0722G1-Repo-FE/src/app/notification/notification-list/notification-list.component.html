@@ -154,7 +154,9 @@
       </td>
       <!-- Hết Checkbox xóa ở tbody -->
     </tr>
+    <!--suppress TypeScriptUnresolvedFunction -->
     <tr style="height: 47px" *ngFor="let a of [].constructor(5 - pageNotifications.numberOfElements)">
+      <!--suppress TypeScriptUnresolvedFunction -->
       <td *ngFor="let b of [].constructor(6)"></td>
     </tr>
     </tbody>
@@ -233,14 +235,30 @@
      aria-labelledby="deleteModalLabel"
      aria-hidden="true">
   <div class="modal-dialog">
-    <div class="modal-content">
+    <div class="modal-content" *ngIf="deleteNotifications.length == 0">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel0">Thông báo</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <strong style="color: red">Đã xảy ra lỗi. Vui lòng thử lại. <br><br></strong>
+        <div class="modal-footer">
+          <button id="deleteAccept0" class="btn btn-warning" data-bs-dismiss="modal">
+            Xác nhận
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="modal-content" *ngIf="deleteNotifications.length !== 0">
       <div class="modal-header">
         <h5 class="modal-title" id="deleteModalLabel">Xác nhận xóa</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"
                 aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        Xoá các thông báo với các tiêu đề được liệt kê bên dưới ?
+        <div *ngIf="deleteNotifications.length > 1">Xoá các thông báo với các tiêu đề được liệt kê bên dưới ?</div>
+        <div *ngIf="deleteNotifications.length == 1">Xoá thông báo với tiêu đề bên dưới ?</div>
         <div *ngFor="let item of deleteNotifications">
           <strong style="color: red">{{item.title}} &nbsp;</strong>
         </div>
