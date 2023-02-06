@@ -1,11 +1,12 @@
-<div class="container-fluid main-content">
+<app-header></app-header>
+<div class="main-content" style="height: 600px">
 
   <div class="row mt-3">
     <div class="col-md-1 col-sm-12">
       <button class="btn button-css" routerLink="/home"><i class="fa-solid fa-arrow-left"></i></button>
     </div>
     <div class="col-md-10 col-sm-12">
-      <h2 class="text-center">Quản lý nhân viên</h2>
+      <h2 class="text-center fw-bold">QUẢN LÝ NHÂN VIÊN</h2>
     </div>
     <div class="col-md-1"></div>
   </div>
@@ -59,7 +60,7 @@
     <div class="row">
       <div class="col col-md-12">
         <table class="table table-light table-striped mt-3">
-          <thead class="text-center">
+          <thead class="text-center table-dark">
           <tr>
             <th scope="col" style="width: 4%">STT</th>
             <th scope="col" style="width: 10%">Mã nhân viên</th>
@@ -78,9 +79,9 @@
             <td>{{(i + 1) + (request.page * request.size)}}</td>
             <td>{{employee.codeEmployee}}</td>
             <td>{{employee.nameEmployee}}</td>
-            <td>{{employee.dateOfBirth}}</td>
+            <td>{{employee.dateOfBirth | date: 'dd/MM/yyyy' }}</td>
             <td>{{employee.genderEmployee ? 'Nam' : 'Nữ'}}</td>
-            <td>{{employee.phoneEmployee}}</td>
+            <td>{{employee.phoneEmployee | slice:0:4}} {{employee.phoneEmployee | slice:4:7}} {{employee.phoneEmployee | slice:7:10}}</td>
             <td>{{employee.emailEmployee}}</td>
             <td>{{employee.nameDivision}}</td>
             <td>
@@ -101,7 +102,7 @@
     </div>
 
     <!--  Phân trang -->
-    <div *ngIf="employeeList" class="d-flex justify-content-end" id="last-row">
+    <div *ngIf="employeeList" class="d-flex justify-content-center" id="last-row">
       <div>
         <nav aria-label="Page navigation example">
           <ul class="pagination">
@@ -161,3 +162,4 @@
 
 </div>
 <app-employee-delete [employee]="temp" (eventDelete)="reload()"></app-employee-delete>
+<app-footer></app-footer>
