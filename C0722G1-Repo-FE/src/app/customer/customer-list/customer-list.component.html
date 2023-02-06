@@ -1,1 +1,200 @@
-<p>customer-list works!</p>
+<div>
+  <p style="width: 100%; height: 100px; background-color: lightblue">
+    Header
+  </p>
+</div>
+<div class="container-fluid main-content">
+  <!--  <h2 class="text-center fw-bold text-light mt-3">-->
+  <h2 class="text-center fw-bold mt-3">DANH SÁCH KHÁCH HÀNG </h2>
+
+  <nav class="navbar navbar-expand-lg py-0 my-0">
+    <div class="container-fluid">
+      <a routerLink="/customer/create">
+        <button class="btn btn-primary">
+          <span class="text-light"> Thêm khách hàng</span>
+        </button>
+      </a>
+      <div class="d-flex my-2" role="search">
+        <!--                <input class="form-control me-1" type="text" placeholder="" aria-label="Search">-->
+        <!--                <button class="btn button-css btn-outline-danger col-md-1 align-items-center" type="submit">Tìm kiếm-->
+        <!--                </button>-->
+        <div class="input-group mb-3">
+          <input class="form-control me-1" type="text" placeholder="" aria-label="Search" class="form-control">
+          <div class="input-group-prepend">
+            <button class="btn btn-outline-danger" type="button">Tìm kiếm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <table class="table table-light table-striped mt-3">
+    <thead>
+    <tr>
+      <th scope="col">STT</th>
+      <th scope="col">Mã KH</th>
+      <th scope="col">Họ và tên</th>
+      <th scope="col">Địa chỉ</th>
+      <th scope="col">Số điện thoại</th>
+      <th scope="col">Số điện thoại 2</th>
+      <th scope="col">Tình trạng</th>
+      <th scope="col">Chi tiết</th>
+      <th scope="col">Chức năng</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of customer.content; let i = index">
+      <td>{{(i + 1)}}</td>
+      <td>{{item.code_customer}}</td>
+      <td>{{item.name_customer}}</td>
+      <td>{{item.address_customer}}</td>
+      <td>{{item.phone_customer1}}</td>
+      <td>{{item.phone_customer2}}</td>
+      <td>
+        <span *ngIf="item.approval_customer == 0; else elseApproval">Đã duyệt</span>
+        <ng-template #elseApproval>
+          <button type="button" class="btn btn-light btn-outline-secondary btn-sm" data-bs-toggle="modal"
+                  data-bs-target="#confirmModal">
+            Duyệt
+          </button>        </ng-template>
+      </td>
+
+      <td>
+        <button type="button" class="btn btn-light btn-outline-secondary btn-sm">
+          Chi tiết <i class="fa-solid fa-thin fa-circle-info"></i>
+        </button>
+      </td>
+      <td>
+        <button type="button" class="btn btn-light btn-outline-secondary btn-sm">
+          <i class="fa-regular fa-pen-to-square"></i>
+        </button>
+        <button type="button" class="btn btn-light btn-outline-secondary btn-sm" data-bs-toggle="modal"
+                data-bs-target="#exampleModal">
+          <i class="fa-regular fa-trash-can"></i>
+        </button>
+      </td>
+    </tr>
+
+    </tbody>
+  </table>
+
+<!--  <nav aria-label="Page navigation example">-->
+<!--    <ul class="pagination justify-content-end">-->
+<!--      <li class="page-item disabled">-->
+<!--        <a class="page-link">Trước</a>-->
+<!--      </li>-->
+<!--      <li class="page-item active"><a class="page-link" href="#">1</a></li>-->
+<!--      <li class="page-item"><a class="page-link" href="#">2</a></li>-->
+<!--      <li class="page-item"><a class="page-link" href="#">3</a></li>-->
+<!--      <li class="page-item">-->
+<!--        <a class="page-link" href="#">Sau</a>-->
+<!--      </li>-->
+<!--    </ul>-->
+<!--  </nav>-->
+
+  <!--  Phân trang + Nút xóa-->
+  <div *ngIf="customer" class="d-flex justify-content-between" id="last-row">
+    <div>
+    </div>
+    <div>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item" [ngClass]="customer.first ? 'disabled': ''">
+            <a role="button" class="page-link" (click)="gotoPage(0)">Trang đầu</a>
+          </li>
+          <li class="page-item" [ngClass]="customer.first ? 'disabled': ''">
+            <a role="button" class="page-link" (click)="gotoPage(customer.number - 1)"><</a>
+          </li>
+          <li class="page-item" *ngIf="customer.number - 3 > 0">
+            <a role="button" class="page-link"
+               (click)="gotoPage(customer.number - 4)">{{customer.number - 3}}</a>
+          </li>
+          <li class="page-item" *ngIf="customer.number - 2 > 0">
+            <a role="button" class="page-link"
+               (click)="gotoPage(customer.number - 3)">{{customer.number - 2}}</a>
+          </li>
+          <li class="page-item" *ngIf="customer.number - 1 > 0">
+            <a role="button" class="page-link"
+               (click)="gotoPage(customer.number - 2)">{{customer.number - 1}}</a>
+          </li>
+          <li class="page-item" *ngIf="customer.number > 0">
+            <a role="button" class="page-link"
+               (click)="gotoPage(customer.number - 1)">{{customer.number}}</a>
+          </li>
+
+          <li class="page-item active"><a class="page-link">{{customer.number + 1}}</a></li>
+
+          <li class="page-item" *ngIf="customer.number + 2 <= customer.totalPages">
+            <a role="button" class="page-link"
+               (click)="gotoPage(customer.number + 1)">{{customer.number + 2}}</a>
+          </li>
+          <li class="page-item" *ngIf="customer.number + 3 <= customer.totalPages">
+            <a role="button" class="page-link"
+               (click)="gotoPage(customer.number + 2)">{{customer.number + 3}}</a>
+          </li>
+          <li class="page-item" *ngIf="customer.number + 4 <= customer.totalPages">
+            <a role="button" class="page-link"
+               (click)="gotoPage(customer.number + 3)">{{customer.number + 4}}</a>
+          </li>
+          <li class="page-item" *ngIf="customer.number + 5 <= customer.totalPages">
+            <a role="button" class="page-link"
+               (click)="gotoPage(customer.number + 4)">{{customer.number + 5}}</a>
+          </li>
+          <li class="page-item" [ngClass]="customer.last ? 'disabled': ''">
+            <a role="button" class="page-link" (click)="gotoPage(customer.number + 1)">></a>
+          </li>
+          <li class="page-item" [ngClass]="customer.last ? 'disabled': ''">
+            <a role="button" class="page-link" (click)="gotoPage(customer.totalPages - 1)">Trang cuối</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div>
+    </div>
+  </div>
+</div>
+<div>
+  <p style="width: 100%; height: 100px; background-color: lightpink">
+    Footer
+  </p>
+</div>
+<!--Modal Xóa-->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Xóa khách hàng</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Bạn có chắc là muốn xóa khách hàng này ra khỏi danh sách!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+        <button type="button" class="btn btn-danger">Xóa</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Modal Duyệt-->
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="confirmModalLabel">Duyệt khách hàng</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Bạn có chắc là muốn duyệt khách hàng này!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success">Duyệt</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+      </div>
+    </div>
+  </div>
+</div>

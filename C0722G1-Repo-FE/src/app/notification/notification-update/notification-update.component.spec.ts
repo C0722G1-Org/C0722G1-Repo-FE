@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FormCreateComponent } from './form-create.component';
+import { NotificationUpdateComponent } from './notification-update.component';
 
-describe('FormCreateComponent', () => {
-  let component: FormCreateComponent;
-  let fixture: ComponentFixture<FormCreateComponent>;
+describe('NotificationUpdateComponent', () => {
+  let component: NotificationUpdateComponent;
+  let fixture: ComponentFixture<NotificationUpdateComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FormCreateComponent ]
+      declarations: [ NotificationUpdateComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FormCreateComponent);
+    fixture = TestBed.createComponent(NotificationUpdateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
