@@ -1,7 +1,6 @@
 import {Account} from '../account/account';
 
 export interface Customer {
-
   /**
    * Create by: HocHH
    * Date created: 03/02/2023
@@ -21,8 +20,6 @@ export interface Customer {
 
   // account?: Account;
 
-
-export interface Customer {
   idCustomer?: number;
   nameCustomer?: string;
   emailCustomer?: string;
@@ -36,5 +33,4 @@ export interface Customer {
   phoneCustomer1?: string;
   phoneCustomer2?: string;
   account?: Account;
-
 }
