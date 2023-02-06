@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {Post} from "../../entity/post/post";
-import {PostService} from "../post.service";
-import {ToastrService} from "ngx-toastr";
-import {Router} from "@angular/router";
+import {LandType} from '../../entity/post/land-type';
+import {PostListService} from './post-list.service';
+import {City} from '../../entity/post/city';
+import {Direction} from '../../entity/post/direction';
 
 @Component({
   selector: 'app-post-list',
@@ -10,22 +10,63 @@ import {Router} from "@angular/router";
   styleUrls: ['./post-list.component.css']
 })
 export class PostListComponent implements OnInit {
-  page: number = 1;
-  postList: Post[] | undefined;
-  userNameAccount: string = "";
+  landTypeList: LandType[] = [];
+  cityList: City[] = [];
+  directionList: Direction[] = [];
 
-  constructor(private _postService: PostService, private _router: Router) {
-    this._postService.findPostListByUserNameAccount(this.userNameAccount).subscribe(data => {
-      this.postList = data;
-    });
+  constructor(private postListService: PostListService) {
   }
 
   ngOnInit(): void {
+    this.getLandType();
+    this.getCity();
+    this.getDirection();
   }
 
-  searchByNameDemandType(value: string) {
-    this._postService.findByNameDemandType(value).subscribe(data => {
-      this.postList = data;
-    })
+  /**
+   * Create by: SangNP
+   * Date created: 03/02/2023
+   * Function: take list land type
+   * @return LandType[]
+   */
+  getLandType(): void {
+    this.postListService.getLandType().subscribe(data => {
+        this.landTypeList = data;
+      }, error => {
+      },
+      () => {
+      });
+  }
+  /**
+   * Create by: SangNP
+   * Date created: 03/02/2023
+   * Function: take list city
+   * @return City[]
+   */
+  getCity(): void {
+    this.postListService.getCity().subscribe(data => {
+        this.cityList = data;
+      }, error => {
+      },
+      () => {
+      });
+  }
+  /**
+   * Create by: SangNP
+   * Date created: 03/02/2023
+   * Function: take directionList
+   * @return Direction[]
+   */
+  getDirection(): void {
+    this.postListService.getDirection().subscribe(data => {
+        this.directionList = data;
+      }, error => {
+      },
+      () => {
+      });
+  }
+
+  search(direction: string, city: string, price: string, landType: string, area: string) {
+
   }
 }

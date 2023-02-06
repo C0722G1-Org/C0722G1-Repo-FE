@@ -122,7 +122,8 @@ export class PostChartComponent implements OnInit {
    * Get the value of the variable: postCharList through the searchChart() method in PostService
    * && Register to listen to the event: subscribe
    * Get the value of the variable: totalTransaction,countSuccess,countTotal
-   * @param year,month
+   * @param month: string
+   * @param year:string
    * Author: DatTQ  ;  Date:02/02/2023
    */
   searchChart(month: string, year: string): void {
@@ -149,7 +150,7 @@ export class PostChartComponent implements OnInit {
    * Get the value of the variable: postCharList through the displayListChart() method in PostService;
    * Get the value of the variable: totalTransaction,countSuccess,countTotal;
    * Create Chart corresponding to param (yearChange) with method createChart();
-   * @param yearChange;
+   * @param yearChange: string;
    * Author: DatTQ  ;  Date:02/02/2023;
    */
   changeYear(yearChange: string): void {

@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
+import {PostDetail} from '../entity/post/post-detail';
 import {HttpClient} from '@angular/common/http';
-import {Post} from '../entity/post/post';
-import {PortChart} from '../entity/post/port-chart';
+import {Post} from "../entity/post/post";
+import {PortChart} from "../entity/post/port-chart";
 
 @Injectable({
   providedIn: 'root'
