@@ -1,10 +1,8 @@
 import {Injectable} from '@angular/core';
-
-import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
 import {Post} from '../entity/post/post';
 import {PortChart} from '../entity/post/port-chart';
-import {PostDetail} from '../entity/post/post-detail';
 
 @Injectable({
   providedIn: 'root'
@@ -61,6 +59,32 @@ export class PostService {
    * @return a Observable that contain a Post object can be showed on Post detail screen
    */
   findPostById(id: number): Observable<any> {
-    return this.httpClient.get<PostDetail>('http://localhost:8080/package/' + id);
+    return this.httpClient.get<any>('http://localhost:8080/api/public/home/detail?id=' + id);
+  }
+
+  /**
+   * Method uses:
+   * Send a request to backend API to get a list of image by parameter Id
+   * Created by: HuyDN
+   * Created date: 04/02/2023
+   *
+   * @param idPost: a Post' id
+   * @return a Observable that contain a Post object can be showed on Post detail screen
+   */
+  findImageByIdPost(idPost: number): Observable<any> {
+    return this.httpClient.get<any>('http://localhost:8080/api/public/home/image?id=' + idPost);
+  }
+
+  /**
+   * Method uses:
+   * Send a request to backend API to change Post's status to succeeded
+   * Created by: HuyDN
+   * Created date: 04/02/2023
+   *
+   * @param idPost: a Post' id
+   * @return a Observable that contain a Post object can be showed on Post detail screen
+   */
+  succeedConfirm(idPost: number | undefined): Observable<any> {
+    return this.httpClient.patch('http://localhost:8080/api/post/confirm?id=', idPost);
   }
 }
