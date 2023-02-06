@@ -11,6 +11,7 @@ import { PostChartComponent } from './post-chart/post-chart.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { PostApprovalComponent } from './post-approval/post-approval.component';
 import { PostListApprovalComponent } from './post-list-approval/post-list-approval.component';
+import {ToastContainerModule} from 'ngx-toastr';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { PostListApprovalComponent } from './post-list-approval/post-list-approv
     imports: [
         CommonModule,
         PostRoutingModule,
+        ToastContainerModule,
         FormsModule,
         ReactiveFormsModule
     ]
