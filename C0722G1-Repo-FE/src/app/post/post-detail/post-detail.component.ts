@@ -15,35 +15,36 @@ import {Image} from '../../entity/post/image';
 export class PostDetailComponent implements OnInit {
   // @ts-ignore
   @ViewChild(ToastContainerDirective, {static: true}) toastContainer: ToastContainerDirective;
-  statusPost: StatusPost[] = [
-    {idStatusPost: 1, nameStatusPost: 'Chờ giao dịch'},
-    {idStatusPost: 2, nameStatusPost: 'Đã giao dịch'},
-    {idStatusPost: 3, nameStatusPost: 'Giao dịch thất bại'}];
-  postDetail: PostDetail = {
-    idPost: 1, price: 56000000000, area: 500, note: 'alo',
-    customer: {
-      idCustomer: 1,
-      nameCustomer: 'Đặng Nhật Huy',
-      phoneCustomer1: '0799440683',
-      genderCustomer: 3,
-      emailCustomer: 'b77cwalk@gmail.com'
-    },
-    demandType: {idDemandType: 2, nameDemandType: 'Bán'}, landType: {idLandType: 1, nameLandType: 'Căn hộ'},
-    statusPost: this.statusPost[0],
-    direction: {idDirection: 1, nameDirection: 'Đông Bắc'},
-    dateCreation: '2023/02/03',
-  };
-  // postDetail: PostDetail = {};
-  imageList: Image[] = [
-    {
-      idImage: 1,
-      url: 'https://images.pexels.com/photos/440731/pexels-photo-440731.jpeg?cs=srgb&dl=pexels-%C3%A1kos-szab%C3%B3-440731.jpg&fm=jpg'
-    },
-    {idImage: 2, url: 'https://www.shutterstock.com/image-photo/land-plot-aerial-view-gps-260nw-1970998805.jpg'},
-    {idImage: 3, url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDGUd2bl4Is0982KMXwNidDIpN-OunVsdDmsWAToukBA&s'}];
+  // statusPost: StatusPost[] = [
+  //   {idStatusPost: 1, nameStatusPost: 'Chờ giao dịch'},
+  //   {idStatusPost: 2, nameStatusPost: 'Đã giao dịch'},
+  //   {idStatusPost: 3, nameStatusPost: 'Giao dịch thất bại'}];
+  // postDetail: PostDetail = {
+  //   idPost: 1, price: 5656700000, area: 500, note: 'alo',
+  //   customer: {
+  //     idCustomer: 1,
+  //     nameCustomer: 'Đặng Nhật Huy',
+  //     phoneCustomer1: '0799440683',
+  //     genderCustomer: 3,
+  //     emailCustomer: 'b77cwalk@gmail.com'
+  //   },
+  //   demandType: {idDemandType: 2, nameDemandType: 'Bán'}, landType: {idLandType: 1, nameLandType: 'Căn hộ'},
+  //   statusPost: this.statusPost[0],
+  //   direction: {idDirection: 1, nameDirection: 'Đông Bắc'},
+  //   dateCreation: '2023/02/03',
+  // };
+  postDetail: PostDetail = {};
+  imageList: Image[] = [];
+  // imageList: Image[] = [
+  //   {
+  //     idImage: 1,
+  //     url: 'https://file4.batdongsan.com.vn/resize/1275x717/2023/02/02/20230202154431-b87f_wm.jpg'
+  //   },
+  //   {idImage: 2, url: 'https://file4.batdongsan.com.vn/resize/1275x717/2023/02/02/20230202154431-fb0b_wm.jpg'},
+  //   {idImage: 3, url: 'https://file4.batdongsan.com.vn/resize/1275x717/2023/02/02/20230202154432-aded_wm.jpg'}];
   // @ts-ignore
   phoneNumber: string | undefined = this.postDetail?.customer?.phoneCustomer1.slice(0, 6) + '*** · Hiện số';
-  accountId = 1;
+  accountId = 0;
   price = this.postDetail.price;
   million = 1000000;
   billion = 1000000000;
@@ -88,9 +89,9 @@ export class PostDetailComponent implements OnInit {
    */
   ngOnInit(): void {
     this.toastr.overlayContainer = this.toastContainer;
-    // if (this.tokenService.getToken()){
-    //   this.accountId = this.tokenService.getIdAccount();
-    // }
+    if (this.tokenService.getToken()){
+      this.accountId = this.tokenService.getIdAccount();
+    }
     if (this.postDetail.price != null) {
       this.convertToMillion();
     }

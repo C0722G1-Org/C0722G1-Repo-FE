@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {EmployeeService} from '../../service/employee/employee.service';
-import {DivisionService} from '../../service/employee/division.service';
 import {Router} from '@angular/router';
 import {Division} from '../../entity/employee/division';
 import {ToastrService} from 'ngx-toastr';
+import {EmployeeService} from '../../service/employee.service';
+import {DivisionService} from '../../service/division.service';
 
 @Component({
   selector: 'app-employee-create',
@@ -28,20 +28,20 @@ export class EmployeeCreateComponent implements OnInit {
     genderEmployee: new FormControl('', Validators.required),
     dateOfBirth: new FormControl('', Validators.required),
     division: new FormGroup({
-      idDivision: new FormControl(),
-      nameDivision: new FormControl()
+      idDivision: new FormControl(''),
+      nameDivision: new FormControl('')
     }),
-    flagDeleted: new FormControl(),
+
+    flagDeleted: new FormControl(false),
     account: new FormGroup({
-      idAccount: new FormControl(),
-      name: new FormControl(),
-      usernameAccount: new FormControl(),
-      email: new FormControl(),
-      encryptPassword: new FormControl(),
-      flagDelete: new FormControl()
+      idAccount: new FormControl(''),
+      name: new FormControl(''),
+      usernameAccount: new FormControl(''),
+      email: new FormControl(''),
+      encryptPassword: new FormControl(''),
+      flagDelete: new FormControl('')
     })
   });
-
 
   constructor(private employeeService: EmployeeService,
               private divisionService: DivisionService,
@@ -78,10 +78,10 @@ export class EmployeeCreateComponent implements OnInit {
    * Function: get all list division
    */
   getAllDivision(): void {
-  this.divisionService.getAllDivision().subscribe(data => {
-    this.divisions = data;
-  }, error => {
-    console.log(error);
-  });
+    this.divisionService.getAllDivision().subscribe(data => {
+      this.divisions = data;
+    }, error => {
+      console.log(error);
+    });
   }
 }
