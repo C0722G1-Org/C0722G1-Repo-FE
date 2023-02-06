@@ -1,7 +1,7 @@
-import {Wards} from './wards';
+import {Wards} from "./wards";
 
 export interface Address {
   idAddress?: number;
-  numberAddress?: string;
+  nameAddress?: string;
   wards?: Wards;
 }

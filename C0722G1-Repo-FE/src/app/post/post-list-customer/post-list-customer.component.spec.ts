@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PostChartComponent } from './post-chart.component';
+import { PostListCustomerComponent } from './post-list-customer.component';
 
-describe('PostChartComponent', () => {
-  let component: PostChartComponent;
-  let fixture: ComponentFixture<PostChartComponent>;
+describe('PostListCustomerComponent', () => {
+  let component: PostListCustomerComponent;
+  let fixture: ComponentFixture<PostListCustomerComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PostChartComponent ]
+      declarations: [ PostListCustomerComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PostChartComponent);
+    fixture = TestBed.createComponent(PostListCustomerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

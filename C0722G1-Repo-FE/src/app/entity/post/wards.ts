@@ -1,7 +1,7 @@
-import {District} from './district';
+import {District} from "./district";
 
 export interface Wards {
-  idWards?: number;
-  nameWards?: string;
-  district?: District;
+idWards?: number;
+nameWards?: string;
+district?: District;
 }
