@@ -5,5 +5,4 @@ export interface Account {
   encryptPassword?: string;
   flagDelete?: boolean;
   usernameAccount?: string;
-
 }
