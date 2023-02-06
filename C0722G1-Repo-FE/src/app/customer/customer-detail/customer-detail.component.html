@@ -1,1 +1,93 @@
-<p>customer-detail works!</p>
+<div class="row m-0">
+  <div class=" d-flex justify-content-center align-items-center mt-2 mb-2">
+    <div class="boxed shadow h-100">
+      <form *ngIf="rfCustomer" [formGroup]="customerDetail">
+      <fieldset>
+        <legend>
+          <div>
+            <div style="margin-left: 15px; margin-top: 15px">
+              <a href="#" type="button"><i class="fa-solid fa-arrow-left"></i></a>
+              <span style="font-size: 35px; margin-left: 30px">Xem thông tin chi khách hàng KH001</span>
+            </div>
+          </div>
+        </legend>
+      </fieldset>
+
+      <div class="mb-2 row">
+        <div class="col-4">
+          <label class="form-label ms-2">Họ và tên:</label>
+        </div>
+        <div class="col-8">
+          <label>{{customerDetail?.nameCustomer|currency}}</label>
+        </div>
+      </div>
+
+
+<!--      <div class="mb-2 row">-->
+<!--        <div class="col-4">-->
+<!--          <label class="form-label ms-2">Giới tính:</label>-->
+<!--        </div>-->
+<!--        <div class="col-8">-->
+<!--          <label>Nam</label>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="mb-2 row">-->
+<!--        <div class="col-4">-->
+<!--          <label class="form-label ms-2">Ngày sinh:</label>-->
+<!--        </div>-->
+<!--        <div class="col-8">-->
+<!--          <label>11/02/2003</label>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="mb-2 row">-->
+<!--        <div class="col-4">-->
+<!--          <label class="form-label ms-2">Số điện thoại:</label>-->
+<!--        </div>-->
+<!--        <div class="col-8">-->
+<!--          <label>0345674451</label>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="mb-2 row">-->
+<!--        <div class="col-4">-->
+<!--          <label class="form-label ms-2">Email:</label>-->
+<!--        </div>-->
+<!--        <div class="col-8">-->
+<!--          <label>maomao@gmail.com</label>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="mb-2 row">-->
+<!--        <div class="col-4">-->
+<!--          <label class="form-label ms-2">Địa chỉ:</label>-->
+<!--        </div>-->
+<!--        <div class="col-8">-->
+<!--          <label>32 Trần Hưng Đạo, Quảng Trị</label>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="mb-2 row justify-content-center ">-->
+<!--        <button type="submit" style="margin-right: 5px ; width: 50%;"-->
+<!--                class="btn btn-outline-success d-flex justify-content-center">-->
+<!--          <p>Xem danh sách nhu cầu của KH001</p>-->
+<!--        </button>-->
+<!--      </div>-->
+
+
+<!--      <div class="d-flex mt-3 mb-4 w-100 ">-->
+<!--        <button type="submit" style="margin-right: 5px"-->
+<!--                class="btn btn-primary d-flex justify-content-center">-->
+<!--          <p>Sửa thông tin</p>-->
+<!--        </button>-->
+<!--        <button class="btn btn-outline btn-outline-danger ms-auto d-flex justify-content-center">-->
+<!--          <p>Xoá</p>-->
+<!--        </button>-->
+<!--      </div>-->
+
+      </form>
+    </div>
+  </div>
+</div>
+
