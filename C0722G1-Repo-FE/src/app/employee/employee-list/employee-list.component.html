@@ -49,7 +49,7 @@
     <div class="row mt-2">
       <div class="col-md-10"></div>
       <div class="col-md-2 col-sm-12 d-flex justify-content-end">
-        <button class="btn button-css btn-outline-danger" type="button"
+        <button class="btn button-css btn-outline-danger" type="button" id="auto_trigger"
                 (click)="searchEmployee(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value)">
           Tìm kiếm
         </button>
@@ -77,7 +77,7 @@
           </thead>
           <tbody class="text-center">
           <tr *ngFor="let employee of employees; let i = index">
-            <td>{{(i + 1)}}</td>
+            <td>{{(i + 1) + (request.page * request.size)}}</td>
             <td>{{employee.codeEmployee}}</td>
             <td>{{employee.nameEmployee}}</td>
             <td>{{employee.dateOfBirth}}</td>
@@ -101,8 +101,38 @@
         </table>
       </div>
     </div>
+
+    <nav aria-label="Page navigation example">
+      <ul class="pagination d-flex justify-content-md-end justify-content-center">
+        <li class="page-item">
+          <button class="page-link" [hidden]="pageNumber == 0" type="button"
+                  (click)="changePage(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value,pageNumber - 1)">Trang trước
+          </button>
+        </li>
+        <li class="page-item px-0">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">{{pageNumber + 1}}</span>
+            </div>
+            <div class="input-group-prepend">
+              <span class="input-group-text">/</span>
+            </div>
+            <div class="input-group-prepend" style="float: left">
+              <span class="input-group-text"  id="basic-addon1">{{totalPages}}</span>
+            </div>
+          </div>
+        </li>
+        <li class="page-item">
+          <button class="page-link" [hidden]="pageNumber >= totalPages - 1" type="button"
+                  (click)="changePage(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value,pageNumber + 1)">Trang sau
+          </button>
+        </li>
+      </ul>
+    </nav>
+
   </div>
-  <ng-template #elseBlock><h2>Không có dữ liệu.</h2></ng-template>
+  <ng-template #elseBlock><h2 style="color: red; text-align: center">Không có dữ liệu.</h2></ng-template>
+
 
 </div>
 <app-employee-delete [employee]="temp" (eventDelete)="reload()"></app-employee-delete>

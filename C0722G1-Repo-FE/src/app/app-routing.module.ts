@@ -7,6 +7,7 @@ import {environment} from '../environments/environment';
 
 const routes: Routes = [
   {path: 'home', loadChildren: () => import('./home/home.module').then(module => module.HomeModule)},
+  
   {path: '', redirectTo: 'home', pathMatch: 'full'},
   {
     path: 'employee', loadChildren: () => import('./employee/employee.module').then(module => module.EmployeeModule),
@@ -37,6 +38,7 @@ const routes: Routes = [
     // canActivate: [AuthGuard]
   },
   {path: '**', loadChildren: () => import('./not-found/not-found.module').then(module => module.NotFoundModule)}
+
 ];
 
 @NgModule({

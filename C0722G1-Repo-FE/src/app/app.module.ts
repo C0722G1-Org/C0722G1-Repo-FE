@@ -10,6 +10,11 @@ import {HttpClientModule} from '@angular/common/http';
 import {ReactiveFormsModule} from '@angular/forms';
 import {PostModule} from './post/post.module';
 
+import {AngularFireModule} from '@angular/fire';
+import {environment} from "../environments/environment";
+import {NgxPaginationModule} from "ngx-pagination";
+
+
 @NgModule({
   declarations: [
     AppComponent
@@ -19,10 +24,13 @@ import {PostModule} from './post/post.module';
     AppRoutingModule,
     HttpClientModule,
     HomeModule,
+    NgxPaginationModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     ReactiveFormsModule,
-    PostModule
+    PostModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig)
+
   ],
   providers: [],
   bootstrap: [AppComponent]

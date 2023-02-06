@@ -1,23 +1,29 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs';
-import {PortChart} from '../entity/post/port-chart';
+import {PostDetail} from '../entity/post/post-detail';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostService {
-  urlPortChartSearch = 'http://localhost:8080/api/post/search';
-  urlPortChartList = 'http://localhost:8080/api/post';
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient) { }
+
+  /**
+   * Method uses:
+   * Send a request to backend API to get a Post by parameter Id
+   * Created by: HuyDN
+   * Created date: 02/02/2023
+   *
+   * @param id: a Post' id
+   * @return a Observable that contain a Post object can be showed on Post detail screen
+   */
+  findPostById(id: number): Observable<any> {
+    return this.httpClient.get<any>('http://localhost:8080/api/post/detail?id=' + id);
   }
 
-  displayListChart(): Observable<PortChart[]> {
-    return this.httpClient.get<PortChart[]>(this.urlPortChartList);
-  }
-
-  searchChart(month: string, year: string): Observable<PortChart[]> {
-    return this.httpClient.get<PortChart[]>(this.urlPortChartSearch + '?year=' + year + '&month=' + month);
+  findImageByIdPost(idPost: number): Observable<any>{
+    return this.httpClient.get<any>('http://localhost:8080/api/images?id=' + idPost);
   }
 }

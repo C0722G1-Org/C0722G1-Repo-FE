@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PostChartComponent } from './post-chart.component';
+import { NotificationUpdateComponent } from './notification-update.component';
 
-describe('PostChartComponent', () => {
-  let component: PostChartComponent;
-  let fixture: ComponentFixture<PostChartComponent>;
+describe('NotificationUpdateComponent', () => {
+  let component: NotificationUpdateComponent;
+  let fixture: ComponentFixture<NotificationUpdateComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PostChartComponent ]
+      declarations: [ NotificationUpdateComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PostChartComponent);
+    fixture = TestBed.createComponent(NotificationUpdateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
