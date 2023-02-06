@@ -7,7 +7,7 @@ import {ToastrService} from 'ngx-toastr';
 @Injectable({
   providedIn: 'root'
 })
-export class EmployeeGuard implements CanActivate, CanActivateChild {
+export class EmployeeGuard implements CanActivate {
   constructor(
     private tokenService: TokenService,
     private toast: ToastrService,
@@ -15,6 +15,12 @@ export class EmployeeGuard implements CanActivate, CanActivateChild {
   ) {
   }
 
+  /**
+   * Create by: PhuongLTH
+   * Date create: 03/02/2023
+   * @param route
+   * @param state
+   */
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
@@ -34,9 +40,4 @@ export class EmployeeGuard implements CanActivate, CanActivateChild {
       return false;
     }
   }
-
-  canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.canActivate(childRoute, state);
-  }
-
 }
