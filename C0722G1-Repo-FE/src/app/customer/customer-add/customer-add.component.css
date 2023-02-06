@@ -1,6 +1,6 @@
 *:not(i) {
-  font-family: "Noto Sans", serif !important;
-  box-sizing: border-box !important;
+  font-family: sans-serif;
+  box-sizing: border-box;
   margin: 0;
   /*padding: 0;*/
   border: 0;
@@ -102,5 +102,7 @@ button {
 .invalid-feedback{
   font-size: 13px;
 }
-
+.customer-infor{
+  border: 2px solid #bdd6ec;
+}
 

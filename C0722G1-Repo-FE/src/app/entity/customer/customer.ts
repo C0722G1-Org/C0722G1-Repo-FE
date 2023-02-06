@@ -13,5 +13,7 @@ export interface Customer {
   approvalCustomer?: number;
   phoneCustomer1?: string;
   phoneCustomer2?: string;
+  nameAccount?: string;
   account?: Account;
 }
+
