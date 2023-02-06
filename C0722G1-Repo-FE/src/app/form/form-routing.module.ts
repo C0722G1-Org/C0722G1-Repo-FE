@@ -7,7 +7,7 @@ import {FormEditComponent} from './form-edit/form-edit.component';
 const routes: Routes = [
   {path: '', component: FormListComponent},
   {path: 'create', component: FormCreateComponent},
-  {path: 'edit', component: FormEditComponent}
+  {path: 'edit/:id', component: FormEditComponent}
 ];
 
 @NgModule({

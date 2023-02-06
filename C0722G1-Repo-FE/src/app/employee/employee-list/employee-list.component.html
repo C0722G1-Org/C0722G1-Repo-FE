@@ -1,23 +1,22 @@
-<app-header></app-header>
-<div class="container-fluid main-content">
+
+<div class="main-content" style="height: 100%">
 
   <div class="row mt-3">
     <div class="col-md-1 col-sm-12">
       <button class="btn button-css" routerLink="/home"><i class="fa-solid fa-arrow-left"></i></button>
     </div>
     <div class="col-md-10 col-sm-12">
-      <h2 class="text-center">Quản lý nhân viên</h2>
+      <h2 class="text-center fw-bold">QUẢN LÝ NHÂN VIÊN</h2>
     </div>
     <div class="col-md-1"></div>
   </div>
 
   <div class="row">
     <div class="col-2">
-      <button class="btn btn-primary button-css col-md-1" type="button" routerLink="/employee/create">Thêm mới</button>
+      <button class="btn btn-outline-primary button-css col-md-1" type="button" routerLink="/employee/create">Thêm mới</button>
     </div>
     <div class="col-10"></div>
   </div>
-
 
   <form>
     <div class="row mt-2">
@@ -49,7 +48,7 @@
     <div class="row mt-2">
       <div class="col-md-10"></div>
       <div class="col-md-2 col-sm-12 d-flex justify-content-end">
-        <button class="btn button-css btn-outline-danger" type="button"
+        <button class="btn button-css btn-outline-danger" type="button" id="auto_trigger"
                 (click)="searchEmployee(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value)">
           Tìm kiếm
         </button>
@@ -57,32 +56,32 @@
     </div>
   </form>
 
-  <div *ngIf="employees.length != 0; else elseBlock">
+  <div *ngIf="employeeInfo.length != 0; else elseBlock">
     <div class="row">
       <div class="col col-md-12">
         <table class="table table-light table-striped mt-3">
-          <thead class="text-center">
+          <thead class="text-center table-dark">
           <tr>
-            <th scope="col">STT</th>
-            <th scope="col">Mã nhân viên</th>
-            <th scope="col">Họ tên</th>
-            <th scope="col">Ngày sinh</th>
-            <th scope="col">Giới tính</th>
-            <th scope="col">Số điện thoại</th>
-            <th scope="col">Email</th>
-            <th scope="col">Chức vụ</th>
-            <th scope="col">Xóa</th>
-            <th scope="col">Sửa</th>
+            <th scope="col" style="width: 2%">STT</th>
+            <th scope="col" style="width: 8%">Mã nhân viên</th>
+            <th scope="col" style="width: 15%">Họ tên</th>
+            <th scope="col" style="width: 8%">Ngày sinh</th>
+            <th scope="col" style="width: 8%">Giới tính</th>
+            <th scope="col" style="width: 8%">Số điện thoại</th>
+            <th scope="col" style="width: 20%">Email</th>
+            <th scope="col" style="width: 8%">Chức vụ</th>
+            <th scope="col" style="width: 2%">Xóa</th>
+            <th scope="col" style="width: 2%">Sửa</th>
           </tr>
           </thead>
           <tbody class="text-center">
-          <tr *ngFor="let employee of employees; let i = index">
-            <td>{{(i + 1)}}</td>
+          <tr *ngFor="let employee of employeeInfo; let i = index">
+            <td>{{(i + 1) + (request.page * request.size)}}</td>
             <td>{{employee.codeEmployee}}</td>
             <td>{{employee.nameEmployee}}</td>
-            <td>{{employee.dateOfBirth}}</td>
+            <td>{{employee.dateOfBirth | date: 'dd/MM/yyyy' }}</td>
             <td>{{employee.genderEmployee ? 'Nam' : 'Nữ'}}</td>
-            <td>{{employee.phoneEmployee}}</td>
+            <td>{{employee.phoneEmployee | slice:0:4}} {{employee.phoneEmployee | slice:4:7}} {{employee.phoneEmployee | slice:7:10}}</td>
             <td>{{employee.emailEmployee}}</td>
             <td>{{employee.nameDivision}}</td>
             <td>
@@ -101,8 +100,65 @@
         </table>
       </div>
     </div>
+
+    <!--  Phân trang -->
+    <div *ngIf="employeeList" class="d-flex justify-content-center" id="last-row">
+      <div>
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+            <li class="page-item" [ngClass]="employeeList.first ? 'disabled': ''">
+              <a role="button" class="page-link" (click)="changePage(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value,0)">Trang đầu</a>
+            </li>
+            <li class="page-item" [ngClass]="employeeList.first ? 'disabled': ''">
+              <a role="button" class="page-link" (click)="changePage(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value,employeeList.number - 1)"><</a>
+            </li>
+            <li class="page-item" *ngIf="employeeList.number - 3 > 0">
+              <a role="button" class="page-link"
+                 (click)="changePage(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value,employeeList.number - 4)">{{employeeList.number - 3}}</a>
+            </li>
+            <li class="page-item" *ngIf="employeeList.number - 2 > 0">
+              <a role="button" class="page-link"
+                 (click)="changePage(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value,employeeList.number - 3)">{{employeeList.number - 2}}</a>
+            </li>
+            <li class="page-item" *ngIf="employeeList.number - 1 > 0">
+              <a role="button" class="page-link"
+                 (click)="changePage(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value,employeeList.number - 2)">{{employeeList.number - 1}}</a>
+            </li>
+            <li class="page-item" *ngIf="employeeList.number > 0">
+              <a role="button" class="page-link"
+                 (click)="changePage(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value,employeeList.number - 1)">{{employeeList.number}}</a>
+            </li>
+            <li class="page-item active"><a class="page-link">{{employeeList.number + 1}}</a></li>
+            <li class="page-item" *ngIf="employeeList.number + 2 <= employeeList.totalPages">
+              <a role="button" class="page-link"
+                 (click)="changePage(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value,employeeList.number + 1)">{{employeeList.number + 2}}</a>
+            </li>
+            <li class="page-item" *ngIf="employeeList.number + 3 <= employeeList.totalPages">
+              <a role="button" class="page-link"
+                 (click)="changePage(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value,employeeList.number + 2)">{{employeeList.number + 3}}</a>
+            </li>
+            <li class="page-item" *ngIf="employeeList.number + 4 <= employeeList.totalPages">
+              <a role="button" class="page-link"
+                 (click)="changePage(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value,employeeList.number + 3)">{{employeeList.number + 4}}</a>
+            </li>
+            <li class="page-item" *ngIf="employeeList.number + 5 <= employeeList.totalPages">
+              <a role="button" class="page-link"
+                 (click)="changePage(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value,employeeList.number + 4)">{{employeeList.number + 5}}</a>
+            </li>
+            <li class="page-item" [ngClass]="employeeList.last ? 'disabled': ''">
+              <a role="button" class="page-link" (click)="changePage(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value,employeeList.number + 1)">></a>
+            </li>
+            <li class="page-item" [ngClass]="employeeList.last ? 'disabled': ''">
+              <a role="button" class="page-link"
+                 (click)="changePage(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value,employeeList.totalPages - 1)"
+              >Trang cuối</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
   </div>
-  <ng-template #elseBlock><h2>Không có dữ liệu.</h2></ng-template>
+  <ng-template #elseBlock><h2 style="color: red; text-align: center">Không có dữ liệu.</h2></ng-template>
 
 </div>
 <app-employee-delete [employee]="temp" (eventDelete)="reload()"></app-employee-delete>

@@ -1,11 +1,12 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {PostListComponent} from '../post/post-list/post-list.component';
+import {HomeComponent} from './home/home.component';
 
 
 const routes: Routes = [
   {
-    path: '', component: PostListComponent, data: {title: 'Trang chủ'}
+    path: '', component: HomeComponent, data: {title: 'Trang chủ'}
   }
 ];
 

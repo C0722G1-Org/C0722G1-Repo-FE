@@ -13,7 +13,7 @@ import {ToastrService} from 'ngx-toastr';
 export class NotificationService {
   private URL_API_NOTIFICATION = 'http://localhost:8080/api/notifications';
 
-  constructor(private httpClient: HttpClient, private toast: ToastrService) {
+  constructor(private httpClient: HttpClient) {
   }
 
   /**
@@ -45,25 +45,5 @@ export class NotificationService {
    */
   delete(deleteIds: number[]): Observable<any> {
     return this.httpClient.post<any>(this.URL_API_NOTIFICATION + '/remove', deleteIds);
-  }
-
-  /**
-   * Created: NhanUQ
-   * Function: notification success
-   * @Param message
-   * Date: 03/02/2023
-   */
-  showSuccess(message: string): void {
-    this.toast.success(message);
-  }
-
-  /**
-   * Created: NhanUQ
-   * Function: notification error
-   * @Param message
-   * Date: 03/02/2023
-   */
-  showError(message: string): void {
-    this.toast.error(message);
   }
 }

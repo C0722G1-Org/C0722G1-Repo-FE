@@ -9,6 +9,9 @@ import {ToastrModule} from 'ngx-toastr';
 import {HttpClientModule} from '@angular/common/http';
 import {ReactiveFormsModule} from '@angular/forms';
 import {PostModule} from './post/post.module';
+import {AngularFireModule} from '@angular/fire';
+import {environment} from '../environments/environment';
+import {FormModule} from './form/form.module';
 
 @NgModule({
   declarations: [
@@ -19,10 +22,12 @@ import {PostModule} from './post/post.module';
     AppRoutingModule,
     HttpClientModule,
     HomeModule,
+    // FormModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     ReactiveFormsModule,
-    PostModule
+    PostModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig)
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -33,7 +33,7 @@ export class PostApprovalComponent implements OnInit {
         });
       }
       , (error: any) => {
-        this.toastrService.error('Đã xảy ra lỗi khi duyệt', 'Lỗi', {
+        this.toastrService.error('Nhu cầu đã bị xoá', 'Lỗi', {
           timeOut: 2000,
           progressBar: true,
           positionClass: 'toast-top-right',

@@ -22,7 +22,7 @@
             <p class="mb-2" *ngIf="!rfSearch.controls['title'].hasError('maxlength')">&nbsp;</p>
             <p class="mb-2" *ngIf="rfSearch.controls['title'].hasError('maxlength')" style="color: red">
               <i class="fa-solid fa-triangle-exclamation"></i>
-              Lưu ý: Nhập tiêu đề tối đa 70 ký tự.
+              Lưu ý: Nhập tiêu đề tối đa 45 ký tự.
             </p>
           </div>
           <div class="col-4">
@@ -58,7 +58,8 @@
                 </div>
               </div>
               <p class="mb-0" *ngIf="!rfSearch.controls['startDate'].hasError('invalidSearchDate')">&nbsp;</p>
-              <p class="mb-0" *ngIf="rfSearch.controls['startDate'].hasError('invalidSearchDate')" id="invalidSearchDate"
+              <p class="mb-0" *ngIf="rfSearch.controls['startDate'].hasError('invalidSearchDate')"
+                 id="invalidSearchDate"
                  style="color: red">
                 <i class="fa-solid fa-triangle-exclamation"></i>
                 Lưu ý: Nhập thời gian từ ngày hôm nay trở về trước.
@@ -108,10 +109,9 @@
     <thead>
     <tr class="table-dark text-light">
       <th class="text-center align-middle">STT</th>
-      <th class="text-center align-middle">Ngày đăng <i class="fa-regular fa-calendar"></i></th>
-      <th class="text-center align-middle" style="width: 378px">Tiêu đề thông báo <i
-        class="fa-solid fa-layer-group"></i></th>
-      <th class="text-center align-middle" style="width: 712px">Nội dung thông báo <i class="fa-solid fa-book"></i></th>
+      <th class="text-center align-middle">Ngày đăng </th>
+      <th class="text-center align-middle" style="width: 378px">Tiêu đề thông báo </th>
+      <th class="text-center align-middle" style="width: 712px">Nội dung thông báo </th>
       <th class="text-center align-middle">Sửa</th>
       <th class="text-center align-middle" style="width: 20px;">
         <button class="btn text-light" (click)="addAllToDelete()">
@@ -150,7 +150,8 @@
       </td>
       <!-- Checkbox xóa ở tbody -->
       <td class="text-center align-middle">
-        <input type="checkbox" [checked]="deleteIds.includes(item.idNotification)" (click)="addToDelete(item.idNotification)"/>
+        <input type="checkbox" [checked]="deleteIds.includes(item.idNotification)"
+               (click)="addToDelete(item.idNotification)"/>
       </td>
       <!-- Hết Checkbox xóa ở tbody -->
     </tr>
@@ -244,8 +245,8 @@
       <div class="modal-body">
         <strong style="color: red">Đã xảy ra lỗi. Vui lòng thử lại. <br><br></strong>
         <div class="modal-footer">
-          <button id="deleteAccept0" class="btn btn-warning" data-bs-dismiss="modal">
-            Xác nhận
+          <button id="deleteAccept0" class="btn btn-secondary" data-bs-dismiss="modal">
+            Huỷ bỏ
           </button>
         </div>
       </div>

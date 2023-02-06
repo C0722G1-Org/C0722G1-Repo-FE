@@ -127,9 +127,9 @@ export class PostListApprovalComponent implements OnInit {
    * @return return this page which all element which is math with value is selected when search
    */
 // tslint:disable-next-line:typedef
-  onSubmit() {
-    if (this.postApprovalSearch.valid) {
-      if (this.postApprovalSearch.value.minPriceSearch == null && this.postApprovalSearch.value.maxPriceSearch == null) {
+  onSubmit(){
+    if (this.postApprovalSearch.valid){
+      if (this.postApprovalSearch.value.minPriceSearch == null && this.postApprovalSearch.value.maxPriceSearch == null ) {
         this.getSearchPagePost(this.postApprovalSearch.value.demandTypeSearch,
           this.postApprovalSearch.value.landTypeSearch,
           '',
@@ -137,15 +137,18 @@ export class PostListApprovalComponent implements OnInit {
           this.postApprovalSearch.value.citySearch,
           this.postApprovalSearch.value.districtSearch,
           this.postApprovalSearch.value.wardsSearch, 0);
-      } else if (this.postApprovalSearch.value.minPriceSearch == null) {
+      }
+      else if (this.postApprovalSearch.value.minPriceSearch == null  ) {
+        const tempMaxPrice = this.postApprovalSearch.value.maxPriceSearch * 1000000;
         this.getSearchPagePost(this.postApprovalSearch.value.demandTypeSearch,
           this.postApprovalSearch.value.landTypeSearch,
           '',
-          this.postApprovalSearch.value.maxPriceSearch,
+          tempMaxPrice,
           this.postApprovalSearch.value.citySearch,
           this.postApprovalSearch.value.districtSearch,
           this.postApprovalSearch.value.wardsSearch, 0);
-      } else {
+      }
+      else if (!this.postApprovalSearch.controls.minPriceSearch.dirty && !this.postApprovalSearch.controls.maxPriceSearch.dirty ) {
         this.getSearchPagePost(this.postApprovalSearch.value.demandTypeSearch,
           this.postApprovalSearch.value.landTypeSearch,
           this.postApprovalSearch.value.minPriceSearch,
@@ -154,8 +157,18 @@ export class PostListApprovalComponent implements OnInit {
           this.postApprovalSearch.value.districtSearch,
           this.postApprovalSearch.value.wardsSearch, 0);
       }
-    }
-  }
+      else {
+        const tempMinPrice = this.postApprovalSearch.value.minPriceSearch * 1000000;
+        const tempMaxPrice = this.postApprovalSearch.value.maxPriceSearch * 1000000;
+        this.getSearchPagePost(this.postApprovalSearch.value.demandTypeSearch,
+          this.postApprovalSearch.value.landTypeSearch,
+          tempMinPrice,
+          tempMaxPrice,
+          this.postApprovalSearch.value.citySearch,
+          this.postApprovalSearch.value.districtSearch,
+          this.postApprovalSearch.value.wardsSearch, 0);
+      }
+    }}
 
   /**
    * Create by: NgocLV
@@ -166,7 +179,41 @@ export class PostListApprovalComponent implements OnInit {
    */
 
   gotoPage(pageNumber: number): void {
-    this.getPagePost(pageNumber);
+    if (this.postApprovalSearch.dirty){
+      if (this.postApprovalSearch.value.minPriceSearch == null && this.postApprovalSearch.value.maxPriceSearch == null ) {
+        this.getSearchPagePost(this.postApprovalSearch.value.demandTypeSearch,
+          this.postApprovalSearch.value.landTypeSearch,
+          '',
+          '',
+          this.postApprovalSearch.value.citySearch,
+          this.postApprovalSearch.value.districtSearch,
+          this.postApprovalSearch.value.wardsSearch, pageNumber);
+      }
+      else if (this.postApprovalSearch.value.minPriceSearch == null ) {
+        const tempMaxPrice = this.postApprovalSearch.value.maxPriceSearch * 1000000;
+        this.getSearchPagePost(this.postApprovalSearch.value.demandTypeSearch,
+          this.postApprovalSearch.value.landTypeSearch,
+          '',
+          tempMaxPrice,
+          this.postApprovalSearch.value.citySearch,
+          this.postApprovalSearch.value.districtSearch,
+          this.postApprovalSearch.value.wardsSearch, pageNumber);
+      }
+      else {
+        const tempMinPrice = this.postApprovalSearch.value.minPriceSearch * 1000000;
+        const tempMaxPrice = this.postApprovalSearch.value.maxPriceSearch * 1000000;
+        this.getSearchPagePost(this.postApprovalSearch.value.demandTypeSearch,
+          this.postApprovalSearch.value.landTypeSearch,
+          tempMinPrice,
+          tempMaxPrice,
+          this.postApprovalSearch.value.citySearch,
+          this.postApprovalSearch.value.districtSearch,
+          this.postApprovalSearch.value.wardsSearch, pageNumber);
+      }
+    }
+    else {
+      this.getPagePost(pageNumber);
+    }
   }
 
   /**

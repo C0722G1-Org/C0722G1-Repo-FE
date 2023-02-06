@@ -7,6 +7,7 @@ import {AdminGuard} from '../authGuard/admin.guard';
 import {CustomerGuard} from '../authGuard/customer.guard';
 import {EmployeeGuard} from '../authGuard/employee.guard';
 import {CustomerListComponent} from './customer-list/customer-list.component';
+import {CustomerDetailComponent} from './customer-detail/customer-detail.component';
 
 const routes: Routes = [
   {
@@ -18,8 +19,11 @@ const routes: Routes = [
     // , canActivate: [AuthGuard] && [CustomerGuard]
   },
   {
-    path: 'edit/:id', component: CustomerEditComponent
+    path: 'edit/:idCustomer', component: CustomerEditComponent
     // , canActivate: [AuthGuard] && [CustomerGuard]
+  },
+  {
+    path: 'detail/:id', component: CustomerDetailComponent
   }
 ];
 

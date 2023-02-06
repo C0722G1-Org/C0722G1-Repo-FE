@@ -87,10 +87,11 @@
         <th style="width: 8%">Loại NC</th>
         <th style="width: 8%">Loại BĐS</th>
         <th style="width: 15%">Vị Trí</th>
-        <th style="width: 11%">Giá (Triệu VNĐ)</th>
+        <th style="width: 11%">Giá </th>
         <th style="width: 11%">Diện tích (m<sup style="font-size: 12px">2</sup>)</th>
         <th style="width: 15%">Ghi chú</th>
-        <th colspan="2" style="text-align: center">Chức năng</th>
+        <th >Trạng thái</th>
+        <th >Chức năng</th>
       </tr>
       </thead>
       <tr *ngIf="(postApprovalList) == null; else elseBlock">
@@ -98,33 +99,36 @@
       </tr>
       <ng-template #elseBlock>
         <tbody *ngFor="let postApproval of postApprovalList.content; index as i">
-        <tr *ngIf="postApproval.idPost != undefined">
+        <tr *ngIf="postApproval.idPost != undefined && postApproval.price != undefined">
           <td style="padding-left: 3px">{{i + 1 + postApprovalList.number * 5}}</td>
-          <td *ngIf="postApproval.idPost < 10; else elseCase">NC00{{postApproval.idPost}}</td>
+          <td *ngIf="postApproval.idPost < 10; else elseCase">NC-00{{postApproval.idPost}}</td>
           <ng-template #elseCase>
-            <td *ngIf="postApproval.idPost < 100; else elseCase2">NC0{{postApproval.idPost}}</td>
+            <td *ngIf="postApproval.idPost < 100; else elseCase2">NC-0{{postApproval.idPost}}</td>
             <ng-template #elseCase2>
-              <td *ngIf="postApproval.idPost < 1000">NC{{postApproval.idPost}}</td>
+              <td *ngIf="postApproval.idPost < 1000">NC-{{postApproval.idPost}}</td>
             </ng-template>
           </ng-template>
           <td>{{postApproval.codeCustomer}}</td>
           <td>{{postApproval.demandType}}</td>
           <td>{{postApproval.landType}}</td>
           <td>{{postApproval.city}}, {{postApproval.district}} </td>
-          <td>{{postApproval.price}} (Triệu VNĐ)</td>
+          <td *ngIf="postApproval.price < 1000000000; else elsePrice">{{(postApproval.price/1000000)}} (Triệu VNĐ)</td>
+          <ng-template #elsePrice>
+            <td>{{postApproval.price/1000000000}} (Tỷ VNĐ) </td>
+          </ng-template>
           <td>{{postApproval.area}} m<sup style="font-size: 12px">2</sup></td>
-          <td>Mua nhà ngoại ô</td>
-          <td style="text-align: center">
+          <td>{{postApproval.note}}</td>
+          <td>
             <span *ngIf="postApproval.approval == true; else elseApproval" class="text-success"><i
               class="bi bi-check-lg"></i> Đã duyệt</span>
             <ng-template #elseApproval>
-              <button type="button" class="btn btn-outline-primary" style="padding: 3px 6px" data-bs-toggle="modal"
+              <button type="button" class="btn btn-outline-primary" style="padding: 3px 6px; width: 80%" data-bs-toggle="modal"
                       data-bs-target="#approvalModal" (click)="temp = postApproval">
                 Duyệt
               </button>
             </ng-template>
           </td>
-          <td style="text-align: center">
+          <td>
             <button class="btn" data-bs-toggle="modal" data-bs-target="#deleteModal" (click)="temp = postApproval">
               <i class="bi bi-trash3"></i></button>
           </td>
@@ -133,7 +137,6 @@
       </ng-template>
 
     </table>
-
 
     <!--  Phân trang -->
     <div *ngIf="postApprovalList" class="d-flex justify-content-center" id="last-row">

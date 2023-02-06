@@ -48,8 +48,7 @@ export class LoginComponent implements OnInit {
    * Date: 02/02/2023
    * Function: login using Account
    */
-  login(): void
-  {
+  login(): void {
     const signInForm = this.signInForm?.value;
     this.securityService.signIn(signInForm).subscribe(data => {
         console.log('data -----> ', data);

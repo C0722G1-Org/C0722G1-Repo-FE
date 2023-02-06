@@ -2,7 +2,6 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Employee} from '../../entity/employee/employee';
 import {FormGroup} from '@angular/forms';
 import {EmployeeService} from '../../service/employee.service';
-import {NotificationService} from '../../service/notification.service';
 
 @Component({
   selector: 'app-employee-delete',
@@ -16,28 +15,43 @@ export class EmployeeDeleteComponent implements OnInit {
   @Output()
   eventDelete = new EventEmitter();
   deleteForm: FormGroup = new FormGroup({});
-  constructor(private employeeService: EmployeeService,
-              private notificationService: NotificationService) { }
+  constructor(private employeeService: EmployeeService) { }
 
   ngOnInit(): void {
   }
 
+  /**
+   * Create by: NhanUQ
+   * Date created: 03/02/2023
+   * Function: delete employee
+   */
   deleteEmployee(): void {
-    console.log(this.employee.idEmployee);
     this.employeeService.deleteEmployee(this.employee.idEmployee).subscribe(() => {
       this.eventDelete.emit();
       this.showToastrSuccess();
     }, error => {
       this.showToastrError();
-    }, () => {});
+    }, () => {
+
+    });
   }
 
+  /**
+   * Create by: NhanUQ
+   * Date created: 03/02/2023
+   * Function: show message notification delete success
+   */
   private showToastrSuccess(): void {
-    this.notificationService.showSuccess('Xóa nhân viên thành công');
+    this.employeeService.showSuccess('Xóa nhân viên thành công', 'Thông báo!');
   }
 
+  /**
+   * Create by: NhanUQ
+   * Date created: 03/02/2023
+   * Function: show message notification delete error
+   */
   private showToastrError(): void {
-    this.notificationService.showError('Có lỗi khi thực hiện');
+    this.employeeService.showError('Có lỗi khi thực hiện', 'Thông báo!');
   }
 
 }

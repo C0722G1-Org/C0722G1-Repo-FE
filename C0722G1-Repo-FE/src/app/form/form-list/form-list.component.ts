@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {DataFormService} from '../../service/data-form.service';
+import {ToastrService} from 'ngx-toastr';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-form-list',
@@ -7,7 +10,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FormListComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dataFormService: DataFormService, private toastrService: ToastrService, private title: Title) {
+    this.title.setTitle('Hồ sơ và biểu mẫu');
+  }
+
 
   ngOnInit(): void {
   }
