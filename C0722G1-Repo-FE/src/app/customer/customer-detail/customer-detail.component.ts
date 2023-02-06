@@ -31,7 +31,8 @@ export class CustomerDetailComponent implements OnInit {
     this.detailById(this.activatedRoute.snapshot.params.idCustomr);
   }
 
-  detailById(idCustomer: any) {
+  // tslint:disable-next-line:typedef
+  detailById(idCustomer: number) {
     this.customerService.detailCustomerById(idCustomer).subscribe(
       data => {
         console.log(data);
