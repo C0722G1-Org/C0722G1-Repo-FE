@@ -73,12 +73,19 @@
 </div>
 </body>
 
-<ul *ngIf="postListCustomer && pageNumber && pageTotal">
-  <span *ngIf="pageNumber > 0" (click)="goToPage(demandType?demandType:'', idCustomer?idCustomer:'', pageNumber -1)">Trước</span>
+<ul *ngIf="postListCustomer && pageNumber && pageTotal && idCustomer!=''">
+  <span *ngIf="pageNumber > 0" (click)="goToPageWithRoleAdmin(demandType?demandType:'', idCustomer?idCustomer:'', pageNumber -1)">Trước</span>
   <li *ngFor="let pageIndex of [].constructor( pageTotal), index as i">
-    <span [ngClass]="pageNumber == pageIndex ? 'active' : ''"  (click)="goToPage(demandType?demandType:'', idCustomer?idCustomer:'', i+1)">{{i+1}}</span>
+    <span [ngClass]="pageNumber == pageIndex ? 'active' : ''"  (click)="goToPageWithRoleAdmin(demandType?demandType:'', idCustomer?idCustomer:'', i+1)">{{i+1}}</span>
   </li>
-  <span *ngIf="pageNumber<pageTotal-1" (click)="goToPage(demandType?demandType:'', idCustomer?idCustomer:'', pageNumber +1)">Sau</span>
+  <span *ngIf="pageNumber<pageTotal-1" (click)="goToPageWithRoleAdmin(demandType?demandType:'', idCustomer?idCustomer:'', pageNumber +1)">Sau</span>
+</ul>
+<ul *ngIf="postListCustomer && pageNumber && pageTotal && idCustomer ==''">
+  <span *ngIf="pageNumber > 0" (click)="goToPageWithRoleCustomer(demandType?demandType:'', idAccount?idAccount:'', pageNumber -1)">Trước</span>
+  <li *ngFor="let pageIndex of [].constructor( pageTotal), index as i">
+    <span [ngClass]="pageNumber == pageIndex ? 'active' : ''"  (click)="goToPageWithRoleCustomer(demandType?demandType:'', idAccount?idAccount:'', i+1)">{{i+1}}</span>
+  </li>
+  <span *ngIf="pageNumber<pageTotal-1" (click)="goToPageWithRoleCustomer(demandType?demandType:'', idAccount?idAccount:'', pageNumber +1)">Sau</span>
 </ul>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"

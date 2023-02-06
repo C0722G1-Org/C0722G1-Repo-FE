@@ -22,7 +22,19 @@ export class PostListCustomerService {
    * @param pageNumber
    * @return PagePostDto
    */
-  getAllAndSearch(idAccount: string|null|undefined, nameDemandTypeSearch: string, pageNumber: number): Observable<PagePostDto> {
-    return this._httpClient.get<PagePostDto>(this.URL_POST_LIST +"&nameDemandTypeSearch=" + nameDemandTypeSearch + "&idAccount=" + idAccount + "?page="+pageNumber);
+
+  getAllAndSearchWithRoleAdmin(idCustomer: string|null|undefined, nameDemandTypeSearch: string, pageNumber: number): Observable<PagePostDto> {
+    return this._httpClient.get<PagePostDto>(this.URL_POST_LIST+"-admin"+ +"&nameDemandTypeSearch=" + nameDemandTypeSearch + "&idCustomer=" + idCustomer + "?page="+pageNumber);
+  }
+  /**
+   * Created by: UyDD
+   * Date Created: 03/02/2023
+   * @param idCustomer
+   * @param nameDemandTypeSearch
+   * @param pageNumber
+   * @return PagePostDto
+   */
+  getAllAndSearchWithRoleCustomer(idAccount: string|null|undefined, nameDemandTypeSearch: string, pageNumber: number): Observable<PagePostDto> {
+    return this._httpClient.get<PagePostDto>(this.URL_POST_LIST+"-customer" +"&nameDemandTypeSearch=" + nameDemandTypeSearch + "&idAccount=" + idAccount + "?page="+pageNumber);
   }
 }

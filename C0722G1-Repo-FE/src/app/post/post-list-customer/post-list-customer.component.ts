@@ -13,7 +13,7 @@ export class PostListCustomerComponent implements OnInit {
   pageNumber: number | undefined = 0;
   postListCustomer: Post[] | undefined;
   idAccount: string | null | undefined = "";
-  idCustomer: string | null | undefined;
+  idCustomer: string | null | undefined = "";
   role: any;
   demandType: string | undefined | null = "";
 
@@ -26,6 +26,7 @@ export class PostListCustomerComponent implements OnInit {
    * @param
    * @return call function gotoPage(nameDemandType: string, idAccount: string, pageNumber: number) to display list post of customer with true role log in
    */
+
   ngOnInit(): void {
     this.role = localStorage.getItem("roles");
     if (this.role) {
@@ -33,12 +34,14 @@ export class PostListCustomerComponent implements OnInit {
       this.role = (JSON.parse(this.role)).forEach(data => {
         if (data.authority == "CUSTOMER") {
           this.idAccount = localStorage.getItem("idAccount");
-          this.goToPage("", this.idAccount + "", 0);
-        } else {
-          this.idCustomer = this.activatedRoute.snapshot.params["idCustomer"];
-          this.goToPage("", this.idCustomer + "", 0);
         }
       })
+      if (this.idAccount !== '') {
+        this.goToPageWithRoleCustomer("", this.idAccount + "", 0);
+      } else {
+        this.idCustomer = this.activatedRoute.snapshot.params["idCustomer"];
+        this.goToPageWithRoleAdmin("", this.idCustomer + "", 0);
+      }
     }
   }
 
@@ -49,10 +52,13 @@ export class PostListCustomerComponent implements OnInit {
    * @return call function gotoPage(nameDemandType: string, idAccount: string, pageNumber: number) to search by nameDemandType
    */
   searchByNameDemandType(value: string) {
-    if (!this.pageNumber) {
+    if (!this.pageNumber && this.idCustomer !== "") {
       this.pageNumber = 0;
+      this.goToPageWithRoleAdmin(value, this.idAccount + "", this.pageNumber);
+    } else if (!this.pageNumber && this.idCustomer == "") {
+      this.pageNumber = 0;
+      this.goToPageWithRoleCustomer(value, this.idCustomer + "", this.pageNumber);
     }
-    this.goToPage(value, this.idAccount + "", this.pageNumber)
   }
 
   /**
@@ -63,8 +69,25 @@ export class PostListCustomerComponent implements OnInit {
    * @param pageNumber
    * @return call function getAllAndSearch(nameDemandType, idAccount, pageNumber) from service to display list post of customer have paging
    */
-  goToPage(nameDemandType: string, idAccount: string, pageNumber: number) {
-    this._postListCustomerService.getAllAndSearch(nameDemandType, idAccount, pageNumber).subscribe(data => {
+
+  goToPageWithRoleAdmin(nameDemandType: string, idCustomer: string, pageNumber: number) {
+    this._postListCustomerService.getAllAndSearchWithRoleAdmin(nameDemandType, idCustomer, pageNumber).subscribe(data => {
+      this.pageTotal = data.totalPages;
+      this.pageNumber = data.pageable?.pageNumber;
+      this.postListCustomer = data.content;
+    })
+  }
+
+  /**
+   * Created by: UyDD
+   * Date Created: 03/02/2023
+   * @param nameDemandType
+   * @param idCustomer
+   * @param pageNumber
+   * @return call function getAllAndSearch(nameDemandType, idAccount, pageNumber) from service to display list post of customer have paging
+   */
+  goToPageWithRoleCustomer(nameDemandType: string, idAccount: string, pageNumber: number) {
+    this._postListCustomerService.getAllAndSearchWithRoleCustomer(nameDemandType, idAccount, pageNumber).subscribe(data => {
       this.pageTotal = data.totalPages;
       this.pageNumber = data.pageable?.pageNumber;
       this.postListCustomer = data.content;
