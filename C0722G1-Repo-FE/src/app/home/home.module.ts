@@ -6,16 +6,15 @@ import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { NavComponent } from './nav/nav.component';
 import { HomeComponent } from './home/home.component';
-import {ReactiveFormsModule} from "@angular/forms";
-import {SecurityModule} from "../security/security.module";
-
+import {ReactiveFormsModule} from '@angular/forms';
+import {SecurityModule} from '../security/security.module';
+import {LoginModalComponent} from '../security/login-modal/login-modal.component';
 
 @NgModule({
-    declarations: [FooterComponent, HeaderComponent, NavComponent, HomeComponent],
-    exports: [
-        HomeComponent,
-        HeaderComponent
-    ],
+    declarations: [FooterComponent, HeaderComponent, NavComponent, HomeComponent, LoginModalComponent],
+  exports: [
+    HomeComponent
+  ],
   imports: [
     CommonModule,
     HomeRoutingModule,

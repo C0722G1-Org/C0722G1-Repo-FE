@@ -13,12 +13,6 @@ export class DivisionService {
   constructor(private httpClient: HttpClient) {
   }
 
-  /**
-   * Create by: NhanUQ
-   * Date created: 03/02/2023
-   * Function: get list employee from BE
-   * @return Observable Division[]
-   */
   getAllDivision(): Observable<Division[]> {
     return this.httpClient.get<Division[]>(this.URL_DIVISION);
   }
