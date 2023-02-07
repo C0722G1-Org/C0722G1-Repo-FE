@@ -1,12 +1,12 @@
-<div class="container shadow pt-2 mt-5 border border-primary" style="background-color:#FFFFFF;">
+<div class="container shadow pt-2 border border-primary" style="background-color:#FFFFFF;">
   <button class="btn btn-outline-primary" type="button"><i class="fa-solid fa-arrow-left"></i></button>
-  <p class="text-center p-title fw-bold">Thêm bài đăng</p>
+  <p class="text-center p-title fw-bold">THÊM BÀI ĐĂNG</p>
   <hr>
   <form [formGroup]="createPostDtoUnit" (ngSubmit)="savePost()">
     <div class="row mt-4 mx-3 mb-3">
       <div class="col-2"></div>
       <div class="col-2">
-        <label for="customerCode" class="form-label"><i class="fa-regular fa-id-card"></i> Mã khách hàng(<span
+        <label for="customerCode" class="form-label"><i class="fa-regular fa-id-card"></i>Mã khách hàng(<span
           class="requirement-field">*</span>):</label>
       </div>
       <div class="col-3">
@@ -21,51 +21,79 @@
         <label for="postName" class="form-label"><i class="fa-regular fa-id-card"></i> Tên bài đăng(<span
           class="requirement-field">*</span>):</label>
       </div>
-      <div class="col-3">
-        <input class="form-control" type="text" id="postName">
+      <div class="col-5">
+        <input formControlName="namePost" class="form-control" type="text" id="postName">
+        <div class="text-danger"
+             *ngIf="createPostDtoUnit.controls['namePost'].invalid && (createPostDtoUnit.controls['namePost'].touched||createPostDtoUnit.controls['namePost'].dirty)">
+          <div *ngIf="createPostDtoUnit.controls['namePost'].errors?.required">
+            Tên bài đăng không được để trống
+          </div>
+          <div *ngIf="createPostDtoUnit.controls['namePost'].errors?.pattern">
+            Tên bài viết chứa các kí tự đặc biệt (chỉ cho phép chữ cái, chữ số , dấu cách và dấu /)
+          </div>
+          <div *ngIf="createPostDtoUnit.controls['namePost'].errors?.maxlength">
+            Tên bài đăng không hợp lệ (Tối đa 50 kí tự và tối thiểu 10 kí tự)
+          </div>
+          <div *ngIf="createPostDtoUnit.controls['namePost'].errors?.minlength">
+            Tên bài đăng không hợp lệ (Tối đa 50 kí tự và tối thiểu 10 kí tự)
+          </div>
+        </div>
       </div>
     </div>
-    <div class="row mx-3 mb-3">
+    <div class="row mx-3">
       <div class="col-2"></div>
       <div class="col-2">
         <label class="form-label"><i class="fa-brands fa-sellsy"></i>Nhu cầu(<span
           class="requirement-field">*</span>):</label>
       </div>
-      <div class="col-1">
+      <div *ngFor="let demand of demandTypeList" class="col-1">
         <div class="form-check">
-          <input class="form-check-input shadow" type="radio" name="demandType" id="buy"><label class="form-check-label"
-                                                                                                for="buy">Mua</label>
-        </div>
-      </div>
-      <div class="col-1">
-        <div class="form-check">
-          <input class="form-check-input shadow" type="radio" name="demandType" id="sell">
-          <label class="form-check-label" for="sell">Bán</label>
-        </div>
-      </div>
-      <div class="col-2">
-        <div class="form-check">
-          <input class="form-check-input shadow" type="radio" name="demandType" id="lease">
-          <label class="form-check-label" for="lease">Cho Thuê</label>
+          <input (change)="setPriceDescription(demand.idDemandType)" formControlName="idDemand"
+                 class="form-check-input shadow" type="radio" name="idDemand" id="{{demand.nameDemandType}}"
+                 value="{{demand.idDemandType}}">
+          <label class="form-check-label" for="{{demand.nameDemandType}}">{{demand.nameDemandType}}</label>
         </div>
       </div>
     </div>
     <div class="row mx-3 mb-3">
       <div class="col-2"></div>
-      <div class="col-2">
-        <label class="form-label"><i class="fa-brands fa-sellsy"></i>Loại bất động sản:(<span
-          class="requirement-field">*</span>):</label>
-      </div>
-      <div class="col-1">
-        <div class="form-check">
-          <input class="form-check-input shadow" type="radio" name="landType" id="home">
-          <label class="form-check-label" for="home">Nhà</label>
+      <div class="col-2"></div>
+      <div class="col-5">
+        <div class="form-text"
+             *ngIf="(createPostDtoUnit.controls['idDemand'].pristine && createPostDtoUnit.controls['idDemand'].untouched)">
+          Vui lòng chọn nhu cầu
+        </div>
+        <div class="text-danger"
+             *ngIf="(createPostDtoUnit.controls['idDemand'].invalid && (createPostDtoUnit.controls['idDemand'].touched||createPostDtoUnit.controls['idDemand'].dirty) && createPostDtoUnit.controls['idDemand'].value == -1)">
+          Vui lòng chọn loại bất động sản
         </div>
       </div>
-      <div class="col-1">
+    </div>
+    <div class="row mx-3">
+      <div class="col-2"></div>
+      <div class="col-2">
+        <label class="form-label"><i class="fa-brands fa-sellsy"></i>Loại bất động sản(<span
+          class="requirement-field">*</span>):</label>
+      </div>
+      <div *ngFor="let landType of landTypeList" class="col-1">
         <div class="form-check">
-          <input class="form-check-input shadow" type="radio" name="landType" id="land">
-          <label class="form-check-label" for="land">Đất</label>
+          <input formControlName="idLandType" class="form-check-input shadow" type="radio" name="idLandType"
+                 id="{{landType.nameLandType}}" value="{{landType.idLandType}}">
+          <label class="form-check-label" for="{{landType.nameLandType}}">{{landType.nameLandType}}</label>
+        </div>
+      </div>
+    </div>
+    <div class="row mx-3 mb-3">
+      <div class="col-2"></div>
+      <div class="col-2"></div>
+      <div class="col-5">
+        <div class="form-text"
+             *ngIf="(createPostDtoUnit.controls['idLandType'].pristine && createPostDtoUnit.controls['idLandType'].untouched)">
+          Vui lòng chọn loại bất động sản
+        </div>
+        <div class="text-danger"
+             *ngIf="(createPostDtoUnit.controls['idLandType'].invalid && (createPostDtoUnit.controls['idLandType'].touched||createPostDtoUnit.controls['idLandType'].dirty) && createPostDtoUnit.controls['idLandType'].value == -1)">
+          Vui lòng chọn loại bất động sản
         </div>
       </div>
     </div>
@@ -76,36 +104,65 @@
           class="requirement-field">*</span>):</label>
       </div>
       <div class="col-4">
-        <input class="form-control" type="text" id="numberAddress" required>
+        <input formControlName="numberAddress" class="form-control" type="text" id="numberAddress" required>
         <div class="form-text">VD: 122 đường abc</div>
+        <div class="text-danger"
+             *ngIf="createPostDtoUnit.controls['numberAddress'].invalid && (createPostDtoUnit.controls['numberAddress'].touched||createPostDtoUnit.controls['numberAddress'].dirty)">
+          <div *ngIf="createPostDtoUnit.controls['numberAddress'].errors?.required">
+            Địa chỉ cụ thể không được để trống
+          </div>
+          <div *ngIf="createPostDtoUnit.controls['numberAddress'].errors?.pattern">
+            Địa chỉ cụ thể chứa các kí tự đặc biệt (chỉ cho phép chữ cái, chữ số , dấu cách và dấu /)
+          </div>
+          <div *ngIf="createPostDtoUnit.controls['numberAddress'].errors?.maxlength">
+            Địa chỉ cụ thể không hợp lệ (Tối đa 50 kí tự và tối thiểu 5 kí tự)
+          </div>
+          <div *ngIf="createPostDtoUnit.controls['numberAddress'].errors?.minlength">
+            Địa chỉ cụ thể không hợp lệ (Tối đa 50 kí tự và tối thiểu 5 kí tự)
+          </div>
+        </div>
       </div>
     </div>
-    <div class="row mx-3 mb-3">
+    <div class="row mx-3">
       <div class="col-2"></div>
       <div class="col-2">
-        <label for="postDirection" class="form-label"><i class="fa-solid fa-location-dot"></i> Hướng nhà:(<span
+        <label for="postDirection" class="form-label"><i class="fa-solid fa-location-dot"></i> Hướng bất động sản(<span
           class="requirement-field">*</span>):</label>
       </div>
       <div class="col-3">
-        <select class="form-select" name="" id="postDirection">
-          <option value="">Đông</option>
-          <option value="">Tây</option>
-          <option value="">Nam</option>
-          <option value="">Bắc</option>
+        <select formControlName="idDirection" class="form-select" name="" id="postDirection">
+          <option value="-1">-- Hướng nhà --</option>
+          <option *ngFor="let item of directionList" [ngValue]="item.idDirection">{{item.nameDirection}}</option>
         </select>
       </div>
     </div>
     <div class="row mx-3 mb-3">
       <div class="col-2"></div>
+      <div class="col-2"></div>
+      <div class="col-5">
+        <div class="form-text"
+             *ngIf="(createPostDtoUnit.controls['idDirection'].pristine && createPostDtoUnit.controls['idDirection'].untouched)">
+          Vui lòng chọn hướng bất động sản
+        </div>
+        <div class="text-danger"
+             *ngIf="createPostDtoUnit.controls['idDirection'].invalid && (createPostDtoUnit.controls['idDirection'].touched||createPostDtoUnit.controls['idDirection'].dirty)">
+          <div
+            *ngIf="createPostDtoUnit.controls['idDirection'].errors?.required || createPostDtoUnit.controls['idDirection'].errors?.min">
+            Hướng bất động sản không được để trống
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mx-3 mb-3">
+      <div class="col-2"></div>
       <div class="col-2">
-        <label for="postCity" class="form-label"><i class="fa-solid fa-location-dot"></i> Tỉnh/Thành phố:(<span
+        <label for="postCity" class="form-label"><i class="fa-solid fa-location-dot"></i> Tỉnh/Thành phố(<span
           class="requirement-field">*</span>):</label>
       </div>
       <div class="col-3">
-        <select class="form-select" name="" id="postCity">
-          <option value="">Tỉnh Khánh Hoà</option>
-          <option value="">Thành phố Đà Nẵng</option>
-          <option value="">Thành phố Hà Nội</option>
+        <select #city class="form-select" (change)="getDistrictsListOnCity(city.value)" id="postCity">
+          <option value="-1">--- Chọn thành phố ---</option>
+          <option *ngFor="let item of cityList" [value]="item.idCity">{{item.nameCity}}</option>
         </select>
       </div>
     </div>
@@ -116,10 +173,13 @@
           class="requirement-field">*</span>):</label>
       </div>
       <div class="col-2 me-5">
-        <select class="form-select" name="" id="postDistrict">
-          <option value="">Quận Hải Châu</option>
-          <option value="">Quận Cẩm Lệ</option>
-          <option value="">Quận Thanh Khê</option>
+        <select #district class="form-select" id="postDistrict" (change)="getWardsListOnDistricts(district.value)">
+          <option value="-1">--- Hãy chọn thành phố ---</option>
+          <div *ngIf="districtsListOnCity.length == 0; else districtOption">
+          </div>
+          <ng-template #districtOption>
+            <option *ngFor="let item of districtsListOnCity" [value]="item.idDistrict">{{item.nameDistrict}}</option>
+          </ng-template>
         </select>
       </div>
       <div class="col-2 border-start pe-0">
@@ -127,11 +187,26 @@
           class="requirement-field">*</span>):</label>
       </div>
       <div class="col-2 p-0">
-        <select class="form-select" name="" id="postWards">
-          <option value="">Phường Hoà Hiệp Bắc</option>
-          <option value="">Phường Hoà Hiệp Nam</option>
-          <option value="">Phường Hoà Khánh Bắc</option>
+        <select formControlName="idWards" class="form-select" id="postWards">
+          <option *ngFor="let item of wardsListOnDistrict" [value]="item.idWards">{{item.nameWards}}</option>
         </select>
+      </div>
+    </div>
+    <div class="row mx-3 mb-3">
+      <div class="col-2"></div>
+      <div class="col-2"></div>
+      <div class="col-5">
+        <div class="form-text"
+             *ngIf="(createPostDtoUnit.controls['idWards'].pristine && createPostDtoUnit.controls['idWards'].untouched)">
+          Vui lòng chọn đầy đủ tỉnh/thành phố, quận/huyện,phường/xã
+        </div>
+        <div class="text-danger"
+             *ngIf="createPostDtoUnit.controls['idWards'].invalid && (createPostDtoUnit.controls['idWards'].touched||createPostDtoUnit.controls['idWards'].dirty)">
+          <div
+            *ngIf="createPostDtoUnit.controls['idWards'].errors?.required || createPostDtoUnit.controls['idWards'].errors?.min">
+            Vui lòng chọn đầy đủ tỉnh/thành phố, quận/huyện,phường/xã
+          </div>
+        </div>
       </div>
     </div>
     <div class="row mx-3 mb-3">
@@ -142,11 +217,30 @@
       </div>
       <div class="col-4">
         <div class="input-group flex-nowrap">
-          <input type="tel" id="postPrice" class="form-control">
-          <span class="input-group-text rounded-end">VND/m<sup>2</sup></span>
-          <span hidden class="input-group-text">VND/Tháng</span>
+          <input formControlName="price" type="tel" id="postPrice" class="form-control">
+          <div *ngIf="priceType==3; else priceDescriptionSwitch">
+            <span class="input-group-text">VND/Tháng</span>
+          </div>
+          <ng-template #priceDescriptionSwitch>
+            <span class="input-group-text rounded-end">VND/m<sup>2</sup></span>
+          </ng-template>
         </div>
         <div class="form-text">Đơn vị VND/m<sup>2</sup> hoặc VND/Tháng sẽ thay đổi theo nhu cầu</div>
+        <div class="text-danger"
+             *ngIf="createPostDtoUnit.controls['price'].invalid && (createPostDtoUnit.controls['price'].touched||createPostDtoUnit.controls['price'].dirty)">
+          <div *ngIf="createPostDtoUnit.controls['price'].errors?.required">
+            Giá tiền không được để trống
+          </div>
+          <div *ngIf="createPostDtoUnit.controls['price'].errors?.pattern">
+            Giá tiền sai định dạng (chứa kí tự)
+          </div>
+          <div *ngIf="createPostDtoUnit.controls['price'].errors?.max">
+            Giá tiền không được hỗ trợ (phải bé hơn 100 tỷ và lớn hơn 1 triệu)
+          </div>
+          <div *ngIf="createPostDtoUnit.controls['price'].errors?.min">
+            Giá tiền không được hỗ trợ (phải bé hơn 100 tỷ và lớn hơn 1 triệu)
+          </div>
+        </div>
       </div>
     </div>
     <div class="row mx-3 mb-3">
@@ -157,34 +251,103 @@
       </div>
       <div class="col-4">
         <div class="input-group flex-nowrap">
-          <input type="tel" id="postArea" class="form-control">
+          <input formControlName="area" type="tel" id="postArea" class="form-control">
           <span class="input-group-text rounded-end">m<sup>2</sup></span>
+        </div>
+        <div class="text-danger"
+             *ngIf="createPostDtoUnit.controls['area'].invalid && (createPostDtoUnit.controls['area'].touched||createPostDtoUnit.controls['area'].dirty)">
+          <div *ngIf="createPostDtoUnit.controls['area'].errors?.required">
+            Diện tích không được để trống
+          </div>
+          <div *ngIf="createPostDtoUnit.controls['area'].errors?.pattern">
+            Diện tích không hợp lệ (chứa kí tự)
+          </div>
+          <div *ngIf="createPostDtoUnit.controls['area'].errors?.max">
+            Diện tích không được hỗ trợ (phải bé hơn 10000m2 và lớn hơn 1m2)
+          </div>
+          <div *ngIf="createPostDtoUnit.controls['area'].errors?.min">
+            Diện tích không được hỗ trợ (phải bé hơn 10000m2 và lớn hơn 1m2)
+          </div>
         </div>
       </div>
     </div>
-    <div class="row mx-3 mb-3">
+    <div class="row mx-3">
       <div class="col-2"></div>
       <div class="col-2">
         <label class="form-label"><i class="fa-regular fa-image"></i> Ảnh minh hoạ:</label>
       </div>
-      <div class="col-4">
+      <div class="col-8">
         <label for="addImage" class="form-label btn btn-outline-success">Chọn ảnh minh hoạ</label>
-        <span id="fileChosen">chưa có ảnh</span>
-        <input type="file" onchange="showFilesName()" id="addImage" multiple accept="image/*" hidden/>
+        <span id="fileChosen"> {{nameImageList.toString()}}</span>
+        <input type="file" (change)="showFilesName($event)" id="addImage" multiple accept="image/*" hidden/>
+      </div>
+    </div>
+    <div class="row mx-3 mb-3">
+      <div class="col-2"></div>
+      <div class="col-2"></div>
+      <div class="col-5">
+        <div class="form-text" *ngIf="submitTimes<=0">
+          Vui lòng thêm ảnh
+        </div>
+        <div class="text-danger"
+             *ngIf="(submitTimes>0 && (imageList.length == 0||nameImageList.length == 0))">
+          Vui lòng thêm ảnh
+        </div>
       </div>
     </div>
     <div class="row mx-3 mb-4">
       <div class="col-2"></div>
       <div class="col-2">
-        <label for="" class="form-label"><i class="fa-regular fa-note-sticky"></i> Mô tả chi tiết:</label>
+        <label for="notePost" class="form-label"><i class="fa-regular fa-note-sticky"></i> Mô tả chi tiết:</label>
       </div>
-      <div class="col-4"><textarea class="form-control" name="" id="" cols="30" rows="3"></textarea></div>
+      <div class="col-6"><textarea formControlName="note" class="form-control" id="notePost" cols="30"
+                                   rows="3"></textarea>
+        <div class="text-danger"
+             *ngIf="createPostDtoUnit.controls['note'].invalid && (createPostDtoUnit.controls['note'].touched||createPostDtoUnit.controls['note'].dirty)">
+          <div *ngIf="createPostDtoUnit.controls['note'].errors?.pattern">
+            Mô tả chi tiết chứa các kí tự đặc biệt (chỉ cho phép chữ cái, chữ số , dấu cách và dấu /)
+          </div>
+          <div *ngIf="createPostDtoUnit.controls['note'].errors?.maxlength">
+            Mô tả chi tiết không hợp lệ (Tối đa 255 kí tự)
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mx-3 mb-4">
+      <div class="col-2"></div>
+      <div class="col-2">
+      </div>
+      <div class="col-6">
+        <p class="text-danger" *ngIf="messageFormServer.length != 0">{{messageFormServer}}</p>
+      </div>
     </div>
     <div class="row mx-3 mb-3">
       <div class="col-5"></div>
       <div class="col-4 p-0">
-        <button type="submit" class="btn btn-primary me-3">Xác nhận</button>
-        <button type="button" class="btn btn-light">Nhập lại</button>
+        <button type="button" class="btn btn-primary me-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+          Xác nhận
+        </button>
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+             aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">XÁC NHẬN ĐĂNG BÀI</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p class="text-primary">Bài đăng của bạn sẽ được gửi cho nhân viên quản lý</p>
+                <p class="text-danger">Chúng tôi sẽ liên hệ với bạn để xác nhận thông tin trong vòng 1-2 ngày kể từ khi
+                  bài đăng được gửi</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Xác nhận</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button type="button" (click)="resetCreatePostDtoUnit()" class="btn btn-light">Nhập lại</button>
       </div>
     </div>
   </form>

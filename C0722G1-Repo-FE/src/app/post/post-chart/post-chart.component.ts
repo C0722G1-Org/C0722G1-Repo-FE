@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {PortChart} from '../../entity/post/port-chart';
 import {PostService} from '../post.service';
+// @ts-ignore
 import {Chart} from 'chart.js';
 import {ToastContainerDirective, ToastrService} from 'ngx-toastr';
 

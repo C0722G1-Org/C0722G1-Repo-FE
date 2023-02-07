@@ -35,11 +35,18 @@
           </li>
         </ul>
         <div>
-          <span *ngIf="checkLogin">ROLE: </span><span style="font-size: 14px; color: blue" class="navbar-brand" href="#" *ngIf="checkLogin">{{roles}}</span>
-          <button class="btn btn-outline-danger me-2" type="submit" *ngIf="!checkLogin" data-bs-toggle="modal" data-bs-target="#login">Đăng nhập</button>
+          <span *ngIf="checkLogin">ROLE: </span><span style="font-size: 14px; color: blue" class="navbar-brand" href="#"
+                                                      *ngIf="checkLogin">{{roles}}</span>
+          <button class="btn btn-outline-danger me-2" type="submit" *ngIf="!checkLogin" data-bs-toggle="modal"
+                  data-bs-target="#login">Đăng nhập
+          </button>
           <button class="btn btn-outline-warning me-2" type="submit" *ngIf="!checkLogin">Đăng ký</button>
-          <button class="btn btn-outline-success me-2" type="submit" routerLink="/#" *ngIf="roles[0]=='CUSTOMER' && checkLogin">Đăng Tin</button>
-          <button class="btn btn-outline-success" type="submit" routerLink="/security/login" *ngIf="!checkLogin">Đăng Tin</button>
+          <button class="btn btn-outline-success me-2" type="submit" routerLink="/post/create"
+                  *ngIf="roles[0]=='CUSTOMER' && checkLogin">Đăng Tin
+          </button>
+          <button class="btn btn-outline-success" type="submit" routerLink="/security/login" *ngIf="!checkLogin">Đăng
+            Tin
+          </button>
         </div>
         <div *ngIf="roles[0]=='CUSTOMER' && checkLogin">
           <div class="dropdown">
