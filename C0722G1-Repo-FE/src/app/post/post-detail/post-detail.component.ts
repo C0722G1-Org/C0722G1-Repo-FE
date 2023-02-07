@@ -1,11 +1,10 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
 import {PostService} from '../post.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {ToastContainerDirective, ToastrService} from 'ngx-toastr';
-// import {StatusPost} from '../../entity/post/status-post';
 import {TokenService} from '../../service/token.service';
 import {Image} from '../../entity/post/image';
 import {PostDetailDto} from '../../dto/post/PostDetailDto';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ToastContainerDirective, ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-post-detail',

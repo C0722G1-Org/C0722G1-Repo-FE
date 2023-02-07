@@ -3,11 +3,12 @@ import {LandType} from '../../entity/post/land-type';
 import {PostListService} from './post-list.service';
 import {City} from '../../entity/post/city';
 import {Direction} from '../../entity/post/direction';
-import {FormBuilder, FormGroup} from '@angular/forms';
 import {PostListHome} from '../../entity/post/post-list-home';
 import {Image} from '../../entity/post/image';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {Title} from '@angular/platform-browser';
 import {ToastrService} from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-post-list',

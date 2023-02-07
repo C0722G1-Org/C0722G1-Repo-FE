@@ -1,10 +1,10 @@
+import {Division} from '../../entity/employee/division';
+import {EmployeeService} from '../../service/employee.service';
+import {DivisionService} from '../../service/division.service';
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
-import {Division} from '../../entity/employee/division';
 import {ToastrService} from 'ngx-toastr';
-import {EmployeeService} from '../../service/employee.service';
-import {DivisionService} from '../../service/division.service';
 
 @Component({
   selector: 'app-employee-create',

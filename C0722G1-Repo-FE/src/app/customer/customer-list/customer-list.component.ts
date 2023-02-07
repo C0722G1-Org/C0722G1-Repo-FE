@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
 import {PageCustomerDto} from '../../dto/page-customer-dto';
 import {Customer} from '../../entity/customer/customer';
 import {CustomerService} from '../../service/customer.service';
 import {Router} from '@angular/router';
 import {Title} from '@angular/platform-browser';
+import {Component, OnInit} from '@angular/core';
+
 
 
 @Component({

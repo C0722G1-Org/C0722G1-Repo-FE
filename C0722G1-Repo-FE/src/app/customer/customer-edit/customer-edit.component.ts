@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+
 import {CustomerEdit} from '../../entity/customer/customer-edit';
 import {CustomerService} from '../../service/customer.service';
 import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
+import {Component, OnInit} from '@angular/core';
 
 export const checkBirthDay: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
   // @ts-ignore
@@ -18,6 +19,7 @@ export const checkBirthDay: ValidatorFn = (control: AbstractControl): Validation
     return null;
   }
 };
+
 @Component({
   selector: 'app-customer-edit',
   templateUrl: './customer-edit.component.html',
@@ -80,14 +82,14 @@ export class CustomerEditComponent implements OnInit {
 
   updateCustomer(): void {
     const customer = this.editForm.value;
-    this.customerService.updateCustomer(customer).subscribe(data => {
+    this.customerService.updateCustomer(customer).subscribe((data: any) => {
       if (data != null) {
         this.toastrService.error('Không có dữ liệu để chỉnh sửa!', 'Thông báo');
       } else {
         this.toastrService.success('Sửa thông tin khách hàng thành công!', 'Thông báo');
         this.router.navigateByUrl('/customer');
       }
-    }, error => {
+    }, (error: any) => {
     });
   }
 

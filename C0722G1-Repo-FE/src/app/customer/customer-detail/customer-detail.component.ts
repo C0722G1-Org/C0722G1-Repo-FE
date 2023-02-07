@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {CustomerService} from '../../service/customer.service';
-import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {Customer} from '../../entity/customer/customer';
+import {CustomerService} from '../../service/customer.service';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Title} from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-customer-detail',
@@ -12,7 +13,6 @@ import {Title} from '@angular/platform-browser';
 })
 export class CustomerDetailComponent implements OnInit {
   idCustomer: number | undefined;
-  rfCustomer: FormGroup | undefined;
   customerDetail: Customer | undefined;
 
   constructor(private customerService: CustomerService,

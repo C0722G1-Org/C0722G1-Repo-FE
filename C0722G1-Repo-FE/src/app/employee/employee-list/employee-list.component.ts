@@ -1,5 +1,4 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+
 import {Employee} from '../../entity/employee/employee';
 import {Division} from '../../entity/employee/division';
 import {EmployeeService} from '../../service/employee.service';
@@ -7,6 +6,8 @@ import {DivisionService} from '../../service/division.service';
 import {EmployeeInfoJson} from '../../dto/employee/employee-info-json';
 import {EmployeeInfo} from '../../dto/employee/employee-info';
 import {Title} from '@angular/platform-browser';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-employee-list',

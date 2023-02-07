@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+
 import {Post} from '../../entity/post/post';
 import {PagePostDto} from '../../dto/post/page-post-dto';
 import {PostListCustomerService} from '../../service/post-list-customer/post-list-customer.service';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({

@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Employee} from '../../entity/employee/employee';
 import {Division} from '../../entity/employee/division';
-import {ActivatedRoute, Router} from '@angular/router';
-import {ToastrService} from 'ngx-toastr';
 import {EmployeeService} from '../../service/employee.service';
 import {DivisionService} from '../../service/division.service';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-employee-edit',

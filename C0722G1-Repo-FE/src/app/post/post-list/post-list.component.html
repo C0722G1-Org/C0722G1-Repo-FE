@@ -38,10 +38,11 @@
         </div>
         <div class="col-4">
           <button type="submit" class="btn btn-outline-danger my-1">Tìm kiếm</button>
-          <button class="btn btn-outline-danger my-1 mx-3" (click)="resetSearch()"><i class="fa-solid fa-arrows-rotate"></i></button>
+          <button class="btn btn-outline-danger my-1 mx-3" (click)="resetSearch()"><i
+            class="fa-solid fa-arrows-rotate"></i></button>
           <select formControlName="direction" class="form-select my-2" aria-label="Default select example">
             <option value="">Hướng</option>
-            <option *ngFor="let item of directionList" [ngValue]="item">{{item.nameDirection}}</option>
+            <option *ngFor="let item of directionList" [ngValue]="item.nameDirection">{{item.nameDirection}}</option>
           </select>
         </div>
       </form>
@@ -52,18 +53,23 @@
     <div class="col-12" *ngIf="mess!=''" style="height: 280px">
       <h1>{{mess}}</h1>
     </div>
-    <a [routerLink]=["/post/detail",item.idPost] class="col-lg-3 d-flex justify-content-center" *ngFor="let item of postList" href="" style="text-decoration: none">
-      <div class="card p-0 my-5" style="width: 19rem">
-        <img *ngIf="item.imageURL == ''" src="https://premiervillagehalongbayresort.com/wp-content/uploads/2019/08/Bản-sao-của-775A8349-1.jpg"
+    <div class="col-lg-3 d-flex justify-content-center" *ngFor="let item of postList" style="text-decoration: none">
+      <a id="postCard" [routerLink]="['/post/detail', item.idPost]" class="card p-0 my-5" style="width: 19rem"
+         style="text-decoration: none">
+        <img *ngIf="item.imageURL == ''"
+             src="https://premiervillagehalongbayresort.com/wp-content/uploads/2019/08/Bản-sao-của-775A8349-1.jpg"
              class="card-img-top" alt="..." style="height: 250px">
         <img *ngIf="item.imageURL != ''" [src]="item.imageURL"
-             class="card-img-top" alt="https://premiervillagehalongbayresort.com/wp-content/uploads/2019/08/Bản-sao-của-775A8349-1.jpg" style="height: 250px">
+             class="card-img-top"
+             alt="lỗi"
+             style="height: 250px">
         <div class="card-body" style="height: 200px">
           <h6 class="card-title text-danger" maxlength="20" style="height: 50px">{{item.namePost}}</h6>
           <p class="card-text text-dark" *ngIf="item.price != undefined">
-            <span *ngIf="item.price >= 1000000000; else elseBlock">{{item.price/1000000000| number :'1.1-1' }} tỷ</span>
+            <span *ngIf="item.price >= 1000000000; else elseBlock">{{item.price / 1000000000| number :'1.1-1' }}
+              tỷ</span>
             <ng-template #elseBlock>
-              <span>{{item.price/1000000| number :'1.1-1' }} triệu</span>
+              <span>{{item.price / 1000000| number :'1.1-1' }} triệu</span>
             </ng-template>
             <span> . </span>
             <span>{{item.area}} m<sup>2</sup></span>
@@ -78,12 +84,14 @@
             <span>{{item.dateCreation|date:'dd/MM/yyyy'}}</span>
           </p>
         </div>
-      </div>
-    </a>
+      </a>
+    </div>
 
   </div>
   <div class="text-center my-3">
     <button *ngIf="page != totalPage-1 && mess==''" class="btn btn-outline-dark" (click)="showMore()">Xem thêm</button>
-    <button *ngIf="page == totalPage-1 && mess=='' && totalPage != 1" class="btn btn-outline-dark" (click)="showLess()">Ẩn đi</button>
+    <button *ngIf="page == totalPage-1 && mess=='' && totalPage != 1" class="btn btn-outline-dark" (click)="showLess()">
+      Ẩn đi
+    </button>
   </div>
 </div>

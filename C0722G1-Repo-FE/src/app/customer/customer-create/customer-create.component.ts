@@ -1,17 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  ValidationErrors,
-  ValidatorFn,
-  Validators
-} from '@angular/forms';
-import {Router} from '@angular/router';
 import {Account} from '../../entity/account/account';
 import {Customer} from '../../entity/customer/customer';
 import {CustomerService} from '../../service/customer.service';
+import {Router} from '@angular/router';
+import {AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
 
 
 export const checkBirthDay: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
@@ -26,7 +18,6 @@ export const checkBirthDay: ValidatorFn = (control: AbstractControl): Validation
     return null;
   }
 };
-
 
 @Component({
   selector: 'app-customer-create',
@@ -43,10 +34,10 @@ export class CustomerCreateComponent implements OnInit {
   submitted = false;
   action = true;
   status = false;
-  account : Account | undefined;
+  account: Account | undefined;
   customer: Customer | undefined;
   result = false;
-  private customerForm: FormGroup| undefined;
+  private customerForm: FormGroup | undefined;
   private listMailCustomerAndUsernameAccount: string[] | undefined;
 
 
@@ -105,6 +96,7 @@ export class CustomerCreateComponent implements OnInit {
 
     return (new Date().getFullYear() - formYear > 15) ? null : {invalidDateOfBirth: true};
   }
+
   getListMailCustomer(): void {
     this.customerService.findListMailCustomerr().subscribe(list => {
       this.listMailCustomerAndUsernameAccount = list;
@@ -143,7 +135,7 @@ export class CustomerCreateComponent implements OnInit {
                 Validators.minLength(6)])
             }, this.checkPasswords
           )
-        }, {validators: [this.isExist, this.areEqual ]},
+        }, {validators: [this.isExist, this.areEqual]},
       );
     });
   }
@@ -155,6 +147,7 @@ export class CustomerCreateComponent implements OnInit {
     // @ts-ignore
     console.log(this.status, this.customerForm.valid);
   }
+
   isExist: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
     // @ts-ignore
     const email = control.get('emailCustomer').value;
@@ -168,7 +161,7 @@ export class CustomerCreateComponent implements OnInit {
       }
     });
     return result;
-  }
+  };
   areEqual: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
     // @ts-ignore
     const username = control.get('usernameAccount').value;
@@ -182,5 +175,5 @@ export class CustomerCreateComponent implements OnInit {
       }
     });
     return result;
-  }
+  };
 }

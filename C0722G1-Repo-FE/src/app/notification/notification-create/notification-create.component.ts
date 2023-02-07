@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
 import {NotificationServiceService} from '../../service/notification-service.service';
+import Swal from 'sweetalert2';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
-import {FormBuilder, Validators} from '@angular/forms';
 import {Title} from '@angular/platform-browser';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-notification-create',

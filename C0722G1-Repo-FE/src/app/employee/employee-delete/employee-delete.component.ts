@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Employee} from '../../entity/employee/employee';
-import {FormGroup} from '@angular/forms';
 import {EmployeeService} from '../../service/employee.service';
+import {FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-employee-delete',

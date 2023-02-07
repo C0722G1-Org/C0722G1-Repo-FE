@@ -1,10 +1,12 @@
+import {Customer} from '../../entity/customer/customer';
+
+import {CustomerService} from '../../service/customer.service';
 import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
-import {Customer} from '../../entity/customer/customer';
 import {Router} from '@angular/router';
-import {CustomerService} from '../../service/customer.service';
 import {Title} from '@angular/platform-browser';
 import {ToastrService} from 'ngx-toastr';
+
 
 export const checkBirthDay: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
   // @ts-ignore
@@ -26,7 +28,6 @@ export const checkBirthDay: ValidatorFn = (control: AbstractControl): Validation
 })
 export class CustomerAddComponent implements OnInit {
   rfAddCustomer: FormGroup | undefined;
-  customerList: Customer [] | undefined;
   private listMailCustomerAndUsernameAccount: string[] | undefined;
 
 

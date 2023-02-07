@@ -1,13 +1,12 @@
-/* tslint:disable */
-import {Component, Inject, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {error} from 'protractor';
-import {ToastrService} from 'ngx-toastr';
 import {NotificationService} from '../../service/notification.service';
 import {PageNotificationDto} from '../../dto/notification/page-notification-dto';
 import {NotificationDeleteDto} from '../../dto/notification/notification-delete-dto';
-import {Title} from "@angular/platform-browser";
+import {Component, OnInit} from '@angular/core';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ToastrService} from 'ngx-toastr';
+import {Title} from '@angular/platform-browser';
 
+// @ts-ignore
 @Component({
   selector: 'app-notification-list',
   templateUrl: './notification-list.component.html',
@@ -28,27 +27,34 @@ export class NotificationListComponent implements OnInit {
   checkedAll!: boolean;
   orderNumber!: number;
 ​
+
   constructor(private notificationService: NotificationService,
               private formBuilder: FormBuilder,
               private toastrService: ToastrService,
-              private titleService:Title) {
-    this.titleService.setTitle("DANH SÁCH THÔNG BÁO")
+              private titleService: Title) {
+    this.titleService.setTitle('DANH SÁCH THÔNG BÁO');
   }
+
 ​
+
   ngOnInit(): void {
     this.createSearchForm();
     this.searchNotification(0);
     this.deleteIds = [];
     this.checkedAll = false;
   }
+
 ​
+
   searchNotification(pageNumber: number): void {
     this.notificationService.getPageNotifications(this.rfSearch.value, pageNumber).subscribe(next => {
       this.pageNotifications = next;
     }, error => {
     });
   }
+
 ​
+
   getSearchDate(timeInfo: string): string {
     let today = new Date();
     switch (timeInfo) {
@@ -64,7 +70,9 @@ export class NotificationListComponent implements OnInit {
         return '';
     }
   }
+
 ​
+
   createSearchForm(): void {
     this.rfSearch = this.formBuilder.group({
       title: ['', [
@@ -76,7 +84,9 @@ export class NotificationListComponent implements OnInit {
       startDate: ['', this.constrainNotAfterToday]
     });
   }
+
 ​
+
   constrainNotAfterToday(abstractControl: AbstractControl): any {
     if (abstractControl.value == '') {
       return null;
@@ -85,20 +95,28 @@ export class NotificationListComponent implements OnInit {
     let inputSearchDate = new Date(abstractControl.value).getTime();
     return (today - inputSearchDate >= 0) ? null : {invalidSearchDate: true};
   }
+
 ​
+
   resetFormAndData(): void {
     this.ngOnInit();
   }
+
 ​
+
   gotoPage(pageNumber: number): void {
     this.searchNotification(pageNumber);
   }
+
 ​
+
   addToDelete(id: number): void {
     const index = this.deleteIds.indexOf(id);
     index > -1 ? this.deleteIds.splice(index, 1) : this.deleteIds.push(id);
   }
+
 ​
+
   addAllToDelete(): void {
     this.checkedAll = true;
     for (let value of this.pageNotifications.content) {
@@ -125,7 +143,9 @@ export class NotificationListComponent implements OnInit {
       }
     }
   }
+
 ​
+
   sendToDeleteGroupModal(): void {
     this.deleteNotifications = [];
     this.notificationService.findByListId(this.deleteIds).subscribe(data => {
@@ -133,7 +153,9 @@ export class NotificationListComponent implements OnInit {
     }, error => {
     });
   }
+
 ​
+
   delete(): void {
     this.notificationService.delete(this.deleteIds).subscribe(next => {
       this.toastrService.success('Xóa thành công', 'Thông báo', {
@@ -152,8 +174,8 @@ export class NotificationListComponent implements OnInit {
     }, () => {
       this.ngOnInit();
     });
-  }
-​
+  };
+
   expandOrCollapse(id: number, action: string) {
     if (action === 'expand') {
       // @ts-ignore
