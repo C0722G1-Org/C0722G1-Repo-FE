@@ -30,14 +30,19 @@ export class FormCreateComponent implements OnInit {
    */
   validationMessages = {
     contentDataForm: [
-      {type: 'required', message: 'Vui lòng nhập nội dung biểu mẫu '}
+      {type: 'required', message: 'Vui lòng nhập nội dung biểu mẫu '},
+      {type: 'pattern', message: 'Vui lòng nhập đúng định dạng'},
+      {type: 'minLength', message: 'Vui lòng nhập ít nhất 7 kí tự'},
+      {type: 'maxLength', message: 'Vui lòng nhập không quá 50 kí tự'}
     ],
     fileForm: [
       {type: 'required', message: 'Vui lòng thêm file  '}
     ]
   };
   dataFormCreate = new FormGroup({
-    contentDataForm: new FormControl('', [Validators.required]),
+    contentDataForm: new FormControl('', [Validators.required, Validators.pattern(
+      '[a-zA-Z _ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪ' +
+      'ễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+'), Validators.minLength(7), Validators.maxLength(50)]),
     urlDataForm: new FormControl(''),
     fileForm: new FormControl('', [Validators.required])
   });
