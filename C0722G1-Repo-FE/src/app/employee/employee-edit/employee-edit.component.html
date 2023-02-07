@@ -34,7 +34,7 @@
               <div class="col-8">
                 <input formControlName="nameEmployee" id="name" type="text" class="form-control"
                        placeholder="Nhập tên nhân viên.."/>
-                <div class="text-danger" *ngIf="formUpdateEmployee.controls.nameEmployee.invalid && formUpdateEmployee.controls.nameEmployee.invalid else elseBlock">
+                <div class="text-danger" *ngIf="formUpdateEmployee.controls.nameEmployee.touched && formUpdateEmployee.controls.nameEmployee.touched else elseBlock">
                   <span *ngIf="formUpdateEmployee.controls.nameEmployee.hasError('required')">Tên không được trống</span>
                   <span *ngIf="formUpdateEmployee.controls.nameEmployee.hasError('pattern')">Tên chưa đúng định dạng</span>
                 </div>
@@ -50,7 +50,7 @@
               </div>
               <div class="col-8">
                 <input formControlName="dateOfBirth" id="initialPrice" type="date" class="form-control"/>
-                <div class="text-danger" *ngIf="formUpdateEmployee.controls.dateOfBirth.invalid else elseBlock">
+                <div class="text-danger" *ngIf="formUpdateEmployee.controls.dateOfBirth.touched else elseBlock">
                   <span *ngIf="formUpdateEmployee.controls.dateOfBirth.hasError('required')">Ngày sinh không được trống</span>
                 </div>
                 <ng-template #elseBlock><br></ng-template>
@@ -75,7 +75,7 @@
                 </div>
               </div>
             </div>
-            <div class="text-danger" style="margin-left: 220px" *ngIf="formUpdateEmployee.controls.genderEmployee.invalid else elseBlock">
+            <div class="text-danger" style="margin-left: 220px" *ngIf="formUpdateEmployee.controls.genderEmployee.touched else elseBlock">
               <span *ngIf="formUpdateEmployee.controls.genderEmployee.hasError('required')">Giới tính không được trống</span>
             </div>
             <ng-template #elseBlock><br></ng-template>
@@ -99,7 +99,7 @@
               <div class="col-8">
                 <input formControlName="phoneEmployee" id="phone" type="text" class="form-control"
                        placeholder="Nhập số điện thoại nhân viên.."/>
-                <div class="text-danger" *ngIf="formUpdateEmployee.controls.phoneEmployee.invalid && formUpdateEmployee.controls.phoneEmployee.invalid else elseBlock">
+                <div class="text-danger" *ngIf="formUpdateEmployee.controls.phoneEmployee.touched && formUpdateEmployee.controls.phoneEmployee.touched else elseBlock">
                   <span *ngIf="formUpdateEmployee.controls.phoneEmployee.hasError('required')">SDT không được trống</span>
                   <span *ngIf="formUpdateEmployee.controls.phoneEmployee.hasError('pattern')">SDT chưa đúng định dạng</span>
                 </div>
@@ -115,7 +115,7 @@
               <div class="col-8">
                 <input formControlName="emailEmployee" id="email" type="text" class="form-control"
                        placeholder="Nhập email nhân viên.."/>
-                <div class="text-danger" *ngIf="formUpdateEmployee.controls.emailEmployee.invalid && formUpdateEmployee.controls.emailEmployee.invalid else elseBlock">
+                <div class="text-danger" *ngIf="formUpdateEmployee.controls.emailEmployee.touched && formUpdateEmployee.controls.emailEmployee.touched else elseBlock">
                   <span *ngIf="formUpdateEmployee.controls.emailEmployee.hasError('required')">Email không được trống</span>
                   <span *ngIf="formUpdateEmployee.controls.emailEmployee.hasError('email')">Email chưa đúng định dạng</span>
                 </div>

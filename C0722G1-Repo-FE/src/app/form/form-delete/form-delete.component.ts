@@ -26,22 +26,22 @@ export class FormDeleteComponent implements OnInit {
   ngOnInit(): void {
 
   }
-  // /**
-  //  * Create by: DungND
-  //  * Date created: 03/02/2023
-  //  * Function: deleteDataForm()
-  //  */
-  // deleteDataForm(): void {
-  //   this.dataFormService.deleteById(this.dataFormDelete.idDataForm).subscribe(() => {
-  //       this.alertService.showMessage('xóa thành công!');
-  //       this.deleteEvent.emit();
-  //     }, (error: any) => {
-  //       this.alertService.showMessageErrors('xóa không thành công!');
-  //     }
-  //     , () => {
-  //     }
-  //   );
-  //
-  // }
+  /**
+   * Create by: DungND
+   * Date created: 03/02/2023
+   * Function: deleteDataForm()
+   */
+  deleteDataForm(): void {
+    this.dataFormService.deleteById(this.dataFormDelete.idDataForm).subscribe(() => {
+        this.alertService.showMessage('xóa thành công!');
+        this.deleteEvent.emit();
+      }, (error: any) => {
+        this.alertService.showMessageErrors('xóa không thành công!');
+      }
+      , () => {
+      }
+    );
+
+  }
 
 }

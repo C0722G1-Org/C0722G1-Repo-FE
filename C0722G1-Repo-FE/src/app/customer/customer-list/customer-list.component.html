@@ -1,10 +1,4 @@
-<!--
-<div>
-  <p style="width: 100%; height: 100px; background-color: lightblue">
-    Header
-  </p>
-</div>
--->
+
 <div class="container-fluid main-content">
   <h2 class="text-center fw-bold mt-3">DANH SÁCH KHÁCH HÀNG </h2>
 
@@ -17,16 +11,6 @@
       </a>
       <div class="d-flex my-2">
         <div class="input-group mb-3">
-          <!--
-                    <input class="form-control me-1" type="text" placeholder="" aria-label="Search"
-                           class="form-control" [(ngModel)]="allSearch">
-                    <button class="btn btn-light btn-outline-warning" (click)="resetSearchInput()">
-                      <i class="fa-solid fa-xmark"></i></button>
-                    <div class="input-group-prepend">
-                      <button class="btn btn-outline-danger" type="button" (click)="searchByMore()">Tìm kiếm</button>
-                    </div>
-          -->
-
           <input style="width: 300px;margin-left: 513px" class="form-control me-1" type="search"
                  placeholder="Nhập vào tên hoặc địa chỉ muốn tìm" aria-label="Search" [(ngModel)]="allSearch">
           <button class="btn btn-outline-danger" type="button" (click)="searchByMore()">
@@ -58,11 +42,6 @@
       <td>{{item.name_customer}}</td>
       <td>{{item.address_customer}}</td>
       <td>{{item.phone_customer1}}</td>
-      <!--      <td>{{item.phone_customer2}}</td>-->
-<!--      <td>-->
-<!--        <h8 *ngIf="item.approval_customer != null; else elsePhone2">{{item.phone_customer2}}</h8>-->
-<!--        <ng-template #elsePhone2>Không có</ng-template>-->
-<!--      </td>-->
       <td>
         {{item.phone_customer2 != null ? item.phone_customer2 : ''}}
 
@@ -160,14 +139,6 @@
     </div>
   </div>
 </div>
-<!--
-<div>
-  <p style="width: 100%; height: 100px; background-color: lightpink">
-    Footer
-  </p>
-</div>
--->
-<!--Modal Xóa-->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
   <div class="modal-dialog">

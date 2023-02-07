@@ -115,8 +115,8 @@ export class PostChartComponent implements OnInit {
         }
       }
       this.createChart();
-      this.successToastr('Chào mừng bạn đến với màn hình xem thống kê bài đăng');
-      this.successToastr('Biểu đồ tất cả các năm');
+      this.successToastr('Chào mừng bạn đến với màn hình xem thống kê bài đăng!');
+      this.successToastr('Biểu đồ tất cả các năm!');
     }, error => {
     }, () => {
     });
@@ -132,7 +132,6 @@ export class PostChartComponent implements OnInit {
    * Author: DatTQ  ;  Date:02/02/2023
    */
   searchChart(month: string, year: string): void {
-    console.log(month, year);
     this.postService.searchChart(month, year).subscribe(data => {
       this.postCharList = data;
       this.totalTransaction = 0;
@@ -140,19 +139,23 @@ export class PostChartComponent implements OnInit {
       this.countTotal = 0;
       if ((month != null && month !== '' && month !== '-1')
         && (year != null && year !== '' && year === '-1') && this.postCharList != null) {
-        this.errorToastr('Bạn không chọn năm nên dữ liệu  hiển thị ở tháng hiện tại');
+        this.errorToastr('Bạn không chọn năm nên dữ liệu  hiển thị ở tháng & năm hiện tại!');
       }
       if ((month != null && month !== '' && month !== '-1') && (year != null && year !== '' && year !== '-1')
         && this.postCharList != null) {
-        this.successToastr('Thống kê bài đăng ' + month + ', năm ' + year + ' thành công');
+        this.successToastr('Thống kê bài đăng tháng ' + month + ', năm ' + year + '!');
       }
       if ((month != null && month !== '' && month !== '-1') && (year != null && year !== '' && year !== '-1')
         && this.postCharList == null) {
-        this.errorToastr('Không có dữ liệu bài đăng tháng ' + month + ', năm ' + year);
+        this.errorToastr('Không có dữ liệu bài đăng tháng ' + month + ', năm ' + year + '!');
       }
       if ((month != null && month !== '' && month === '-1') && (year != null && year !== '' && year !== '-1')
         && this.postCharList != null) {
-        this.successToastr('Thống kê bài đăng năm ' + year);
+        this.successToastr('Thống kê bài đăng năm ' + year + '!');
+      }
+      if ((month != null && month !== '' && month === '-1') && (year != null && year !== '' && year === '-1')
+        && this.postCharList != null) {
+        this.successToastr('Thống kê bài đăng trong danh sách!');
       }
       for (let i = 0; i < this.postCharList.length; i++) {
         if (data[i].statusPost === 1) {
@@ -186,8 +189,6 @@ export class PostChartComponent implements OnInit {
     this.count10 = 0;
     this.count11 = 0;
     this.count12 = 0;
-    this.postService.displayListChart().subscribe(data => {
-      this.postCharList = data;
       const posts = this.postCharList.length;
       for (let i = 0; i < posts; i++) {
         // tslint:disable-next-line:triple-equals
@@ -241,7 +242,6 @@ export class PostChartComponent implements OnInit {
       }
       this.createChart();
       this.successToastr('Biểu đồ bài đăng năm: ' + yearChange);
-    });
   }
 
   /**
@@ -259,8 +259,8 @@ export class PostChartComponent implements OnInit {
           label: 'Tổng bài đăng',
           data: [this.count1, this.count2, this.count3, this.count4, this.count5, this.count6,
             this.count7, this.count8, this.count9, this.count10, this.count11, this.count12],
-          backgroundColor: '#02165f',
-          borderColor: '#02165f',
+          backgroundColor: '#fa0234',
+          borderColor: '#fa0234',
           borderWidth: 2,
           fill: false,
         }]
@@ -285,8 +285,7 @@ export class PostChartComponent implements OnInit {
    */
   getTotalTransaction(): void {
     for (let i = 0; i <= this.postCharList.length; i++) {
-      // tslint:disable-next-line:triple-equals
-      if (this.postCharList[i]?.statusPost == 1) {
+      if (this.postCharList[i]?.statusPost === 1) {
         // @ts-ignore
         this.totalTransaction += this.postCharList[i].price;
       }
@@ -299,8 +298,7 @@ export class PostChartComponent implements OnInit {
    */
   getTotalPostSuccess(): void {
     for (let i = 0; i <= this.postCharList.length; i++) {
-      // tslint:disable-next-line:triple-equals
-      if (this.postCharList[i]?.statusPost == 1) {
+      if (this.postCharList[i]?.statusPost === 1) {
         this.countSuccess += 1;
       }
       this.countTotal = this.postCharList.length;

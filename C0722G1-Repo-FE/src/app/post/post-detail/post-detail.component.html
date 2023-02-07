@@ -59,7 +59,7 @@
       </div>
     </div>
     <div class="col-lg-2 ">
-      <div class="row sticky-top">
+      <div class="row">
         <div class="col-lg-6">
           <div class="card" style="width: 14rem; height: max-content">
             <div class="row">
@@ -106,7 +106,7 @@
               <div class="col-10">
                 <button style="text-align: center; width: 11rem" id="show" class="btn mt-1"
                         (click)="showPhoneNumber()"><span id="phoneNumber"
-                                                          style="font-size: smaller; color: white">{{phoneNumber}}</span>
+                                                          style="font-size: smaller; color: white"><span (click)="copyPhoneNumber(phoneNumber)">{{phoneNumber}}</span></span>
                 </button>
               </div>
               <div class="col-1"></div>
@@ -135,14 +135,16 @@
     </div>
     <div class="col-lg-6">
       <span>{{postDetail?.nameDemandType}}</span>
-      / <span class="link">{{postDetail?.nameLandType}}</span>
-      / <span class="link">hướng {{postDetail?.nameDirection}}</span>
-      / <span class="link">{{postDetail?.nameCity}}</span>
+      / <span [routerLink]="['/post/list/', postDetail?.nameLandType+'1']"
+              class="link">{{postDetail?.nameLandType}}</span>
+      / <span [routerLink]="['/post/list/', postDetail?.nameDirection+'2']"
+              class="link">hướng {{postDetail?.nameDirection}}</span>
+      / <span [routerLink]="['/post/list/', postDetail?.nameCity]" class="link">{{postDetail?.nameCity}}</span>
       <h4 class="mt-2">{{postDetail?.namePost}}
-        {{postDetail.numberAddress}},
-        {{postDetail.nameWards}},
-        {{postDetail.nameDistrict}},
-        {{postDetail.nameCity}}
+        {{postDetail?.numberAddress}},
+        {{postDetail?.nameWards}},
+        {{postDetail?.nameDistrict}},
+        {{postDetail?.nameCity}}
       </h4>
       <span class="mt-3">{{postDetail?.numberAddress}}, {{postDetail?.nameWards}},
         {{postDetail?.nameDistrict}}
@@ -167,11 +169,11 @@
         </div>
         <div class="col-3"><span class="hr_value">{{postDetail?.area}}m²</span></div>
         <div class="col-3"><span class="hr_value">{{postDetail?.nameDemandType}}</span></div>
-        <div class="col-3" style="margin-top: -0.2rem">
-          <a class="btn" (click)="showSucceedReport()">
-            <i id="warning" class="fa-solid fa-circle-exclamation"></i> Báo xấu
-          </a>
-        </div>
+<!--        <div class="col-3" style="margin-top: -0.2rem">-->
+<!--          <a class="btn" (click)="showSucceedReport()">-->
+<!--            <i id="warning" class="fa-solid fa-circle-exclamation"></i> Báo xấu-->
+<!--          </a>-->
+<!--        </div>-->
       </div>
       <hr>
     </div>

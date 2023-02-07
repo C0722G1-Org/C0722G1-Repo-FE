@@ -199,6 +199,15 @@ export class PostListApprovalComponent implements OnInit {
           this.postApprovalSearch.value.districtSearch,
           this.postApprovalSearch.value.wardsSearch, pageNumber);
       }
+      else if (!this.postApprovalSearch.controls.minPriceSearch.dirty && !this.postApprovalSearch.controls.maxPriceSearch.dirty ) {
+        this.getSearchPagePost(this.postApprovalSearch.value.demandTypeSearch,
+          this.postApprovalSearch.value.landTypeSearch,
+          this.postApprovalSearch.value.minPriceSearch,
+          this.postApprovalSearch.value.maxPriceSearch,
+          this.postApprovalSearch.value.citySearch,
+          this.postApprovalSearch.value.districtSearch,
+          this.postApprovalSearch.value.wardsSearch, pageNumber);
+      }
       else {
         const tempMinPrice = this.postApprovalSearch.value.minPriceSearch * 1000000;
         const tempMaxPrice = this.postApprovalSearch.value.maxPriceSearch * 1000000;

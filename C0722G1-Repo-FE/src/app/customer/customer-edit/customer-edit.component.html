@@ -70,24 +70,64 @@
                         <span
                           *ngIf="editForm.controls.phoneCustomer1.hasError('pattern')">Số điện thoại chưa đúng định dạng</span>
                       </div>
+                      <ng-template #elseBlock></ng-template><br>
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-2 row">
+                  <div class="d-flex align-items-center mb-2">
+                    <div class="col-4">
+                      <label for="phone2" class="form-label ms-2">Di động 2: <span
+                        style="color: red">(*)</span>:</label>
+                    </div>
+                    <div class="col-8">
+                      <input id="phone2" type="text" class="form-control" formControlName="phoneCustomer2" required/>
+                      <div class="text-danger"
+                           *ngIf="editForm.controls.phoneCustomer2.invalid else elseBlock">
+                        <span
+                          *ngIf="editForm.controls.phoneCustomer2.hasError('pattern')">Số điện thoại chưa đúng định dạng</span>
+                      </div>
+                      <ng-template #elseBlock></ng-template><br>
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-2 row">
+                  <div class="d-flex align-items-center mb-2">
+                    <div class="col-4">
+                      <label for="idCardCustomer" class="form-label ms-2">Số CCCD<span
+                        style="color: red">(*)</span>:</label>
+                    </div>
+                    <div class="col-8">
+                      <input id="idCardCustomer" type="text" class="form-control" formControlName="idCardCustomer"
+                             required placeholder="CCCD gồm 9 chữ số"/>
+                      <div class="text-danger"
+                           *ngIf="editForm.controls.idCardCustomer.invalid else elseBlock">
+                      <span
+                        *ngIf="editForm.controls.idCardCustomer.hasError('required') && editForm.controls.idCardCustomer.touched">CCCD không được để trống.</span>
+                        <span
+                          *ngIf="editForm.controls.idCardCustomer.hasError('pattern')">CCCD gồm 12 số.</span>
+                      </div>
                       <ng-template #elseBlock><br></ng-template>
                     </div>
                   </div>
-                  <div class="mb-2 row">
-                    <div class="d-flex align-items-center mb-2">
-                      <div class="col-4">
-                        <label for="phone2" class="form-label ms-2">Di động 2:</label>
-                      </div>
-                      <div class="col-8">
-                        <input id="phone2" type="text" class="form-control" style="margin-left: 7px"
-                               formControlName="phoneCustomer2"/>
-                        <div class="text-danger"
-                             *ngIf="editForm.controls.phoneCustomer2.invalid else elseBlock">
+                </div>
+                <div class="mb-2 row">
+                  <div class="d-flex align-items-center mb-2">
+                    <div class="col-4">
+                      <label for="emailCustomer" class="form-label ms-2">Email<span
+                        style="color: red">(*)</span>:</label>
+                    </div>
+                    <div class="col-8">
+                      <input id="emailCustomer" type="text" class="form-control" required
+                             formControlName="emailCustomer"/>
+                      <div class="text-danger"
+                           *ngIf="editForm.controls.emailCustomer.invalid && editForm.controls.emailCustomer.touched else elseBlock">
+                    <span
+                      *ngIf="editForm.controls.emailCustomer.hasError('required') && editForm.controls.emailCustomer.touched">Email không được để trống. Ví dụ: van12@gmail.com</span>
                         <span
-                          *ngIf="editForm.controls.phoneCustomer2.hasError('pattern')">Số điện thoại chưa đúng định dạng</span>
-                        </div>
-                        <ng-template #elseBlock><br></ng-template>
+                          *ngIf="editForm.controls.emailCustomer.hasError('email')">Email chưa đúng định dạng. Ví dự: van21@gmail.com</span>
                       </div>
+                      <ng-template #elseBlock><br></ng-template>
                     </div>
                   </div>
                 </div>
@@ -95,99 +135,64 @@
                   <div class="mb-2 row">
                     <div class="d-flex align-items-center mb-2">
                       <div class="col-4">
-                        <label for="idCardCustomer" class="form-label ms-2">Số CCCD<span
+                        <label class="form-label ms-2">Giới tính: <span
                           style="color: red">(*)</span>:</label>
                       </div>
                       <div class="col-8">
-                        <input id="idCardCustomer" type="text" class="form-control" formControlName="idCardCustomer"
-                               required placeholder="CCCD gồm 9 chữ số"/>
-                        <div class="text-danger"
-                             *ngIf="editForm.controls.idCardCustomer.invalid else elseBlock">
-                      <span
-                        *ngIf="editForm.controls.idCardCustomer.hasError('required') && editForm.controls.idCardCustomer.touched">CCCD không được để trống.</span>
-                          <span
-                            *ngIf="editForm.controls.idCardCustomer.hasError('pattern')">CCCD gồm 12 số.</span>
-                        </div>
-                        <ng-template #elseBlock><br></ng-template>
+                        <label class="form-check-label" for="nam">Nam</label>
+                        <input class="form-check-input" type="radio" name="genderCustomer" id="nam"
+                               formControlName="genderCustomer" required [value]="1" style="margin-left: 5px">
+                        <label class="form-check-label" for="nu" style="margin-left: 30px">Nữ</label>
+                        <input class="form-check-input" type="radio" name="genderCustomer" id="nu"
+                               formControlName="genderCustomer" [value]="0" style="margin-left: 5px">
+                        <span style="color: red"
+                              *ngIf="editForm.controls.genderCustomer.hasError('required') && editForm.controls.genderCustomer.touched">Giới tính không được để trống.</span>
                       </div>
                     </div>
                   </div>
+                  <div class="mb-2 row">
+                    <div class="d-flex align-items-center mb-2">
+                      <div class="col-4">
+                        <label for="dateOfBirth" class="form-label ms-2">Ngày sinh<span
+                          style="color: red">(*)</span>:</label>
+                      </div>
+                      <div class="col-8">
+                        <input id="dateOfBirth" type="date" class="form-control" formControlName="dateOfBirth"
+                               required/><br>
+                        <span style="color: red"
+                              *ngIf="editForm.controls.dateOfBirth.hasError('required') && editForm.controls.dateOfBirth.touched">Ngày sinh không được để trống.</span>
+                        <span style="color: red" *ngIf="editForm.hasError('checkBirthDay')">Tuổi phải nằm trong khoảng 18 đến 100.</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-2 row">
+                    <div class="d-flex align-items-center mb-2">
+                      <div class="col-4">
+                        <label for="addressCustomer" class="form-label ms-2">Địa chỉ<span
+                          style="color: red">(*)</span>:</label>
+                      </div>
+                      <div class="col-8">
+                        <input id="addressCustomer" type="text" class="form-control" formControlName="addressCustomer"
+                               required/>
+                        <span style="color: red"
+                              *ngIf="editForm.controls.addressCustomer.hasError('required') && editForm.controls.addressCustomer.touched">Địa chỉ không được để trống</span>
+                        <span style="color: red"
+                              *ngIf="editForm.controls.addressCustomer.hasError('maxlength') && editForm.controls.addressCustomer.touched">Địa chỉ không được quá 255 kí tự</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-center" style="margin-bottom: 15px">
+                    <button type="button" class="btn btn-secondary">Thoát</button>
+                    <input style="margin-left: 15px" type="submit" class="btn btn-primary"
+                           [disabled]="!editForm.valid"
+                           value="Lưu thông tin">
+                  </div>
                 </div>
               </div>
-              <div class="mb-2 row">
-                <div class="d-flex align-items-center mb-2">
-                  <div class="col-4">
-                    <label for="emailCustomer" class="form-label ms-2">Email<span
-                      style="color: red">(*)</span>:</label>
-                  </div>
-                  <div class="col-8">
-                    <input id="emailCustomer" type="text" class="form-control" required
-                           formControlName="emailCustomer"/>
-                    <div class="text-danger"
-                         *ngIf="editForm.controls.emailCustomer.invalid && editForm.controls.emailCustomer.touched else elseBlock">
-                    <span
-                      *ngIf="editForm.controls.emailCustomer.hasError('required') && editForm.controls.emailCustomer.touched">Email không được để trống. Ví dụ: van12@gmail.com</span>
-                      <span
-                        *ngIf="editForm.controls.emailCustomer.hasError('email')">Email chưa đúng định dạng.</span>
-                    </div>
-                    <ng-template #elseBlock><br></ng-template>
-                  </div>
-                </div>
-                <div class="mb-2 row">
-                  <div class="d-flex align-items-center mb-2">
-                    <div class="col-4">
-                      <label class="form-label ms-2">Giới tính: <span
-                        style="color: red">(*)</span>:</label>
-                    </div>
-                    <div class="col-8">
-                      <label class="form-check-label" for="nam">Nam</label>
-                      <input class="form-check-input" type="radio" name="genderCustomer" id="nam"
-                             formControlName="genderCustomer" required [value]="1" style="margin-left: 5px">
-                      <label class="form-check-label" for="nu" style="margin-left: 30px">Nữ</label>
-                      <input class="form-check-input" type="radio" name="genderCustomer" id="nu"
-                             formControlName="genderCustomer" [value]="0" style="margin-left: 5px">
-                      <span style="color: red"
-                            *ngIf="editForm.controls.genderCustomer.hasError('required') && editForm.controls.genderCustomer.touched">Giới tính không được để trống</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="mb-2 row">
-                  <div class="d-flex align-items-center mb-2">
-                    <div class="col-4">
-                      <label for="dateOfBirth" class="form-label ms-2">Ngày sinh<span
-                        style="color: red">(*)</span>:</label>
-                    </div>
-                    <div class="col-8">
-                      <input id="dateOfBirth" type="date" class="form-control" formControlName="dateOfBirth"
-                             required/><br>
-                      <span style="color: red"
-                            *ngIf="editForm.controls.dateOfBirth.hasError('required') && editForm.controls.dateOfBirth.touched">Ngày sinh không được để trống</span>
-
-                    </div>
-                  </div>
-                </div>
-                <div class="mb-2 row">
-                  <div class="d-flex align-items-center mb-2">
-                    <div class="col-4">
-                      <label for="addressCustomer" class="form-label ms-2">Địa chỉ<span
-                        style="color: red">(*)</span>:</label>
-                    </div>
-                    <div class="col-8">
-                      <input id="addressCustomer" type="text" class="form-control" formControlName="addressCustomer"
-                             required/>
-                      <span style="color: red"
-                            *ngIf="editForm.controls.addressCustomer.hasError('required') && editForm.controls.addressCustomer.touched">Địa chỉ không được để trống</span>
-                      <span style="color: red"
-                            *ngIf="editForm.controls.addressCustomer.hasError('maxlength') && editForm.controls.addressCustomer.touched">Địa chỉ không được quá 255 kí tự</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="d-flex justify-content-center" style="margin-bottom: 15px">
-                  <button type="button" class="btn btn-secondary">Thoát</button>
-                  <input style="margin-left: 15px" type="submit" class="btn btn-primary"
-                         [disabled]="!editForm.valid"
-                         value="Lưu thông tin">
-                </div>
+              <div style="font-style: italic">
+                <span>Những mục có chứa dấu </span>
+                <span style="color: red">(*)</span>
+                <span> là những mục bắt buộc nhập</span>
               </div>
             </form>
           </div>

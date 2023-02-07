@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {PageCustomerDto} from '../dto/page-customer-dto';
 import {CustomerEdit} from '../entity/customer/customer-edit';
 import {Customer} from '../entity/customer/customer';
+import {environment} from '../../environments/environment';
 
 
 @Injectable({
@@ -13,8 +14,8 @@ export class CustomerService {
   URL_CUSTOMER = 'http://localhost:8080';
   CUSTOMER_URL = 'http://localhost:8080/api/customer';
   CUSTOMER_URL_UPDATE = 'http://localhost:8080/api/customer/update-customer';
-  urlCustomer = 'http://localhost:8080/api/customer/signup';
-  urlListMaileCustomer = 'http://localhost:8080/api/customer/ListMailCustomerAnhNameAccount' ;
+  urlCustomer = 'http://localhost:8080/api/public/signup';
+  urlListMaileCustomer = 'http://localhost:8080/api/public/ListMailCustomerAnhNameAccount' ;
   /**
    * Create by: HocHH
    * @param httpClient
@@ -45,7 +46,7 @@ export class CustomerService {
    * method of using save customer
    */
 
-// tslint:disable-next-line:typedef
+
   saveCustomer(customer: Customer | undefined) {
     console.log(customer);
     return this.httpClient.post<Customer>(this.urlCustomer, customer);
@@ -56,9 +57,27 @@ export class CustomerService {
    * method of using save customer
    */
 
-  findListMailCustomerr(): Observable<string[]> {
-    return this.httpClient.get<string[]>(this.urlListMaileCustomer);
+  findListMailCustomerr(): Observable<Customer[]> {
+    return this.httpClient.get<Customer[]>(this.urlListMaileCustomer);
   }
 
+  /**
+   * Create by: HuyNV
+   * Date created : 01/02/2023
+   * Function : to create customer
+   *
+   */
+  createCustomer(customer: Customer): Observable<Customer> {
+    return this.httpClient.post<Customer>(environment.customerURL, customer);
+  }
 
+  /**
+   * Create by: HuyNV
+   * Date created : 01/02/2023
+   * Function : to find by id customer
+   *
+   */
+  detailCustomerById(idCustomer: number): Observable<Customer> {
+    return this.httpClient.get<Customer>(environment.detailCustomerURL + '/detail/' + idCustomer);
+  }
 }

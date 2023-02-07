@@ -1,9 +1,6 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {AuthGuard} from './authGuard/auth.guard';
-import {AdminGuard} from './authGuard/admin.guard';
-import {EmployeeGuard} from './authGuard/employee.guard';
-import {environment} from '../environments/environment';
 
 const routes: Routes = [
   {path: 'home', loadChildren: () => import('./home/home.module').then(module => module.HomeModule)},
