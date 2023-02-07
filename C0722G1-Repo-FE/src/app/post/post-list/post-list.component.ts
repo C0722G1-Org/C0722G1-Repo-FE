@@ -30,7 +30,7 @@ export class PostListComponent implements OnInit {
   constructor(private postListService: PostListService,
               private fb: FormBuilder,
               private titleService: Title, private toastrService: ToastrService) {
-    this.titleService.setTitle('home');
+    this.titleService.setTitle('Trang chủ');
     this.formSearch = this.fb.group({
       area: [''],
       price: [''],
