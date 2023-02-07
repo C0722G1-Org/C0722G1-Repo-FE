@@ -14,14 +14,17 @@ import {PostListApprovalComponent} from './post-list-approval/post-list-approval
 import {ToastContainerModule} from 'ngx-toastr';
 import {PostListCustomerComponent} from './post-list-customer/post-list-customer.component';
 import {AppModule} from '../app.module';
+import {NgxPaginationModule} from 'ngx-pagination';
+import {TruncateAddressModule} from './post-list-approval/truncate-address/truncate-address.module';
 
 
 @NgModule({
   declarations: [PostCreateComponent, PostEditComponent, PostListComponent, PostDeleteComponent, PostDetailComponent, PostChartComponent,
-    PostApprovalComponent, PostListApprovalComponent, PostListCustomerComponent],
+    PostApprovalComponent, PostListApprovalComponent, PostListCustomerComponent, TruncateAddressModule],
   exports: [
     PostDeleteComponent,
-    PostApprovalComponent
+    PostApprovalComponent,
+    TruncateAddressModule
   ]
   ,
   imports: [
@@ -29,7 +32,8 @@ import {AppModule} from '../app.module';
     PostRoutingModule,
     ToastContainerModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxPaginationModule
   ]
 
 })

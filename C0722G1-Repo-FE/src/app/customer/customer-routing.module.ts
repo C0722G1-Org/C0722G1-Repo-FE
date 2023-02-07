@@ -14,18 +14,15 @@ import {PostListCustomerComponent} from '../post/post-list-customer/post-list-cu
 const routes: Routes = [
   {
     path: '', component: CustomerListComponent
-    // , canActivateChild: [AdminGuard]
   },
   {
     path: 'create', component: CustomerCreateComponent
-    // , canActivate: [AuthGuard] && [CustomerGuard]
   },
   {
     path: 'add', component: CustomerAddComponent
   },
   {
     path: 'edit/:idCustomer', component: CustomerEditComponent
-    // , canActivate: [AuthGuard] && [CustomerGuard]
   },
   {
     path: 'detail/:id', component: CustomerDetailComponent

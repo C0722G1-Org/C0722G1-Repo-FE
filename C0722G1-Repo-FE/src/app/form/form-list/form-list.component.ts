@@ -12,15 +12,15 @@ import {DataForm} from '../../entity/form/data-form';
 })
 export class FormListComponent implements OnInit {
 
-  constructor(private dataFormService: DataFormService, private toastrService: ToastrService, private title: Title) {
-    this.title.setTitle('Hồ sơ và biểu mẫu');
-  }
-
   page = 0;
   contentDataForm = '';
   dataFormPage!: DataFormJson;
   dataForm: DataForm = {};
   @ViewChild(ToastContainerDirective, {static: true}) toastContainer: ToastContainerDirective | undefined;
+
+  constructor(private dataFormService: DataFormService, private toastrService: ToastrService, private titleService: Title) {
+    this.titleService.setTitle('Hồ sơ và biểu mẫu');
+  }
 
   ngOnInit(): void {
     this.searchByContent(this.contentDataForm, true);
@@ -41,6 +41,10 @@ export class FormListComponent implements OnInit {
     this.dataFormService.searchByContent(this.contentDataForm.trim(), this.page).subscribe(data => {
       if (data.content.length !== null) {
         this.dataFormPage = data;
+        if (contentDataForm !== '') {
+          this.toastrService.success('Tìm kiếm thành công', 'Thông Báo');
+          // this.toastrService.remove();
+        }
       }
     }, error => {
       this.contentDataForm = '';
@@ -48,21 +52,29 @@ export class FormListComponent implements OnInit {
       if (this.dataFormPage != null) {
         this.showToastrError();
       }
-      console.log(error);
     });
   }
-
+  /**
+   * Create by: DungND
+   * Date created: 03/02/2023
+   * Function: reloadList
+   *
+   */
+  // load lại list
+  reloadList(): void {
+    this.searchByContent('', true);
+  }
   /**
    * Create by: KhanhLB
    * Date created: 03/02/2023
    * Function: show message toastr when search error
    */
   private showToastrError(): void {
-    this.toastrService.error('Không có kết quả cần tìm', 'Thông báo');
+    this.toastrService.error('Không có kết quả cần tìm', 'Thông Báo');
   }
-
   gotoPage(pageNumber: number): void {
     this.page = pageNumber;
     this.ngOnInit();
+
   }
 }

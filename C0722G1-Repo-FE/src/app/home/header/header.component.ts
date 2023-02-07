@@ -32,7 +32,6 @@ export class HeaderComponent implements OnInit {
 
   logOut(): void {
     window.localStorage.clear();
-
     this.router.navigateByUrl('/').then(() => {
       location.reload();
     });

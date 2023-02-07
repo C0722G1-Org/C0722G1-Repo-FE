@@ -13,13 +13,13 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" href="#">Nhà đất bán</a>
+            <a class="nav-link active" [routerLink]="['/home/search', '1']">Nhà đất bán</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="#">Nhà đất cho thuê</a>
+            <a class="nav-link active" [routerLink]="['/home/search', '1']">Nhà đất cho thuê</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="#">Cần mua cần thuê</a>
+            <a class="nav-link active" [routerLink]="['/home/search', '1']">Cần mua nhà đất</a>
           </li>
           <li class="nav-item dropdown" *ngIf="roles[0]!=='CUSTOMER' && checkLogin">
             <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown"
@@ -39,20 +39,11 @@
           </li>
         </ul>
         <div>
-          <span *ngIf="checkLogin">ROLE: </span><span style="font-size: 14px; color: blue" class="navbar-brand" href="#"
-                                                      *ngIf="checkLogin">{{roles}}</span>
-          <button class="btn btn-outline-danger me-2" type="submit" *ngIf="!checkLogin" data-bs-toggle="modal"
-                  data-bs-target="#login">Đăng nhập
-          </button>
-          <button class="btn btn-outline-warning me-2" type="submit" routerLink="/customer/create" *ngIf="!checkLogin">
-            Đăng ký
-          </button>
-          <button class="btn btn-outline-success me-2" type="submit" routerLink="/post/create"
-                  *ngIf="roles[0]=='CUSTOMER' && checkLogin">Đăng Tin
-          </button>
-          <button class="btn btn-outline-success" type="submit" routerLink="/security/login" *ngIf="!checkLogin">Đăng
-            Tin
-          </button>
+          <span *ngIf="checkLogin"> </span><span style="font-size: 14px; color: blue" class="navbar-brand" href="#" *ngIf="checkLogin">{{name}}</span>
+          <button class="btn btn-outline-danger me-2" type="submit" *ngIf="!checkLogin" data-bs-toggle="modal" data-bs-target="#login">Đăng nhập</button>
+          <button class="btn btn-outline-warning me-2" type="submit" routerLink="/customer/create" *ngIf="!checkLogin">Đăng ký</button>
+          <button class="btn btn-outline-success me-2" type="submit" routerLink="/post/create" *ngIf="roles[0]=='CUSTOMER' && checkLogin">Đăng Tin</button>
+          <button class="btn btn-outline-success" type="submit" routerLink="/security/login" *ngIf="!checkLogin">Đăng Tin</button>
         </div>
         <div *ngIf="roles[0]=='CUSTOMER' && checkLogin">
           <div class="dropdown">

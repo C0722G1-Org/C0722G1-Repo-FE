@@ -17,7 +17,7 @@ export class PostDetailComponent implements OnInit {
   @ViewChild(ToastContainerDirective, {static: true}) toastContainer: ToastContainerDirective;
   imageList: Image[] = [];
 // @ts-ignore
-  accountId = 0;
+  accountId: string | null = '';
   million = 1000000;
   billion = 1000000000;
   postDetail: PostDetailDto = {};
@@ -27,12 +27,12 @@ export class PostDetailComponent implements OnInit {
   phoneNumber: string | undefined = '';
 // @ts-ignore
   displayPhoneNumber: string | undefined = '';
-  idex = 1;
+  url: string | undefined = '';
 
   constructor(private postService: PostService,
               private activatedRoute: ActivatedRoute,
               private toastr: ToastrService,
-              // private tokenService: TokenService,
+              private tokenService: TokenService,
               private titleService: Title,
               private router: Router) {
     this.activatedRoute.paramMap.subscribe(data => {
@@ -68,6 +68,7 @@ export class PostDetailComponent implements OnInit {
            */
           this.postService.findImageByIdPost(Number(id)).subscribe(dataImage => {
             this.imageList = dataImage;
+            this.url = this.imageList[0].url;
             if (this.postDetail.price != null && this.postDetail.price >= this.billion) {
               this.convertToBillion();
             } else if (this.postDetail.price != null && this.postDetail.price >= this.million) {
@@ -88,9 +89,9 @@ export class PostDetailComponent implements OnInit {
   ngOnInit(): void {
     this.titleService.setTitle('Chi tiết bất động sản');
     this.toastr.overlayContainer = this.toastContainer;
-    // if (this.tokenService.getToken()){
-    //   this.accountId = this.tokenService.getIdAccount();
-    // }
+    if (this.tokenService.getToken()) {
+      this.accountId = this.tokenService.getIdAccount();
+    }
     this.toastr.toastrConfig.positionClass = 'toast-bottom-right';
   }
 
@@ -158,5 +159,9 @@ export class PostDetailComponent implements OnInit {
       navigator.clipboard.writeText(this.displayPhoneNumber);
       this.toastr.info('Đã sao chép số điện thoại');
     }
+  }
+
+  changeImage(url: string | undefined): void {
+    this.url = url;
   }
 }
