@@ -12,7 +12,6 @@ import {PostModule} from './post/post.module';
 import {AngularFireModule} from '@angular/fire';
 import {environment} from '../environments/environment';
 import {FormModule} from './form/form.module';
-
 @NgModule({
   declarations: [
     AppComponent
@@ -30,6 +29,8 @@ import {FormModule} from './form/form.module';
     AngularFireModule.initializeApp(environment.firebaseConfig)
   ],
   providers: [],
+  exports: [
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

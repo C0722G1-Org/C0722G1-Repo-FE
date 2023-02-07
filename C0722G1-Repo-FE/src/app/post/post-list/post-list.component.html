@@ -54,8 +54,7 @@
       <h1>{{mess}}</h1>
     </div>
     <div class="col-lg-3 d-flex justify-content-center" *ngFor="let item of postList" style="text-decoration: none">
-      <a id="postCard" [routerLink]="['/post/detail', item.idPost]" class="card p-0 my-5" style="width: 19rem"
-         style="text-decoration: none">
+      <a id="postCard" [routerLink]="['/post/detail', item.idPost]" class="card p-0 my-5" style="width: 19rem; text-decoration: none">
         <img *ngIf="item.imageURL == ''"
              src="https://premiervillagehalongbayresort.com/wp-content/uploads/2019/08/Bản-sao-của-775A8349-1.jpg"
              class="card-img-top" alt="..." style="height: 250px">
@@ -64,7 +63,7 @@
              alt="lỗi"
              style="height: 250px">
         <div class="card-body" style="height: 200px">
-          <h6 class="card-title text-danger" maxlength="20" style="height: 50px">{{item.namePost}}</h6>
+          <h6 class="card-title text-danger" style="height: 50px">{{item.namePost|slice:0:100}}</h6>
           <p class="card-text text-dark" *ngIf="item.price != undefined">
             <span *ngIf="item.price >= 1000000000; else elseBlock">{{item.price / 1000000000| number :'1.1-1' }}
               tỷ</span>

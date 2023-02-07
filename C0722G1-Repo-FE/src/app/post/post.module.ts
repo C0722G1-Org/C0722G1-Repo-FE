@@ -12,6 +12,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { PostApprovalComponent } from './post-approval/post-approval.component';
 import { PostListApprovalComponent } from './post-list-approval/post-list-approval.component';
 import { PostListCustomerComponent } from './post-list-customer/post-list-customer.component';
+import {AppModule} from '../app.module';
 
 
 @NgModule({
@@ -22,11 +23,11 @@ import { PostListCustomerComponent } from './post-list-customer/post-list-custom
     PostApprovalComponent
   ]
   ,
-    imports: [
-        CommonModule,
-        PostRoutingModule,
-        FormsModule,
-        ReactiveFormsModule
-    ]
+  imports: [
+    CommonModule,
+    PostRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
+  ]
 })
 export class PostModule { }

@@ -14,8 +14,8 @@ export class CustomerService {
   URL_CUSTOMER = 'http://localhost:8080';
   CUSTOMER_URL = 'http://localhost:8080/api/customer';
   CUSTOMER_URL_UPDATE = 'http://localhost:8080/api/customer/update-customer';
-  urlCustomer = 'http://localhost:8080/api/customer/signup';
-  urlListMaileCustomer = 'http://localhost:8080/api/customer/ListMailCustomerAnhNameAccount' ;
+  urlCustomer = 'http://localhost:8080/api/public/signup';
+  urlListMaileCustomer = 'http://localhost:8080/api/public/ListMailCustomerAnhNameAccount' ;
   /**
    * Create by: HocHH
    * @param httpClient
@@ -46,7 +46,7 @@ export class CustomerService {
    * method of using save customer
    */
 
-// tslint:disable-next-line:typedef
+
   saveCustomer(customer: Customer | undefined) {
     console.log(customer);
     return this.httpClient.post<Customer>(this.urlCustomer, customer);
@@ -57,8 +57,8 @@ export class CustomerService {
    * method of using save customer
    */
 
-  findListMailCustomerr(): Observable<string[]> {
-    return this.httpClient.get<string[]>(this.urlListMaileCustomer);
+  findListMailCustomerr(): Observable<Customer[]> {
+    return this.httpClient.get<Customer[]>(this.urlListMaileCustomer);
   }
 
   /**

@@ -56,6 +56,10 @@ export class PostListService {
     return this.httpClient.get('http://localhost:8080/api/public/home/list?area=' + area + '&price=' + price + '&landType=' + landType + '&direction=' + direction + '&city=' + city + '&page=' + page);
   }
 
+  searchByLandType(landType: string | null): Observable<any> {
+    return this.httpClient.get('http://localhost:8080/api/public/home/list?landType=' + landType);
+  }
+
   /**
    * Create by: SangNP
    * Date created: 03/02/2023
@@ -64,5 +68,13 @@ export class PostListService {
    */
   getImageByIdPost(id: number | undefined): Observable<Image[]> {
     return this.httpClient.get<Image[]>('http://localhost:8080/api/public/home/image?id=' + id);
+  }
+
+  searchByDirection(direction: string | null): Observable<any> {
+    return this.httpClient.get('http://localhost:8080/api/public/home/list?direction=' + direction);
+  }
+
+  searchByCity(city: string | null): Observable<any> {
+    return this.httpClient.get('http://localhost:8080/api/public/home/list?city=' + city);
   }
 }

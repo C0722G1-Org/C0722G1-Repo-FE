@@ -1,87 +1,102 @@
-import {NotificationServiceService} from '../../service/notification-service.service';
-import Swal from 'sweetalert2';
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Title} from '@angular/platform-browser';
+import {ToastrService} from 'ngx-toastr';
+import {NotificationService} from '../../service/notification.service';
+import {Notification} from '../../entity/notification/notification';
 
+// @ts-ignore
 @Component({
   selector: 'app-notification-update',
   templateUrl: './notification-update.component.html',
   styleUrls: ['./notification-update.component.css']
 })
 export class NotificationUpdateComponent implements OnInit {
-
-  // @ts-ignore
-  notification: Notification;
+  notification!: Notification;
   notificationForm: FormGroup = new FormGroup({});
-  id: any ;
+  id!: number;
   // @ts-ignore
   checkId: boolean;
+​
+  notificationHasContent!: boolean;
+​
 
-  constructor(private notificationServiceService: NotificationServiceService,
+  constructor(private notificationService: NotificationService,
               private activatedRoute: ActivatedRoute,
               private router: Router,
               private formBuilder: FormBuilder,
-              private titleService: Title) {
-    this.titleService.setTitle('update Notificaon');
+              private titleService: Title,
+              private toastrService: ToastrService) {
+    this.titleService.setTitle('CHỈNH SỬA THÔNG BÁO');
   }
 
   ngOnInit(): void {
     this.updateNotification();
-
   }
 
-  private updateNotification(): any {
+  // tslint:disable-next-line:typedef
+  private updateNotification() {
     this.id = Number(this.activatedRoute.snapshot.params.id);
-    return this.notificationServiceService.finNotificationdById(this.id).subscribe(data => {
-      if (this.id != null) {
-        this.checkId = true;
-        // @ts-ignore
-        this.notification = data;
-        console.log('test', data);
-        this.notificationForm = this.formBuilder.group({
-          id: [],
-          title: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(70), Validators.pattern(('^[a-zA-Z_ÀÁÂÃÈÉÊẾÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêếìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ0-9/ ]{2,30}$'))]],
-          postingDate: ['', [Validators.required]],
-          content: ['', [Validators.required, Validators.maxLength(350), Validators.minLength(3), Validators.pattern(('^[a-zA-Z_ÀÁÂÃÈÉÊẾÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêếìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]{2,30}$'))]]
-        });
-        this.notificationForm.patchValue(data);
-      } else {
-        this.checkId = false;
-        alert('Notification Khong ton tai');
+    if (this.id == null) {
+      this.notificationHasContent = false;
+      return;
+    }
+    return this.notificationService.findNotificationdById(this.id).subscribe(data => {
+      if (data == null) {
+        this.notificationHasContent = false;
+        return;
       }
+      this.notificationHasContent = true;
+      this.checkId = true;
+      // @ts-ignore
+      this.notification = data;
+      console.log('test', data);
+      this.notificationForm = this.formBuilder.group({
+        id: [],
+        title: [this.notification.title, [Validators.required, Validators.minLength(7), Validators.maxLength(45)]],
+        postingDate: [this.getToday(), Validators.required],
+        content: [this.notification.content, [Validators.required, Validators.maxLength(400), Validators.minLength(7)]]
+      });
+    }, err => {
+      this.notificationHasContent = false;
     });
+  }
 
+  getToday(): string {
+    const today = new Date();
+    return (new Date(today.getTime())).toJSON().substring(0, 10);
   }
 
   submit(id: number): void {
     const notification = this.notificationForm.value;
     console.log('notification', notification);
-    this.notificationServiceService.update(id, notification).subscribe(() => {
-      Swal.fire({
-        icon: 'success',
-        title: 'Chỉnh sửa  thành công!',
-        width: 600,
-        padding: '3em',
-        color: '#716add',
-        showConfirmButton: false,
-        timer: 2500
-
+    this.notificationService.update(id, notification).subscribe(() => {
+      this.toastrService.success('Sửa thành công', 'Thông báo', {
+        timeOut: 2000,
+        progressBar: true,
+        positionClass: 'toast-top-right',
+        easing: 'ease-in'
       });
-
+    }, err => {
+      this.toastrService.error('Đã xảy ra lỗi', 'Lỗi', {
+        timeOut: 2000,
+        progressBar: true,
+        positionClass: 'toast-top-right',
+        easing: 'ease-in'
+      });
+    }, () => {
+      this.redirectTo('notification');
     });
-    // this.router.navigateByUrl('');
-    // this.ngOnInit();
-  }
-
-  // @ts-ignore
-  comparWithId(item1, item2): boolean {
-    return item1 && item2 && item1.id === item2.id;
+    this.ngOnInit();
   }
 
   resetForm(): void {
     this.ngOnInit();
   }
 
+  redirectTo(uri: string): void {
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+      this.router.navigate([uri]));
+  }
 }

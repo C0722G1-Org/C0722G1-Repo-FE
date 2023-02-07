@@ -2,12 +2,13 @@
   font-family: sans-serif;
   box-sizing: border-box;
   margin: 0;
+  /*padding: 0;*/
   border: 0;
   font-size: 16px;
   font: inherit;
   vertical-align: baseline;
 }
-
+​
 .remove_img {
   padding: 3px;
   position: absolute;
@@ -23,6 +24,7 @@
 h1 {
   font-size: 32px;
 }
+h2{font-size: 25px}
 body {
   width: 100vw;
   height: 100vh;
@@ -58,7 +60,7 @@ button {
 .slide {
   animation: slide 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   animation-iteration-count: infinite;
-  animation-delay: 0.2;
+  animation-delay: 0.2s;
 }
 @keyframes slide {
   0% {

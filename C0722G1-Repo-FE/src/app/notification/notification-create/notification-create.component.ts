@@ -5,7 +5,9 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {Title} from '@angular/platform-browser';
+import {NotificationService} from '../../service/notification.service';
 
+// @ts-ignore
 @Component({
   selector: 'app-notification-create',
   templateUrl: './notification-create.component.html',
@@ -13,18 +15,17 @@ import {Title} from '@angular/platform-browser';
 })
 export class NotificationCreateComponent implements OnInit {
 
-  // @ts-ignore
-  notificationForm: FormGroup;
-  // @ts-ignore
-  notification: Notification;
+  notificationForm!: FormGroup;
 
-  constructor(private notificationService: NotificationServiceService,
+  notification!: Notification;
+
+  constructor(private notificationService: NotificationService,
               private activatedRoute: ActivatedRoute,
               private toast: ToastrService,
-              private route: Router,
+              private router: Router,
               private formBuilder: FormBuilder,
               private titleService: Title) {
-    this.titleService.setTitle('create Notificaon');
+    this.titleService.setTitle('TẠO THÔNG BÁO MỚI');
   }
 
   ngOnInit(): void {
@@ -34,37 +35,47 @@ export class NotificationCreateComponent implements OnInit {
   getCreateNotification(): void {
     this.notificationForm = this.formBuilder.group({
       id: [],
-      title: ['', [Validators.required, Validators.maxLength(100), Validators.minLength(3), Validators.pattern(('^[a-zA-Z_ÀÁÂÃÈÉÊẾÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêếìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]{2,30}$'))]],
-      postingDate: ['', [Validators.required]],
-      content: ['', [Validators.required, Validators.maxLength(500), Validators.minLength(3), Validators.pattern(('^[a-zA-Z_ÀÁÂÃÈÉÊẾÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêếìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]{2,30}$'))]]
+      title: ['', [Validators.required, Validators.maxLength(45), Validators.minLength(5)]],
+      postingDate: [this.getToday(), Validators.required],
+      content: ['', [Validators.required, Validators.maxLength(400), Validators.minLength(7)]]
     });
-
   }
 
   submit(): void {
     const notification = this.notificationForm.value;
+    // @ts-ignore
+    // @ts-ignore
     this.notificationService.create(notification).subscribe(() => {
-      Swal.fire({
-        icon: 'success',
-        title: 'Chỉnh sửa  thành công!',
-        width: 600,
-        padding: '3em',
-        color: '#716add',
-        showConfirmButton: false,
-        timer: 2500
+      this.toast.success('Thêm mới thành công', 'Thông báo', {
+        timeOut: 2000,
+        progressBar: true,
+        positionClass: 'toast-top-right',
+        easing: 'ease-in'
       });
-
+    }, (error: any) => {
+      this.toast.error('Đã xảy ra lỗi khi thêm mới', 'Lỗi', {
+        timeOut: 2000,
+        progressBar: true,
+        positionClass: 'toast-top-right',
+        easing: 'ease-in'
+      });
     });
-    this.route.navigateByUrl('');
+    // this.route.navigateByUrl('/notification');
+    this.redirectTo('/notification');
     this.ngOnInit();
-  }
-
-  // @ts-ignore
-  comparWithId(item1, item2): boolean {
-    return item1 && item2 && item1.id === item2.id;
   }
 
   resetForm(): void {
     this.ngOnInit();
+  }
+
+  getToday(): string {
+    const today = new Date();
+    return (new Date(today.getTime())).toJSON().substring(0, 10);
+  }
+
+  redirectTo(uri: string): void {
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+      this.router.navigate([uri]));
   }
 }

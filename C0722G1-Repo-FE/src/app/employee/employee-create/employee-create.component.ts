@@ -2,9 +2,22 @@ import {Division} from '../../entity/employee/division';
 import {EmployeeService} from '../../service/employee.service';
 import {DivisionService} from '../../service/division.service';
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
+
+export const checkBirthDay: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+  // @ts-ignore
+  const birthday = new Date(control.get('dateOfBirth').value).getTime();
+  console.log(birthday);
+  const dateNow = new Date().getTime();
+  console.log(dateNow);
+  if (dateNow - birthday < 18 * 365 * 24 * 60 * 60 * 1000 || dateNow - birthday > 100 * 365 * 24 * 60 * 60 * 1000) {
+    return {checkBirthDay: true};
+  } else {
+    return null;
+  }
+};
 
 @Component({
   selector: 'app-employee-create',
@@ -41,7 +54,7 @@ export class EmployeeCreateComponent implements OnInit {
       encryptPassword: new FormControl(''),
       flagDelete: new FormControl('')
     })
-  });
+  }, {validators: [checkBirthDay]});
 
   constructor(private employeeService: EmployeeService,
               private divisionService: DivisionService,

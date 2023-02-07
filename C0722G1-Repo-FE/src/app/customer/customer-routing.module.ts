@@ -9,6 +9,7 @@ import {EmployeeGuard} from '../authGuard/employee.guard';
 import {CustomerListComponent} from './customer-list/customer-list.component';
 import {CustomerDetailComponent} from './customer-detail/customer-detail.component';
 import {CustomerAddComponent} from './customer-add/customer-add.component';
+import {PostListCustomerComponent} from '../post/post-list-customer/post-list-customer.component';
 
 const routes: Routes = [
   {

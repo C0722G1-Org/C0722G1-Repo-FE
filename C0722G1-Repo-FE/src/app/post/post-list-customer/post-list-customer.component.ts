@@ -20,6 +20,8 @@ export class PostListCustomerComponent implements OnInit {
   demandType: string | undefined | null = '';
   resultPage: PagePostDto | undefined;
   search = 'transparent !important';
+  post: Post | undefined;
+  nameCustomer: string = "";
 
   constructor(private postListCustomerService: PostListCustomerService, private activatedRoute: ActivatedRoute) {
   }
@@ -45,6 +47,7 @@ export class PostListCustomerComponent implements OnInit {
       // })
     } else {
       this.idCustomer = this.activatedRoute.snapshot.params['idCustomer'];
+      console.log(this.idCustomer);
       this.goToPageWithRoleAdmin(this.idCustomer + '', '', 0);
       // this._postListCustomerService.getCustomerById(this.idCustomer+"").subscribe(value => {
       //   this.customer = value;
@@ -88,6 +91,8 @@ export class PostListCustomerComponent implements OnInit {
       this.pageNumber = data.pageable?.pageNumber + 1;
       this.postListCustomer = data.content;
       this.resultPage = data;
+      // @ts-ignore
+      this.nameCustomer = this.postListCustomer[0].customer.nameCustomer.toUpperCase();
     });
   }
 
@@ -106,7 +111,11 @@ export class PostListCustomerComponent implements OnInit {
       this.pageNumber = data.pageable?.pageNumber + 1;
       this.postListCustomer = data.content;
       this.resultPage = data;
+      // @ts-ignore
+      this.nameCustomer = this.postListCustomer[0].customer.nameCustomer.toUpperCase();
     });
   }
-
+  infoPost(item: Post) {
+    this.post = item;
+  }
 }

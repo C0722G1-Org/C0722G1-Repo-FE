@@ -7,13 +7,16 @@ import {NotificationUpdateComponent} from './notification-update/notification-up
 import {CommonModule} from '@angular/common';
 import {ReactiveFormsModule} from '@angular/forms';
 
+// @ts-ignore
 @NgModule({
   declarations: [NotificationListComponent, NotificationPipePipe, NotificationCreateComponent, NotificationUpdateComponent],
+  exports: [
+    NotificationListComponent
+  ],
   imports: [
     CommonModule,
     NotificationRoutingModule,
     ReactiveFormsModule
   ]
 })
-export class NotificationModule {
-}
+export class NotificationModule { }

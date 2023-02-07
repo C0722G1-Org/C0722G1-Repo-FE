@@ -189,8 +189,6 @@ export class PostChartComponent implements OnInit {
     this.count10 = 0;
     this.count11 = 0;
     this.count12 = 0;
-    this.postService.displayListChart().subscribe(data => {
-      this.postCharList = data;
       const posts = this.postCharList.length;
       for (let i = 0; i < posts; i++) {
         // tslint:disable-next-line:triple-equals
@@ -244,7 +242,6 @@ export class PostChartComponent implements OnInit {
       }
       this.createChart();
       this.successToastr('Biểu đồ bài đăng năm: ' + yearChange);
-    });
   }
 
   /**

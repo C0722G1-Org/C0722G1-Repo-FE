@@ -1,4 +1,30 @@
+.header-nav {
+  background-color:#fff;
+}
+.container-fluid {
+  color: white;
+}
+body {
+  /*background-image: url("src/assets/img/bgfurama.jpg");*/
+  background-position: right bottom;
+  background-repeat: no-repeat;
+  background-size: 70%;
+  background-attachment: fixed;
+}
 
+ul{
+  margin: 0;
+  padding: 0 !important;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+li{
+  margin: 0;
+  padding: 0;
+  width: auto;
+}
 .active {
   color: #0D6EFD;
 }
@@ -46,4 +72,10 @@
   background-color: #e8e8e8;
 
 }
+.modal-content:hover{
+  background-color:#e8e8e8 ;
+}
 
+/*::placeholder{*/
+/*    color: #0D6EFD;*/
+/*}*/

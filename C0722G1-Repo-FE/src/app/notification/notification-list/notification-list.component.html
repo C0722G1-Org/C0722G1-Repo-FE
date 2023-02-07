@@ -1,15 +1,18 @@
 <div class="p-3 px-5">
-  <h2 class="text-center fw-bold text-dark mt-3" style="font-family: Arial,serif;font-size: 24px">
-    DANH SÁCH THÔNG BÁO
-  </h2>
-  <a href="#">
+  <div style="margin-left: 15px; margin-top: 15px" class="d-flex justify-content-between">
+    <div><a href="/home" type="button"><i class="fa-solid fa-arrow-left"></i></a></div>
+    <div><h2>DANH SÁCH THÔNG BÁO</h2></div>
+    <div></div>
+  </div>
+  <a routerLink="/notification/create">
     <button class="btn btn-primary btn-outline-secondary mx-1">
       <span class="text-light"> Thêm mới thông báo </span>
     </button>
   </a>
   <div class="row">
     <form class="pb-3" *ngIf="rfSearch" [formGroup]="rfSearch" (ngSubmit)="searchNotification(0)">
-      <fieldset style="all: revert; background-color: #eeeeee;">
+      <!--      <fieldset style="all: revert; background-color: #eeeeee;">-->
+      <fieldset style="all: revert;">
         <legend style="all: revert; background-color: white;padding: 5px 10px"
                 class="text-center border border-secondary">
           <strong style="color:#a67802">Tìm kiếm</strong>
@@ -30,7 +33,7 @@
               <div class="col-6">
                 <strong style="color:#a67802">Chọn ngày cụ thể: </strong>
                 <input formControlName="startDate" type="date" class="form-control rounded-0 mt-2"
-                       id="startDate1" placeholder="Nhập cột mốc ngày tháng..."
+                       id="startDate1" placeholder="dd-mm-yyyy"
                        onfocus="document.getElementById('startDate2').value = ''">
               </div>
               <div class="col-6">
@@ -84,7 +87,7 @@
             <div class="row">
               <div class="col-6">
                 <div class="input-group">
-                  <button class="btn btn-danger w-100 mt-2" [disabled]="rfSearch.invalid">
+                  <button class="btn btn-outline-danger w-100 mt-2" [disabled]="rfSearch.invalid">
                     <i class="fa-solid fa-magnifying-glass"></i>
                     Tìm kiếm
                   </button>
@@ -92,7 +95,7 @@
               </div>
               <div class="col-6">
                 <div class="input-group">
-                  <button class="btn btn-secondary w-100 mt-2" (click)="resetFormAndData()"
+                  <button class="btn btn-outline-secondary w-100 mt-2" (click)="resetFormAndData()"
                           onclick="document.getElementById('startDate').type='text'">
                     <i class="fa-solid fa-arrows-rotate"></i>
                     Làm mới bộ tìm kiếm
@@ -122,10 +125,10 @@
     </thead>
     <tbody>
     <tr style="height: 47px" *ngFor="let item of pageNotifications.content;index as i">
-      <td class="text-center align-middle">{{i + 1 + pageNotifications.number * 5}}</td>
-      <td class="text-center align-middle">{{item.postingDate | date: 'dd/MM/yyyy' }}</td>
-      <td class="align-middle" style="width: 378px">{{item.title}}</td>
-      <td class="align-middle" style="width: 712px">
+      <td class="text-center align-top pt-2">{{i + 1 + pageNotifications.number * 5}}</td>
+      <td class="text-center align-top pt-2">{{item.postingDate | date: 'dd/MM/yyyy' }}</td>
+      <td class="align-top pt-2" style="width: 378px">{{item.title}}</td>
+      <td class="align-top pt-2" style="width: 712px">
         <div id="collapsedContent{{item.idNotification}}" style="display: inline-block">
           {{item.content | NotificationPipe}}
           <a style="color:blue;" role="button" id="expandButton{{item.idNotification}}" *ngIf="item.content.length > 70"
@@ -141,15 +144,15 @@
           </a>
         </div>
       </td>
-      <td class="text-center align-middle">
-        <a href="#">
+      <td class="text-center align-top pt-2">
+        <a routerLink="/notification/edit/{{item.idNotification}}">
           <button class="btn btn-success btn-outline-secondary btn-sm text-light">
             <i class="fa-regular fa-pen-to-square"></i>
           </button>
         </a>
       </td>
       <!-- Checkbox xóa ở tbody -->
-      <td class="text-center align-middle">
+      <td class="text-center align-top pt-2">
         <input type="checkbox" [checked]="deleteIds.includes(item.idNotification)"
                (click)="addToDelete(item.idNotification)"/>
       </td>

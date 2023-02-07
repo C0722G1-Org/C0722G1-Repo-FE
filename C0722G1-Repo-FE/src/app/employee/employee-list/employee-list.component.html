@@ -1,5 +1,5 @@
 
-<div class="main-content" style="height: 100%">
+<div class="container main-content" style="height: 100%">
 
   <div class="row mt-3">
     <div class="col-md-1 col-sm-12">
@@ -49,7 +49,7 @@
       <div class="col-md-10"></div>
       <div class="col-md-2 col-sm-12 d-flex justify-content-end">
         <button class="btn button-css btn-outline-danger" type="button" id="auto_trigger"
-                (click)="searchEmployee(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value)">
+                (click)="searchEmployee(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value, false)">
           Tìm kiếm
         </button>
       </div>
@@ -107,51 +107,53 @@
         <nav aria-label="Page navigation example">
           <ul class="pagination">
             <li class="page-item" [ngClass]="employeeList.first ? 'disabled': ''">
-              <a role="button" class="page-link" (click)="changePage(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value,0)">Trang đầu</a>
+              <a role="button" class="page-link" (click)="changePage(0)">Trang đầu</a>
             </li>
             <li class="page-item" [ngClass]="employeeList.first ? 'disabled': ''">
-              <a role="button" class="page-link" (click)="changePage(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value,employeeList.number - 1)"><</a>
+              <a role="button" class="page-link" (click)="changePage(employeeList.number - 1)"><</a>
             </li>
             <li class="page-item" *ngIf="employeeList.number - 3 > 0">
               <a role="button" class="page-link"
-                 (click)="changePage(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value,employeeList.number - 4)">{{employeeList.number - 3}}</a>
+                 (click)="changePage(employeeList.number - 4)">{{employeeList.number - 3}}</a>
             </li>
             <li class="page-item" *ngIf="employeeList.number - 2 > 0">
               <a role="button" class="page-link"
-                 (click)="changePage(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value,employeeList.number - 3)">{{employeeList.number - 2}}</a>
+                 (click)="changePage(employeeList.number - 3)">{{employeeList.number - 2}}</a>
             </li>
             <li class="page-item" *ngIf="employeeList.number - 1 > 0">
               <a role="button" class="page-link"
-                 (click)="changePage(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value,employeeList.number - 2)">{{employeeList.number - 1}}</a>
+                 (click)="changePage(employeeList.number - 2)">{{employeeList.number - 1}}</a>
             </li>
             <li class="page-item" *ngIf="employeeList.number > 0">
               <a role="button" class="page-link"
-                 (click)="changePage(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value,employeeList.number - 1)">{{employeeList.number}}</a>
+                 (click)="changePage(employeeList.number - 1)">{{employeeList.number}}</a>
             </li>
             <li class="page-item active"><a class="page-link">{{employeeList.number + 1}}</a></li>
             <li class="page-item" *ngIf="employeeList.number + 2 <= employeeList.totalPages">
               <a role="button" class="page-link"
-                 (click)="changePage(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value,employeeList.number + 1)">{{employeeList.number + 2}}</a>
+                 (click)="changePage(employeeList.number + 1)">{{employeeList.number + 2}}</a>
             </li>
             <li class="page-item" *ngIf="employeeList.number + 3 <= employeeList.totalPages">
               <a role="button" class="page-link"
-                 (click)="changePage(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value,employeeList.number + 2)">{{employeeList.number + 3}}</a>
+                 (click)="changePage(employeeList.number + 2)">{{employeeList.number + 3}}</a>
             </li>
             <li class="page-item" *ngIf="employeeList.number + 4 <= employeeList.totalPages">
               <a role="button" class="page-link"
-                 (click)="changePage(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value,employeeList.number + 3)">{{employeeList.number + 4}}</a>
+                 (click)="changePage(employeeList.number + 3)">{{employeeList.number + 4}}</a>
             </li>
             <li class="page-item" *ngIf="employeeList.number + 5 <= employeeList.totalPages">
               <a role="button" class="page-link"
-                 (click)="changePage(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value,employeeList.number + 4)">{{employeeList.number + 5}}</a>
-            </li>
-            <li class="page-item" [ngClass]="employeeList.last ? 'disabled': ''">
-              <a role="button" class="page-link" (click)="changePage(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value,employeeList.number + 1)">></a>
+                 (click)="changePage(employeeList.number + 4)">{{employeeList.number + 5}}</a>
             </li>
             <li class="page-item" [ngClass]="employeeList.last ? 'disabled': ''">
               <a role="button" class="page-link"
-                 (click)="changePage(codeEmployeeSearch.value, nameEmployeeSearch.value, emailEmployeeSearch.value, divisionSearch.value,employeeList.totalPages - 1)"
-              >Trang cuối</a>
+                 (click)="changePage(employeeList.number + 1)">></a>
+            </li>
+            <li class="page-item" [ngClass]="employeeList.last ? 'disabled': ''">
+              <a role="button" class="page-link"
+                 (click)="changePage(employeeList.totalPages - 1)">
+                Trang cuối
+              </a>
             </li>
           </ul>
         </nav>

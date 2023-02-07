@@ -8,6 +8,7 @@ import {Image} from '../../entity/post/image';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {Title} from '@angular/platform-browser';
 import {ToastrService} from 'ngx-toastr';
+import {ActivatedRoute} from '@angular/router';
 
 
 @Component({
@@ -27,10 +28,14 @@ export class PostListComponent implements OnInit {
   mess = '';
   imageList: Image[] = [];
   image = '';
+  keySearch: string | null = '';
 
+  // CONSTRUCTOR
   constructor(private postListService: PostListService,
               private fb: FormBuilder,
-              private titleService: Title, private toastrService: ToastrService) {
+              private titleService: Title,
+              private toastrService: ToastrService,
+              private activatedRoute: ActivatedRoute) {
     this.titleService.setTitle('Trang chủ');
     this.formSearch = this.fb.group({
       area: [''],
@@ -39,13 +44,30 @@ export class PostListComponent implements OnInit {
       city: [''],
       direction: ['']
     });
+    this.activatedRoute.paramMap.subscribe(data => {
+      const keySearch = data.get('search');
+      if (keySearch?.includes('1')) {
+        this.keySearch = keySearch.substring(0, keySearch.length - 1);
+        this.searchByLandType(this.keySearch);
+        this.formSearch.patchValue({landType: this.keySearch});
+      } else if (keySearch?.includes('2')) {
+        this.keySearch = keySearch.substring(0, keySearch.length - 1);
+        this.searchByDirection(this.keySearch);
+        this.formSearch.patchValue({direction: this.keySearch});
+        console.log(this.keySearch);
+      } else {
+        this.keySearch = keySearch;
+        this.searchByCity(this.keySearch);
+        this.formSearch.patchValue({city: this.keySearch});
+      }
+      console.log(this.keySearch);
+    });
   }
 
   ngOnInit(): void {
     this.getLandType();
     this.getCity();
     this.getDirection();
-    this.getPostPage();
   }
 
   /**
@@ -244,5 +266,62 @@ export class PostListComponent implements OnInit {
    */
   error(mess: string): void {
     this.toastrService.error(mess);
+  }
+
+  /**
+   * Method uses:
+   * Send a request to backend API to get a list of Post by search key
+   * Created by: HuyDN
+   * Created date: 07/02/2023
+   * @param keySearch: string
+   * @return a Observable that contain a list of Post object can be showed on Post detail screen
+   */
+  private searchByLandType(keySearch: string | null): void {
+    this.postListService.searchByLandType(keySearch).subscribe(data => {
+      this.postList = data.content;
+      this.totalPage = data.totalPages;
+      this.page = data.pageable.pageNumber;
+      if (this.postList.length > 0) {
+        this.getImageByIdPost(this.postList);
+      }
+    });
+  }
+
+  /**
+   * Method uses:
+   * Send a request to backend API to get a list of Post by search key
+   * Created by: HuyDN
+   * Created date: 07/02/2023
+   * @param keySearch: string
+   * @return a Observable that contain a list of Post object can be showed on Post detail screen
+   */
+  private searchByDirection(keySearch: string | null): void {
+    this.postListService.searchByDirection(keySearch).subscribe(data => {
+      this.postList = data.content;
+      this.totalPage = data.totalPages;
+      this.page = data.pageable.pageNumber;
+      if (this.postList.length > 0) {
+        this.getImageByIdPost(this.postList);
+      }
+    });
+  }
+
+  /**
+   * Method uses:
+   * Send a request to backend API to get a list of Post by search key
+   * Created by: HuyDN
+   * Created date: 07/02/2023
+   * @param keySearch: string
+   * @return a Observable that contain a list of Post object can be showed on Post detail screen
+   */
+  private searchByCity(keySearch: string | null): void {
+    this.postListService.searchByCity(keySearch).subscribe(data => {
+      this.postList = data.content;
+      this.totalPage = data.totalPages;
+      this.page = data.pageable.pageNumber;
+      if (this.postList.length > 0) {
+        this.getImageByIdPost(this.postList);
+      }
+    });
   }
 }

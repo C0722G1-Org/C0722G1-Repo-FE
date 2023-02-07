@@ -87,7 +87,7 @@
         <th style="width: 8%">Loại NC</th>
         <th style="width: 8%">Loại BĐS</th>
         <th style="width: 15%">Vị Trí</th>
-        <th style="width: 11%">Giá </th>
+        <th style="width: 11%; padding-left: 1%">Giá </th>
         <th style="width: 11%">Diện tích (m<sup style="font-size: 12px">2</sup>)</th>
         <th style="width: 15%">Ghi chú</th>
         <th >Trạng thái</th>
@@ -111,16 +111,17 @@
           <td>{{postApproval.codeCustomer}}</td>
           <td>{{postApproval.demandType}}</td>
           <td>{{postApproval.landType}}</td>
-          <td>{{postApproval.city}}, {{postApproval.district}},... </td>
-          <td *ngIf="postApproval.price < 1000000000; else elsePrice">{{(postApproval.price/1000000)}} (Triệu VNĐ)</td>
+          <td>{{postApproval.city}}, {{postApproval.district}}
+          </td>
+          <td style="padding-left: 1%" *ngIf="postApproval.price < 1000000000; else elsePrice">{{(postApproval.price/1000000)}} (Triệu VNĐ)</td>
           <ng-template #elsePrice>
-            <td>{{postApproval.price/1000000000}} (Tỷ VNĐ) </td>
+            <td style="padding-left: 1%">{{postApproval.price/1000000000}} (Tỷ VNĐ) </td>
           </ng-template>
           <td>{{postApproval.area}} m<sup style="font-size: 12px">2</sup></td>
           <td>{{postApproval.note}}</td>
           <td>
-            <span *ngIf="postApproval.approval == true; else elseApproval" class="text-success"><i
-              class="bi bi-check-lg"></i> Đã duyệt</span>
+        <span *ngIf="postApproval.approval == true; else elseApproval" class="text-success"><i
+          class="bi bi-check-lg"></i> Đã duyệt</span>
             <ng-template #elseApproval>
               <button type="button" class="btn btn-outline-primary" style="padding: 3px 6px; width: 80%" data-bs-toggle="modal"
                       data-bs-target="#approvalModal" (click)="temp = postApproval">

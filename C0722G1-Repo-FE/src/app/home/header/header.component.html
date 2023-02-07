@@ -32,13 +32,14 @@
               <li><a class="dropdown-item" routerLink="/form">Biểu mẫu</a></li>
               <li><a class="dropdown-item" routerLink="/post/charts">Thống kê</a></li>
               <li><a class="dropdown-item" *ngIf="roles[0]!=='EMPLOYEE' || 'ADMIN'" routerLink="/post">DS Nhu Cầu</a></li>
+              <li><a class="dropdown-item" *ngIf="roles[0]=='ADMIN'"  routerLink="/notification">DS Thông báo</a></li>
             </ul>
           </li>
         </ul>
         <div>
           <span *ngIf="checkLogin">ROLE: </span><span style="font-size: 14px; color: blue" class="navbar-brand" href="#" *ngIf="checkLogin">{{roles}}</span>
           <button class="btn btn-outline-danger me-2" type="submit" *ngIf="!checkLogin" data-bs-toggle="modal" data-bs-target="#login">Đăng nhập</button>
-          <button class="btn btn-outline-warning me-2" type="submit" *ngIf="!checkLogin">Đăng ký</button>
+          <button class="btn btn-outline-warning me-2" type="submit" routerLink="/customer/create" *ngIf="!checkLogin">Đăng ký</button>
           <button class="btn btn-outline-success me-2" type="submit" routerLink="/#" *ngIf="roles[0]=='CUSTOMER' && checkLogin">Đăng Tin</button>
           <button class="btn btn-outline-success" type="submit" routerLink="/security/login" *ngIf="!checkLogin">Đăng Tin</button>
         </div>

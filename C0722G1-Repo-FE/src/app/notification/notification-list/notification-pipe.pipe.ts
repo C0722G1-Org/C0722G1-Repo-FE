@@ -1,5 +1,4 @@
-import {Pipe, PipeTransform} from '@angular/core';
-
+import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'NotificationPipe'
@@ -11,4 +10,5 @@ export class NotificationPipePipe implements PipeTransform {
     }
     return value.length > limit ? value.substr(0, limit) + ellipsis : value;
   }
+
 }

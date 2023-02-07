@@ -28,7 +28,7 @@ export const checkBirthDay: ValidatorFn = (control: AbstractControl): Validation
 })
 export class CustomerAddComponent implements OnInit {
   rfAddCustomer: FormGroup | undefined;
-  private listMailCustomerAndUsernameAccount: string[] | undefined;
+  private listMailCustomerAndUsernameAccount: Customer[] | undefined;
 
 
   constructor(private builder: FormBuilder,

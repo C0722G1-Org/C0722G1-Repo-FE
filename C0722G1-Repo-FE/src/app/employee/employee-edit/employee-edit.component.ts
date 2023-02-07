@@ -3,9 +3,22 @@ import {Employee} from '../../entity/employee/employee';
 import {Division} from '../../entity/employee/division';
 import {EmployeeService} from '../../service/employee.service';
 import {DivisionService} from '../../service/division.service';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
+
+export const checkBirthDay: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+  // @ts-ignore
+  const birthday = new Date(control.get('dateOfBirth').value).getTime();
+  console.log(birthday);
+  const dateNow = new Date().getTime();
+  console.log(dateNow);
+  if (dateNow - birthday < 18 * 365 * 24 * 60 * 60 * 1000 || dateNow - birthday > 100 * 365 * 24 * 60 * 60 * 1000) {
+    return {checkBirthDay: true};
+  } else {
+    return null;
+  }
+};
 
 @Component({
   selector: 'app-employee-edit',
@@ -38,7 +51,7 @@ export class EmployeeEditComponent implements OnInit {
       dateOfBirth: new FormControl(this.employee.dateOfBirth, Validators.required),
       division: new FormControl(''),
       flagDeleted: new FormControl(this.employee.flagDeleted)
-    });
+    }, {validators: [checkBirthDay]});
     this.activatedRoute.paramMap.subscribe(data => {
       const id = data.get('id');
       console.log(id);

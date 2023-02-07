@@ -26,6 +26,9 @@ const routes: Routes = [
     path: 'detail/:id', component: PostDetailComponent
   },
   {
+    path: 'list/:search', component: PostListComponent
+  },
+  {
     path: 'list/customerByAdmin/:idCustomer', component: PostListCustomerComponent
   },
   {
