@@ -28,11 +28,13 @@
             </a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" routerLink="/customer">Quản lý khách hàng</a></li>
-              <li><a class="dropdown-item" *ngIf="roles[0]!=='EMPLOYEE'" routerLink="/employee">Quản lý nhân viên</a></li>
+              <li><a class="dropdown-item" *ngIf="roles[0]!=='EMPLOYEE'" routerLink="/employee">Quản lý nhân viên</a>
+              </li>
               <li><a class="dropdown-item" routerLink="/form">Biểu mẫu</a></li>
               <li><a class="dropdown-item" routerLink="/post/charts">Thống kê</a></li>
-              <li><a class="dropdown-item" *ngIf="roles[0]!=='EMPLOYEE' || 'ADMIN'" routerLink="/post">DS Nhu Cầu</a></li>
-              <li><a class="dropdown-item" *ngIf="roles[0]=='ADMIN'"  routerLink="/notification">DS Thông báo</a></li>
+              <li><a class="dropdown-item" *ngIf="roles[0]!=='EMPLOYEE' || 'ADMIN'" routerLink="/post">DS Nhu Cầu</a>
+              </li>
+              <li><a class="dropdown-item" *ngIf="roles[0]=='ADMIN'" routerLink="/notification">DS Thông báo</a></li>
             </ul>
           </li>
         </ul>
