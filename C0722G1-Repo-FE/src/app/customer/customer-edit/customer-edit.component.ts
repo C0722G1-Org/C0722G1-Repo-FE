@@ -1,16 +1,29 @@
 import {Component, OnInit} from '@angular/core';
 import {CustomerEdit} from '../../entity/customer/customer-edit';
 import {CustomerService} from '../../service/customer.service';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 
+export const checkBirthDay: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+  // @ts-ignore
+  const birthday = new Date(control.get('dateOfBirth').value).getTime();
+  console.log(birthday);
+  const dateNow = new Date().getTime();
+  console.log(dateNow);
+  if (dateNow - birthday < 18 * 365 * 24 * 60 * 60 * 1000 || dateNow - birthday > 100 * 365 * 24 * 60 * 60 * 1000) {
+    return {checkBirthDay: true};
+  } else {
+    return null;
+  }
+};
 @Component({
   selector: 'app-customer-edit',
   templateUrl: './customer-edit.component.html',
   styleUrls: ['./customer-edit.component.css']
 })
+
 export class CustomerEditComponent implements OnInit {
 
   customer: CustomerEdit = {};
@@ -35,7 +48,7 @@ export class CustomerEditComponent implements OnInit {
       dateOfBirth: new FormControl(this.customer.dateOfBirth, [Validators.required]),
       phoneCustomer1: new FormControl(this.customer.phoneCustomer1, [Validators.required, Validators.pattern('(((\\+|)84)|0)(3|5|7|8|9)+([0-9]{8})')]),
       phoneCustomer2: new FormControl(this.customer.phoneCustomer2, [Validators.pattern('(((\\+|)84)|0)(3|5|7|8|9)+([0-9]{8})')]),
-    });
+    }, {validators: [checkBirthDay]});
 
     this.activatedRoute.paramMap.subscribe(data => {
       const id = data.get('idCustomer');

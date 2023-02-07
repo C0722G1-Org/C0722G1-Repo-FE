@@ -28,7 +28,7 @@
             </a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" routerLink="/customer">Quản lý khách hàng</a></li>
-              <li><a class="dropdown-item" *ngIf="roles[0]!=='EMPLOYEE'" href="#">Quản lý nhân viên</a></li>
+              <li><a class="dropdown-item" *ngIf="roles[0]!=='EMPLOYEE'" routerLink="/employee">Quản lý nhân viên</a></li>
               <li><a class="dropdown-item" routerLink="/form">Biểu mẫu</a></li>
               <li><a class="dropdown-item" routerLink="/post/charts">Thống kê</a></li>
             </ul>
@@ -72,7 +72,7 @@
             </button>
             <ul class="dropdown-menu dropdown-menu-end">
               <li><a class="dropdown-item" href="#">Thông tin</a></li>
-              <li><a class="dropdown-item" href="#">Quản lý nhân viên</a></li>
+              <li><a class="dropdown-item" routerLink="/employee">Quản lý nhân viên</a></li>
               <li><a class="dropdown-item" routerLink="/customer">Quản lý khách hàng</a></li>
               <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logout" href="#">Đăng xuất</a></li>
             </ul>

@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {PageCustomerDto} from '../dto/page-customer-dto';
 import {CustomerEdit} from '../entity/customer/customer-edit';
 import {Customer} from '../entity/customer/customer';
+import {environment} from '../../environments/environment';
 
 
 @Injectable({
@@ -60,5 +61,23 @@ export class CustomerService {
     return this.httpClient.get<string[]>(this.urlListMaileCustomer);
   }
 
+  /**
+   * Create by: HuyNV
+   * Date created : 01/02/2023
+   * Function : to create customer
+   *
+   */
+  createCustomer(customer: Customer): Observable<Customer> {
+    return this.httpClient.post<Customer>(environment.customerURL, customer);
+  }
 
+  /**
+   * Create by: HuyNV
+   * Date created : 01/02/2023
+   * Function : to find by id customer
+   *
+   */
+  detailCustomerById(idCustomer: number): Observable<Customer> {
+    return this.httpClient.get<Customer>(environment.detailCustomerURL + '/detail/' + idCustomer);
+  }
 }

@@ -54,8 +54,8 @@ export class EmployeeEditComponent implements OnInit {
    * Date created: 03/02/2023
    * Function: compare with
    */
-  compareCate(item1: Employee, item2: Employee): boolean {
-    return item1 && item2 ? item1.idEmployee === item2.idEmployee : item1 === item2;
+  compareCate(item1: Division, item2: Division): boolean {
+    return item1 && item2 ? item1.idDivision === item2.idDivision: item1 === item2;
   }
 
   ngOnInit(): void {

@@ -7,6 +7,7 @@ import {PostChartComponent} from './post-chart/post-chart.component';
 import {PostListApprovalComponent} from './post-list-approval/post-list-approval.component';
 import {PostDetailComponent} from './post-detail/post-detail.component';
 import {PostListComponent} from './post-list/post-list.component';
+import {PostListCustomerComponent} from './post-list-customer/post-list-customer.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,12 @@ const routes: Routes = [
   },
   {
     path: 'detail/:id', component: PostDetailComponent
+  },
+  {
+    path: 'list/customerByAdmin/:idCustomer', component: PostListCustomerComponent
+  },
+  {
+    path: 'list/customerByCustomer/:idAccount', component: PostListCustomerComponent
   }
 ];
 

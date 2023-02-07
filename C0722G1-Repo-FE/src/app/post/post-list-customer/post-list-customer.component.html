@@ -1,0 +1,95 @@
+<div>
+  <div style="height: 150px; background-color: silver">
+    <h3 style="text-align: center">
+      HEADER
+    </h3>
+  </div>
+  <div>
+    <h3 style="text-align: center">DANH SÁCH NHU CẦU CỦA KHÁCH HÀNG </h3>
+  </div>
+  <div class="container">
+    <div class="header-nav " style="position: sticky;z-index: 1;top: 0">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item" style="margin-right: 30px">
+                <button class="btn btn-outline-secondary" routerLink="/home"><i class="fa-solid fa-chevron-left"></i>
+                  Trở về
+                </button>
+              </li>
+              <li class="nav-item">
+                <button class="btn btn-outline-primary" [routerLink]="['/post/create',idCustomer]">Thêm nhu cầu</button>
+              </li>
+            </ul>
+            <div>
+              <form class="d-flex">
+                <input class="inputSearch" type="search" placeholder="Tìm kiếm Nhu cầu BĐS"
+                       aria-label="Search" #nameDemandType>
+                <button type="button" class="btn btn-outline-danger" style="margin-left: 30px"
+                        (click)="searchByNameDemandType(nameDemandType.value)">Tìm kiếm
+                </button>
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </nav>
+
+      <div>
+        <p *ngIf="resultPage" class="text-center" style="display:block; min-height: 26px; color: {{search}};">
+          Kết quả: {{resultPage.totalElements}} bài đăng !
+        </p>
+      </div>
+      <hr style="background-color: blue; height: 2px">
+    </div>
+    <div *ngIf="postListCustomer">
+      <div class="row">
+        <div *ngFor="let item of postListCustomer, let i = index"
+             class="col-lg-3 col-md-3">
+          <div class="card" style="padding: 0 !important;">
+            <img src="{{item?.imageListURL}}" class="card-img-top d-block w-100" style="height: 195px" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Loại nhu cầu: {{item?.demandType?.nameDemandType}}</h5>
+              <p class="card-text">Loại BĐS: {{item?.landType?.nameLandType}}</p>
+              <p class="card-text">Vị trí: {{item?.direction?.nameDirection}}</p>
+              <p class="card-text">Diện tích: {{item?.area}}m<sup>2</sup></p>
+              <p style="text-align: center"><a href="#" class="btn btn-outline-primary" [routerLink]="['/post/detail',item.idPost]">Xem chi tiết</a>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center align-items-center">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<nav aria-label="..." *ngIf=" postListCustomer && pageTotal && idCustomer!=''">
+  <ul class="pagination">
+    <li *ngIf="pageNumber" class="page-item" [ngClass]="(pageNumber-1) > 0?'':'disabled'">
+      <a class="page-link" tabindex="-1" aria-disabled="true" (click)="goToPageWithRoleAdmin(idCustomer?idCustomer:'',demandType?demandType:'',  pageNumber -2)">Trước</a>
+    </li>
+    <li class="page-item" *ngFor="let pageIndex of [].constructor( pageTotal), index as i" [ngClass]="pageNumber == i+1 ? 'active' : ''">
+      <a class="page-link" (click)="goToPageWithRoleAdmin(idCustomer?idCustomer:'',demandType?demandType:'', i)" >{{i+1}}</a>
+    </li>
+    <li class="page-item">
+      <a *ngIf="pageNumber" class="page-link" [ngClass]="(pageNumber-1) < (pageTotal-1)?'':'disabled'" (click)="goToPageWithRoleAdmin(idCustomer?idCustomer:'',demandType?demandType:'',  pageNumber)">Sau</a>
+    </li>
+  </ul>
+</nav>
+
+<nav aria-label="..." *ngIf=" postListCustomer && pageTotal && idCustomer==''">
+  <ul class="pagination">
+    <li *ngIf="pageNumber" class="page-item" [ngClass]="(pageNumber-1) > 0?'':'disabled'">
+      <a class="page-link" tabindex="-1" aria-disabled="true" (click)="goToPageWithRoleCustomer(idCustomer?idCustomer:'',demandType?demandType:'',  pageNumber -2)">Trước</a>
+    </li>
+    <li class="page-item" *ngFor="let pageIndex of [].constructor( pageTotal), index as i" [ngClass]="pageNumber == i+1 ? 'active' : ''">
+      <a class="page-link" (click)="goToPageWithRoleCustomer(idCustomer?idCustomer:'',demandType?demandType:'', i)" >{{i+1}}</a>
+    </li>
+    <li class="page-item">
+      <a *ngIf="pageNumber" class="page-link" [ngClass]="(pageNumber-1) < (pageTotal-1)?'':'disabled'" (click)="goToPageWithRoleCustomer(idCustomer?idCustomer:'',demandType?demandType:'',  pageNumber)">Sau</a>
+    </li>
+  </ul>
+</nav>

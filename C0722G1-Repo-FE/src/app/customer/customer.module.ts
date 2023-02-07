@@ -9,11 +9,13 @@ import { CustomerDeleteComponent } from './customer-delete/customer-delete.compo
 import { CustomerDetailComponent } from './customer-detail/customer-detail.component';
 import { CustomerApprovalComponent } from './customer-approval/customer-approval.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { CustomerAddComponent } from './customer-add/customer-add.component';
 
 
 @NgModule({
   declarations: [CustomerCreateComponent, CustomerEditComponent, CustomerListComponent, CustomerDeleteComponent, CustomerDetailComponent,
-    CustomerApprovalComponent],
+    CustomerApprovalComponent,
+    CustomerAddComponent],
   imports: [
     CommonModule,
     CustomerRoutingModule,

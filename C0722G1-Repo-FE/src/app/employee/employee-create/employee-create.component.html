@@ -7,7 +7,7 @@
           <legend>
             <div>
               <div style="margin-left: 15px; margin-top: 15px">
-                <a href="#" type="button"><i class="fa-solid fa-arrow-left"></i></a>
+                <a routerLink="/employee" type="button"><i class="fa-solid fa-arrow-left"></i></a>
                 <span style="font-size: 35px; margin-left: 180px">Thêm Nhân viên</span>
               </div>
             </div>
@@ -179,7 +179,7 @@
                 <label class="form-label ms-2">Chức vụ<span style="color: red">(*)</span>:</label>
               </div>
               <div class="col-8">
-                <select class="form-select" formControlName="division">
+                <select class="form-select" formGroupName="division">
                   <option *ngFor="let i of divisions" [ngValue]="i">{{i.nameDivision}}</option>
                 </select>
               </div>
@@ -189,7 +189,6 @@
         <div class="d-flex justify-content-center" style="margin-bottom: 15px">
           <button type="submit" class="btn btn-primary" [disabled]="!formCreateEmployee.valid">Lưu thông tin</button>
           <input style="margin-left: 15px" type="reset" class="btn btn-light" value="Nhập lại">
-          <button style="margin-left: 15px" type="button" class="btn btn-danger" routerLink="/employee">Hủy</button>
         </div>
       </div>
     </div>
