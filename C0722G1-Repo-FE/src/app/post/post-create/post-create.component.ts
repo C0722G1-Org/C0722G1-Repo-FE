@@ -13,6 +13,8 @@ import {CreatePostDto} from '../../dto/post/post-create/create-post-dto';
 import {ToastrService} from 'ngx-toastr';
 import {BaseResponseCreatePost} from '../../dto/post/post-create/base-response-create-post';
 import {ResponseStatusEnum} from '../../dto/post/post-create/response-status-enum.enum';
+import {TokenService} from '../../service/token.service';
+import {CreatePostDtoCustomer} from '../../dto/post/post-create/create-post-dto-customer';
 
 @Component({
   selector: 'app-post-create',
@@ -68,6 +70,7 @@ export class PostCreateComponent implements OnInit {
     price: 0
   };
 
+  idAccount: number | string | null = '';
   baseResponse: BaseResponseCreatePost = {
     code: 0,
     status: ResponseStatusEnum.SUCCESS,
@@ -78,15 +81,31 @@ export class PostCreateComponent implements OnInit {
 
   messageFormServer = '';
 
+  createPostDtoCustomer: CreatePostDtoCustomer = {
+    idCustomer: 0,
+    codeCustomer: '',
+  };
+
+  codeCustomer = 'Lỗi chưa xác định';
+
   constructor(
     private fb: FormBuilder,
     private createPostService: PostCreateServiceService,
     @Inject(AngularFireStorage) private fireStorage: AngularFireStorage,
-    private toastrService: ToastrService) {
+    private toastrService: ToastrService,
+    private tokenService: TokenService) {
   }
 
   ngOnInit(): void {
-    console.log(this.createPostDtoUnit.get('idDemand')?.value);
+    this.idAccount = this.tokenService.getIdAccount();
+    if (this.idAccount != null) {
+      this.idAccount = +this.idAccount;
+      this.createPostService.getIdAndCodeCustomer(this.idAccount).subscribe(data => {
+        this.createPostDtoCustomer = data;
+        this.createPostDtoUnit.controls.idCustomer.setValue(this.createPostDtoCustomer.idCustomer);
+        this.codeCustomer = this.createPostDtoCustomer.codeCustomer;
+      });
+    }
     this.getLandType();
     this.getDemandType();
     this.getDirectionList();

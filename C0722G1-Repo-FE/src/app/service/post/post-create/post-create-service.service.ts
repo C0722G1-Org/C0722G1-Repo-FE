@@ -10,6 +10,7 @@ import {District} from '../../../entity/post/district';
 import {Wards} from '../../../entity/post/wards';
 import {CreatePostDto} from '../../../dto/post/post-create/create-post-dto';
 import {BaseResponseCreatePost} from '../../../dto/post/post-create/base-response-create-post';
+import {CreatePostDtoCustomer} from '../../../dto/post/post-create/create-post-dto-customer';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,7 @@ export class PostCreateServiceService {
   private URL_CITY = 'http://localhost:8080/api/public/city';
   private URL_DISTRICTS = 'http://localhost:8080/api/public/districts';
   private URL_WARDS = 'http://localhost:8080/api/public/wards';
+  private URL_GET_ID_CODE_CUSTOMER = 'http://localhost:8080/api/post/customer/login';
 
   constructor(private httpClient: HttpClient) {
   }
@@ -52,5 +54,9 @@ export class PostCreateServiceService {
 
   savePost(createPostDto: CreatePostDto): Observable<BaseResponseCreatePost> {
     return this.httpClient.post<BaseResponseCreatePost>(this.URL_POST_CREATE, createPostDto);
+  }
+
+  getIdAndCodeCustomer(idAccount: number): Observable<CreatePostDtoCustomer> {
+    return this.httpClient.post<CreatePostDtoCustomer>(this.URL_GET_ID_CODE_CUSTOMER, idAccount);
   }
 }
