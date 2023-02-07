@@ -111,7 +111,22 @@
           <td>{{postApproval.codeCustomer}}</td>
           <td>{{postApproval.demandType}}</td>
           <td>{{postApproval.landType}}</td>
-          <td>{{postApproval.city}}, {{postApproval.district}}
+          <td *ngIf="postApproval.wards != undefined && postApproval.district != undefined && postApproval.city != undefined">
+
+            <div id="collapsedContent{{postApproval.idPost}}" style="display: inline-block">
+              {{postApproval.city}}, {{postApproval.district}}, {{postApproval.wards | truncate}}
+              <a style="color: blue; text-decoration: none; font-size: 18px" class="text-primary" role="button" id="expandButton{{postApproval.idPost}}" *ngIf="(postApproval.city.length + postApproval.district.length + postApproval.wards.length) > 20"
+                 (click)="expandOrCollapse(postApproval.idPost, 'expand')">
+                ...
+              </a>
+            </div>
+            <div id="expandedContent{{postApproval.idPost}}" style="display: none">
+              {{postApproval.city}}, {{postApproval.district}}, {{postApproval.wards}}<br>
+              <a style=" color: blue; font-size: 13px" role="button" id="collapseButton{{postApproval.idPost}}"
+                 (click)="expandOrCollapse(postApproval.idPost, 'collapse')">
+                thu gọn
+              </a>
+            </div>
           </td>
           <td style="padding-left: 1%" *ngIf="postApproval.price < 1000000000; else elsePrice">{{(postApproval.price/1000000)}} (Triệu VNĐ)</td>
           <ng-template #elsePrice>

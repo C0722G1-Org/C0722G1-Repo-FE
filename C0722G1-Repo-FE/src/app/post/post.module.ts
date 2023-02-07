@@ -13,21 +13,25 @@ import { PostApprovalComponent } from './post-approval/post-approval.component';
 import { PostListApprovalComponent } from './post-list-approval/post-list-approval.component';
 import { PostListCustomerComponent } from './post-list-customer/post-list-customer.component';
 import {AppModule} from '../app.module';
+import {NgxPaginationModule} from 'ngx-pagination';
+import {TruncateAddressModule} from './post-list-approval/truncate-address/truncate-address.module';
 
 
 @NgModule({
   declarations: [PostCreateComponent, PostEditComponent, PostListComponent, PostDeleteComponent, PostDetailComponent, PostChartComponent,
-    PostApprovalComponent, PostListApprovalComponent, PostListCustomerComponent],
+    PostApprovalComponent, PostListApprovalComponent, PostListCustomerComponent, TruncateAddressModule],
   exports: [
     PostDeleteComponent,
-    PostApprovalComponent
+    PostApprovalComponent,
+    TruncateAddressModule
   ]
   ,
   imports: [
     CommonModule,
     PostRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxPaginationModule
   ]
 })
 export class PostModule { }

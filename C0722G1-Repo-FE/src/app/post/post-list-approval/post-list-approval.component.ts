@@ -285,5 +285,25 @@ export class PostListApprovalComponent implements OnInit {
     }, () => {
     });
   }
+  /**
+   * Create by: NgocLV
+   * Date created: 07/02/2023
+   * Function: expand or collapse value which is show in one td
+   *
+   */
+// tslint:disable-next-line:typedef
+  expandOrCollapse(id: number, action: string) {
+    if (action === 'expand') {
+      // @ts-ignore
+      document.getElementById('expandedContent' + id).style.display = 'inline-block';
+      // @ts-ignore
+      document.getElementById('collapsedContent' + id).style.display = 'none';
+    } else {
+      // @ts-ignore
+      document.getElementById('expandedContent' + id).style.display = 'none';
+      // @ts-ignore
+      document.getElementById('collapsedContent' + id).style.display = 'inline-block';
+    }
+  }
 
 }

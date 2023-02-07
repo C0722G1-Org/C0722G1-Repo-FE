@@ -32,8 +32,9 @@ export class PostChartComponent implements OnInit {
   count10 = 0;
   count11 = 0;
   count12 = 0;
-  // @ts-ignore
-  @ViewChild(ToastContainerDirective, {static: true}) toastContainer: ToastContainerDirective;
+  p = 1;
+  itemsPerPage = 7;
+  showMore = false;
 
   /** Constructor initialization
    *  Dependency Injection PostService
@@ -48,6 +49,9 @@ export class PostChartComponent implements OnInit {
     this.getYearList();
   }
 
+  onShow(): void {
+    this.showMore = !this.showMore;
+  }
   /**
    * Initialize the value of the variable: postList through the displayListChart() method in PostService &&
    * Register to listen to the event: subscribe
@@ -115,8 +119,7 @@ export class PostChartComponent implements OnInit {
         }
       }
       this.createChart();
-      this.successToastr('Chào mừng bạn đến với màn hình xem thống kê bài đăng!');
-      this.successToastr('Biểu đồ tất cả các năm!');
+      this.successToastr('Chào mừng bạn đến với trang xem thống kê  & biểu đồ bài đăng!');
     }, error => {
     }, () => {
     });
@@ -145,10 +148,6 @@ export class PostChartComponent implements OnInit {
         && this.postCharList != null) {
         this.successToastr('Thống kê bài đăng tháng ' + month + ', năm ' + year + '!');
       }
-      if ((month != null && month !== '' && month !== '-1') && (year != null && year !== '' && year !== '-1')
-        && this.postCharList == null) {
-        this.errorToastr('Không có dữ liệu bài đăng tháng ' + month + ', năm ' + year + '!');
-      }
       if ((month != null && month !== '' && month === '-1') && (year != null && year !== '' && year !== '-1')
         && this.postCharList != null) {
         this.successToastr('Thống kê bài đăng năm ' + year + '!');
@@ -165,6 +164,9 @@ export class PostChartComponent implements OnInit {
           this.countTotal = this.postCharList.length;
         }
       }
+    }, error => {
+      this.postCharList = [];
+      this.errorToastr('Không có dữ liệu bài đăng tháng ' + month + ', năm ' + year + '!');
     });
   }
 
@@ -189,59 +191,62 @@ export class PostChartComponent implements OnInit {
     this.count10 = 0;
     this.count11 = 0;
     this.count12 = 0;
-      const posts = this.postCharList.length;
-      for (let i = 0; i < posts; i++) {
-        // tslint:disable-next-line:triple-equals
-        if (this.postCharList[i].monthPost == 1 && this.postCharList[i].yearPost == +yearChange) {
-          this.count1 += 1;
-        }
-        // tslint:disable-next-line:triple-equals
-        if (this.postCharList[i].monthPost == 2 && this.postCharList[i].yearPost == +yearChange) {
-          this.count2 += 1;
-        }
-        // tslint:disable-next-line:triple-equals
-        if (this.postCharList[i].monthPost == 3 && this.postCharList[i].yearPost == +yearChange) {
-          this.count3 += 1;
-        }
-        // tslint:disable-next-line:triple-equals
-        if (this.postCharList[i].monthPost == 4 && this.postCharList[i].yearPost == +yearChange) {
-          this.count4 += 1;
-        }
-        // tslint:disable-next-line:triple-equals
-        if (this.postCharList[i].monthPost == 5 && this.postCharList[i].yearPost == +yearChange) {
-          this.count5 += 1;
-        }
-        // tslint:disable-next-line:triple-equals
-        if (this.postCharList[i].monthPost == 6 && this.postCharList[i].yearPost == +yearChange) {
-          this.count6 += 1;
-        }
-        // tslint:disable-next-line:triple-equals
-        if (this.postCharList[i].monthPost == 7 && this.postCharList[i].yearPost == +yearChange) {
-          this.count7 += 1;
-        }
-        // tslint:disable-next-line:triple-equals
-        if (this.postCharList[i].monthPost == 8 && this.postCharList[i].yearPost == +yearChange) {
-          this.count8 += 1;
-        }
-        // tslint:disable-next-line:triple-equals
-        if (this.postCharList[i].monthPost == 9 && this.postCharList[i].yearPost == +yearChange) {
-          this.count9 += 1;
-        }
-        // tslint:disable-next-line:triple-equals
-        if (this.postCharList[i].monthPost == 10 && this.postCharList[i].yearPost == +yearChange) {
-          this.count10 += 1;
-        }
-        // tslint:disable-next-line:triple-equals
-        if (this.postCharList[i].monthPost == 11 && this.postCharList[i].yearPost == +yearChange) {
-          this.count11 += 1;
-        }
-        // tslint:disable-next-line:triple-equals
-        if (this.postCharList[i].monthPost == 12 && this.postCharList[i].yearPost == +yearChange) {
-          this.count12 += 1;
-        }
+    // this.postService.displayListChart().subscribe(data => {
+    //   this.postCharList = data;
+    const posts = this.postCharList.length;
+    for (let i = 0; i < posts; i++) {
+      // tslint:disable-next-line:triple-equals
+      if (this.postCharList[i].monthPost == 1 && this.postCharList[i].yearPost == +yearChange) {
+        this.count1 += 1;
       }
-      this.createChart();
-      this.successToastr('Biểu đồ bài đăng năm: ' + yearChange);
+      // tslint:disable-next-line:triple-equals
+      if (this.postCharList[i].monthPost == 2 && this.postCharList[i].yearPost == +yearChange) {
+        this.count2 += 1;
+      }
+      // tslint:disable-next-line:triple-equals
+      if (this.postCharList[i].monthPost == 3 && this.postCharList[i].yearPost == +yearChange) {
+        this.count3 += 1;
+      }
+      // tslint:disable-next-line:triple-equals
+      if (this.postCharList[i].monthPost == 4 && this.postCharList[i].yearPost == +yearChange) {
+        this.count4 += 1;
+      }
+      // tslint:disable-next-line:triple-equals
+      if (this.postCharList[i].monthPost == 5 && this.postCharList[i].yearPost == +yearChange) {
+        this.count5 += 1;
+      }
+      // tslint:disable-next-line:triple-equals
+      if (this.postCharList[i].monthPost == 6 && this.postCharList[i].yearPost == +yearChange) {
+        this.count6 += 1;
+      }
+      // tslint:disable-next-line:triple-equals
+      if (this.postCharList[i].monthPost == 7 && this.postCharList[i].yearPost == +yearChange) {
+        this.count7 += 1;
+      }
+      // tslint:disable-next-line:triple-equals
+      if (this.postCharList[i].monthPost == 8 && this.postCharList[i].yearPost == +yearChange) {
+        this.count8 += 1;
+      }
+      // tslint:disable-next-line:triple-equals
+      if (this.postCharList[i].monthPost == 9 && this.postCharList[i].yearPost == +yearChange) {
+        this.count9 += 1;
+      }
+      // tslint:disable-next-line:triple-equals
+      if (this.postCharList[i].monthPost == 10 && this.postCharList[i].yearPost == +yearChange) {
+        this.count10 += 1;
+      }
+      // tslint:disable-next-line:triple-equals
+      if (this.postCharList[i].monthPost == 11 && this.postCharList[i].yearPost == +yearChange) {
+        this.count11 += 1;
+      }
+      // tslint:disable-next-line:triple-equals
+      if (this.postCharList[i].monthPost == 12 && this.postCharList[i].yearPost == +yearChange) {
+        this.count12 += 1;
+      }
+    }
+    this.createChart();
+    this.successToastr('Biểu đồ bài đăng năm: ' + yearChange);
+    // });
   }
 
   /**
@@ -311,7 +316,9 @@ export class PostChartComponent implements OnInit {
    * @param mess:string
    */
   successToastr(mess: string): void {
-    this.toastr.success(mess);
+    this.toastr.success(mess, 'Thông báo', {
+      timeOut: 1500
+    });
   }
 
   /**
@@ -320,6 +327,8 @@ export class PostChartComponent implements OnInit {
    * @param mess:string
    */
   errorToastr(mess: string): void {
-    this.toastr.error(mess);
+    this.toastr.error(mess, 'Lỗi', {
+      timeOut: 1500
+    });
   }
 }

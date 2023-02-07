@@ -1,4 +1,5 @@
-<div class="row mt-2">
+<div class="mt-1 text-center text-primary"><h2>THỐNG KÊ BÀI ĐĂNG</h2></div>
+<div class="row mt-1">
   <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
     <table class="table table-light table-striped table-hover mt-3">
       <thead>
@@ -27,7 +28,8 @@
                 <button class="btn btn-primary me-1" (click)="searchChart(monthVariable.value,yearVariable.value)"
                         type="button"><i class="bi bi-search"></i></button>
               </form>
-              <small class="text-primary"><i>Lưu ý:Chọn năm hoặc chọn cả năm và tháng để hiển thị đúng kết quả!!!</i></small>
+              <small class="text-primary"><i>Lưu ý:Chọn năm hoặc chọn cả năm và tháng để hiển thị đúng kết
+                quả!!!</i></small>
             </div>
           </div>
         </th>
@@ -35,6 +37,7 @@
 
       <tr>
         <th hidden>ID</th>
+        <th>STT</th>
         <th>Ngày</th>
         <th>Vị trí</th>
         <th>Giá Cả</th>
@@ -43,10 +46,14 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let post of postCharList ;index as i ">
+      <tr *ngFor="let post of postCharList | paginate:{itemsPerPage:7,currentPage:p} ;index as i ">
         <td hidden>{{post.idPost}}</td>
+        <td>{{i + 1 + itemsPerPage * (p - 1)}}</td>
         <td>{{post.dateCreation | date:'dd/MM/yyyy'}}</td>
-        <td>{{post.numberAddress + ',' + post.nameWards + ',' + post.nameDistrict + ',' + post.nameCity}}</td>
+        <td>{{showMore ? post.numberAddress + ',' + post.nameWards + ',' + post.nameDistrict + ',' + post.nameCity : (post.numberAddress + ',' + post.nameWards + ',' + post.nameDistrict + ',' + post.nameCity | slice:0: 20)}}
+          <span *ngIf="!showMore">...</span>
+          <a *ngIf="!showMore" (click)="onShow()"><button class="btn btn-outline-primary">Xem thêm</button></a>
+          <a *ngIf="showMore" (click)="onShow()"><button class="btn btn-outline-primary">Ẩn bớt</button></a></td>
         <td>{{post.price | currency: "VND"}}</td>
         <td *ngIf="post.statusPost!=undefined">{{post.statusPost == 1 ? 'Thành Công' : 'Thất Bại'}}</td>
         <td *ngIf="post.statusPost!= undefined && post.statusPost>1,else block1">{{0|currency: "VND"}}</td>
@@ -62,10 +69,11 @@
         </ng-template>
       <tr>
       <tr>
-<!--        <td colspan="9" *ngIf="postCharList==null">Không tìm thấy kết quả!!!</td>-->
+        <td colspan="10" *ngIf="postCharList.length==0" class="text-center">Không tìm thấy kết quả!!!</td>
       </tr>
       </tbody>
     </table>
+    <pagination-controls previousLabel="Trước" nextLabel="Sau" (pageChange)="p=$event"></pagination-controls>
 
   </div>
 
@@ -80,7 +88,7 @@
           <select #yearChange (change)="changeYear(yearChange.value)" style="width: 100%"
                   class="form-select me-1">
             <option disabled selected>--Chọn Năm--</option>
-            <option *ngFor="let year of yearList"  [ngValue]="year">{{year}}</option>
+            <option *ngFor="let year of yearList" [ngValue]="year">{{year}}</option>
           </select>
         </label>
       </div>
