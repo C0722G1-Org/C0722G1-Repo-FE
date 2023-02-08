@@ -75,6 +75,10 @@ export class LoginModalComponent implements OnInit {
             extendedTimeOut: 1500
           });
         }
+      }, error => {
+        if (error.status === 403) {
+          this.toast.error('Đăng nhập thất bại', 'Thông báo')
+        }
       }
     );
   }

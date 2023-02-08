@@ -10,14 +10,13 @@ const routes: Routes = [
   {
     path: 'employee', loadChildren: () => import('./employee/employee.module').then(module => module.EmployeeModule),
     canActivate: [AuthGuard]
-    && [AdminGuard]
+      && [AdminGuard]
   },
   {
     path: 'post', loadChildren: () => import('./post/post.module').then(module => module.PostModule),
   },
   {
     path: 'customer', loadChildren: () => import('./customer/customer.module').then(module => module.CustomerModule),
-    canActivate: [AuthGuard] && [CustomerGuard]
   },
   {
     path: 'form', loadChildren: () => import('./form/form.module').then(module => module.FormModule),
@@ -25,7 +24,8 @@ const routes: Routes = [
       && [AdminGuard]
   },
   {
-    path: 'notification', loadChildren: () => import('./notification/notification.module').then(module => module.NotificationModule),
+    path: 'notification',
+    loadChildren: () => import('./notification/notification.module').then(module => module.NotificationModule),
     canActivate: [AuthGuard]
       && [AdminGuard]
   },
