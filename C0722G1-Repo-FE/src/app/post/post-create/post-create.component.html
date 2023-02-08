@@ -1,18 +1,16 @@
-<div class="container shadow pt-2 border border-primary" style="background-color:#FFFFFF;">
-  <button class="btn btn-outline-primary" type="button"><i class="fa-solid fa-arrow-left"></i></button>
+<div class="container pt-2 mb-5" style="background-color:#FFFFFF;">
+  <button class="btn" type="button" routerLink=""><i class="fa-solid fa-arrow-left"></i></button>
   <p class="text-center p-title fw-bold">THÊM BÀI ĐĂNG</p>
   <hr>
   <form [formGroup]="createPostDtoUnit" (ngSubmit)="savePost()">
     <div class="row mt-4 mx-3 mb-3">
       <div class="col-2"></div>
       <div class="col-2">
-        <label for="customerCode" class="form-label"><i class="fa-regular fa-id-card"></i>Mã khách hàng(<span
+        <label for="customerCode" class="form-label"><i class="fa-regular fa-id-card"></i> Mã khách hàng(<span
           class="requirement-field">*</span>):</label>
       </div>
       <div class="col-3">
         <input readonly [value]="codeCustomer" class="form-control-plaintext" type="text" id="customerCode">
-        <div class="form-text">Đã được điền tự động. Không được chỉnh sửa
-        </div>
       </div>
     </div>
     <div class="row mt-4 mx-3 mb-3">
@@ -43,7 +41,7 @@
     <div class="row mx-3">
       <div class="col-2"></div>
       <div class="col-2">
-        <label class="form-label"><i class="fa-brands fa-sellsy"></i>Nhu cầu(<span
+        <label class="form-label"><i class="fa-brands fa-sellsy"></i> Nhu cầu(<span
           class="requirement-field">*</span>):</label>
       </div>
       <div *ngFor="let demand of demandTypeList" class="col-1">
@@ -72,7 +70,7 @@
     <div class="row mx-3">
       <div class="col-2"></div>
       <div class="col-2">
-        <label class="form-label"><i class="fa-brands fa-sellsy"></i>Loại bất động sản(<span
+        <label class="form-label"><i class="fa-brands fa-sellsy"></i> Loại bất động sản(<span
           class="requirement-field">*</span>):</label>
       </div>
       <div *ngFor="let landType of landTypeList" class="col-1">
@@ -105,7 +103,7 @@
       </div>
       <div class="col-4">
         <input formControlName="numberAddress" class="form-control" type="text" id="numberAddress" required>
-        <div class="form-text">VD: 122 đường abc</div>
+        <div class="form-text">VD: 122B đường Trần Hưng Đạo</div>
         <div class="text-danger"
              *ngIf="createPostDtoUnit.controls['numberAddress'].invalid && (createPostDtoUnit.controls['numberAddress'].touched||createPostDtoUnit.controls['numberAddress'].dirty)">
           <div *ngIf="createPostDtoUnit.controls['numberAddress'].errors?.required">
@@ -186,7 +184,7 @@
         <label for="postWards" class="form-label"><i class="fa-solid fa-location-dot"></i> Phường/Xã(<span
           class="requirement-field">*</span>):</label>
       </div>
-      <div class="col-2 p-0">
+      <div class="col-3 p-0">
         <select formControlName="idWards" class="form-select" id="postWards">
           <option *ngFor="let item of wardsListOnDistrict" [value]="item.idWards">{{item.nameWards}}</option>
         </select>
@@ -222,7 +220,7 @@
             <span class="input-group-text">VND/Tháng</span>
           </div>
           <ng-template #priceDescriptionSwitch>
-            <span class="input-group-text rounded-end">VND/m<sup>2</sup></span>
+            <span class="input-group-text rounded-end">VND</span>
           </ng-template>
         </div>
         <div class="form-text">Đơn vị VND/m<sup>2</sup> hoặc VND/Tháng sẽ thay đổi theo nhu cầu</div>
