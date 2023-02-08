@@ -28,4 +28,3 @@ export interface EmployeeInfoJson {
   numberOfElements: number;
   empty: boolean;
 }
-

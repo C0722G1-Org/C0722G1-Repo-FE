@@ -32,7 +32,7 @@ export class PostDeleteComponent implements OnInit {
         easing: 'ease-in'
       });
     }, (error: any) => {
-      this.toastrService.error('Đã xảy ra lỗi khi xóa', 'Lỗi', {
+      this.toastrService.error('Nhu cầu đã bị xoá từ trước', 'Lỗi', {
         timeOut: 2000,
         progressBar: true,
         positionClass: 'toast-top-right',

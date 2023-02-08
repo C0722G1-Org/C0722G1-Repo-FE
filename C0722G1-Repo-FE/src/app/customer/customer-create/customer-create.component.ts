@@ -1,19 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  ValidationErrors,
-  ValidatorFn,
-  Validators
-} from '@angular/forms';
-import {Router} from '@angular/router';
 import {Account} from '../../entity/account/account';
 import {Customer} from '../../entity/customer/customer';
 import {CustomerService} from '../../service/customer.service';
+import {Router} from '@angular/router';
+import {AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
 import {ToastrService} from 'ngx-toastr';
-
 
 
 export const checkBirthDay: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
@@ -29,14 +20,12 @@ export const checkBirthDay: ValidatorFn = (control: AbstractControl): Validation
   }
 };
 
-
 @Component({
   selector: 'app-customer-create',
   templateUrl: './customer-create.component.html',
   styleUrls: ['./customer-create.component.css']
 })
 export class CustomerCreateComponent implements OnInit {
-
   constructor(private customerService: CustomerService,
               private router: Router,
               private formBuilder: FormBuilder,
@@ -47,12 +36,11 @@ export class CustomerCreateComponent implements OnInit {
   submitted = false;
   action = true;
   status = false;
-  account = new Account();
+  account: Account | undefined;
   customer: Customer | undefined;
   result = false;
   private customerForm: FormGroup | undefined;
   private listMailCustomerAndUsernameAccount: Customer[] | undefined;
-
 
   ngOnInit(): void {
     this.getListMailCustomer();
@@ -67,9 +55,6 @@ export class CustomerCreateComponent implements OnInit {
       return 'Sure?';
     };
   }
-
-
-
 
   submit(): void {
     this.submitted = true;
@@ -104,12 +89,11 @@ export class CustomerCreateComponent implements OnInit {
     const formYear = Number(new Date(abstractControl.value).getFullYear());
     const formMonth = Number(new Date(abstractControl.value).getMonth() + 1);
     const formDay = Number(new Date(abstractControl.value).getDate());
-
     return (new Date().getFullYear() - formYear > 15) ? null : {invalidDateOfBirth: true};
   }
 
   getListMailCustomer(): void {
-    this.customerService.findListMailCustomerr().subscribe(list => {
+    this.customerService.findListMailCustomerr().subscribe((list) => {
       this.listMailCustomerAndUsernameAccount = list;
       console.log(list);
       // tslint:disable-next-line:no-unused-expression
@@ -151,7 +135,6 @@ export class CustomerCreateComponent implements OnInit {
     });
   }
 
-
   // tslint:disable-next-line:typedef
   onchangeStautus() {
     this.status = !this.status;
@@ -169,7 +152,7 @@ export class CustomerCreateComponent implements OnInit {
       }
     });
     return result;
-  }
+  };
   areEqual: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
     // @ts-ignore
     const username = control.get('usernameAccount').value;
@@ -182,5 +165,5 @@ export class CustomerCreateComponent implements OnInit {
       }
     });
     return result;
-  }
+  };
 }

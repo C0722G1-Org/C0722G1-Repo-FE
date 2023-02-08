@@ -29,6 +29,8 @@ export class AdminGuard implements CanActivate {
       console.log('check ad -->', JSON.stringify(this.tokenService.getRole()) === JSON.stringify(['ADMIN']));
       if (JSON.stringify(this.tokenService.getRole()) === JSON.stringify(['ADMIN'])) {
         return true;
+      } else if (JSON.stringify(this.tokenService.getRole()) === JSON.stringify(['EMPLOYEE'])) {
+        return true;
       } else {
         this.toast.warning('Bạn không đủ quyền', 'Thông báo');
         this.router.navigateByUrl('');

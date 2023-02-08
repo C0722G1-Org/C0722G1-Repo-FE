@@ -2,6 +2,7 @@
   <nav class="navbar navbar-expand-lg" style="background-color: #f2f2f2">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">
+
         <img src="../../../assets/image/logoSang.png" width="110"/>
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -12,13 +13,13 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" href="#">Nhà đất bán</a>
+            <a class="nav-link active" [routerLink]="['/home/search', '1']">Nhà đất bán</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="#">Nhà đất cho thuê</a>
+            <a class="nav-link active" [routerLink]="['/home/search', '1']">Nhà đất cho thuê</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="#">Cần mua cần thuê</a>
+            <a class="nav-link active" [routerLink]="['/home/search', '1']">Cần mua nhà đất</a>
           </li>
           <li class="nav-item dropdown" *ngIf="roles[0]!=='CUSTOMER' && checkLogin">
             <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown"
@@ -26,18 +27,22 @@
               Quản lý
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Quản lý khách hàng</a></li>
-              <li><a class="dropdown-item" *ngIf="roles[0]!=='EMPLOYEE'" href="#">Quản lý nhân viên</a></li>
-              <li><a class="dropdown-item" href="#">Biểu mẫu</a></li>
-              <li><a class="dropdown-item" href="#">Thống kê</a></li>
+              <li><a class="dropdown-item" routerLink="/customer">Quản lý khách hàng</a></li>
+              <li><a class="dropdown-item" *ngIf="roles[0]!=='EMPLOYEE'" routerLink="/employee">Quản lý nhân viên</a>
+              </li>
+              <li><a class="dropdown-item" routerLink="/form">Biểu mẫu</a></li>
+              <li><a class="dropdown-item" routerLink="/post/charts">Thống kê</a></li>
+              <li><a class="dropdown-item" *ngIf="roles[0]!=='EMPLOYEE' || 'ADMIN'" routerLink="/post">DS Nhu Cầu</a>
+              </li>
+              <li><a class="dropdown-item" *ngIf="roles[0]=='ADMIN'" routerLink="/notification">DS Thông báo</a></li>
             </ul>
           </li>
         </ul>
         <div>
-          <span *ngIf="checkLogin">ROLE: </span><span style="font-size: 14px; color: blue" class="navbar-brand" href="#" *ngIf="checkLogin">{{roles}}</span>
+          <span *ngIf="checkLogin"> </span><span style="font-size: 14px; color: blue" class="navbar-brand" href="#" *ngIf="checkLogin">{{name}}</span>
           <button class="btn btn-outline-danger me-2" type="submit" *ngIf="!checkLogin" data-bs-toggle="modal" data-bs-target="#login">Đăng nhập</button>
-          <button class="btn btn-outline-warning me-2" type="submit" *ngIf="!checkLogin">Đăng ký</button>
-          <button class="btn btn-outline-success me-2" type="submit" routerLink="/#" *ngIf="roles[0]=='CUSTOMER' && checkLogin">Đăng Tin</button>
+          <button class="btn btn-outline-warning me-2" type="submit" routerLink="/customer/create" *ngIf="!checkLogin">Đăng ký</button>
+          <button class="btn btn-outline-success me-2" type="submit" routerLink="/post/create" *ngIf="roles[0]=='CUSTOMER' && checkLogin">Đăng Tin</button>
           <button class="btn btn-outline-success" type="submit" routerLink="/security/login" *ngIf="!checkLogin">Đăng Tin</button>
         </div>
         <div *ngIf="roles[0]=='CUSTOMER' && checkLogin">
@@ -59,7 +64,7 @@
             </button>
             <ul class="dropdown-menu dropdown-menu-end">
               <li><a class="dropdown-item" href="#">Thông tin</a></li>
-              <li><a class="dropdown-item" href="#">Quản lý khách hàng</a></li>
+              <li><a class="dropdown-item" routerLink="/customer">Quản lý khách hàng</a></li>
               <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logout" href="#">Đăng xuất</a></li>
             </ul>
           </div>
@@ -71,8 +76,8 @@
             </button>
             <ul class="dropdown-menu dropdown-menu-end">
               <li><a class="dropdown-item" href="#">Thông tin</a></li>
-              <li><a class="dropdown-item" href="#">Quản lý nhân viên</a></li>
-              <li><a class="dropdown-item" href="#">Quản lý khách hàng</a></li>
+              <li><a class="dropdown-item" routerLink="/employee">Quản lý nhân viên</a></li>
+              <li><a class="dropdown-item" routerLink="/customer">Quản lý khách hàng</a></li>
               <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logout" href="#">Đăng xuất</a></li>
             </ul>
           </div>

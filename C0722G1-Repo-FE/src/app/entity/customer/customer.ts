@@ -1,7 +1,7 @@
-
 import {Account} from '../account/account';
 
 export interface Customer {
+
   /**
    * Create by: HocHH
    * Date created: 03/02/2023
@@ -10,7 +10,7 @@ export interface Customer {
   id_customer?: number;
   name_customer?: string;
   email_customer?: string;
-  address_customer?:string;
+  address_customer?: string;
   idCard_customer?: string;
   code_customer?: string;
   gender_customer?: number;
@@ -18,7 +18,8 @@ export interface Customer {
   approval_customer?: number;
   phone_customer1?: string;
   phone_customer2?: string;
-  // account?: Account;
+  account?: Account;
+  dateOfBirth?: string;
   idCustomer?: number;
   nameCustomer?: string;
   emailCustomer?: string;
@@ -26,14 +27,12 @@ export interface Customer {
   idCardCustomer?: string;
   codeCustomer?: string;
   genderCustomer?: number;
-  dateOfBirth?: string;
   dateOfBirthCustomer?: string;
   flagDelete?: boolean;
   approvalCustomer?: number;
   phoneCustomer1?: string;
   phoneCustomer2?: string;
-  nameAccount?: string;
-  account?: Account;
   accountCustomer?: Account;
-}
 
+
+}

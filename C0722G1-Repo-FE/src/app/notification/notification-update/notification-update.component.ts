@@ -1,59 +1,102 @@
 import {Component, OnInit} from '@angular/core';
-import {Notification} from '../../entity/notification/notification';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {NotificationServiceService} from '../../service/notification-service.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import Swal from 'sweetalert2';
+import {Title} from '@angular/platform-browser';
+import {ToastrService} from 'ngx-toastr';
+import {NotificationService} from '../../service/notification.service';
+import {Notification} from '../../entity/notification/notification';
 
+// @ts-ignore
 @Component({
   selector: 'app-notification-update',
   templateUrl: './notification-update.component.html',
   styleUrls: ['./notification-update.component.css']
 })
 export class NotificationUpdateComponent implements OnInit {
-  notification: Notification | null = {};
+  notification!: Notification;
   notificationForm: FormGroup = new FormGroup({});
-  id: number = 0;
+  id!: number;
+  // @ts-ignore
+  checkId: boolean;
+​
+  notificationHasContent!: boolean;
+​
 
-  constructor(private contificationService: NotificationServiceService,
+  constructor(private notificationService: NotificationService,
               private activatedRoute: ActivatedRoute,
-              private router: Router) {}
+              private router: Router,
+              private formBuilder: FormBuilder,
+              private titleService: Title,
+              private toastrService: ToastrService) {
+    this.titleService.setTitle('CHỈNH SỬA THÔNG BÁO');
+  }
 
   ngOnInit(): void {
-    this.getNotification();
+    this.updateNotification();
   }
 
-  private getNotification() {
+  // tslint:disable-next-line:typedef
+  private updateNotification() {
     this.id = Number(this.activatedRoute.snapshot.params.id);
-    return this.contificationService.finNotificationdById(this.id).subscribe(data => {
+    if (this.id == null) {
+      this.notificationHasContent = false;
+      return;
+    }
+    return this.notificationService.findNotificationdById(this.id).subscribe(data => {
+      if (data == null) {
+        this.notificationHasContent = false;
+        return;
+      }
+      this.notificationHasContent = true;
+      this.checkId = true;
+      // @ts-ignore
       this.notification = data;
-      this.notificationForm = new FormGroup({
-        id: new FormControl(this.notification.idNotification,Validators.required,),
-        title: new FormControl(this.notification. title,Validators.required),
-        postingDate: new FormControl(this.notification.postingDate,Validators.required),
-        conten: new FormControl(this.notification. conten,Validators.required)
+      console.log('test', data);
+      this.notificationForm = this.formBuilder.group({
+        id: [],
+        title: [this.notification.title, [Validators.required, Validators.minLength(7), Validators.maxLength(45)]],
+        postingDate: [this.getToday(), Validators.required],
+        content: [this.notification.content, [Validators.required, Validators.maxLength(400), Validators.minLength(7)]]
       });
+    }, err => {
+      this.notificationHasContent = false;
     });
   }
 
-  submit(id: number) {
-    const veXe = this.notificationForm.value;
-    this.contificationService.update(id, veXe).subscribe(() => {
-      Swal.fire({
-        icon: 'success',
-        title: 'Chỉnh sửa  thành công!',
-        width: 600,
-        padding: '3em',
-        color: '#716add'
-      });
+  getToday(): string {
+    const today = new Date();
+    return (new Date(today.getTime())).toJSON().substring(0, 10);
+  }
 
+  submit(id: number): void {
+    const notification = this.notificationForm.value;
+    console.log('notification', notification);
+    this.notificationService.update(id, notification).subscribe(() => {
+      this.toastrService.success('Sửa thành công', 'Thông báo', {
+        timeOut: 2000,
+        progressBar: true,
+        positionClass: 'toast-top-right',
+        easing: 'ease-in'
+      });
+    }, err => {
+      this.toastrService.error('Đã xảy ra lỗi', 'Lỗi', {
+        timeOut: 2000,
+        progressBar: true,
+        positionClass: 'toast-top-right',
+        easing: 'ease-in'
+      });
+    }, () => {
+      this.redirectTo('notification');
     });
-    this.router.navigateByUrl('');
     this.ngOnInit();
   }
 
-  // @ts-ignore
-  comparWithId(item1, item2): boolean {
-    return item1 && item2 && item1.id === item2.id;
+  resetForm(): void {
+    this.ngOnInit();
+  }
+
+  redirectTo(uri: string): void {
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
+      this.router.navigate([uri]));
   }
 }

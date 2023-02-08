@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {PortChart} from '../../entity/post/port-chart';
 import {PostService} from '../post.service';
+// @ts-ignore
 import {Chart} from 'chart.js';
 import {ToastContainerDirective, ToastrService} from 'ngx-toastr';
 
@@ -31,8 +32,9 @@ export class PostChartComponent implements OnInit {
   count10 = 0;
   count11 = 0;
   count12 = 0;
-  // @ts-ignore
-  @ViewChild(ToastContainerDirective, {static: true}) toastContainer: ToastContainerDirective;
+  p = 1;
+  itemsPerPage = 7;
+  showMore = false;
 
   /** Constructor initialization
    *  Dependency Injection PostService
@@ -47,6 +49,9 @@ export class PostChartComponent implements OnInit {
     this.getYearList();
   }
 
+  onShow(): void {
+    this.showMore = !this.showMore;
+  }
   /**
    * Initialize the value of the variable: postList through the displayListChart() method in PostService &&
    * Register to listen to the event: subscribe
@@ -114,6 +119,9 @@ export class PostChartComponent implements OnInit {
         }
       }
       this.createChart();
+      this.successToastr('Chào mừng bạn đến với trang xem thống kê  & biểu đồ bài đăng!');
+    }, error => {
+    }, () => {
     });
   }
 
@@ -132,16 +140,33 @@ export class PostChartComponent implements OnInit {
       this.totalTransaction = 0;
       this.countSuccess = 0;
       this.countTotal = 0;
-      // tslint:disable-next-line:prefer-for-of
-      for (let i = 0; i < data.length; i++) {
-        // tslint:disable-next-line:triple-equals
-        if (data[i].statusPost == 1) {
+      if ((month != null && month !== '' && month !== '-1')
+        && (year != null && year !== '' && year === '-1') && this.postCharList != null) {
+        this.errorToastr('Bạn không chọn năm nên dữ liệu  hiển thị ở tháng & năm hiện tại!');
+      }
+      if ((month != null && month !== '' && month !== '-1') && (year != null && year !== '' && year !== '-1')
+        && this.postCharList != null) {
+        this.successToastr('Thống kê bài đăng tháng ' + month + ', năm ' + year + '!');
+      }
+      if ((month != null && month !== '' && month === '-1') && (year != null && year !== '' && year !== '-1')
+        && this.postCharList != null) {
+        this.successToastr('Thống kê bài đăng năm ' + year + '!');
+      }
+      if ((month != null && month !== '' && month === '-1') && (year != null && year !== '' && year === '-1')
+        && this.postCharList != null) {
+        this.successToastr('Thống kê bài đăng trong danh sách!');
+      }
+      for (let i = 0; i < this.postCharList.length; i++) {
+        if (data[i].statusPost === 1) {
           // @ts-ignore
           this.totalTransaction += data[i].price;
           this.countSuccess += 1;
           this.countTotal = this.postCharList.length;
         }
       }
+    }, error => {
+      this.postCharList = [];
+      this.errorToastr('Không có dữ liệu bài đăng tháng ' + month + ', năm ' + year + '!');
     });
   }
 
@@ -166,6 +191,8 @@ export class PostChartComponent implements OnInit {
     this.count10 = 0;
     this.count11 = 0;
     this.count12 = 0;
+    // this.postService.displayListChart().subscribe(data => {
+    //   this.postCharList = data;
     const posts = this.postCharList.length;
     for (let i = 0; i < posts; i++) {
       // tslint:disable-next-line:triple-equals
@@ -217,8 +244,9 @@ export class PostChartComponent implements OnInit {
         this.count12 += 1;
       }
     }
-
     this.createChart();
+    this.successToastr('Biểu đồ bài đăng năm: ' + yearChange);
+    // });
   }
 
   /**
@@ -236,8 +264,8 @@ export class PostChartComponent implements OnInit {
           label: 'Tổng bài đăng',
           data: [this.count1, this.count2, this.count3, this.count4, this.count5, this.count6,
             this.count7, this.count8, this.count9, this.count10, this.count11, this.count12],
-          backgroundColor: '#02165f',
-          borderColor: '#02165f',
+          backgroundColor: '#fa0234',
+          borderColor: '#fa0234',
           borderWidth: 2,
           fill: false,
         }]
@@ -262,9 +290,7 @@ export class PostChartComponent implements OnInit {
    */
   getTotalTransaction(): void {
     for (let i = 0; i <= this.postCharList.length; i++) {
-      console.log(this.postCharList);
-      // tslint:disable-next-line:triple-equals
-      if (this.postCharList[i]?.statusPost == 1) {
+      if (this.postCharList[i]?.statusPost === 1) {
         // @ts-ignore
         this.totalTransaction += this.postCharList[i].price;
       }
@@ -277,12 +303,32 @@ export class PostChartComponent implements OnInit {
    */
   getTotalPostSuccess(): void {
     for (let i = 0; i <= this.postCharList.length; i++) {
-      // tslint:disable-next-line:triple-equals
-      if (this.postCharList[i]?.statusPost == 1) {
+      if (this.postCharList[i]?.statusPost === 1) {
         this.countSuccess += 1;
       }
       this.countTotal = this.postCharList.length;
-      console.log(this.countTotal, this.countSuccess);
     }
+  }
+
+  /**
+   * Function generate message for success case
+   * Author: DatTQ  ;  Date:04/02/2023
+   * @param mess:string
+   */
+  successToastr(mess: string): void {
+    this.toastr.success(mess, 'Thông báo', {
+      timeOut: 1500
+    });
+  }
+
+  /**
+   * Function generate message for error case
+   * Author: DatTQ  ;  Date:04/02/2023
+   * @param mess:string
+   */
+  errorToastr(mess: string): void {
+    this.toastr.error(mess, 'Lỗi', {
+      timeOut: 1500
+    });
   }
 }

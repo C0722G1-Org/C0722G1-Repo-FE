@@ -7,7 +7,7 @@
             <div>
               <div style="margin-left: 15px; margin-top: 15px">
                 <a href="#" type="button"><i class="fa-solid fa-arrow-left"></i></a>
-                <span style="font-size: 35px; margin-left: 180px">Thêm khách hàng</span>
+                <span style="font-size: 35px; margin-left: 180px">Thêm Khách Hàng</span>
               </div>
             </div>
           </legend>
@@ -23,20 +23,19 @@
                       rfAddCustomer.controls['nameCustomer'].invalid?'is-invalid':'is-valid':''"/>
               <div *ngIf="rfAddCustomer.controls['nameCustomer'].hasError('required') &&
                                      rfAddCustomer.controls['nameCustomer'].touched" style="color: red">
-                Tên không được bỏ trống
+                Tên không được bỏ trống.
               </div>
               <div *ngIf="rfAddCustomer.controls['nameCustomer'].hasError('pattern') &&
                                      rfAddCustomer.controls['nameCustomer'].touched" style="color: red">
-                Tên phải đúng định dạng
+                Tên phải đúng định dạng. ví dụ : Nguyễn Văn A
               </div>
               <div *ngIf="rfAddCustomer.controls['nameCustomer'].hasError('maxlength') &&
                                      rfAddCustomer.controls['nameCustomer'].touched" style="color: red">
-                Tên không được quá dài
+                Tên không được quá dài.
               </div>
             </div>
           </div>
         </div>
-
         <div class="mb-2">
           <div class="d-flex align-items-center mb-2">
             <div class="col-4">
@@ -48,11 +47,11 @@
                              (rfAddCustomer.controls['dateOfBirth'].invalid|| rfAddCustomer.errors?.checkBirthDay)?'is-invalid':'is-valid':''"/>
               <div *ngIf="rfAddCustomer.controls['dateOfBirth'].hasError('required') &&
                                      rfAddCustomer.controls['dateOfBirth'].touched" style="color: red">
-                Ngày sinh không được bỏ trống
+                Ngày sinh không được bỏ trống.
               </div>
               <div *ngIf="rfAddCustomer.errors?.checkBirthDay"
                    style="color: red">
-                Bạn chưa đủ 18 tuổi
+                Tuổi phải nằm trong khoảng 18 đến 100.
               </div>
             </div>
           </div>
@@ -64,16 +63,16 @@
             </div>
             <div class="d-flex align-items-center mb-2 col-8">
               <div class="col-4">
-                <input type="radio" formControlName="genderCustomer" value="0" >
-                  <label>Nam</label><br>
+                <input type="radio" formControlName="genderCustomer" value="0" required >
+                <label>Nam</label><br>
               </div>
               <div class="col-4">
                 <input type="radio" formControlName="genderCustomer" value="1" >
-                  <label>Nữ</label><br>
+                <label>Nữ</label><br>
               </div>
               <div class="col-4">
-                <input type="radio" formControlName="genderCustomer" value="2">
-                  <label>Khác</label><br>
+                <input type="radio" formControlName="genderCustomer" value="2" >
+                <label>Khác</label><br>
               </div>
             </div>
           </div>
@@ -89,7 +88,7 @@
                       rfAddCustomer.controls['addressCustomer'].invalid?'is-invalid':'is-valid':''"/>
               <div *ngIf="rfAddCustomer.controls['addressCustomer'].hasError('required') &&
                                      rfAddCustomer.controls['addressCustomer'].touched" style="color: red">
-                Địa chỉ không được bỏ trống
+                Địa chỉ không được bỏ trống.
               </div>
             </div>
           </div>
@@ -105,11 +104,11 @@
                              rfAddCustomer.controls['phoneCustomer1'].invalid?'is-invalid':'is-valid':''"/>
               <div *ngIf="rfAddCustomer.controls['phoneCustomer1'].hasError('required') &&
                                      rfAddCustomer.controls['phoneCustomer1'].touched" style="color: red">
-                Số điện thoại không được bỏ trống
+                Số điện thoại không được bỏ trống.
               </div>
               <div *ngIf="rfAddCustomer.controls['phoneCustomer1'].hasError('pattern') &&
                                      rfAddCustomer.controls['phoneCustomer1'].touched" style="color: red">
-                Số điện thoại phải đúng định dạng
+                Số điện thoại phải đúng định dạng.
               </div>
             </div>
           </div>
@@ -125,15 +124,18 @@
                              rfAddCustomer.controls['phoneCustomer2'].invalid?'is-invalid':'is-valid':''"/>
               <div *ngIf="rfAddCustomer.controls['phoneCustomer2'].hasError('required') &&
                                      rfAddCustomer.controls['phoneCustomer2'].touched" style="color: red">
-                Số điện thoại không được bỏ trống
+                Số điện thoại không được bỏ trống.
               </div>
               <div *ngIf="rfAddCustomer.controls['phoneCustomer2'].hasError('pattern') &&
                                      rfAddCustomer.controls['phoneCustomer2'].touched" style="color: red">
-                Số điện thoại phải đúng định dạng
+                Số điện thoại phải đúng định dạng.
               </div>
             </div>
           </div>
         </div>
+
+
+
         <div class="mb-2 ">
           <div class="d-flex align-items-center mb-2">
             <div class="col-4">
@@ -145,15 +147,15 @@
                      (rfAddCustomer.controls['usernameAccount'].invalid|| rfAddCustomer.errors?.isExist)?'is-invalid':'is-valid':''"/>
               <div *ngIf="rfAddCustomer.errors?.isExist && rfAddCustomer.controls['usernameAccount'].touched"
                    style="color: red">
-                Email đã tồn tại
+                Email đã tồn tại.
               </div>
               <div *ngIf="rfAddCustomer.controls['usernameAccount'].hasError('required') &&
                                      rfAddCustomer.controls['usernameAccount'].touched" style="color: red">
-                Email không được bỏ trống
+                Email không được bỏ trống.
               </div>
               <div *ngIf="rfAddCustomer.controls['usernameAccount'].hasError('pattern') &&
                                      rfAddCustomer.controls['usernameAccount'].touched" style="color: red">
-                Email phải đúng định dạng
+                Email phải đúng định dạng.
               </div>
             </div>
           </div>
@@ -169,19 +171,19 @@
                      rfAddCustomer.controls['encryptPassword'].invalid?'is-invalid':'is-valid':''"/>
               <div *ngIf="rfAddCustomer.controls['encryptPassword'].hasError('required') &&
                                      rfAddCustomer.controls['encryptPassword'].touched" style="color: red">
-                Mật khẩu không được bỏ trống
+                Mật khẩu không được bỏ trống.
               </div>
               <div *ngIf="rfAddCustomer.controls['encryptPassword'].hasError('pattern') &&
                                      rfAddCustomer.controls['encryptPassword'].touched" style="color: red">
-                Mật khẩu không đúng định dạng
+                Mật khẩu không đúng định dạng.
               </div>
               <div *ngIf="rfAddCustomer.controls['encryptPassword'].hasError('minlength') &&
                                      rfAddCustomer.controls['encryptPassword'].touched" style="color: red">
-                Mật khẩu không được quá ngắn
+                Mật khẩu không được quá ngắn.
               </div>
               <div *ngIf="rfAddCustomer.controls['encryptPassword'].hasError('maxlength') &&
                                      rfAddCustomer.controls['encryptPassword'].touched" style="color: red">
-                Mật khẩu không được quá dài
+                Mật khẩu không được quá dài.
               </div>
             </div>
           </div>
@@ -197,17 +199,17 @@
                      rfAddCustomer.controls['idCardCustomer'].invalid?'is-invalid':'is-valid':''"/>
               <div *ngIf="rfAddCustomer.controls['idCardCustomer'].hasError('required') &&
                                      rfAddCustomer.controls['idCardCustomer'].touched" style="color: red">
-                CCCD không được bỏ trống
+                CCCD không được bỏ trống.
               </div>
               <div *ngIf="rfAddCustomer.controls['idCardCustomer'].hasError('pattern') &&
                                      rfAddCustomer.controls['idCardCustomer'].touched" style="color: red">
-                CCCD không đúng định dạng
+                CCCD không đúng định dạng.
               </div>
             </div>
           </div>
         </div>
-
-
+        ​
+        ​
         <div class="d-flex mt-3 mb-2 w-100">
           <button type="button" style="margin-right: 33px"
                   class="btn btn-outline btn-outline-primary ms-auto d-flex justify-content-center" (click)="resetFormAndData()">
@@ -218,16 +220,16 @@
             <p>Thêm</p>
           </button>
         </div>
-
+        ​
       </form>
-
+      ​
       <div class="mb-2">
             <span style="font-size: 15px" class="fst-italic">
               Trường có dấu <span style="color: red"> (*)</span> là bắt
               buộc,không được bỏ trống
             </span>
       </div>
-
+      ​
     </div>
   </div>
 </div>

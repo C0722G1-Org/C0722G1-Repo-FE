@@ -1,9 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
-import {PostDetail} from '../entity/post/post-detail';
 import {HttpClient} from '@angular/common/http';
-import {Post} from "../entity/post/post";
-import {PortChart} from "../entity/post/port-chart";
+import {Observable} from 'rxjs';
+import {PortChart} from '../entity/post/port-chart';
 
 @Injectable({
   providedIn: 'root'
@@ -17,15 +15,8 @@ export class PostService {
   urlPortChartSearch = 'http://localhost:8080/api/post/charts-search';
   urlPortChartList = 'http://localhost:8080/api/post/charts';
 
+
   constructor(private httpClient: HttpClient) {
-  }
-
-  findPostListByUserNameAccount(userNameAccount: string): Observable<Post[]> {
-    return this.httpClient.get<Post[]>(this.URL_POST_LIST + '?customer.accountCustomer.userNameAccount_like=' + userNameAccount);
-  }
-
-  findByNameDemandType(value: string): Observable<Post[]> {
-    return this.httpClient.get<Post[]>(this.URL_POST_LIST + '?demandType.nameDemandType_like=' + value);
   }
 
   /**
@@ -62,7 +53,6 @@ export class PostService {
   findPostById(id: number): Observable<any> {
     return this.httpClient.get<any>('http://localhost:8080/api/public/home/detail?id=' + id);
   }
-
   /**
    * Method uses:
    * Send a request to backend API to get a list of image by parameter Id
@@ -75,7 +65,6 @@ export class PostService {
   findImageByIdPost(idPost: number): Observable<any> {
     return this.httpClient.get<any>('http://localhost:8080/api/public/home/image?id=' + idPost);
   }
-
   /**
    * Method uses:
    * Send a request to backend API to change Post's status to succeeded

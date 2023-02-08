@@ -1,10 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {DataForm} from '../../entity/form/data-form';
 import {DataFormService} from '../../service/data-form.service';
 import {ToastContainerDirective, ToastrService} from 'ngx-toastr';
+import {Title} from '@angular/platform-browser';
 import {DataFormJson} from '../../entity/form/data-form-json';
-
-
+import {DataForm} from '../../entity/form/data-form';
 
 @Component({
   selector: 'app-form-list',
@@ -12,22 +11,16 @@ import {DataFormJson} from '../../entity/form/data-form-json';
   styleUrls: ['./form-list.component.css']
 })
 export class FormListComponent implements OnInit {
-  page = 0;
-  contentDataForm = '';
-  totalElement = 0;
-  totalPage = 0;
-  dataFormPage: DataForm[] = [];
-  dataForm: DataForm = {};
-
-
-  constructor(private dataFormService: DataFormService, private toastrService: ToastrService) {
-  }
 
   page = 0;
   contentDataForm = '';
   dataFormPage!: DataFormJson;
   dataForm: DataForm = {};
   @ViewChild(ToastContainerDirective, {static: true}) toastContainer: ToastContainerDirective | undefined;
+
+  constructor(private dataFormService: DataFormService, private toastrService: ToastrService, private titleService: Title) {
+    this.titleService.setTitle('Hồ sơ và biểu mẫu');
+  }
 
   ngOnInit(): void {
     this.searchByContent(this.contentDataForm, true);
@@ -45,9 +38,13 @@ export class FormListComponent implements OnInit {
       this.page = 0;
     }
     this.contentDataForm = contentDataForm;
-    this.dataFormService.searchByContent(this.contentDataForm, this.page).subscribe(data => {
+    this.dataFormService.searchByContent(this.contentDataForm.trim(), this.page).subscribe(data => {
       if (data.content.length !== null) {
         this.dataFormPage = data;
+        if (contentDataForm !== '') {
+          this.toastrService.success('Tìm kiếm thành công', 'Thông Báo');
+          // this.toastrService.remove();
+        }
       }
     }, error => {
       this.contentDataForm = '';
@@ -55,21 +52,8 @@ export class FormListComponent implements OnInit {
       if (this.dataFormPage != null) {
         this.showToastrError();
       }
-      console.log(error);
-
     });
   }
-  /**
-   * Create by: DungND
-   * Date created: 03/02/2023
-   * Function: reloadList
-   *
-   */
-  //load lại list
-  reloadList() {
-  this.searchByContent("");
-  }
-
   /**
    * Create by: DungND
    * Date created: 03/02/2023
@@ -80,16 +64,14 @@ export class FormListComponent implements OnInit {
   reloadList(): void {
     this.searchByContent('', true);
   }
-
   /**
    * Create by: KhanhLB
    * Date created: 03/02/2023
    * Function: show message toastr when search error
    */
   private showToastrError(): void {
-    this.toastrService.error('Không có kết quả cần tìm', 'Thông báo');
+    this.toastrService.error('Không có kết quả cần tìm', 'Thông Báo');
   }
-
   gotoPage(pageNumber: number): void {
     this.page = pageNumber;
     this.ngOnInit();

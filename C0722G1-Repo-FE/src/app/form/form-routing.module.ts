@@ -3,7 +3,6 @@ import {Routes, RouterModule} from '@angular/router';
 import {FormListComponent} from './form-list/form-list.component';
 import {FormCreateComponent} from './form-create/form-create.component';
 import {FormEditComponent} from './form-edit/form-edit.component';
-import {FormDeleteComponent} from './form-delete/form-delete.component';
 
 const routes: Routes = [
   {path: '', component: FormListComponent},
