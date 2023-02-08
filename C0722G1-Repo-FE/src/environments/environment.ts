@@ -4,7 +4,16 @@
 
 export const environment = {
   production: false,
-  API_SERVE: undefined
+  customerURL: 'http://localhost:8080/api/customer/create',
+  detailCustomerURL: 'http://localhost:8080/api/customer',
+  firebaseConfig: {
+    apiKey: 'AIzaSyDzyfWa2xaavBCzThSeDFQi1g9SwyDxHJ4',
+    authDomain: 'file-8a68b.firebaseapp.com',
+    projectId: 'file-8a68b',
+    storageBucket: 'file-8a68b.appspot.com',
+    messagingSenderId: '195564391460',
+    appId: '1:195564391460:web:d6becb3313c6ff22fd5cb1'
+  }
 };
 
 /*

@@ -1,18 +1,39 @@
-import {Component, OnInit} from '@angular/core';
-import {Customer} from '../../entity/customer/customer';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {CustomerService} from '../../service/customer/customer.service';
+import {CustomerEdit} from '../../entity/customer/customer-edit';
+import {CustomerService} from '../../service/customer.service';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn,
+  Validators} from '@angular/forms';
+import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
-import {Title} from '@angular/platform-browser';
+import {Component, OnInit} from '@angular/core';
+
+export const checkBirthDay: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+  // @ts-ignore
+  const birthday = new Date(control.get('dateOfBirth').value).getTime();
+  console.log(birthday);
+  const dateNow = new Date().getTime();
+  console.log(dateNow);
+  if (dateNow - birthday < 18 * 365 * 24 * 60 * 60 * 1000 || dateNow - birthday > 100 * 365 * 24 * 60 * 60 * 1000) {
+    return {checkBirthDay: true};
+  } else {
+    return null;
+  }
+};
 
 @Component({
   selector: 'app-customer-edit',
   templateUrl: './customer-edit.component.html',
   styleUrls: ['./customer-edit.component.css']
 })
+
 export class CustomerEditComponent implements OnInit {
-  customer: Customer = {};
+  checkError: boolean = true;
+  customer: CustomerEdit = {};
   editForm: FormGroup;
 
   constructor(private customerService: CustomerService,
@@ -21,7 +42,7 @@ export class CustomerEditComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               private toastrService: ToastrService) {
     // @ts-ignore
-    this.titleService.setTitle('Edit Customer');
+    this.titleService.setTitle('Sửa Thông tin Khách Hàng');
     this.editForm = new FormGroup({
       idCustomer: new FormControl(this.customer.idCustomer),
       // tslint:disable-next-line:max-line-length
@@ -34,13 +55,15 @@ export class CustomerEditComponent implements OnInit {
       dateOfBirth: new FormControl(this.customer.dateOfBirth, [Validators.required]),
       phoneCustomer1: new FormControl(this.customer.phoneCustomer1, [Validators.required, Validators.pattern('(((\\+|)84)|0)(3|5|7|8|9)+([0-9]{8})')]),
       phoneCustomer2: new FormControl(this.customer.phoneCustomer2, [Validators.pattern('(((\\+|)84)|0)(3|5|7|8|9)+([0-9]{8})')]),
-    });
+    }, {validators: [checkBirthDay]});
 
     this.activatedRoute.paramMap.subscribe(data => {
       const id = data.get('idCustomer');
       if (id != null) {
         this.getCustomerById(+id);
       }
+    }, error => {
+      this.checkError = false;
     });
   }
 
@@ -54,7 +77,6 @@ export class CustomerEditComponent implements OnInit {
    */
   getCustomerById(idCustomer: number): void {
     this.customerService.findById(idCustomer).subscribe(data => {
-      console.log(data);
       this.editForm.patchValue(data);
       this.customer = data;
     });
@@ -67,14 +89,15 @@ export class CustomerEditComponent implements OnInit {
 
   updateCustomer(): void {
     const customer = this.editForm.value;
-    this.customerService.updateCustomer(customer).subscribe(data => {
+    this.customerService.updateCustomer(customer).subscribe((data: any) => {
       if (data != null) {
         this.toastrService.error('Không có dữ liệu để chỉnh sửa!', 'Thông báo');
       } else {
         this.toastrService.success('Sửa thông tin khách hàng thành công!', 'Thông báo');
         this.router.navigateByUrl('/customer');
       }
-    }, error => {
+    }, (error: any) => {
     });
   }
+
 }

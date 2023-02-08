@@ -1,0 +1,30 @@
+.main-content {
+  background: #FFFFFF;
+  font-family: Arial, serif;
+  font-size: 16px;
+}
+.search{
+  position: relative;
+  left: 5%;
+  top: -0.80rem;
+  background-color: white;
+  display: inline-block;
+  width: 77px;
+  height: 20px;
+  padding: 0 5px;
+}
+.button-css {
+  width: 100px;
+  height: 33px;
+  margin: 0 auto;
+  padding: 0;
+  display: table-cell;
+  vertical-align: middle;
+}
+th {
+  padding: 3px 0;
+}
+td {
+  vertical-align: middle;
+  padding: 0;
+}

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {environment} from 'src/environments/environment.prod';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {SignInForm} from '../entity/account/SignInForm';
 import {Observable} from 'rxjs';
 import {JwtResponse} from '../entity/account/JwtResponse';
@@ -9,11 +9,18 @@ import {JwtResponse} from '../entity/account/JwtResponse';
   providedIn: 'root'
 })
 export class SecurityService {
-  // @ts-ignore
   private API_SIGNIN = environment.API_LOCAL + '/signin';
 
   constructor(private httpClient: HttpClient) {
   }
+
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    }),
+    'Access-Control-Allow-Origin': 'http://localhost:4200',
+    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+  };
 
   /**
    * Create by: PhuongLTH
@@ -23,6 +30,6 @@ export class SecurityService {
    * @return HttpStatus.OK if signInForm(username) has in database or HttpStatus.BAD_REQUEST if signInForm(username) not found in database
    */
   signIn(signInForm: SignInForm): Observable<any> {
-    return this.httpClient.post<JwtResponse>(this.API_SIGNIN, signInForm);
+    return this.httpClient.post<JwtResponse>(this.API_SIGNIN, signInForm, this.httpOptions);
   }
 }

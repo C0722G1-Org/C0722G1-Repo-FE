@@ -1,0 +1,102 @@
+<div class="mt-1 text-center"><h2>THỐNG KÊ BÀI ĐĂNG</h2></div>
+<div class="row mt-1">
+  <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
+    <table class="table table-light table-striped table-hover mt-3">
+      <thead>
+      <tr>
+        <th colspan="11">
+          <div class="row">
+            <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
+              <h2>Bài đăng</h2>
+            </div>
+            <div class="col-7 col-sm-7 col-md-7 col-lg-7 col-xl-7 col-xxl-7">
+              <form class="d-flex justify-content-center">
+
+                <label class="me-2">
+                  <select #monthVariable style="width: 100%"
+                          class="form-select">
+                    <option value="-1">--Chọn Tháng--</option>
+                    <option *ngFor="let month of monthList" [ngValue]="month">{{month}}</option>
+                  </select>
+                </label>
+                <label class="me-2">
+                  <select #yearVariable style="width: 100%" class="form-select me-1">
+                    <option value="-1" selected>--Chọn Năm--</option>
+                    <option *ngFor="let year of yearList" [ngValue]="year">{{year}}</option>
+                  </select>
+                </label>
+                <button class="btn btn-primary me-1" (click)="searchChart(monthVariable.value,yearVariable.value)"
+                        type="button"><i class="bi bi-search"></i></button>
+              </form>
+              <small class="text-primary text-center" ><i>Lưu ý:Chọn năm hoặc chọn cả năm và tháng để hiển thị đúng kết
+                quả!!!</i></small>
+            </div>
+          </div>
+        </th>
+      </tr>
+
+      <tr>
+        <th hidden>ID</th>
+        <th>STT</th>
+        <th>Ngày</th>
+        <th>Vị trí</th>
+        <th>Giá Cả</th>
+        <th>Tình trạng</th>
+        <th>Lợi nhuận</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let post of postCharList | paginate:{itemsPerPage:7,currentPage:p} ;index as i ">
+        <td hidden>{{post.idPost}}</td>
+        <td>{{i + 1 + itemsPerPage * (p - 1)}}</td>
+        <td>{{post.dateCreation | date:'dd/MM/yyyy'}}</td>
+        <td>{{showMore ? post.numberAddress + ',' + post.nameWards + ',' + post.nameDistrict + ',' + post.nameCity : (post.numberAddress + ',' + post.nameWards + ',' + post.nameDistrict + ',' + post.nameCity | slice:0: 30)}}
+          <span *ngIf="!showMore">...</span>
+          <a *ngIf="!showMore" (click)="onShow()">Xem thêm</a>
+          <a *ngIf="showMore" (click)="onShow()">Ẩn bớt</a></td>
+        <td>{{post.price | currency: "VND"}}</td>
+        <td *ngIf="post.statusPost!=undefined">{{post.statusPost == 1 ? 'Thành Công' : 'Thất Bại'}}</td>
+        <td *ngIf="post.statusPost!= undefined && post.statusPost>1,else block1">{{0|currency: "VND"}}</td>
+
+        <ng-template #block1>
+          <td *ngIf="post.price!= undefined && 0 <=post.price && post.price<2000000000 ">
+            {{post.price * 0.02 |currency: "VND"}}</td>
+          <td
+            *ngIf="post.price!= undefined && 2000000000 <=post.price && post.price<3000000000 ">
+            {{post.price * 0.03 |currency: "VND"}}</td>
+          <td *ngIf="post.price != undefined && 3000000000<=post.price">
+            {{post.price * 0.05 |currency: "VND"}}</td>
+        </ng-template>
+      <tr>
+      <tr>
+        <td colspan="10" *ngIf="postCharList.length==0" class="text-center">Không tìm thấy kết quả!!!</td>
+      </tr>
+      </tbody>
+    </table>
+    <pagination-controls previousLabel="Trước" nextLabel="Sau" (pageChange)="p=$event"></pagination-controls>
+
+  </div>
+
+  <!--CHART.JS-->
+  <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 col-xxl-4 text-primary">
+    <h5>Số bài đăng thành công: {{countSuccess}}/{{countTotal}}</h5>
+    <h5>Tổng giao dịch: {{totalTransaction |currency: "VND"}} </h5>
+    <div class="row">
+      <div class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5 col-xxl-5 text-primary"><h5>Biểu đồ bài đăng năm:</h5></div>
+      <div class="col-7 col-sm-7 col-md-7 col-lg-7 col-xl-7 col-xxl-7 text-primary">
+        <label>
+          <select #yearChange (change)="changeYear(yearChange.value)" style="width: 100%"
+                  class="form-select me-1">
+            <option disabled selected>--Chọn Năm--</option>
+            <option *ngFor="let year of yearList" [ngValue]="year">{{year}}</option>
+          </select>
+        </label>
+      </div>
+    </div>
+
+    <div style="width:100%;">
+      <canvas id="myChart" width="100%" height="75"></canvas>
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>

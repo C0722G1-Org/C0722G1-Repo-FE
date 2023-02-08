@@ -50,9 +50,8 @@ export class LoginModalComponent implements OnInit {
   login(): void {
     const signInForm = this.signInForm?.value;
     this.securityService.signIn(signInForm).subscribe(data => {
-        console.log('data -----> ', data);
+
         if (data.token !== undefined) {
-          console.log(this.signInForm?.value.rememberMe);
           if (this.signInForm?.value.rememberMe) {
             this.tokenService.rememberMe(data.roles, data.name, data.token);
             this.router.navigateByUrl('/home');
@@ -71,12 +70,15 @@ export class LoginModalComponent implements OnInit {
         }
         // @ts-ignore
         if (data.status === 202) {
-          console.log('login Failed!');
           this.toast.error('Mật khẩu không đúng vui lòng nhập lại', 'Thông báo', {
             timeOut: 3000,
             extendedTimeOut: 1500
           });
         }
+      }, error => {
+      if (error.status === 403){
+        this.toast.error('Đăng nhập thất bại, vui lòng nhập lại.','Thông báo')
+      }
       }
     );
   }
