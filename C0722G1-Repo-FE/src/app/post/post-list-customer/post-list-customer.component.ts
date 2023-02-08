@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Post} from "../../entity/post/post";
 import {PostListCustomerService} from "../../service/post-list-customer/post-list-customer.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
+import {PagePostDto} from "../../dto/page-post-dto";
+import {Customer} from "../../entity/customer/customer";
 
 @Component({
   selector: 'app-post-list-customer',
@@ -10,38 +12,40 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class PostListCustomerComponent implements OnInit {
   pageTotal: number | undefined = 0;
-  pageNumber: number | undefined = 0;
+  pageNumber: number | undefined = 1;
   postListCustomer: Post[] | undefined;
   idAccount: string | null | undefined = "";
   idCustomer: string | null | undefined = "";
   role: any;
   demandType: string | undefined | null = "";
+  resultPage: PagePostDto | undefined;
+  search = "transparent !important";
+  customer: Customer | undefined;
+  post: Post | undefined;
+  nameCustomer: string = "";
 
-  constructor(private _postListCustomerService: PostListCustomerService, private activatedRoute: ActivatedRoute) {
+  constructor(private _postListCustomerService: PostListCustomerService, private activatedRoute: ActivatedRoute, private router: Router) {
   }
 
   /**
    * Created by: UyDD
    * Date Created: 03/02/2023
-   * @param
    * @return call function gotoPage(nameDemandType: string, idAccount: string, pageNumber: number) to display list post of customer with true role log in
    */
 
   ngOnInit(): void {
     this.role = localStorage.getItem("roles");
-    if (this.role) {
-      // @ts-ignore
-      this.role = (JSON.parse(this.role)).forEach(data => {
-        if (data.authority == "CUSTOMER") {
-          this.idAccount = localStorage.getItem("idAccount");
-        }
-      })
-      if (this.idAccount !== '') {
-        this.goToPageWithRoleCustomer("", this.idAccount + "", 0);
-      } else {
-        this.idCustomer = this.activatedRoute.snapshot.params["idCustomer"];
-        this.goToPageWithRoleAdmin("", this.idCustomer + "", 0);
-      }
+    // @ts-ignore
+    // this.role = (JSON.parse(this.role)).forEach(data => {
+    //   if (data.authority == "CUSTOMER") {
+    //     this.idAccount = localStorage.getItem("idAccount");
+    //   }
+    // })
+    if (this.idAccount != "") {
+      this.goToPageWithRoleCustomer(this.idAccount + "", "", 0);
+    } else {
+      this.idCustomer = this.activatedRoute.snapshot.params["idCustomer"];
+      this.goToPageWithRoleAdmin(this.idCustomer + "", "", 0);
     }
   }
 
@@ -52,30 +56,17 @@ export class PostListCustomerComponent implements OnInit {
    * @return call function gotoPage(nameDemandType: string, idAccount: string, pageNumber: number) to search by nameDemandType
    */
   searchByNameDemandType(value: string) {
-    if (!this.pageNumber && this.idCustomer !== "") {
+    console.log(value);
+    this.search = "red";
+    if (this.idCustomer !== "") {
+      this.demandType = value;
       this.pageNumber = 0;
-      this.goToPageWithRoleAdmin(value, this.idAccount + "", this.pageNumber);
-    } else if (!this.pageNumber && this.idCustomer == "") {
+      this.goToPageWithRoleAdmin(this.idCustomer + "", value, this.pageNumber);
+    } else if (this.idCustomer == "") {
+      this.demandType = value;
       this.pageNumber = 0;
-      this.goToPageWithRoleCustomer(value, this.idCustomer + "", this.pageNumber);
+      this.goToPageWithRoleCustomer(this.idAccount + "", value, this.pageNumber);
     }
-  }
-
-  /**
-   * Created by: UyDD
-   * Date Created: 03/02/2023
-   * @param nameDemandType
-   * @param idAccount
-   * @param pageNumber
-   * @return call function getAllAndSearch(nameDemandType, idAccount, pageNumber) from service to display list post of customer have paging
-   */
-
-  goToPageWithRoleAdmin(nameDemandType: string, idCustomer: string, pageNumber: number) {
-    this._postListCustomerService.getAllAndSearchWithRoleAdmin(nameDemandType, idCustomer, pageNumber).subscribe(data => {
-      this.pageTotal = data.totalPages;
-      this.pageNumber = data.pageable?.pageNumber;
-      this.postListCustomer = data.content;
-    })
   }
 
   /**
@@ -86,11 +77,64 @@ export class PostListCustomerComponent implements OnInit {
    * @param pageNumber
    * @return call function getAllAndSearch(nameDemandType, idAccount, pageNumber) from service to display list post of customer have paging
    */
-  goToPageWithRoleCustomer(nameDemandType: string, idAccount: string, pageNumber: number) {
-    this._postListCustomerService.getAllAndSearchWithRoleCustomer(nameDemandType, idAccount, pageNumber).subscribe(data => {
-      this.pageTotal = data.totalPages;
-      this.pageNumber = data.pageable?.pageNumber;
-      this.postListCustomer = data.content;
+
+  goToPageWithRoleAdmin(idCustomer: string, nameDemandType: string, pageNumber: number) {
+    this._postListCustomerService.getAllAndSearchWithRoleAdmin(idCustomer, nameDemandType, pageNumber).subscribe(data => {
+      // @ts-ignore
+      if (data) {
+        this.pageTotal = data.totalPages;
+        // @ts-ignore
+        this.pageNumber = data.pageable?.pageNumber + 1;
+        this.postListCustomer = data.content;
+        this.resultPage = data;
+        // @ts-ignore
+        this.nameCustomer = this.postListCustomer[0].customer.nameCustomer.toUpperCase();
+      } else {
+        this.pageTotal = 0;
+        this.pageNumber = 1;
+        this.resultPage = data;
+        this.postListCustomer = [];
+      }
     })
+  }
+
+  /**
+   * Created by: UyDD
+   * Date Created: 03/02/2023
+   * @param nameDemandType
+   * @param idAccount
+   * @param pageNumber
+   * @return call function getAllAndSearch(nameDemandType, idAccount, pageNumber) from service to display list post of customer have paging
+   */
+  goToPageWithRoleCustomer(idAccount: string, nameDemandType: string, pageNumber: number) {
+    this._postListCustomerService.getAllAndSearchWithRoleCustomer(idAccount, nameDemandType, pageNumber).subscribe(data => {
+      if (data) {
+        this.pageTotal = data.totalPages;
+        // @ts-ignore
+        this.pageNumber = data.pageable?.pageNumber + 1;
+        this.postListCustomer = data.content;
+        this.resultPage = data;
+        // @ts-ignore
+        this.nameCustomer = this.postListCustomer[0].customer.nameCustomer.toUpperCase();
+      } else {
+        this.pageTotal = 0;
+        this.pageNumber = 1;
+        this.resultPage = data;
+        this.postListCustomer = [];
+      }
+    })
+  }
+
+  infoPost(item: Post) {
+    this.post = item;
+  }
+
+  back() {
+    if(this.idCustomer){
+      // @ts-ignore
+      this.router.navigateByUrl('/customer');
+    }else{
+      this.router.navigateByUrl('/home');
+    }
   }
 }

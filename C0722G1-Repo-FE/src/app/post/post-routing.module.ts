@@ -3,7 +3,6 @@ import {Routes, RouterModule} from '@angular/router';
 import {PostComponentComponent} from './post-component/post-component.component';
 import {PostCreateComponent} from './post-create/post-create.component';
 import {PostEditComponent} from './post-edit/post-edit.component';
-import {PostListComponent} from "./post-list/post-list.component";
 import {PostListCustomerComponent} from "./post-list-customer/post-list-customer.component";
 
 const routes: Routes = [
@@ -16,7 +15,12 @@ const routes: Routes = [
   {
     path: 'edit', component: PostEditComponent
   },
-  {path: 'list/customer', component: PostListCustomerComponent}
+  {
+    path: 'list/customerByAdmin/:idCustomer', component: PostListCustomerComponent
+  },
+  {
+    path: 'list/customerByCustomer', component: PostListCustomerComponent
+  }
 ];
 
 @NgModule({

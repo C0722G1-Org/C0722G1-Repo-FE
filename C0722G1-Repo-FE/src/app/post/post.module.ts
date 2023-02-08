@@ -9,6 +9,7 @@ import { PostDeleteComponent } from './post-delete/post-delete.component';
 import { PostDetailComponent } from './post-detail/post-detail.component';
 import {NgxPaginationModule} from "ngx-pagination";
 import { PostListCustomerComponent } from './post-list-customer/post-list-customer.component';
+import {FormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { PostListCustomerComponent } from './post-list-customer/post-list-custom
   imports: [
     CommonModule,
     PostRoutingModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    FormsModule
   ]
 })
 export class PostModule { }

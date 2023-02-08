@@ -2,6 +2,6 @@ import {Wards} from "./wards";
 
 export interface Address {
   idAddress?: number;
-  nameAddress?: string;
+  numberAddress?: string;
   wards?: Wards;
 }

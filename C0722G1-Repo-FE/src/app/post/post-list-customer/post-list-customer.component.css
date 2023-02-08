@@ -31,7 +31,7 @@ li{
 
 .inputSearch{
   border-radius: 8px;
-  border: 1px solid #0D6EFD;
+  border: 1px solid #DC3545;
   outline: none;
   margin-right: 2px;
   padding: 8px 24px;
@@ -45,6 +45,42 @@ li{
 .card:hover {
   cursor: pointer;
   box-shadow: 1px 1px 17px rgba(0, 0, 0, 0.35);
+}
+
+.link-page {
+  display: inline-block;
+  padding: 4px 8px;
+  border: 1px solid #0D6EFD;
+  min-width: 30px;
+  margin: 0 4px;
+  border-radius: 3px;
+  text-align: center;
+  color: #0D6EFD;
+  background-color: transparent;
+}
+.link-page:hover {
+  background-color: #e8e8e8;
+}
+
+.link-page.active {
+  background-color: #0D6EFD;
+  color: white;
+  border: 1px solid #0D6EFD;
+}
+.link-page.disabled {
+  opacity: 0.5;
+  background-color: #e8e8e8;
+
+}
+.modal-content:hover{
+  background-color:#e8e8e8 ;
+}
+.card-text {
+  display: block;
+  width: 280px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 /*::placeholder{*/
 /*    color: #0D6EFD;*/

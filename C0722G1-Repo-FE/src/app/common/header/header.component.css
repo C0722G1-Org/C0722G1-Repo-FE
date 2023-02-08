@@ -1,0 +1,14 @@
+.header-content {
+  padding-top: 10px;
+  padding-bottom: 12px;
+}
+.header {
+  padding-top: 10px;
+  padding-bottom: 1px;
+  color: #212121;
+  font-size: 14px;
+  line-height: 1em;
+}
+.header-topline {
+  border-bottom: 2px solid burlywood;
+}
