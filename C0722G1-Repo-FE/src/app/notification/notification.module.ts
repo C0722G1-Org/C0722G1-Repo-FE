@@ -3,13 +3,16 @@ import { CommonModule } from '@angular/common';
 
 import { NotificationRoutingModule } from './notification-routing.module';
 import { NotificationListComponent } from './notification-list/notification-list.component';
+import { NotificationHomeComponent } from './notification-home/notification-home.component';
+import {ReactiveFormsModule} from '@angular/forms';
 
 
 @NgModule({
-  declarations: [NotificationListComponent],
+  declarations: [NotificationListComponent, NotificationHomeComponent],
   imports: [
     CommonModule,
-    NotificationRoutingModule
+    NotificationRoutingModule,
+    ReactiveFormsModule
   ]
 })
 export class NotificationModule { }

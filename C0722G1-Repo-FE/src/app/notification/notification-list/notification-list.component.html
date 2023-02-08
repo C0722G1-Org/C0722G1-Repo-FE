@@ -1,1 +1,257 @@
-<p>notification-list works!</p>
+<!--<div class="p-3 px-5">-->
+<!--  <h2 class="text-center fw-bold text-dark mt-3" style="font-family: Arial,serif;font-size: 24px">-->
+<!--    DANH SÁCH THÔNG BÁO-->
+<!--  </h2>-->
+<!--  <a href="#">-->
+<!--    <button class="btn btn-primary btn-outline-secondary mx-1">-->
+<!--      <span class="text-light"> Thêm mới thông báo </span>-->
+<!--    </button>-->
+<!--  </a>-->
+<!--  <div class="row">-->
+<!--    <form class="pb-3" *ngIf="rfSearch" [formGroup]="rfSearch" (ngSubmit)="searchNotification(0)">-->
+<!--      <fieldset style="all: revert; background-color: #eeeeee;">-->
+<!--        <legend style="all: revert; background-color: white;padding: 5px 10px"-->
+<!--                class="text-center border border-secondary">-->
+<!--          <strong style="color:#a67802">Tìm kiếm</strong>-->
+<!--        </legend>-->
+<!--        <div class="row">-->
+<!--          <div class="col-8">-->
+<!--            <strong style="color:#a67802">Tiêu đề thông báo:</strong>-->
+<!--            <input formControlName="title" type="text" class="form-control rounded-0 mt-2" id="title"-->
+<!--                   placeholder="Nhập tiêu đề cần tìm...">-->
+<!--            <p class="mb-2" *ngIf="!rfSearch.controls['title'].hasError('maxlength')">&nbsp;</p>-->
+<!--            <p class="mb-2" *ngIf="rfSearch.controls['title'].hasError('maxlength')" style="color: red">-->
+<!--              <i class="fa-solid fa-triangle-exclamation"></i>-->
+<!--              Lưu ý: Nhập tiêu đề tối đa 70 ký tự.-->
+<!--            </p>-->
+<!--          </div>-->
+<!--          <div class="col-4">-->
+<!--            <div class="row">-->
+<!--              <div class="col-6">-->
+<!--                <strong style="color:#a67802">Chọn ngày cụ thể: </strong>-->
+<!--                <input formControlName="startDate" type="date" class="form-control rounded-0 mt-2"-->
+<!--                       id="startDate1" placeholder="Nhập cột mốc ngày tháng..."-->
+<!--                       onfocus="document.getElementById('startDate2').value = ''">-->
+<!--              </div>-->
+<!--              <div class="col-6">-->
+<!--                <strong style="color:#a67802">Hoặc khoảng thời gian: </strong>-->
+<!--                <div class="input-group">-->
+<!--                  <select-->
+<!--                    onchange="document.getElementById('startDate1').value = ''"-->
+<!--                    formControlName="startDate"-->
+<!--                    class="form-control rounded-0 mt-2"-->
+<!--                    id="startDate2">-->
+<!--                    <option value="">Chọn khoảng thời gian</option>-->
+<!--                    <option value="">Tất cả thời gian</option>-->
+<!--                    <option value="{{getSearchDate('withinWeek')}}">-->
+<!--                      Trong vòng 1 tuần-->
+<!--                    <option value="{{getSearchDate('withinMonth')}}">-->
+<!--                      Trong vòng 1 tháng-->
+<!--                    </option>-->
+<!--                    <option value="{{getSearchDate('withinThreeMonth')}}">-->
+<!--                      Trong vòng 3 tháng-->
+<!--                    </option>-->
+<!--                    <option value="{{getSearchDate('withinYear')}}">-->
+<!--                      Trong vòng 1 năm-->
+<!--                    </option>-->
+<!--                  </select>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <p class="mb-0" *ngIf="!rfSearch.controls['startDate'].hasError('invalidSearchDate')">&nbsp;</p>-->
+<!--              <p class="mb-0" *ngIf="rfSearch.controls['startDate'].hasError('invalidSearchDate')" id="invalidSearchDate"-->
+<!--                 style="color: red">-->
+<!--                <i class="fa-solid fa-triangle-exclamation"></i>-->
+<!--                Lưu ý: Nhập thời gian từ ngày hôm nay trở về trước.-->
+<!--              </p>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="row">-->
+<!--          <div class="col-8">-->
+<!--            <strong style="color:#a67802">Nội dung thông báo:</strong>-->
+<!--            <input formControlName="content" type="text" class="form-control rounded-0 mt-2"-->
+<!--                   id="content" placeholder="Nhập nội dung cần tìm...">-->
+<!--            <p class="mb-0" *ngIf="!rfSearch.controls['content'].hasError('maxlength')">&nbsp;</p>-->
+<!--            <p class="mb-0" *ngIf="rfSearch.controls['content'].hasError('maxlength')"-->
+<!--               style="color: red">-->
+<!--              <i class="fa-solid fa-triangle-exclamation"></i>-->
+<!--              Lưu ý: Nhập nội dung tối đa 100 ký tự.-->
+<!--            </p>-->
+<!--          </div>-->
+<!--          <div class="col-4">-->
+<!--            <br>-->
+<!--            <div class="row">-->
+<!--              <div class="col-6">-->
+<!--                <div class="input-group">-->
+<!--                  <button class="btn btn-danger w-100 mt-2" [disabled]="rfSearch.invalid">-->
+<!--                    <i class="fa-solid fa-magnifying-glass"></i>-->
+<!--                    Tìm kiếm-->
+<!--                  </button>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="col-6">-->
+<!--                <div class="input-group">-->
+<!--                  <button class="btn btn-secondary w-100 mt-2" (click)="resetFormAndData()"-->
+<!--                          onclick="document.getElementById('startDate').type='text'">-->
+<!--                    <i class="fa-solid fa-arrows-rotate"></i>-->
+<!--                    Làm mới bộ tìm kiếm-->
+<!--                  </button>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </fieldset>-->
+<!--    </form>-->
+<!--  </div>-->
+<!--  <table class="table table-light table-striped table-bordered table-hover" *ngIf="pageNotifications != null">-->
+<!--    <thead>-->
+<!--    <tr class="table-dark text-light">-->
+<!--      <th class="text-center align-middle">STT</th>-->
+<!--      <th class="text-center align-middle">Ngày đăng <i class="fa-regular fa-calendar"></i></th>-->
+<!--      <th class="text-center align-middle" style="width: 378px">Tiêu đề thông báo <i-->
+<!--        class="fa-solid fa-layer-group"></i></th>-->
+<!--      <th class="text-center align-middle" style="width: 712px">Nội dung thông báo <i class="fa-solid fa-book"></i></th>-->
+<!--      <th class="text-center align-middle">Sửa</th>-->
+<!--      <th class="text-center align-middle" style="width: 20px;">-->
+<!--        <button class="btn text-light" (click)="addAllToDelete()">-->
+<!--          <i class="fa-regular fa-trash-can delete-group-icon"></i>-->
+<!--        </button>-->
+<!--      </th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    <tr style="height: 47px" *ngFor="let item of pageNotifications.content;index as i">-->
+<!--      <td class="text-center align-middle">{{i + 1 + pageNotifications.number * 5}}</td>-->
+<!--      <td class="text-center align-middle">{{item.postingDate | date: 'dd/MM/yyyy' }}</td>-->
+<!--      <td class="align-middle" style="width: 378px">{{item.title}}</td>-->
+<!--      <td class="align-middle" style="width: 712px">-->
+<!--        <div id="collapsedContent{{item.idNotification}}" style="display: inline-block">-->
+<!--          {{item.content | NotificationPipe}}-->
+<!--          <a style="color:blue;" role="button" id="expandButton{{item.idNotification}}" *ngIf="item.content.length > 70"-->
+<!--             (click)="expandOrCollapse(item.idNotification, 'expand')">-->
+<!--            xem thêm-->
+<!--          </a>-->
+<!--        </div>-->
+<!--        <div id="expandedContent{{item.idNotification}}" style="display: none">-->
+<!--          {{item.content}}<br>-->
+<!--          <a style=" color: blue" role="button" id="collapseButton{{item.idNotification}}"-->
+<!--             (click)="expandOrCollapse(item.idNotification, 'collapse')">-->
+<!--            thu gọn-->
+<!--          </a>-->
+<!--        </div>-->
+<!--      </td>-->
+<!--      <td class="text-center align-middle">-->
+<!--        <a href="#">-->
+<!--          <button class="btn btn-success btn-outline-secondary btn-sm text-light">-->
+<!--            <i class="fa-regular fa-pen-to-square"></i>-->
+<!--          </button>-->
+<!--        </a>-->
+<!--      </td>-->
+<!--      &lt;!&ndash; Checkbox xóa ở tbody &ndash;&gt;-->
+<!--      <td class="text-center align-middle">-->
+<!--        <input type="checkbox" [checked]="deleteIds.includes(item.idNotification)" (click)="addToDelete(item.idNotification)"/>-->
+<!--      </td>-->
+<!--      &lt;!&ndash; Hết Checkbox xóa ở tbody &ndash;&gt;-->
+<!--    </tr>-->
+<!--    <tr style="height: 47px" *ngFor="let a of [].constructor(5 - pageNotifications.numberOfElements)">-->
+<!--      <td *ngFor="let b of [].constructor(6)"></td>-->
+<!--    </tr>-->
+<!--    </tbody>-->
+<!--  </table>-->
+<!--  <h3 *ngIf="pageNotifications == null" class="text-center">Không tìm thấy kết quả phù hợp!</h3>-->
+
+<!--  &lt;!&ndash;  Phân trang + Nút xóa&ndash;&gt;-->
+<!--  <div *ngIf="pageNotifications" class="d-flex justify-content-between" id="last-row">-->
+<!--    <div>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--      <nav aria-label="Page navigation example">-->
+<!--        <ul class="pagination">-->
+<!--          <li class="page-item" [ngClass]="pageNotifications.first ? 'disabled': ''">-->
+<!--            <a role="button" class="page-link" (click)="gotoPage(0)">Trang đầu</a>-->
+<!--          </li>-->
+<!--          <li class="page-item" [ngClass]="pageNotifications.first ? 'disabled': ''">-->
+<!--            <a role="button" class="page-link" (click)="gotoPage(pageNotifications.number - 1)"><</a>-->
+<!--          </li>-->
+<!--          <li class="page-item" *ngIf="pageNotifications.number - 3 > 0">-->
+<!--            <a role="button" class="page-link"-->
+<!--               (click)="gotoPage(pageNotifications.number - 4)">{{pageNotifications.number - 3}}</a>-->
+<!--          </li>-->
+<!--          <li class="page-item" *ngIf="pageNotifications.number - 2 > 0">-->
+<!--            <a role="button" class="page-link"-->
+<!--               (click)="gotoPage(pageNotifications.number - 3)">{{pageNotifications.number - 2}}</a>-->
+<!--          </li>-->
+<!--          <li class="page-item" *ngIf="pageNotifications.number - 1 > 0">-->
+<!--            <a role="button" class="page-link"-->
+<!--               (click)="gotoPage(pageNotifications.number - 2)">{{pageNotifications.number - 1}}</a>-->
+<!--          </li>-->
+<!--          <li class="page-item" *ngIf="pageNotifications.number > 0">-->
+<!--            <a role="button" class="page-link"-->
+<!--               (click)="gotoPage(pageNotifications.number - 1)">{{pageNotifications.number}}</a>-->
+<!--          </li>-->
+
+<!--          <li class="page-item active"><a class="page-link">{{pageNotifications.number + 1}}</a></li>-->
+
+<!--          <li class="page-item" *ngIf="pageNotifications.number + 2 <= pageNotifications.totalPages">-->
+<!--            <a role="button" class="page-link"-->
+<!--               (click)="gotoPage(pageNotifications.number + 1)">{{pageNotifications.number + 2}}</a>-->
+<!--          </li>-->
+<!--          <li class="page-item" *ngIf="pageNotifications.number + 3 <= pageNotifications.totalPages">-->
+<!--            <a role="button" class="page-link"-->
+<!--               (click)="gotoPage(pageNotifications.number + 2)">{{pageNotifications.number + 3}}</a>-->
+<!--          </li>-->
+<!--          <li class="page-item" *ngIf="pageNotifications.number + 4 <= pageNotifications.totalPages">-->
+<!--            <a role="button" class="page-link"-->
+<!--               (click)="gotoPage(pageNotifications.number + 3)">{{pageNotifications.number + 4}}</a>-->
+<!--          </li>-->
+<!--          <li class="page-item" *ngIf="pageNotifications.number + 5 <= pageNotifications.totalPages">-->
+<!--            <a role="button" class="page-link"-->
+<!--               (click)="gotoPage(pageNotifications.number + 4)">{{pageNotifications.number + 5}}</a>-->
+<!--          </li>-->
+<!--          <li class="page-item" [ngClass]="pageNotifications.last ? 'disabled': ''">-->
+<!--            <a role="button" class="page-link" (click)="gotoPage(pageNotifications.number + 1)">></a>-->
+<!--          </li>-->
+<!--          <li class="page-item" [ngClass]="pageNotifications.last ? 'disabled': ''">-->
+<!--            <a role="button" class="page-link" (click)="gotoPage(pageNotifications.totalPages - 1)">Trang cuối</a>-->
+<!--          </li>-->
+<!--        </ul>-->
+<!--      </nav>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--      <button class="btn btn-danger" data-bs-toggle="modal"-->
+<!--              (click)="sendToDeleteGroupModal()" data-bs-target="#deleteGroupModal"-->
+<!--              [disabled]="deleteIds.length == 0">-->
+<!--        <i class="fa-regular fa-trash-can delete-icon"></i> Xoá-->
+<!--      </button>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Modal Xóa &ndash;&gt;-->
+<!--<div class="modal fade" id="deleteGroupModal" tabindex="-1" role="dialog"-->
+<!--     aria-labelledby="deleteModalLabel"-->
+<!--     aria-hidden="true">-->
+<!--  <div class="modal-dialog">-->
+<!--    <div class="modal-content">-->
+<!--      <div class="modal-header">-->
+<!--        <h5 class="modal-title" id="deleteModalLabel">Xác nhận xóa</h5>-->
+<!--        <button type="button" class="btn-close" data-bs-dismiss="modal"-->
+<!--                aria-label="Close"></button>-->
+<!--      </div>-->
+<!--      <div class="modal-body">-->
+<!--        Xoá các thông báo với các tiêu đề được liệt kê bên dưới ?-->
+<!--        <div *ngFor="let item of deleteNotifications">-->
+<!--          <strong style="color: red">{{item.title}} &nbsp;</strong>-->
+<!--        </div>-->
+<!--        <div class="modal-footer">-->
+<!--          <button id="deleteCancel" class="btn btn-secondary" data-bs-dismiss="modal">Huỷ bỏ</button>-->
+<!--          <button id="deleteAccept" class="btn btn-warning" data-bs-dismiss="modal"-->
+<!--                  (click)="delete()">Xác nhận-->
+<!--          </button>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+

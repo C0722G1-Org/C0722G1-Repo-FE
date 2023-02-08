@@ -9,10 +9,11 @@ import {
   Validators
 } from '@angular/forms';
 import {Router} from '@angular/router';
-import {Account} from '../../entity/account/account';
-import {Customer} from '../../entity/customer/customer';
-import {CustomerService} from '../../service/customer.service';
 import {ToastrService} from 'ngx-toastr';
+import {CustomerService} from '../../service/customer.service';
+import {Customer} from '../../entity/customer/customer';
+import {CustomerDtoEmailAndUsername} from '../../dto/customerDtoEmailAndUsername';
+import {Accountsss} from '../../entity/account/accountsss';
 
 
 
@@ -41,17 +42,17 @@ export class CustomerCreateComponent implements OnInit {
               private router: Router,
               private formBuilder: FormBuilder,
               // tslint:disable-next-line:variable-name
-              private _toast: ToastrService) {
+              private toastrService: ToastrService) {
   }
 
   submitted = false;
   action = true;
   status = false;
-  account: Account | undefined;
+  account: Accountsss | undefined;
   customer: Customer | undefined;
   result = false;
   private customerForm: FormGroup | undefined;
-  private listMailCustomerAndUsernameAccount: Customer[] | undefined;
+  private listMailCustomerAndUsernameAccount: CustomerDtoEmailAndUsername[] | undefined;
 
 
   ngOnInit(): void {
@@ -76,19 +77,28 @@ export class CustomerCreateComponent implements OnInit {
     // @ts-ignore
     this.customer = this.customerForm.value;
     // @ts-ignore
-    this.account.usernameAccount = this.customerForm.value.usernameAccount;
+    this.account?.usernameAccount = this.customerForm.value.usernameAccount;
     // @ts-ignore
-    this.account.encryptPassword = this.customerForm.get('passGroup').get('encryptPassword').value;
+    this.account?.encryptPassword = this.customerForm.get('passGroup').get('encryptPassword').value;
     // @ts-ignore
-    this.account.email = this.customerForm.value.emailCustomer;
+    this.account?.email = this.customerForm.value.emailCustomer;
     // @ts-ignore
-    this.account.name = this.customerForm.value.nameCustomer;
+    this.account?.name = this.customerForm.value.nameCustomer;
     // @ts-ignore
-    this.customer?.account = this.account;
+    this.customer?.accountCustomer = this.account;
     // @ts-ignore
+    this.customer?.encryptPassword = this.customerForm.get('passGroup').get('encryptPassword').value;
+    // @ts-ignore
+    console.log(this.customer);
     this.customerService.saveCustomer(this.customer).subscribe(value => {
-      this.router.navigateByUrl('/customer/create');
-      this._toast.success('Đăng Ký Thành Công');
+
+      if (value == null) {
+        this.toastrService.error('Thêm mới không thành công.', 'Thông báo');
+      } else {
+        this.toastrService.success('Thêm mới thành công!', 'Thông báo');
+        this.router.navigateByUrl('/customer/create');
+      }
+      // this._toast.success('Đăng Ký Thành Công');
     }, error => {
       this.action = false;
     }, () => {
@@ -164,7 +174,7 @@ export class CustomerCreateComponent implements OnInit {
     // @ts-ignore
     this.listMailCustomerAndUsernameAccount.forEach(value => {
       // @ts-ignore
-      if (email === value.emailCustomer) {
+      if (email === value.email) {
         result = {isExist: true};
       }
     });
@@ -176,8 +186,7 @@ export class CustomerCreateComponent implements OnInit {
     let result = null;
     // @ts-ignore
     this.listMailCustomerAndUsernameAccount.forEach(value => {
-      // @ts-ignore
-      if (username === value.account.usernameAccount) {
+      if (username === value.usernameAccount) {
         result = {areEqual: true};
       }
     });

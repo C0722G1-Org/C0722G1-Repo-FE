@@ -1,10 +1,11 @@
 
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Account} from '../entity/account/account';
+// import {Account} from '../entity/account/accountsss';
 import {Customer} from '../entity/customer/customer';
 import {Observable} from 'rxjs';
 import {environment} from '../../environments/environment';
+import {CustomerDtoEmailAndUsername} from '../dto/customerDtoEmailAndUsername';
 
 @Injectable({
   providedIn: 'root'
@@ -35,11 +36,11 @@ export class CustomerService {
    * date:31/01/2023
    * method of using save customer
    */
-  findListMailCustomerr(): Observable<Customer[]> {
-    return this.httpClient.get<Customer[]>(this.urlListMaileCustomer);
+  findListMailCustomerr(): Observable<CustomerDtoEmailAndUsername[]> {
+    return this.httpClient.get<CustomerDtoEmailAndUsername[]>(this.urlListMaileCustomer);
   }
 
-  CUSTOMER_URL = 'http://localhost:8080/api/customers';
+  // CUSTOMER_URL = 'http://localhost:8080/api/customers';
 
 
   constructor(private httpClient: HttpClient) {

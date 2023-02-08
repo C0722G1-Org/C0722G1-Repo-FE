@@ -121,15 +121,20 @@
       <input formControlName="addressCustomer" type="text" placeholder="Địa chỉ(*)"/>
 
       <!--gioi tinh(*)-->
-      <div id="inlineRadio1">
+      <div id="inlineRadio1" >
          <span class="text-danger ms-3 val"
                *ngIf="customerForm.controls.genderCustomer.hasError('required') && (customerForm.controls.genderCustomer.touched||submitted) ">
          Vui lòng nhập giới tính!!!
-    </span><br>
-        <p>Chọn giới tính</p>
+    </span>
+        <label>Chọn giới tính :</label>
         <label><input type="radio"  value="1"  formControlName="genderCustomer">Nam</label>
         <label><input type="radio"  value="2"  formControlName="genderCustomer">Nữ</label>
         <label><input type="radio"  value="3"  formControlName="genderCustomer">Khác</label>
+        <span class="text-danger ms-3 val" *ngIf="customerForm.controls.genderCustomer.touched else elseBlock">
+          <p
+            *ngIf="customerForm.controls.genderCustomer.hasError('required')">Giới tính không được trống</p>
+        </span>
+        <ng-template #elseBlock><br></ng-template>
       </div>
 
       <div class="form-check d-flex justify-content-center">
@@ -145,7 +150,7 @@
     <div class="overlay">
       <div class="overlay-panel overlay-left overlay-right">
         <h3>Batdongsan.com.vn</h3>
-        <img src="../../../assets/logoSang.png" height="213" width="399"/>
+        <img src="../../../assets/image/logoSang.png" height="213" width="399"/>
         <p>Đăng nhập bằng tài khoản của bạn</p>
         <button class="ghost" routerLink="/account/login" id="signIn">Đăng nhập</button>
       </div>

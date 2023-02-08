@@ -9,6 +9,7 @@ import { PostDeleteComponent } from './post-delete/post-delete.component';
 import { PostDetailComponent } from './post-detail/post-detail.component';
 
 
+
 @NgModule({
   declarations: [PostCreateComponent, PostEditComponent, PostListComponent, PostDeleteComponent, PostDetailComponent],
   imports: [

@@ -1,5 +1,5 @@
 
-import {Account} from '../account/account';
+import { Accountsss} from '../account/accountsss';
 
 export interface Customer {
   /**
@@ -10,7 +10,7 @@ export interface Customer {
   id_customer?: number;
   name_customer?: string;
   email_customer?: string;
-  address_customer?:string;
+  address_customer?: string;
   idCard_customer?: string;
   code_customer?: string;
   gender_customer?: number;
@@ -32,8 +32,8 @@ export interface Customer {
   approvalCustomer?: number;
   phoneCustomer1?: string;
   phoneCustomer2?: string;
+  encryptPassword?: string;
   nameAccount?: string;
-  account?: Account;
-  accountCustomer?: Account;
+  accountCustomer?: Accountsss;
 }
 
