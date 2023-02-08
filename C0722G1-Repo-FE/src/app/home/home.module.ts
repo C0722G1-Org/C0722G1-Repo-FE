@@ -8,10 +8,11 @@ import { NavComponent } from './nav/nav.component';
 import { HomeComponent } from './home/home.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {SecurityModule} from "../security/security.module";
+import { NotificationComponent } from './notification/notification.component';
 
 
 @NgModule({
-    declarations: [FooterComponent, HeaderComponent, NavComponent, HomeComponent],
+    declarations: [FooterComponent, HeaderComponent, NavComponent, HomeComponent, NotificationComponent],
     exports: [
         HomeComponent,
         HeaderComponent,

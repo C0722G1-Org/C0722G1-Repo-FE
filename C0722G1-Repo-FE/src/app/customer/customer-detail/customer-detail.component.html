@@ -6,7 +6,7 @@
         <legend>
           <div>
             <div style="margin-left: 15px; margin-top: 15px">
-              <a href="#" type="button"><i class="fa-solid fa-arrow-left"></i></a>
+              <a routerLink="/customer" type="button"><i class="fa-solid fa-arrow-left"></i></a>
               <span style="font-size: 35px; margin: 0 auto;text-align: center ; display: block;">Thông Tin Chi Tiết Khách Hàng </span>
               <span
                 style="font-size: 35px; margin: 0 auto;text-align: center ; display: block;">{{customerDetail?.nameCustomer}}</span>
@@ -20,7 +20,7 @@
           <label class="form-label ms-2">Họ và tên:</label>
         </div>
         <div class="col-8">
-          <label>{{customerDetail.nameCustomer}}</label>
+          <label>{{customerDetail?.nameCustomer}}</label>
         </div>
       </div>
 
@@ -30,9 +30,9 @@
           <label class="form-label ms-2">Giới tính:</label>
         </div>
         <div class="col-8">
-          <label *ngIf="customerDetail.genderCustomer == 0">Nam</label>
-          <label *ngIf="customerDetail.genderCustomer == 1">Nữ</label>
-          <label *ngIf="customerDetail.genderCustomer == 2">Khác</label>
+          <label *ngIf="customerDetail?.genderCustomer == 0">Nam</label>
+          <label *ngIf="customerDetail?.genderCustomer == 1">Nữ</label>
+          <label *ngIf="customerDetail?.genderCustomer == 2">Khác</label>
         </div>
       </div>
 
@@ -41,7 +41,7 @@
           <label class="form-label ms-2">Ngày sinh:</label>
         </div>
         <div class="col-8">
-          <label>{{customerDetail.dateOfBirth | date : 'dd/MM/y'}}</label>
+          <label>{{customerDetail?.dateOfBirth | date : 'dd/MM/y'}}</label>
         </div>
       </div>
 
@@ -50,7 +50,7 @@
           <label class="form-label ms-2">Số điện thoại:</label>
         </div>
         <div class="col-8">
-          <label>{{customerDetail.phoneCustomer1}}</label>
+          <label>{{customerDetail?.phoneCustomer1}}</label>
         </div>
       </div>
 
@@ -59,7 +59,7 @@
           <label class="form-label ms-2">Email:</label>
         </div>
         <div class="col-8">
-          <label>{{customerDetail.emailCustomer}}</label>
+          <label>{{customerDetail?.emailCustomer}}</label>
         </div>
       </div>
 
@@ -68,18 +68,15 @@
           <label class="form-label ms-2">Địa chỉ:</label>
         </div>
         <div class="col-8">
-          <label>{{customerDetail.addressCustomer}}</label>
+          <label>{{customerDetail?.addressCustomer}}</label>
         </div>
       </div>
 
       <div class="mb-2 row justify-content-center ">
-        <!--        <a [routerLink]="['post/list/customerByAdmin/', customerDetail.idCustomer]">-->
         <button type="submit" style="margin-right: 5px ; width: 80%; "
-                [routerLink]="['/post/list/customerByAdmin', customerDetail.idCustomer]"
                 class="btn btn-outline-success d-flex justify-content-center">
-          <p>Xem Danh Sách Nhu Cầu Của {{customerDetail.nameCustomer}}</p>
+          <p *ngIf="idCustomer" [routerLink]="['/post/list/customerByAdmin/', customerDetail.idCustomer]" >Xem Danh Sách Nhu Cầu Của {{customerDetail?.nameCustomer}}</p>
         </button>
-        <!--        </a>-->
       </div>
 
 

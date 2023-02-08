@@ -54,6 +54,10 @@
                   <span *ngIf="formUpdateEmployee.controls.dateOfBirth.hasError('required')">Ngày sinh không được trống</span>
                 </div>
                 <ng-template #elseBlock><br></ng-template>
+                <div *ngIf="formUpdateEmployee.errors?.checkBirthDay"
+                     style="color: red">
+                  Tuổi phải nằm trong khoảng 18 đến 100.
+                </div>
               </div>
             </div>
           </div>

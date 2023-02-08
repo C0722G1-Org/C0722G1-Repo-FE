@@ -33,6 +33,7 @@ export interface Customer {
   phoneCustomer1?: string;
   phoneCustomer2?: string;
   accountCustomer?: Account;
+  encryptPassword?: string;
 
 
 }

@@ -16,8 +16,7 @@ const routes: Routes = [
     path: 'post', loadChildren: () => import('./post/post.module').then(module => module.PostModule),
   },
   {
-    path: 'customer', loadChildren: () => import('./customer/customer.module').then(module => module.CustomerModule),
-    canActivate: [AuthGuard] && [CustomerGuard]
+    path: 'customer', loadChildren: () => import('./customer/customer.module').then(module => module.CustomerModule)
   },
   {
     path: 'form', loadChildren: () => import('./form/form.module').then(module => module.FormModule),

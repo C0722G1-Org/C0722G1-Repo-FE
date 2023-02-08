@@ -41,7 +41,7 @@ export class FormListComponent implements OnInit {
     this.dataFormService.searchByContent(this.contentDataForm.trim(), this.page).subscribe(data => {
       if (data.content.length !== null) {
         this.dataFormPage = data;
-        if (contentDataForm !== '') {
+        if (contentDataForm !== '' && !flag) {
           this.toastrService.success('Tìm kiếm thành công', 'Thông Báo');
           // this.toastrService.remove();
         }

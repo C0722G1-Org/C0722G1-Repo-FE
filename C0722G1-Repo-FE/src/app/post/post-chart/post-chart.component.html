@@ -1,4 +1,4 @@
-<div class="mt-1 text-center text-primary"><h2>THỐNG KÊ BÀI ĐĂNG</h2></div>
+<div class="mt-1 text-center"><h2>THỐNG KÊ BÀI ĐĂNG</h2></div>
 <div class="row mt-1">
   <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
     <table class="table table-light table-striped table-hover mt-3">
@@ -7,7 +7,7 @@
         <th colspan="11">
           <div class="row">
             <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-              <h2 class="text-primary">Bài đăng</h2>
+              <h2>Bài đăng</h2>
             </div>
             <div class="col-7 col-sm-7 col-md-7 col-lg-7 col-xl-7 col-xxl-7">
               <form class="d-flex justify-content-center">
@@ -28,7 +28,7 @@
                 <button class="btn btn-primary me-1" (click)="searchChart(monthVariable.value,yearVariable.value)"
                         type="button"><i class="bi bi-search"></i></button>
               </form>
-              <small class="text-primary"><i>Lưu ý:Chọn năm hoặc chọn cả năm và tháng để hiển thị đúng kết
+              <small class="text-primary text-center" ><i>Lưu ý:Chọn năm hoặc chọn cả năm và tháng để hiển thị đúng kết
                 quả!!!</i></small>
             </div>
           </div>
@@ -50,10 +50,10 @@
         <td hidden>{{post.idPost}}</td>
         <td>{{i + 1 + itemsPerPage * (p - 1)}}</td>
         <td>{{post.dateCreation | date:'dd/MM/yyyy'}}</td>
-        <td>{{showMore ? post.numberAddress + ',' + post.nameWards + ',' + post.nameDistrict + ',' + post.nameCity : (post.numberAddress + ',' + post.nameWards + ',' + post.nameDistrict + ',' + post.nameCity | slice:0: 20)}}
+        <td>{{showMore ? post.numberAddress + ',' + post.nameWards + ',' + post.nameDistrict + ',' + post.nameCity : (post.numberAddress + ',' + post.nameWards + ',' + post.nameDistrict + ',' + post.nameCity | slice:0: 30)}}
           <span *ngIf="!showMore">...</span>
-          <a *ngIf="!showMore" (click)="onShow()"><button class="btn btn-outline-primary">Xem thêm</button></a>
-          <a *ngIf="showMore" (click)="onShow()"><button class="btn btn-outline-primary">Ẩn bớt</button></a></td>
+          <a *ngIf="!showMore" (click)="onShow()">Xem thêm</a>
+          <a *ngIf="showMore" (click)="onShow()">Ẩn bớt</a></td>
         <td>{{post.price | currency: "VND"}}</td>
         <td *ngIf="post.statusPost!=undefined">{{post.statusPost == 1 ? 'Thành Công' : 'Thất Bại'}}</td>
         <td *ngIf="post.statusPost!= undefined && post.statusPost>1,else block1">{{0|currency: "VND"}}</td>

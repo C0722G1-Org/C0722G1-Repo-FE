@@ -13,11 +13,11 @@ import {formatDate} from '@angular/common';
   styleUrls: ['./form-edit.component.css']
 })
 export class FormEditComponent implements OnInit {
-
+  checkError: boolean = true;
     formDataFormUpdate: FormGroup = new FormGroup(
       {
         idDataForm: new FormControl(),
-        contentDataForm: new FormControl('', [Validators.required]),
+        contentDataForm: new FormControl('', [Validators.required,Validators.maxLength(200),Validators.pattern('^[AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬBCDĐEÈẺẼÉẸÊỀỂỄẾỆFGHIÌỈĨÍỊJKLMNOÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢPQRSTUÙỦŨÚỤƯỪỬỮỨỰVWXYỲỶỸÝỴZ][aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz]+ [AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬBCDĐEÈẺẼÉẸÊỀỂỄẾỆFGHIÌỈĨÍỊJKLMNOÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢPQRSTUÙỦŨÚỤƯỪỬỮỨỰVWXYỲỶỸÝỴZ][aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz]+(?: [AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬBCDĐEÈẺẼÉẸÊỀỂỄẾỆFGHIÌỈĨÍỊJKLMNOÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢPQRSTUÙỦŨÚỤƯỪỬỮỨỰVWXYỲỶỸÝỴZ][aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz]*)*$')]),
         urlDataForm: new FormControl(''),
         fileForm: new FormControl('', [Validators.required])
       }
@@ -42,7 +42,9 @@ export class FormEditComponent implements OnInit {
 
     validationMessages = {
       contentDataForm: [
-        {type: 'required', message: 'Vui lòng nhập nội dung biểu mẫu '}
+        {type: 'required', message: 'Vui lòng nhập nội dung biểu mẫu '},
+        {type: 'maxlength', message: 'Vui lòng nhập nội dung ít hơn 200 ký tự'},
+        {type: 'pattern',message: 'Vui lòng không nhập ký tự đặc biệt và số vd : Hợp Đồng Abc'}
       ],
       fileForm: [
         {type: 'required', message: 'Vui lòng thêm file  '}
@@ -50,7 +52,7 @@ export class FormEditComponent implements OnInit {
     };
 
     ngOnInit(): void {
-
+      this.getDataForm(this.activatedRoute.snapshot.params.id);
 
     }
 
@@ -67,6 +69,7 @@ export class FormEditComponent implements OnInit {
           this.formDataFormUpdate.patchValue(data);
         }
         , error => {
+          this.checkError =false;
         }
         , () => {
         }

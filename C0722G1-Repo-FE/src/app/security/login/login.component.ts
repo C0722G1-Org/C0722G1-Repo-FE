@@ -4,6 +4,7 @@ import {SecurityService} from '../../service/security.service';
 import {TokenService} from '../../service/token.service';
 import {Router} from '@angular/router';
 import {Toast, ToastrService} from 'ngx-toastr';
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-login',
@@ -22,8 +23,10 @@ export class LoginComponent implements OnInit {
     private tokenService: TokenService,
     private router: Router,
     private toast: ToastrService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private titleService: Title
   ) {
+    this.titleService.setTitle('Trang đăng nhập')
   }
 
   /**
@@ -70,6 +73,10 @@ export class LoginComponent implements OnInit {
           timeOut: 3000,
           extendedTimeOut: 1500
         });
+      }
+    }, error => {
+      if (error.status === 403){
+        this.toast.error('Đăng nhập thất bại, vui lòng nhập lại.', 'Thông báo')
       }
     }
   )

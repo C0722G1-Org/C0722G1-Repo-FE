@@ -25,9 +25,6 @@ export class CustomerGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (this.tokenService.getToken()) {
-      console.log('roles -->', this.tokenService.getRole());
-      console.log('string roles ->', JSON.stringify(this.tokenService.getRole()));
-      console.log('check cus -->', JSON.stringify(this.tokenService.getRole()) === JSON.stringify(['CUSTOMER']));
       if (JSON.stringify(this.tokenService.getRole()) === JSON.stringify(['CUSTOMER'])) {
         return true;
       } else if (JSON.stringify(this.tokenService.getRole()) === JSON.stringify(['ADMIN'])) {

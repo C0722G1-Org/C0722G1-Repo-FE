@@ -25,9 +25,6 @@ export class EmployeeGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (this.tokenService.getToken()) {
-      console.log('roles -->', this.tokenService.getRole());
-      console.log('string roles -->', JSON.stringify(this.tokenService.getRole()));
-      console.log('check emp -->', JSON.stringify(this.tokenService.getRole()) === JSON.stringify(['EMPLOYEE']));
       if (JSON.stringify(this.tokenService.getRole()) === JSON.stringify(['EMPLOYEE'])) {
         return true;
       } else {

@@ -38,7 +38,7 @@ export class CustomerDetailComponent implements OnInit {
   detailById(idCustomer: number) {
     this.customerService.detailCustomerById(idCustomer).subscribe(
       data => {
-        console.log(data);
+        console.log('asdadasdasd',data);
         this.customerDetail = data;
       }
     );
