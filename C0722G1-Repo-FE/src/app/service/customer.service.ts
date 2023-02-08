@@ -41,22 +41,31 @@ export class CustomerService {
 
   CUSTOMER_URL = 'http://localhost:8080/api/customers';
 
+
   constructor(private httpClient: HttpClient) {
-  }
-  createCustomer(customer: Customer): Observable<Customer> {
-    return this.httpClient.post<Customer>(environment.customerURL, customer);
+
   }
 
-  detailCustomerById(idCustomer: number | undefined): Observable<Customer> {
-    return this.httpClient.get<Customer>(environment.detailCustomerURL + '/detail/' + 2);
-  }
+  /**
+   * Create by: HuyNV
+   * Date created : 01/02/2023
+   * Function : to create customer
+   *
+   * @param customer
+   */
+  // createCustomer(customer: Customer): Observable<Customer> {
+  //   return this.httpClient.post<Customer>(environment.customerURL, customer);
+  // }
 
-  findById(idCustomer: number): Observable<any> {
-    return this.httpClient.get(this.CUSTOMER_URL + '/' + idCustomer);
-  }
-
-  updateCustomer(customer: Customer): Observable<any> {
-    return this.httpClient.patch(this.CUSTOMER_URL + '/' + customer.idCustomer, customer);
-  }
+  // /**
+  //  * Create by: HuyNV
+  //  * Date created : 01/02/2023
+  //  * Function : to find by id customer
+  //  *
+  //  * @param idCustomer
+  //  */
+  // detailCustomerById(idCustomer: number): Observable<Customer> {
+  //   return this.httpClient.get<Customer>(environment.detailCustomerURL + '/detail/' + idCustomer);
+  // }
 
 }

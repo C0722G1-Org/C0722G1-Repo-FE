@@ -1,3 +1,4 @@
+
 import {Account} from '../account/account';
 
 export interface Customer {
@@ -17,9 +18,7 @@ export interface Customer {
   approval_customer?: number;
   phone_customer1?: string;
   phone_customer2?: string;
-
   // account?: Account;
-
   idCustomer?: number;
   nameCustomer?: string;
   emailCustomer?: string;
@@ -28,9 +27,13 @@ export interface Customer {
   codeCustomer?: string;
   genderCustomer?: number;
   dateOfBirth?: string;
+  dateOfBirthCustomer?: string;
   flagDelete?: boolean;
   approvalCustomer?: number;
   phoneCustomer1?: string;
   phoneCustomer2?: string;
+  nameAccount?: string;
   account?: Account;
+  accountCustomer?: Account;
 }
+

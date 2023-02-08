@@ -47,7 +47,7 @@ export class CustomerCreateComponent implements OnInit {
   submitted = false;
   action = true;
   status = false;
-  account = new Account();
+  account: Account | undefined;
   customer: Customer | undefined;
   result = false;
   private customerForm: FormGroup | undefined;
