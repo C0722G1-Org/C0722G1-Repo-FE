@@ -7,7 +7,7 @@
             <div>
               <div style="margin-left: 15px; margin-top: 15px">
                 <a routerLink="/customer" type="button"><i class="fa-solid fa-arrow-left"></i></a>
-                <span style="font-size: 35px; margin-left: 180px">Thêm Khách Hàng</span>
+                <span style="font-size: 35px; margin-left: 180px">THÊM KHÁCH HÀNG</span>
               </div>
             </div>
           </legend>
@@ -26,7 +26,7 @@
                    *ngIf="rfAddCustomer.controls.nameCustomer.invalid && rfAddCustomer.controls.nameCustomer.touched ">
                 <span *ngIf="rfAddCustomer.controls.nameCustomer.hasError('required') ">Tên không được trống.</span>
                 <span
-                  *ngIf="rfAddCustomer.controls.nameCustomer.hasError('pattern')">Tên không chưa kí tự đặc biệt. Ví dụ Nguyễn Văn Huy </span>
+                  *ngIf="rfAddCustomer.controls.nameCustomer.hasError('pattern')">Tên không chưa kí tự đặc biệt. Ví dụ Nguyễn Văn A </span>
                 <span
                   *ngIf="rfAddCustomer.controls.nameCustomer.hasError('minlength')">Tên phải nhiều hơn 5 kí tự.</span>
                 <span
@@ -35,7 +35,7 @@
             </div>
           </div>
         </div>
-        ​
+
         <div class="mb-2">
           <div class="d-flex align-items-center mb-2">
             <div class="col-4">
@@ -113,7 +113,7 @@
               </div>
               <div *ngIf="rfAddCustomer.controls['phoneCustomer1'].hasError('pattern') &&
                                      rfAddCustomer.controls['phoneCustomer1'].touched" style="color: red">
-                Số điện thoại phải đúng định dạng. Ví dụ: 090 XXXX XXX .
+                Số điện thoại phải đúng định dạng. Ví dụ: 038X[7], 076X[7], 097X[7] .
               </div>
             </div>
           </div>
@@ -131,7 +131,7 @@
               </div>
               <div *ngIf="rfAddCustomer.controls['phoneCustomer2'].hasError('pattern') &&
                                      rfAddCustomer.controls['phoneCustomer2'].touched" style="color: red">
-                Số điện thoại phải đúng định dạng. Ví dụ: 090 XXXX XXX .
+                Số điện thoại phải đúng định dạng. Ví dụ: 038X[7], 076X[7], 097X[7] .
               </div>
             </div>
           </div>
@@ -223,7 +223,6 @@
             <p>Thêm</p>
           </button>
         </div>
-        ​
       </form>
       ​
       <div class="mb-2">

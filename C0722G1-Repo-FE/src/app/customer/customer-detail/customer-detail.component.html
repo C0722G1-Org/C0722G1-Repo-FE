@@ -75,7 +75,7 @@
       <div class="mb-2 row justify-content-center ">
         <button type="submit" style="margin-right: 5px ; width: 80%; "
                 class="btn btn-outline-success d-flex justify-content-center">
-          <p *ngIf="idCustomer" [routerLink]="['/post/list/customerByAdmin/', customerDetail.idCustomer]" >Xem Danh Sách Nhu Cầu Của {{customerDetail?.nameCustomer}}</p>
+          <p [routerLink]="['/post/list/customerByAdmin/', customerDetail?.idCustomer]" >Xem Danh Sách Bài Đăng Của {{customerDetail?.nameCustomer}}</p>
         </button>
       </div>
 

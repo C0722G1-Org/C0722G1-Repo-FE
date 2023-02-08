@@ -69,7 +69,9 @@ export class FormEditComponent implements OnInit {
           this.formDataFormUpdate.patchValue(data);
         }
         , error => {
-          this.checkError =false;
+          if (error.status === 400 || 404){
+            this.router.navigateByUrl("/**")
+          }
         }
         , () => {
         }
@@ -130,8 +132,7 @@ export class FormEditComponent implements OnInit {
 
 
     return(): void {
-      this.formDataFormUpdate.patchValue({contentDataForm: ''});
-      this.formDataFormUpdate.patchValue({urlDataForm: ''});
+     this.ngOnInit();
     }
 
 }

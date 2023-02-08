@@ -29,8 +29,7 @@ export const checkBirthDay: ValidatorFn = (control: AbstractControl): Validation
 })
 export class CustomerAddComponent implements OnInit {
   rfAddCustomer: FormGroup | undefined;
-  listMailCustomerAndUsernameAccount: CustomerDtoEmailAndUsername[] | undefined;
-
+  private listMailCustomerAndUsernameAccount: CustomerDtoEmailAndUsername[] | undefined;
 
   constructor(private builder: FormBuilder,
               private router: Router,
@@ -45,8 +44,8 @@ export class CustomerAddComponent implements OnInit {
   }
 
   getAddCustomer(): void {
-    // this.customerService.findListMailCustomerr().subscribe(data => {
-    //   this.listMailCustomerAndUsernameAccount = data;
+    this.customerService.findListMailCustomerr().subscribe(list => {
+      this.listMailCustomerAndUsernameAccount = list;
       this.rfAddCustomer = this.builder.group({
           nameCustomer: ['', [Validators.required, Validators.pattern('^[AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬBCDĐEÈẺẼÉẸÊỀỂỄẾỆFGHIÌỈĨÍỊJKLMNOÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢPQRSTUÙỦŨÚỤƯỪỬỮỨỰVWXYỲỶỸÝỴZ][aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz]+ [AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬBCDĐEÈẺẼÉẸÊỀỂỄẾỆFGHIÌỈĨÍỊJKLMNOÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢPQRSTUÙỦŨÚỤƯỪỬỮỨỰVWXYỲỶỸÝỴZ][aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz]+(?: [AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬBCDĐEÈẺẼÉẸÊỀỂỄẾỆFGHIÌỈĨÍỊJKLMNOÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢPQRSTUÙỦŨÚỤƯỪỬỮỨỰVWXYỲỶỸÝỴZ][aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz]*)*$'),
             Validators.maxLength(50),
@@ -58,14 +57,14 @@ export class CustomerAddComponent implements OnInit {
           flagDelete: [false],
           genderCustomer: [''],
           dateOfBirth: ['', [Validators.required]],
-          phoneCustomer1: ['', [Validators.required, Validators.pattern('[0][9][0]\\d{7}')]],
-          phoneCustomer2: ['', [Validators.pattern('[0][9][0]\\d{7}')]],
-          emailCustomer: ['',[Validators.required,
+          phoneCustomer1: ['', [Validators.required, Validators.pattern('(((\\+|)84)|0)(3|5|7|8|9)+([0-9]{8})')]],
+          phoneCustomer2: ['', [Validators.pattern('(((\\+|)84)|0)(3|5|7|8|9)+([0-9]{8})')]],
+          emailCustomer: ['', [Validators.required,
             Validators.pattern('^[a-zA-Z0-9.!#$%&\'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$')]],
           encryptPassword: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]]
-        }, {validators: [checkBirthDay]}
+        }, {validators: [checkBirthDay, this.isExist]}
       );
-    // });
+    });
   }
 
 
@@ -83,19 +82,20 @@ export class CustomerAddComponent implements OnInit {
     }
   }
 
-  // isExist: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
-  //   // @ts-ignore
-  //   const email = control.get('emailCustomer').value;
-  //   let result = null;
-  //   // @ts-ignore
-  //   this.listMailCustomerAndUsernameAccount.forEach(value => {
-  //     // @ts-ignore
-  //     if (email === value.emailCustomer) {
-  //       result = {isExist: true};
-  //     }
-  //   });
-  //   return result;
-  // };
+
+  isExist: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+    // @ts-ignore
+    const email = control.get('emailCustomer').value;
+    let result = null;
+    // @ts-ignore
+    this.listMailCustomerAndUsernameAccount.forEach(value => {
+      // @ts-ignore
+      if (email === value.email) {
+        result = {isExist: true};
+      }
+    });
+    return result;
+  }
 
   resetFormAndData(): void {
     this.ngOnInit();

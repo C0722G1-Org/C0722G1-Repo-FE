@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid mt-5">
   <div toastContainer></div>
   <div class="row">
     <div class="col-lg-2">
@@ -49,11 +49,11 @@
 
               <p style="text-align: center"><span>Được đăng bởi</span> <br>
                 <span class="hr_value" id="customerName"
-                      [routerLink]="['customer/detail', postDetail?.idCustomer]">{{postDetail?.nameCustomer}}</span>
+                      [routerLink]="['/customer/detail', postDetail?.idCustomer]">{{postDetail?.nameCustomer}}</span>
               </p>
 
               <p style="font-size: smaller; text-align: center; margin-top: -0.6rem">
-                <span class="hl_value"> Ngày đăng: </span><span>{{postDetail?.dateCreation}}</span>
+                <span class="hl_value"> Ngày đăng: </span><span>{{postDetail?.dateCreation | date:'dd/MM/y'}}</span>
               </p>
             </div>
 
@@ -63,7 +63,7 @@
                 <button style="text-align: center; width: 11rem" id="show" class="btn mt-1"
                         (click)="showPhoneNumber()"><span id="phoneNumber"
                                                           style="font-size: smaller; color: white"><span
-                  (click)="copyPhoneNumber(phoneNumber)">{{phoneNumber}}</span></span>
+                  (click)="copyPhoneNumber()">{{phoneNumber}}</span></span>
                 </button>
               </div>
               <div class="col-1"></div>
@@ -101,11 +101,14 @@
     </div>
     <div class="col-lg-6">
       <span>{{postDetail?.nameDemandType}}</span>
-      / <span [routerLink]="['/post/list/', postDetail?.nameLandType+'1']"
+      / <span [routerLink]="['/post/list/', postDetail?.nameLandType+'1']" (mouseover)="addHashTag($event, postDetail?.nameLandType)"
+              (mouseout)="removeHashTag($event, postDetail?.nameLandType)"
               class="link">{{postDetail?.nameLandType}}</span>
-      / <span [routerLink]="['/post/list/', postDetail?.nameDirection+'2']"
+      / <span [routerLink]="['/post/list/', postDetail?.nameDirection+'2']" (mouseover)="addHashTagDirection($event, postDetail?.nameDirection)"
+              (mouseout)="removeHashTagDirection($event, postDetail?.nameDirection)"
               class="link">hướng {{postDetail?.nameDirection}}</span>
-      / <span [routerLink]="['/post/list/', postDetail?.nameCity]" class="link">{{postDetail?.nameCity}}</span>
+      / <span [routerLink]="['/post/list/', postDetail?.nameCity]" (mouseover)="addHashTag($event, postDetail?.nameCity)"
+              (mouseout)="removeHashTag($event, postDetail?.nameCity)" class="link">{{postDetail?.nameCity}}</span>
       <h4 class="mt-2">{{postDetail?.namePost}}
         {{postDetail?.numberAddress}},
         {{postDetail?.nameWards}},

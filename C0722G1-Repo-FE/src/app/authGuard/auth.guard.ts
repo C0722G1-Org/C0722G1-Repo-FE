@@ -26,7 +26,7 @@ export class AuthGuard implements CanActivate {
     if (this.tokenService.getToken()) {
       return true;
     } else {
-      this.toast.warning('Vui lòng đăng nhập để tiếp tục', 'Thông báo');
+      this.toast.warning('Vui lòng đăng nhập để tiếp tục.', 'Thông báo');
       this.router.navigateByUrl('/security/login');
       return false;
     }

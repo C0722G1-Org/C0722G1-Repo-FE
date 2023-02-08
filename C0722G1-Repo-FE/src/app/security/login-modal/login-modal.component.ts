@@ -61,24 +61,25 @@ export class LoginModalComponent implements OnInit {
             this.tokenService.setRole(data.roles);
             this.tokenService.setEmail(data.email);
             this.tokenService.setIdAccount(data.idAccount);
-            this.tokenService.setUsernameAccount(data.usernameAccount);
             this.statusRole = data.roles;
-            // this.router.navigateByUrl('/home');
             location.reload();
-            this.toast.info('Đăng nhập thành công', 'Thông báo');
+            this.toast.info('Đăng nhập thành công.', 'Thông báo',{
+              timeOut: 3000,
+              extendedTimeOut: 1500
+            });
           }
         }
-        // @ts-ignore
+
         if (data.status === 202) {
-          this.toast.error('Mật khẩu không đúng vui lòng nhập lại', 'Thông báo', {
+          this.toast.error('Mật khẩu không đúng vui lòng nhập lại.', 'Thông báo', {
             timeOut: 3000,
             extendedTimeOut: 1500
           });
         }
       }, error => {
-      if (error.status === 403){
-        this.toast.error('Đăng nhập thất bại, vui lòng nhập lại.','Thông báo')
-      }
+        if (error.status === 403){
+          this.toast.error('Đăng nhập thất bại, vui lòng nhập lại.','Thông báo')
+        }
       }
     );
   }
