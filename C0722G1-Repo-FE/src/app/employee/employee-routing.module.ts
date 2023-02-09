@@ -1,31 +1,21 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {EmployeeListComponent} from './employee-list/employee-list.component';
-import {AuthGuard} from '../security/auth-guard';
 import {EmployeeCreateComponent} from './employee-create/employee-create.component';
 import {EmployeeEditComponent} from './employee-edit/employee-edit.component';
+import {AuthGuard} from '../authGuard/auth.guard';
+import {AdminGuard} from '../authGuard/admin.guard';
+import {EmployeeGuard} from '../authGuard/employee.guard';
 
 const routes: Routes = [
   {
-    path: '', component: EmployeeListComponent, data: {title: 'employee'}
-    // , canActivate: [AuthGuard],
-    // data: {
-    //   roles: ['ROLE_ADMIN']
-    // }
+    path: '', component: EmployeeListComponent,canActivate: [AdminGuard]
   },
   {
-    path: 'create', component: EmployeeCreateComponent
-    // , canActivate: [AuthGuard],
-    // data: {
-    //   roles: ['ROLE_ADMIN']
-    // }
+    path: 'create', component: EmployeeCreateComponent,canActivate: [AdminGuard]
   },
   {
-    path: 'edit/:id', component: EmployeeEditComponent
-    // , canActivate: [AuthGuard],
-    // data: {
-    //   roles: ['ROLE_ADMIN']
-    // }
+    path: 'edit/:id', component: EmployeeEditComponent,canActivate: [AdminGuard]
   }
 ];
 

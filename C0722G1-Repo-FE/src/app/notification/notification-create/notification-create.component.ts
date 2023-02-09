@@ -43,6 +43,8 @@ export class NotificationCreateComponent implements OnInit {
 
   submit(): void {
     const notification = this.notificationForm.value;
+    // @ts-ignore
+    // @ts-ignore
     this.notificationService.create(notification).subscribe(() => {
       this.toast.success('Thêm mới thành công', 'Thông báo', {
         timeOut: 2000,
@@ -50,7 +52,7 @@ export class NotificationCreateComponent implements OnInit {
         positionClass: 'toast-top-right',
         easing: 'ease-in'
       });
-    }, error => {
+    }, (error: any) => {
       this.toast.error('Đã xảy ra lỗi khi thêm mới', 'Lỗi', {
         timeOut: 2000,
         progressBar: true,

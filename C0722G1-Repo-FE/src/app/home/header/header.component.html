@@ -1,9 +1,9 @@
 <header class="sticky-top">
   <nav class="navbar navbar-expand-lg" style="background-color: #f2f2f2">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" routerLink="">
 
-        <img src="../../../assets/image/logoSang.png" width="110"/>
+        <img src="../../../assets/image/logoSang.png" width="140"/>
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
               data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -13,33 +13,101 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" href="#">Nhà đất bán</a>
+            <a class="nav-link active" [routerLink]="['home/search', '1']" style="font-size: 140%">Nhà đất bán</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="#">Nhà đất cho thuê</a>
+            <a class="nav-link active" [routerLink]="['home/search', '2']" style="font-size: 140%">Nhà đất cho thuê</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="#">Cần mua cần thuê</a>
+            <a class="nav-link active" [routerLink]="['home/search', '3']" style="font-size: 140%">Cần mua nhà đất</a>
+          </li>
+          <li>
+            <a class="nav-link active" *ngIf="roles[0]!=='CUSTOMER' && checkLogin" routerLink="/form" style="font-size: 140%">Biểu mẫu</a>
+          </li>
+          <li>
+            <a class="nav-link active" *ngIf="roles[0]!=='CUSTOMER' && checkLogin" routerLink="/post/charts" style="font-size: 140%">Thống kê</a>
+          </li>
+          <li class="nav-item dropdown" *ngIf="roles[0]!=='CUSTOMER' && checkLogin" style="font-size: 140%">
+            <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown"
+               aria-expanded="false">
+              Quản lý
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" routerLink="/customer">Quản lý khách hàng</a></li>
+              <li><a class="dropdown-item" *ngIf="roles[0]!=='EMPLOYEE'" routerLink="/employee">Quản lý nhân viên</a>
+              </li>
+              <li><a class="dropdown-item" routerLink="/post">DS Nhu Cầu</a>
+              </li>
+              <li><a class="dropdown-item" *ngIf="roles[0]=='ADMIN'" routerLink="/notification">DS Thông báo</a></li>
+            </ul>
           </li>
         </ul>
         <div>
-          <button class="btn btn-outline-danger" type="submit" *ngIf="!checkLogin" data-bs-toggle="modal" data-bs-target="#login">Đăng nhập</button>
-          <button class="btn btn-outline-warning" type="submit" *ngIf="!checkLogin">Đăng ký</button>
-          <button class="btn btn-outline-primary" type="submit" routerLink="/#" *ngIf="checkLogin">Đăng Tin</button>
-          <button class="btn btn-outline-primary" type="submit" routerLink="/security/login" *ngIf="!checkLogin">Đăng Tin</button>
-          <button data-bs-toggle="modal" data-bs-target="#logout" class="btn btn-outline-danger" type="submit"
-                  *ngIf="checkLogin">Đăng Xuất
+          <span *ngIf="checkLogin"> </span><span style="font-size: 110%; color: blue" class="navbar-brand" href="#"
+                                                 *ngIf="checkLogin">{{name}}</span>
+          <button class="btn btn-outline-danger me-2" type="submit" *ngIf="!checkLogin" data-bs-toggle="modal"
+                  data-bs-target="#login">Đăng nhập
+          </button>
+          <button class="btn btn-outline-warning me-2" type="submit" routerLink="/customer/create" *ngIf="!checkLogin">
+            Đăng ký
+          </button>
+          <button class="btn btn-outline-success me-2" type="submit" routerLink="/post/create"
+                  *ngIf="roles[0]=='CUSTOMER' && checkLogin">Đăng Tin
+          </button>
+          <button class="btn btn-outline-success" type="submit" data-bs-toggle="modal"
+                  data-bs-target="#login" *ngIf="!checkLogin">Đăng
+            Tin
+          </button>
+          <!--          <button class="btn btn-outline-success" type="submit" routerLink="/security/login" *ngIf="!checkLogin">Đăng-->
+          <!--            Tin-->
+          <!--          </button>-->
+        </div>
+
+        <!--      modal dưc-->
+        <!--        <div>-->
+        <div *ngIf="roles[0]=='EMPLOYEE' && checkLogin">
+          <button (click)="checkNotification()"  id="notificationMD" type="reset" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <i class="bi bi-bell-fill"></i>
+            <span id="notification_count">{{numberNotification}}</span>
           </button>
         </div>
-        <div *ngIf="checkLogin ">
+        <div *ngIf="roles[0]=='CUSTOMER' && checkLogin">
           <div class="dropdown">
             <button class="btn btn-danger" type="button" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="fa-regular fa-user"></i>
             </button>
             <ul class="dropdown-menu dropdown-menu-end">
-              <li><a class="dropdown-item" href="#">Thông tin</a></li>
-              <li><a class="dropdown-item" href="#">Bài đăng</a></li>
-              <li><a class="dropdown-item" href="#">Đang xuất</a></li>
+              <li><a class="dropdown-item" [routerLink]="['/post/list/customerByCustomer/',idAccount]">Bài đăng</a></li>   <!-- thông tin khách hàng -->
+              <li><a class="dropdown-item" [routerLink]="['/security/change-password/',idAccount]">Sửa mật khẩu</a></li>
+              <!-- thông tin khách hàng -->
+              <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logout" href="#">Đăng xuất</a></li>
+            </ul>
+          </div>
+        </div>
+        <div *ngIf="roles[0]=='EMPLOYEE' && checkLogin">
+          <div class="dropdown">
+            <button class="btn btn-danger" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa-regular fa-user"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal">Thông báo</a></li>
+              <li><a class="dropdown-item" routerLink="/customer">Quản lý khách hàng</a></li>
+              <li><a class="dropdown-item" [routerLink]="['/security/change-password/',idAccount]">Sửa mật khẩu</a></li>
+              <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logout" href="#">Đăng xuất</a></li>
+            </ul>
+          </div>
+        </div>
+        <div *ngIf="roles[0]=='ADMIN' && checkLogin">
+          <div class="dropdown">
+            <button class="btn btn-danger" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa-regular fa-user"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal">Thông báo</a></li>
+              <li><a class="dropdown-item" routerLink="/employee">Quản lý nhân viên</a></li>
+              <li><a class="dropdown-item" routerLink="/customer">Quản lý khách hàng</a></li>
+              <li><a class="dropdown-item" [routerLink]="['/security/change-password/',idAccount]">Sửa mật khẩu</a></li>
+              <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logout" href="#">Đăng xuất</a></li>
             </ul>
           </div>
         </div>
@@ -66,84 +134,6 @@
     </div>
   </div>
 </div>
+<app-login-modal></app-login-modal>
+<app-notification></app-notification>
 
-<!-- Modal login -->
-<div class="modal fade" id="login" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Đăng Nhập</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="row ">
-          <br>
-          <div class="row container">
-            <div class="col-lg-2"></div>
-            <div class="col-lg-8 rounded-3 ms-3">
-              <h5>Xin chào bạn</h5>
-              <h3>Đăng nhập để tiếp tục</h3>
-              <br>
-              <form [formGroup]="signInForm" (ngSubmit)="login()">
-                <!-- Username input -->
-                <div class="form-outline mb-4">
-                  <label class="form-label" for="username">Tài khoản</label>
-                  <input type="text" id="username" class="form-control" formControlName="username"/>
-                  <div class="text-danger"
-                       *ngIf="signInForm.controls.username.invalid && signInForm.controls.username.touched else elseBlock">
-                    <span *ngIf="signInForm.controls.username.hasError('required')">Tên tài khoản không được để trống.</span>
-                    <span *ngIf="signInForm.controls.username.hasError('minlength')">Tên tài khoản Không nhỏ hơn 3 ký tự.</span>
-                  </div>
-                  <ng-template #elseBlock><br></ng-template>
-                </div>
-
-                <!-- Password input -->
-                <div class="form-outline mb-4">
-                  <label class="form-label" for="password">Mật Khẩu</label>
-                  <input type="password" id="password" class="form-control" formControlName="password"/>
-                  <div class="text-danger"
-                       *ngIf="signInForm.controls.password.invalid && signInForm.controls.password.touched else elseBlock">
-                    <span *ngIf="signInForm.controls.password.hasError('required')">Mật khẩu không được để trống.</span>
-                    <span *ngIf="signInForm.controls.password.hasError('minlength')">Mật khẩu Không nhỏ hơn 5 ký tự.</span>
-                  </div>
-                  <ng-template #elseBlock><br></ng-template>
-                </div>
-
-                <!-- 2 column grid layout for inline styling -->
-                <div class="row mb-4">
-                  <div class="col d-flex justify-content-center">
-                    <!-- Checkbox -->
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="rememberMe" checked />
-                      <label class="form-check-label" for="rememberMe"> Nhớ mật khẩu </label>
-                    </div>
-                  </div>
-
-                  <div class="col">
-                    <!-- Simple link -->
-                    <a href="#!" class="text-primary">Quên mật khẩu?</a>
-                  </div>
-                </div>
-
-                <!-- Submit button -->
-                <div class="row align-items-center me-1 ms-1">
-                  <button [disabled]="signInForm.invalid" type="button" class="btn btn-primary btn-block mb-4 ">Đăng nhập</button>
-                </div>
-
-                <!-- Register buttons -->
-                <div class="text-center">
-                  <p>Chưa có tài khoản? <a href="#!" class="text-primary">Đăng ký</a></p>
-                </div>
-              </form>
-            </div>
-
-          </div>
-          <div class="col-lg-2"></div>
-        </div>
-      </div>
-      <div class="modal-footer">
-
-      </div>
-    </div>
-  </div>
-</div>

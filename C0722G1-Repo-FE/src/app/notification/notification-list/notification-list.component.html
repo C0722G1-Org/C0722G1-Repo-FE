@@ -97,6 +97,14 @@
             <div class="row">
               <div class="col-12">
                 <div class="input-group">
+                  <button class="btn btn-outline-danger w-100 mt-2" [disabled]="rfSearch.invalid">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    Tìm kiếm
+                  </button>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="input-group">
                   <button class="btn btn-outline-secondary w-100 mt-2" (click)="resetFormAndData()"
                           onclick="document.getElementById('startDate').type='text'">
                     <i class="fa-solid fa-arrows-rotate"></i>
@@ -288,4 +296,3 @@
     </div>
   </div>
 </div>
-

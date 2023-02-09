@@ -80,6 +80,7 @@ export class NotificationListComponent implements OnInit {
           easing: 'ease-in'
         });
       }
+
       if (this.flagNotToastReset == true && flagSearchToast == true && data !== null && notificationToSearch.title !== '%' && notificationToSearch.title !== '/' &&
         notificationToSearch.content !== '%' && notificationToSearch.content !== '/') {
         this.pageNotifications = data;
@@ -105,6 +106,7 @@ export class NotificationListComponent implements OnInit {
   setflagNotToastResetFalse() {
     this.flagNotToastReset = false;
   }
+
 
   getSearchDate(timeInfo: string): string {
     let today = new Date();
@@ -219,7 +221,7 @@ export class NotificationListComponent implements OnInit {
     }, () => {
       this.ngOnInit();
     });
-  }
+  };
 
   expandOrCollapse(id: number, action: string) {
     if (action === 'expand') {

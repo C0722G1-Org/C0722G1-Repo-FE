@@ -19,7 +19,6 @@ export class NotificationUpdateComponent implements OnInit {
   // @ts-ignore
   checkId: boolean;
   notificationHasContent!: boolean;
-
   constructor(private notificationService: NotificationService,
               private activatedRoute: ActivatedRoute,
               private router: Router,
@@ -47,6 +46,7 @@ export class NotificationUpdateComponent implements OnInit {
       }
       this.notificationHasContent = true;
       this.checkId = true;
+      // @ts-ignore
       this.notification = data;
       console.log('test', data);
       this.notificationForm = this.formBuilder.group({
