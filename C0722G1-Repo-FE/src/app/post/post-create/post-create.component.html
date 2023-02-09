@@ -159,7 +159,6 @@
       </div>
       <div class="col-3">
         <select #city class="form-select" (change)="getDistrictsListOnCity(city.value)" id="postCity">
-          <option value="-1">--- Chọn thành phố ---</option>
           <option *ngFor="let item of cityList" [value]="item.idCity">{{item.nameCity}}</option>
         </select>
       </div>
@@ -321,8 +320,13 @@
     <div class="row mx-3 mb-3">
       <div class="col-5"></div>
       <div class="col-4 p-0">
-        <button type="button" class="btn btn-primary me-3" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+        <button *ngIf="!isWaitingResponse" type="button" class="btn btn-primary me-3" data-bs-toggle="modal"
+                data-bs-target="#staticBackdrop">
           Xác nhận
+        </button>
+        <button *ngIf="isWaitingResponse" class="btn btn-primary" type="button" disabled>
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          Vui lòng chờ
         </button>
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
              aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -333,9 +337,9 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <p class="text-primary">Bài đăng của bạn sẽ được gửi cho nhân viên quản lý</p>
+                <p class="text-primary">Bài đăng của bạn sẽ được gửi cho nhân viên quản lý.</p>
                 <p class="text-danger">Chúng tôi sẽ liên hệ với bạn để xác nhận thông tin trong vòng 1-2 ngày kể từ khi
-                  bài đăng được gửi</p>
+                  bài đăng được gửi.</p>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
@@ -344,8 +348,17 @@
             </div>
           </div>
         </div>
-        <button type="button" (click)="resetCreatePostDtoUnit()" class="btn btn-light">Nhập lại</button>
+        <button *ngIf="!isWaitingResponse" type="button" (click)="resetCreatePostDtoUnit()" class="btn btn-light">Nhập
+          lại
+        </button>
+      </div>
+    </div>
+    <div class="row mx-3 mb-4">
+      <div class="col-2"></div>
+      <div class="col-2"></div>
+      <div class="col-6">
       </div>
     </div>
   </form>
 </div>
+
