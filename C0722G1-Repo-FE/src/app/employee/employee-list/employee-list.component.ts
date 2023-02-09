@@ -98,7 +98,7 @@ export class EmployeeListComponent implements OnInit {
    * Function: show message toastr when search error
    */
   private showToastrError(): void {
-    this.employeeService.showError('Không có kết quả cần tìm.', 'Thông báo!');
+    this.employeeService.showError('Không có kết quả cần tìm.', 'Thông báo');
   }
 
   /**
@@ -107,7 +107,7 @@ export class EmployeeListComponent implements OnInit {
    * Function: show message toastr when search success
    */
   private showToastrSuccess(): void {
-    this.employeeService.showSuccess('Tìm kiếm thành công.', 'Thông báo!');
+    this.employeeService.showSuccess('Tìm kiếm thành công.', 'Thông báo');
 
   }
 

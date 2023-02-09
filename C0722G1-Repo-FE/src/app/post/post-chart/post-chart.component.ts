@@ -153,7 +153,7 @@ export class PostChartComponent implements OnInit {
         }
       });
       // this.createChart();
-      this.successToastr('Biểu đồ bài đăng tất cả các năm trong danh sách!');
+      this.successToastr('Biểu đồ bài đăng tất cả các năm trong danh sách.');
     }, error => {
     }, () => {
     });
@@ -186,19 +186,19 @@ export class PostChartComponent implements OnInit {
       this.monthCount = month;
       if ((month != null && month !== '' && month !== '-1')
         && (year != null && year !== '' && year === '-1') && this.postCharList != null) {
-        this.errorToastr('Bạn không chọn năm nên dữ liệu  hiển thị ở tháng & năm hiện tại!');
+        this.errorToastr('Bạn không chọn năm nên dữ liệu  hiển thị ở tháng & năm hiện tại.');
       }
       if ((month != null && month !== '' && month !== '-1') && (year != null && year !== '' && year !== '-1')
         && this.postCharList != null) {
-        this.successToastr('Thống kê bài đăng tháng ' + month + ', năm ' + year + '!');
+        this.successToastr('Thống kê bài đăng tháng ' + month + ', năm ' + year + '.');
       }
       if ((month != null && month !== '' && month === '-1') && (year != null && year !== '' && year !== '-1')
         && this.postCharList != null) {
-        this.successToastr('Thống kê bài đăng năm ' + year + '!');
+        this.successToastr('Thống kê bài đăng năm ' + year + '.');
       }
       if ((month != null && month !== '' && month === '-1') && (year != null && year !== '' && year === '-1')
         && this.postCharList != null) {
-        this.successToastr('Thống kê bài đăng trong danh sách!');
+        this.successToastr('Thống kê bài đăng trong danh sách.');
       }
       for (let i = 0; i < this.postCharList.length; i++) {
         if (this.postCharList[i].statusPost === 1) {
@@ -221,7 +221,7 @@ export class PostChartComponent implements OnInit {
           this.countTotal = this.postCharList.length;
         }
       }
-      this.errorToastr('Không có dữ liệu bài đăng tháng ' + month + ', năm ' + year + '!');
+      this.errorToastr('Không có dữ liệu bài đăng tháng ' + month + ', năm ' + year + '.');
     });
   }
 
@@ -304,7 +304,7 @@ export class PostChartComponent implements OnInit {
       }
       this.createChart();
       if (yearChange !== '-1') {
-        this.successToastr('Biểu đồ bài đăng năm: ' + yearChange + '!');
+        this.successToastr('Biểu đồ bài đăng năm: ' + yearChange + '.');
       }
     });
   }
@@ -380,7 +380,7 @@ export class PostChartComponent implements OnInit {
    * @param mess:string
    */
   successToastr(mess: string): void {
-    this.toastr.success(mess, 'Thông báo!', {
+    this.toastr.success(mess, 'Thông báo', {
       timeOut: 2000
     });
   }
@@ -391,7 +391,7 @@ export class PostChartComponent implements OnInit {
    * @param mess:string
    */
   errorToastr(mess: string): void {
-    this.toastr.error(mess, 'Cảnh Báo!', {
+    this.toastr.error(mess, 'Cảnh báo', {
       timeOut: 2000
     });
   }
