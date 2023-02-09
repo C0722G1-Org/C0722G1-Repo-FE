@@ -13,9 +13,7 @@ import {Title} from "@angular/platform-browser";
 export const checkBirthDay: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
   // @ts-ignore
   const birthday = new Date(control.get('birthDay').value).getTime();
-  console.log(birthday);
   const dateNow = new Date().getTime();
-  console.log(dateNow);
   if (dateNow - birthday < 18 * 365 * 24 * 60 * 60 * 1000) {
     return {checkBirthDay: true};
   } else {
@@ -94,10 +92,8 @@ export class CustomerCreateComponent implements OnInit {
     this.customerService.findListMailCustomerr().subscribe(list => {
 
       // for (let i = 0; i<list.length; i++){
-      //   console.log(list[i].phoneCustomerMd)
       // }
       this.listMailCustomerAndUsernameAccount = list;
-      console.log(list);
       // tslint:disable-next-line:no-unused-expression
       // @ts-ignore
       this.customerForm = this.formBuilder.group(

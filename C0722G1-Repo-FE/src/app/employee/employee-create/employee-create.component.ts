@@ -11,9 +11,7 @@ import {Title} from "@angular/platform-browser";
 export const checkBirthDay: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
   // @ts-ignore
   const birthday = new Date(control.get('dateOfBirth').value).getTime();
-  console.log(birthday);
   const dateNow = new Date().getTime();
-  console.log(dateNow);
   if (dateNow - birthday < 18 * 365 * 24 * 60 * 60 * 1000 || dateNow - birthday > 100 * 365 * 24 * 60 * 60 * 1000) {
     return {checkBirthDay: true};
   } else {
@@ -81,7 +79,6 @@ export class EmployeeCreateComponent implements OnInit {
       this.router.navigateByUrl('/employee');
     }, error => {
       this.toastrService.error('Thêm mới không thành công.', 'Thông báo');
-      console.log(error);
     });
   }
 
@@ -99,7 +96,6 @@ export class EmployeeCreateComponent implements OnInit {
     this.divisionService.getAllDivision().subscribe(data => {
       this.divisions = data;
     }, error => {
-      console.log(error);
     });
   }
 

@@ -14,7 +14,6 @@ export class NotificationServiceService {
   }
 
   update(id: number, notification: Notification): Observable<Notification> {
-    // console.log('ok');
     return this.httpClient.patch<Notification>(this.API_URL + 'api/notification/update/' + id, notification);
   }
 

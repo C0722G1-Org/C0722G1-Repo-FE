@@ -11,7 +11,7 @@
           <thead>
           </thead>
           <tbody class="table" id="table">
-          <tr *ngFor="let item of pageNotifications.content;index as i">
+          <tr *ngFor="let item of pageNotifications?.content;index as i">
             <td><b class="float-start">{{item.postingDate | date: 'dd/MM/yyyy' }}</b> </td>
             <td style="text-align: left"> {{item.content}} </td>
           </tr>

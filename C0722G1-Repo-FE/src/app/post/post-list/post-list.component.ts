@@ -54,13 +54,11 @@ export class PostListComponent implements OnInit {
         this.keySearch = keySearch.substring(0, keySearch.length - 1);
         this.searchByDirection(this.keySearch);
         this.formSearch.patchValue({direction: this.keySearch});
-        console.log(this.keySearch);
       } else {
         this.keySearch = keySearch;
         this.searchByCity(this.keySearch);
         this.formSearch.patchValue({city: this.keySearch});
       }
-      console.log(this.keySearch);
     });
   }
 

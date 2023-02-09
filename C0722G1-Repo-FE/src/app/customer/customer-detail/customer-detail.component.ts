@@ -47,7 +47,6 @@ export class CustomerDetailComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   detailById(idCustomer: number) {
-
   }
 
 }

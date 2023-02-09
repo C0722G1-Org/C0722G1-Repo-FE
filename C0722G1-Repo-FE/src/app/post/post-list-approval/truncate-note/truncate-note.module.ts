@@ -4,7 +4,7 @@ import {NgModule, Pipe, PipeTransform} from '@angular/core';
   name: 'truncateNote'
 })
 export class TruncateNoteModule implements PipeTransform{
-  transform(value: string, limit = 10, completeWords = false, ellipsis = '...'): any {
+  transform(value: string, limit = 15, completeWords = false, ellipsis = '...'): any {
     if (completeWords) {
       limit = value.substr(0, limit).lastIndexOf('findContent');
     }

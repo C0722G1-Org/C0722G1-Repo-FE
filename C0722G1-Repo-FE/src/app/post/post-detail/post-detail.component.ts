@@ -54,12 +54,9 @@ export class PostDetailComponent implements OnInit {
           }
           this.postDetail = dataPost;
           this.phoneNumber = dataPost.phoneCustomer1.slice(0, 4) + ' ' + dataPost.phoneCustomer1.slice(4, 7) + ' *** • Hiện số';
-          console.log(this.phoneNumber)
           this.displayPhoneNumber = dataPost.phoneCustomer1;
           this.postService.getAccountId(this.postDetail.idCustomer).subscribe(idAccount => {
-            console.log(this.postDetail.idCustomer);
             this.idCheck = idAccount;
-            console.log(this.accountId);
           });
           /**
            * Method uses:
@@ -79,7 +76,6 @@ export class PostDetailComponent implements OnInit {
             }
           });
         }, error => {
-          console.log('error --->', error.status)
           if (error.status === 400 || 404 || 403) {
             this.router.navigateByUrl('/**');
           }

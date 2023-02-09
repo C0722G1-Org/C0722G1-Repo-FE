@@ -30,7 +30,6 @@ export class NotificationComponent implements OnInit {
     this.searchNotification(0);
     this.deleteIds = [];
     this.checkedAll = false;
-    console.log('test date: ' + this.testDate);
   }
 
   /**
@@ -43,7 +42,6 @@ export class NotificationComponent implements OnInit {
     this.notificationService.getPageNotifications(this.rfSearch.value, pageNumber,5).subscribe(next => {
       this.pageNotifications = next;
     }, error => {
-      console.log('Lỗi truy xuất dữ liệu.');
     });
   }
 

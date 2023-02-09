@@ -126,8 +126,8 @@
     </tr>
     </thead>
     <tbody *ngIf="pageNotifications != null">
-    <tr style="height: 47px" *ngFor="let item of pageNotifications.content;index as i">
-      <td class="text-center align-top pt-2">{{i + 1 + pageNotifications.number * pageNotifications.size}}</td>
+    <tr style="height: 47px" *ngFor="let item of pageNotifications?.content;index as i">
+      <td class="text-center align-top pt-2">{{i + 1 + pageNotifications?.number * pageNotifications?.size}}</td>
       <td class="text-center align-top pt-2">{{item.postingDate | date: 'dd/MM/yyyy' }}</td>
       <td class="align-top pt-2" style="width: 378px">{{item.title}}</td>
       <td class="align-top pt-2" style="width: 712px">

@@ -11,9 +11,7 @@ import {Title} from "@angular/platform-browser";
 export const checkBirthDay: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
   // @ts-ignore
   const birthday = new Date(control.get('dateOfBirth').value).getTime();
-  console.log(birthday);
   const dateNow = new Date().getTime();
-  console.log(dateNow);
   if (dateNow - birthday < 18 * 365 * 24 * 60 * 60 * 1000 || dateNow - birthday > 100 * 365 * 24 * 60 * 60 * 1000) {
     return {checkBirthDay: true};
   } else {
@@ -56,7 +54,6 @@ export class EmployeeEditComponent implements OnInit {
     }, {validators: [checkBirthDay]});
     this.activatedRoute.paramMap.subscribe(data => {
       const id = data.get('id');
-      console.log(id);
       if (id != null) {
         this.getEmployee(+id);
       }
@@ -99,7 +96,6 @@ export class EmployeeEditComponent implements OnInit {
     this.divisionService.getAllDivision().subscribe(data => {
       this.divisions = data;
     }, error => {
-      console.log(error);
     });
   }
 
@@ -117,7 +113,6 @@ export class EmployeeEditComponent implements OnInit {
         this.router.navigateByUrl('/employee');
       }
     }, error => {
-      console.log(error);
     });
   }
 }

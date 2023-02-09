@@ -43,7 +43,6 @@ export class ChangePasswordComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe(data => {
       const id = data.get('idAccount');
       if (id != null) {
-        console.log(id);
         this.getAccountById(+id);
       }
     });

@@ -12,9 +12,7 @@ import {CustomerDtoEmailAndUsername} from "../../dto/customer/customerDtoEmailAn
 export const checkBirthDay: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
   // @ts-ignore
   const birthday = new Date(control.get('dateOfBirth').value).getTime();
-  console.log(birthday);
   const dateNow = new Date().getTime();
-  console.log(dateNow);
   if (dateNow - birthday < 18 * 365 * 24 * 60 * 60 * 1000 || dateNow - birthday > 100 * 365 * 24 * 60 * 60 * 1000) {
     return {checkBirthDay: true};
   } else {
@@ -71,8 +69,6 @@ export class CustomerAddComponent implements OnInit {
 
   addCustomer(): void {
     if (this.rfAddCustomer?.valid) {
-      // console.log(JSON.parse(this.rfAddCustomer.value));
-      // console.log(this.rfAddCustomer.value);
       this.customerService.createCustomer(this.rfAddCustomer?.value).subscribe(
         data => {
           this.router.navigateByUrl('customer');

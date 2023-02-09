@@ -25,7 +25,6 @@ export class CustomerService {
   }
 
   getAllCustomerPaging(pageable: any, allSearch: any): Observable<PageCustomerDto> {
-    console.log(this.URL_CUSTOMER + '/api/customer?allSearch=' + allSearch + '&page=' + pageable);
     return this.httpClient.get<PageCustomerDto>(this.URL_CUSTOMER + '/api/customer?allSearch=' + allSearch + '&page=' + pageable);
   }
 
@@ -34,7 +33,6 @@ export class CustomerService {
   }
 
   updateCustomer(customer: CustomerEdit): Observable<any> {
-    console.log(customer);
     return this.httpClient.patch(this.CUSTOMER_URL_UPDATE, customer);
   }
 
@@ -47,7 +45,6 @@ export class CustomerService {
    */
   // tslint:disable-next-line:typedef
   saveCustomer(customer: Customer | undefined) {
-    console.log(customer);
     return this.httpClient.post<Customer>(this.urlCustomer, customer);
   }
   /**

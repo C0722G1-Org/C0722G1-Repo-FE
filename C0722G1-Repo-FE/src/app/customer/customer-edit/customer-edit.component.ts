@@ -6,13 +6,12 @@ import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {Component, OnInit} from '@angular/core';
+import {isFromDtsFile} from "@angular/compiler-cli/src/ngtsc/util/src/typescript";
 
 export const checkBirthDay: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
   // @ts-ignore
   const birthday = new Date(control.get('dateOfBirth').value).getTime();
-  console.log(birthday);
   const dateNow = new Date().getTime();
-  console.log(dateNow);
   if (dateNow - birthday < 18 * 365 * 24 * 60 * 60 * 1000 || dateNow - birthday > 100 * 365 * 24 * 60 * 60 * 1000) {
     return {checkBirthDay: true};
   } else {
@@ -74,6 +73,10 @@ export class CustomerEditComponent implements OnInit {
     this.customerService.findById(idCustomer).subscribe(data => {
       this.editForm.patchValue(data);
       this.customer = data;
+    },error => {
+      if (error.status === 400){
+        this.router.navigateByUrl('/**');
+      }
     });
   }
 
@@ -88,7 +91,6 @@ export class CustomerEditComponent implements OnInit {
       if (data != null) {
         this.toastrService.error('Không có dữ liệu để chỉnh sửa.', 'Thông báo');
       } else {
-        console.log(data);
         this.toastrService.success('Sửa thông tin khách hàng thành công.', 'Thông báo');
         this.router.navigateByUrl('/customer');
       }

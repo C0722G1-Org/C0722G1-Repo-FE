@@ -65,7 +65,6 @@ export class EmployeeListComponent implements OnInit {
     this.employeeService.getAllEmployee(request).subscribe(data => {
       this.employeeList = data;
       this.employeeInfo = data.content;
-      console.log(this.employeeInfo);
       // @ts-ignore
       this.totalPages = data.totalPages;
       // @ts-ignore
@@ -138,7 +137,6 @@ export class EmployeeListComponent implements OnInit {
       this.request).subscribe(data => {
       this.employeeList = data;
       this.employeeInfo = data.content;
-      console.log(this.employeeInfo);
       // @ts-ignore
       this.totalPages = data.totalPages;
       // @ts-ignore

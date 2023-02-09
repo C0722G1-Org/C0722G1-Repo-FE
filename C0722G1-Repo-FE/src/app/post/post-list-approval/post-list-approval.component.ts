@@ -101,7 +101,6 @@ export class PostListApprovalComponent implements OnInit {
     this.postListApprovalService.getAllPostApproval(pageNumber).subscribe(next => {
       this.postApprovalList = next;
     }, error => {
-      console.log('Lỗi truy xuất.');
     });
   }
 

@@ -48,7 +48,6 @@ export class NotificationUpdateComponent implements OnInit {
       this.checkId = true;
       // @ts-ignore
       this.notification = data;
-      console.log('test', data);
       this.notificationForm = this.formBuilder.group({
         id: [],
         title: [this.notification.title, [Validators.required, Validators.minLength(7), Validators.maxLength(45)]],
@@ -88,7 +87,6 @@ export class NotificationUpdateComponent implements OnInit {
 
   submit(id: number): void {
     const notification = this.notificationForm.value;
-    console.log('notification', notification);
     this.notificationService.update(id, notification).subscribe(() => {
       this.toastrService.success('Sửa thành công.', 'Thông báo', {
         timeOut: 2000,

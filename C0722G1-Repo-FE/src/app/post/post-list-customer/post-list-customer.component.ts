@@ -55,7 +55,6 @@ export class PostListCustomerComponent implements OnInit {
    * @return call function gotoPage(nameDemandType: string, idAccount: string, pageNumber: number) to search by nameDemandType
    */
   searchByNameDemandType(value: string): void {
-    console.log(value);
     this.search = 'black';
     if (this.idCustomer !== '') {
       this.demandType = value;

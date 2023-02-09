@@ -37,7 +37,8 @@ export class PostChartComponent implements OnInit {
   count12 = 0;
   p = 1;
   showMore = false;
-  itemsPerPage = 5;
+  itemsPerPage = 6;
+  chart = null;
 
   /** Constructor initialization
    *  Dependency Injection PostService
@@ -49,8 +50,24 @@ export class PostChartComponent implements OnInit {
     this.title.setTitle('Thống kê bài đăng');
     this.currentMonth = new Date().getMonth() + 1;
     this.currentYear = new Date().getFullYear();
-    // this.monthList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     this.getYearList();
+    // this.chart = new Chart('myChart', {
+    //   type: 'bar',
+    //   data: {
+    //     labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6',
+    //       'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+    //     datasets: [{
+    //       label: 'Tổng bài đăng',
+    //       data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    //       // [this.count1, this.count2, this.count3, this.count4, this.count5, this.count6,
+    //       // this.count7, this.count8, this.count9, this.count10, this.count11, this.count12],
+    //       backgroundColor: '#fa0234',
+    //       borderColor: '#fa0234',
+    //       borderWidth: 2,
+    //       fill: false,
+    //     }]
+    //   }
+    // });
   }
 
   /**
@@ -119,8 +136,24 @@ export class PostChartComponent implements OnInit {
           this.count12 += 1;
         }
       }
-      this.createChart();
-      this.successToastr('Biểu đồ bài đăng tất cả các năm trong danh sách.');
+      this.chart = new Chart('myChart', {
+        type: 'bar',
+        data: {
+          labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6',
+            'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+          datasets: [{
+            label: 'Tổng bài đăng',
+            data: [this.count1, this.count2, this.count3, this.count4, this.count5, this.count6,
+              this.count7, this.count8, this.count9, this.count10, this.count11, this.count12],
+            backgroundColor: '#fa0234',
+            borderColor: '#fa0234',
+            borderWidth: 2,
+            fill: false,
+          }]
+        }
+      });
+      // this.createChart();
+      this.successToastr('Biểu đồ bài đăng tất cả các năm trong danh sách!');
     }, error => {
     }, () => {
     });
@@ -144,7 +177,6 @@ export class PostChartComponent implements OnInit {
    * Author: DatTQ  ;  Date:02/02/2023
    */
   searchChart(month: string, year: string): void {
-    console.log(month)
     this.postService.searchChart(month.replace('Tháng ', "0"), year).subscribe(data => {
       this.postCharList = data;
       this.totalTransaction = 0;
@@ -154,9 +186,7 @@ export class PostChartComponent implements OnInit {
       this.monthCount = month;
       if ((month != null && month !== '' && month !== '-1')
         && (year != null && year !== '' && year === '-1') && this.postCharList != null) {
-        this.toastr.warning('Bạn không chọn năm nên dữ liệu  hiển thị ở tháng & năm hiện tại.', 'Cảnh báo!', {
-          timeOut: 2000
-        });
+        this.errorToastr('Bạn không chọn năm nên dữ liệu  hiển thị ở tháng & năm hiện tại!');
       }
       if ((month != null && month !== '' && month !== '-1') && (year != null && year !== '' && year !== '-1')
         && this.postCharList != null) {
@@ -168,7 +198,7 @@ export class PostChartComponent implements OnInit {
       }
       if ((month != null && month !== '' && month === '-1') && (year != null && year !== '' && year === '-1')
         && this.postCharList != null) {
-        this.successToastr('Thống kê bài đăng trong danh sách.');
+        this.successToastr('Thống kê bài đăng trong danh sách!');
       }
       for (let i = 0; i < this.postCharList.length; i++) {
         if (this.postCharList[i].statusPost === 1) {
@@ -191,7 +221,7 @@ export class PostChartComponent implements OnInit {
           this.countTotal = this.postCharList.length;
         }
       }
-      this.errorToastr('Không có dữ liệu bài đăng tháng.' + month + ', năm ' + year + '!');
+      this.errorToastr('Không có dữ liệu bài đăng tháng ' + month + ', năm ' + year + '!');
     });
   }
 
@@ -217,7 +247,7 @@ export class PostChartComponent implements OnInit {
     this.count11 = 0;
     this.count12 = 0;
     if (yearChange === '-1') {
-      this.ngOnInit()
+      this.ngOnInit();
     }
     this.postService.displayListChart().subscribe(data => {
       this.postCharList = data;
@@ -274,7 +304,7 @@ export class PostChartComponent implements OnInit {
       }
       this.createChart();
       if (yearChange !== '-1') {
-        this.successToastr('Biểu đồ bài đăng năm: ' + yearChange + '.');
+        this.successToastr('Biểu đồ bài đăng năm: ' + yearChange + '!');
       }
     });
   }
@@ -284,8 +314,12 @@ export class PostChartComponent implements OnInit {
    * Author: DatTQ  ;  Date:02/02/2023;
    */
   createChart(): void {
-    // tslint:disable-next-line:no-unused-expression
-    new Chart('myChart', {
+    console.log(this.chart);
+    if (this.chart != null) {
+      // @ts-ignore
+      this.chart.destroy();
+    }
+    return this.chart = new Chart('myChart', {
       type: 'bar',
       data: {
         labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6',
@@ -346,7 +380,7 @@ export class PostChartComponent implements OnInit {
    * @param mess:string
    */
   successToastr(mess: string): void {
-    this.toastr.success(mess, 'Thông báo', {
+    this.toastr.success(mess, 'Thông báo!', {
       timeOut: 2000
     });
   }
@@ -357,7 +391,7 @@ export class PostChartComponent implements OnInit {
    * @param mess:string
    */
   errorToastr(mess: string): void {
-    this.toastr.error(mess, 'Thông báo', {
+    this.toastr.error(mess, 'Cảnh Báo!', {
       timeOut: 2000
     });
   }
