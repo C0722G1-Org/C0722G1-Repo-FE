@@ -14,10 +14,12 @@
       <div class="col-md-8">
         <div class="row">
           <form class="d-flex" style="text-align: center">
-            <a class="btn btn-outline-primary my-2 my-sm-0" routerLink="/form/create">
-              Tạo mới
-            </a>
-            <input style="width: 300px;margin-left: 782px" class="form-control me-2" #contentDataForm type="search"
+            <div class="col-4">
+              <a class="btn btn-outline-primary my-2 my-sm-0" routerLink="/form/create">
+                Tạo mới
+              </a>
+            </div>
+            <input style="width: 300px;" class="form-control me-2" #contentDataForm type="search"
                    placeholder="Tìm kiếm theo nội dung " aria-label="Search">
 
             <button class="btn btn-outline-danger" type="button" (click)="searchByContent(contentDataForm.value,false)">

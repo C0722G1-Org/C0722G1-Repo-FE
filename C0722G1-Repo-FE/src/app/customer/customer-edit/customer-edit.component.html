@@ -9,9 +9,9 @@
             <fieldset>
               <legend>
                 <div>
-                  <div style="margin-left: 15px; margin-top: 15px">
+                  <div style="margin-top: 15px">
                     <a routerLink="/customer" type="button"><i class="fa-solid fa-arrow-left"></i></a>
-                    <h1 class="text-center">CHỈNH SỬA THÔNG TIN</h1>
+                    <span id="title" style="font-size: 35px; margin-left: 120px">CHỈNH SỬA THÔNG TIN</span>
                   </div>
                 </div>
               </legend>
@@ -84,7 +84,7 @@
                       <label for="phone2" class="form-label ms-2">DSố điện thoại 2: </label>
                     </div>
                     <div class="col-8">
-                      <input id="phone2" type="text" class="form-control" formControlName="phoneCustomer2" />
+                      <input id="phone2" type="text" class="form-control" formControlName="phoneCustomer2"/>
                       <div class="text-danger"
                            *ngIf="editForm.controls.phoneCustomer2.invalid else elseBlock">
                         <span
@@ -197,9 +197,7 @@
                 </div>
               </div>
               <div class="mb-2">
-
-                2:09
-                <span style="font-size: 15px" class="fst-italic">
+              <span style="font-size: 15px" class="fst-italic">
               Trường có dấu <span style="color: red"> (*)</span> là bắt
               buộc,không được bỏ trống
             </span>
