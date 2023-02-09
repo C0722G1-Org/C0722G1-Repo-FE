@@ -275,7 +275,7 @@
       </div>
       <div class="col-8">
         <label for="addImage" class="form-label btn btn-outline-success">Chọn ảnh minh hoạ</label>
-        <span id="fileChosen"> {{nameImageList.toString()}}</span>
+        <span id="fileChosen"><p *ngFor="let name of nameImageList">{{name}}</p></span>
         <input type="file" (change)="showFilesName($event)" id="addImage" multiple accept="image/*" hidden/>
       </div>
     </div>
