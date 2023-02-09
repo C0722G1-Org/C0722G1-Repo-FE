@@ -6,6 +6,7 @@ import {AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, 
 import {Component, OnInit} from '@angular/core';
 import {ToastrService} from 'ngx-toastr';
 import {CustomerDtoEmailAndUsername} from "../../dto/customer/customerDtoEmailAndUsername";
+import {TokenService} from "../../service/token.service";
 
 
 export const checkBirthDay: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
@@ -28,10 +29,15 @@ export const checkBirthDay: ValidatorFn = (control: AbstractControl): Validation
   styleUrls: ['./customer-create.component.css']
 })
 export class CustomerCreateComponent implements OnInit {
+  checkLogin = false;
+  name: string | null | undefined;
+  roles: string[] = [];
+  idAccount: string | null | undefined;
 
   constructor(private customerService: CustomerService,
               private router: Router,
               private formBuilder: FormBuilder,
+              private tokenService: TokenService,
               // tslint:disable-next-line:variable-name
               private _toast: ToastrService) {
   }
@@ -47,6 +53,12 @@ export class CustomerCreateComponent implements OnInit {
 
 
   ngOnInit(): void {
+    if (this.tokenService.getToken()) {
+      this.checkLogin = true;
+      this.name = this.tokenService.getName();
+      this.roles = this.tokenService.getRole();
+      this.idAccount = this.tokenService.getIdAccount();
+    };
     this.getListMailCustomer();
     // tslint:disable-next-line:only-arrow-functions typedef
     window.onbeforeunload = function(e: Event | undefined) {
@@ -58,11 +70,8 @@ export class CustomerCreateComponent implements OnInit {
       // For Safari
       return 'Sure?';
     };
+
   }
-
-
-
-
 
   checkPasswords(group: AbstractControl): any {
     const passwordCheck = group.value;
