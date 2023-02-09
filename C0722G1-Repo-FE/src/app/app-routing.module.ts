@@ -24,7 +24,8 @@ const routes: Routes = [
       && [AdminEmployeeGuard]
   },
   {
-    path: 'notification', loadChildren: () => import('./notification/notification.module').then(module => module.NotificationModule),
+    path: 'notification',
+    loadChildren: () => import('./notification/notification.module').then(module => module.NotificationModule),
     canActivate: [AuthGuard]
       && [AdminEmployeeGuard]
   },
