@@ -49,12 +49,12 @@
             <option value="" selected>Giá tiền</option>
             <option value="0-499999999">< 500 triệu</option>
             <option value="500000000-1000000000">500 triệu - 1 tỷ</option>
-            <option value="1000000000-1500000000">1 tỷ - 1,5 tỷ</option>
-            <option value="1500000000-2000000000">1,5 tỷ - 2 tỷ</option>
-            <option value="2000000000-2500000000">2 tỷ - 2,5 tỷ</option>
-            <option value="2500000000-3000000000">2,5 tỷ - 3 tỷ</option>
-            <option value="3000000000-3500000000">3 tỷ - 3,5 tỷ</option>
-            <option value="3500000000-4000000000">3,5 tỷ - 4 tỷ</option>
+            <option value="1000000000-1500000000">1 tỷ - 1.5 tỷ</option>
+            <option value="1500000000-2000000000">1.5 tỷ - 2 tỷ</option>
+            <option value="2000000000-2500000000">2 tỷ - 2.5 tỷ</option>
+            <option value="2500000000-3000000000">2.5 tỷ - 3 tỷ</option>
+            <option value="3000000000-3500000000">3 tỷ - 3.5 tỷ</option>
+            <option value="3500000000-4000000000">3.5 tỷ - 4 tỷ</option>
             <option value="4000000001-1000000000000">> 4 tỷ</option>
           </select>
           <select formControlName="city" class="form-select my-2" aria-label="Default select example">
@@ -103,11 +103,12 @@
         <div class="card-body" style="height: 200px">
           <h6 class="card-title text-danger" style="height: 50px">{{item.namePost|slice:0:100}}</h6>
           <p class="card-text text-dark" *ngIf="item.price != undefined">
-            <span *ngIf="item.price >= 1000000000; else elseBlock">{{item.price / 1000000000| number :'1.1-1' }}
+            <span *ngIf="item.price >= 1000000000 && (item.idDemandType == 1 ||item.idDemandType == 2); else elseBlock">{{item.price / 1000000000| number :'1.1-1' }}
               tỷ</span>
             <ng-template #elseBlock>
               <span>{{item.price / 1000000| number :'1.1-1' }} triệu</span>
             </ng-template>
+            <span  *ngIf="item.idDemandType == 3">{{item.price / 1000000| number :'1.1-1' }} triệu/tháng</span>
             <span> - </span>
             <span>{{item.area}} m<sup>2</sup></span>
           </p>
@@ -129,7 +130,7 @@
         </div>
       </a>
     </div>
-
+    ​
   </div>
   <div class="text-center my-3">
     <button *ngIf="page != totalPage-1 && mess==''" class="btn btn-outline-dark" (click)="showMore()">Xem thêm</button>

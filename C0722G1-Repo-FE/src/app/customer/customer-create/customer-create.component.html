@@ -147,9 +147,9 @@
         <h3>Batdongsan.com.vn</h3>
         <img src="../../../assets/image/logoSang.png" height="213" width="399"/>
         <p>Đăng nhập bằng tài khoản của bạn</p>
-        <button class="ghost" routerLink="/account/login" id="signIn">Đăng nhập</button>
+        <button class="btn btn-outline-danger me-2" type="submit" *ngIf="!checkLogin" data-bs-toggle="modal"
+                data-bs-target="#login" id="signIn">Đăng nhập</button>
       </div>
     </div>
   </div>
 </div>
-
