@@ -87,8 +87,8 @@
             <th scope="col" style="width: 8%">Số điện thoại</th>
             <th scope="col" style="width: 20%">Email</th>
             <th scope="col" style="width: 8%">Chức vụ</th>
-            <th scope="col" style="width: 2%">Xóa</th>
             <th scope="col" style="width: 2%">Sửa</th>
+            <th scope="col" style="width: 2%">Xóa</th>
           </tr>
           </thead>
           <tr *ngIf="employeeInfo.length == 0; else elseBlock">
@@ -106,15 +106,15 @@
               <td>{{employee.emailEmployee}}</td>
               <td>{{employee.nameDivision}}</td>
               <td>
+                <a type="button" class="btn btn-sm" [routerLink]="['/employee/edit', employee.idEmployee]">
+                  <i class="fa-regular fa-pen-to-square"></i>
+                </a>
+              </td>
+              <td>
                 <button type="button" class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal"
                         (click)="temp = employee">
                   <i class="fa-regular fa-trash-can"></i>
                 </button>
-              </td>
-              <td>
-                <a type="button" class="btn btn-sm" (dblclick)="editEmployee(employee.idEmployee)">
-                  <i class="fa-regular fa-pen-to-square"></i>
-                </a>
               </td>
             </tr>
             <tr style="height: 47px" *ngFor="let size of [].constructor(5 - employeeList.numberOfElements)">

@@ -96,17 +96,6 @@ export class EmployeeListComponent implements OnInit {
   /**
    * Create by: NhanUQ
    * Date created: 03/02/2023
-   * Function: navigation to page edit with id employee
-   * @param idEmployee : number
-   */
-  editEmployee(idEmployee: number | undefined): void {
-    this.route.navigate(['/employee/edit', idEmployee]).then(r => {
-    });
-  }
-
-  /**
-   * Create by: NhanUQ
-   * Date created: 03/02/2023
    * Function: show message toastr when search error
    */
   private showToastrError(): void {
@@ -183,6 +172,11 @@ export class EmployeeListComponent implements OnInit {
     this.ngOnInit();
   }
 
+  /**
+   * Create by: NhanUQ
+   * Date created: 03/02/2023
+   * Function: reset page list when reset
+   */
   resetSearch() {
     this.inputCode.nativeElement.value = '';
     this.inputName.nativeElement.value = '';
