@@ -12,7 +12,6 @@ import {AuthGuard} from '../authGuard/auth.guard';
 import {AdminGuard} from '../authGuard/admin.guard';
 import {CustomerGuard} from '../authGuard/customer.guard';
 import {AdminEmployeeGuard} from "../authGuard/admin-employee.guard";
-import {CustomerGuard} from "../authGuard/customer.guard";
 
 const routes: Routes = [
   {
