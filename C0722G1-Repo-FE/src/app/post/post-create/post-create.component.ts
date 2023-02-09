@@ -69,6 +69,7 @@ export class PostCreateComponent implements OnInit {
     price: 0
   };
 
+  isWaitingResponse: boolean = false;
   idAccount: number | string | null = '';
   baseResponse: BaseResponseCreatePost = {
     code: 0,
@@ -178,16 +179,19 @@ export class PostCreateComponent implements OnInit {
     }
 
     if (this.createPostDtoUnit.valid) {
+      this.isWaitingResponse = true;
       let urls = await this.getDownloadImageURLs()
       this.createPostDto = this.createPostDtoUnit.value;
       this.createPostDto.imageListURL = urls;
       this.createPostService.savePost(this.createPostDto).subscribe((payload) => {
+        this.isWaitingResponse = false;
         this.baseResponse = payload;
         if (this.baseResponse.code === 200) {
           this.resetCreatePostDtoUnit();
           this.submitTimes = 0;
           this.messageFormServer = '';
           this.toastrService.success('Thêm mới thành công');
+          this.districtsListOnCity = [];
           return;
         }
         if (this.baseResponse.code === 422) {
