@@ -17,7 +17,7 @@
             <a class="btn btn-outline-primary my-2 my-sm-0" routerLink="/form/create">
               Tạo mới
             </a>
-            <input style="width: 300px;margin-left: 513px" class="form-control me-2" #contentDataForm type="search"
+            <input style="width: 300px;margin-left: 782px" class="form-control me-2" #contentDataForm type="search"
                    placeholder="Tìm kiếm theo nội dung " aria-label="Search">
 
             <button class="btn btn-outline-danger" type="button" (click)="searchByContent(contentDataForm.value,false)">
@@ -28,7 +28,7 @@
         </div>
         <div *ngIf="dataFormPage != null else elseBlock">
           <table class="table table-striped center" style="margin-top: 30px">
-            <thead>
+            <thead class="table table-dark">
             <tr>
               <th style="text-align: center">STT</th>
               <th style="text-align: left">Nội Dung</th>
@@ -118,5 +118,6 @@
     </div>
   </div>
 </div>
+<app-form-delete [dataFormDelete]="dataForm" (deleteEvent)="reloadList()"></app-form-delete>
 
 

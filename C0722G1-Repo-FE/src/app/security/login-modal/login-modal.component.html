@@ -21,9 +21,8 @@
                   <label for="floatingInput">Tên tài khoản<small> *</small></label>
                   <div class="text-danger"
                        *ngIf="signInForm.controls.username.invalid && signInForm.controls.username.touched else elseBlock">
-                    <span
-                      *ngIf="signInForm.controls.username.hasError('required')">Tên tài khoản không được để trống.</span>
-                    <span *ngIf="signInForm.controls.username.hasError('minlength')">Tên tài khoản Không nhỏ hơn 3 ký tự.</span>
+                    <span *ngIf="signInForm.controls.username.hasError('required')"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp; Tên tài khoản không được để trống.</span>
+                    <span *ngIf="signInForm.controls.username.hasError('minlength')"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;Tên tài khoản Không nhỏ hơn 3 ký tự.</span>
                   </div>
                   <ng-template #elseBlock><br></ng-template>
                 </div>
@@ -35,9 +34,8 @@
                   <label for="floatingPassword">Mật khẩu<small> *</small></label>
                   <div class="text-danger"
                        *ngIf="signInForm.controls.password.invalid && signInForm.controls.password.touched else elseBlock">
-                    <span *ngIf="signInForm.controls.password.hasError('required')">Mật khẩu không được để trống.</span>
-                    <span
-                      *ngIf="signInForm.controls.password.hasError('minlength')">Mật khẩu Không nhỏ hơn 5 ký tự.</span>
+                    <span *ngIf="signInForm.controls.password.hasError('required')"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp; Mật khẩu không được để trống.</span>
+                    <span *ngIf="signInForm.controls.password.hasError('minlength')"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp; Mật khẩu Không nhỏ hơn 5 ký tự.</span>
                   </div>
                   <ng-template #elseBlock><br></ng-template>
                 </div>
@@ -55,9 +53,7 @@
 
                   <div class="col">
                     <!-- Simple link -->
-                    <a routerLink="/security/change-password/:idAccount" data-bs-dismiss="modal" class="text-primary">Quên
-                      mật
-                      khẩu?</a>
+                    <a routerLink="/security/change-password/:idAccount" data-bs-dismiss="modal" class="text-primary">Quên mật khẩu?</a>
                   </div>
                 </div>
 
@@ -70,8 +66,7 @@
 
                 <!-- Register buttons -->
                 <div class="text-center">
-                  <p>Chưa có tài khoản? <a routerLink="/customer/create" data-bs-dismiss="modal" class="text-primary">Đăng
-                    ký</a></p>
+                  <p>Chưa có tài khoản? <a routerLink="/customer/create" data-bs-dismiss="modal" class="text-primary">Đăng ký</a></p>
                 </div>
               </form>
             </div>

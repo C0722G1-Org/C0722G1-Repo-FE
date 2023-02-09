@@ -35,7 +35,10 @@ export class HeaderComponent implements OnInit {
     this.router.navigateByUrl('/').then(() => {
       location.reload();
     });
-    this.toast.info('Đăng xuất thành công', ' Thông báo');
+    this.toast.info('Đăng xuất thành công', ' Thông báo',{
+      timeOut: 3000,
+      extendedTimeOut: 1500
+    });
   }
 
 }

@@ -1,6 +1,6 @@
-*{
-  box-sizing: border-box;
-  font-family: Arial;
+.main-content {
+  background: #FFFFFF;
+  font-family: Arial, serif;
   font-size: 16px;
 }
 .search{

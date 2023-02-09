@@ -4,6 +4,7 @@ import {PostService} from '../post.service';
 // @ts-ignore
 import {Chart} from 'chart.js';
 import {ToastContainerDirective, ToastrService} from 'ngx-toastr';
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-post-chart',
@@ -33,7 +34,6 @@ export class PostChartComponent implements OnInit {
   count11 = 0;
   count12 = 0;
   p = 1;
-  itemsPerPage = 7;
   showMore = false;
 
   /** Constructor initialization
@@ -42,16 +42,14 @@ export class PostChartComponent implements OnInit {
    *  Use method getYearList() to create yearList[]
    *  Author:DatTQ ; Date:02/02/2023
    */
-  constructor(private postService: PostService, private toastr: ToastrService) {
+  constructor(private postService: PostService, private toastr: ToastrService, private title: Title) {
+    this.title.setTitle('Thống kê bài đăng');
     this.currentMonth = new Date().getMonth() + 1;
     this.currentYear = new Date().getFullYear();
     this.monthList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     this.getYearList();
   }
 
-  onShow(): void {
-    this.showMore = !this.showMore;
-  }
   /**
    * Initialize the value of the variable: postList through the displayListChart() method in PostService &&
    * Register to listen to the event: subscribe
@@ -119,10 +117,18 @@ export class PostChartComponent implements OnInit {
         }
       }
       this.createChart();
-      this.successToastr('Chào mừng bạn đến với trang xem thống kê  & biểu đồ bài đăng!');
+      this.successToastr('Biểu đồ bài đăng tất cả các năm trong danh sách!');
     }, error => {
     }, () => {
     });
+  }
+
+  /**
+   * Function use slice pipes to show more and show less file address in html
+   * Author: DatTQ  ;  Date:02/02/2023;
+   */
+  onShow(): void {
+    this.showMore = !this.showMore;
   }
 
   /**
@@ -157,7 +163,7 @@ export class PostChartComponent implements OnInit {
         this.successToastr('Thống kê bài đăng trong danh sách!');
       }
       for (let i = 0; i < this.postCharList.length; i++) {
-        if (data[i].statusPost === 1) {
+        if (this.postCharList[i].statusPost === 1) {
           // @ts-ignore
           this.totalTransaction += data[i].price;
           this.countSuccess += 1;
@@ -165,7 +171,18 @@ export class PostChartComponent implements OnInit {
         }
       }
     }, error => {
+      this.totalTransaction = 0;
+      this.countSuccess = 0;
+      this.countTotal = 0;
       this.postCharList = [];
+      for (let i = 0; i < this.postCharList.length; i++) {
+        if (this.postCharList[i].statusPost === 1) {
+          // @ts-ignore
+          this.totalTransaction += data[i].price;
+          this.countSuccess += 1;
+          this.countTotal = this.postCharList.length;
+        }
+      }
       this.errorToastr('Không có dữ liệu bài đăng tháng ' + month + ', năm ' + year + '!');
     });
   }
@@ -191,6 +208,9 @@ export class PostChartComponent implements OnInit {
     this.count10 = 0;
     this.count11 = 0;
     this.count12 = 0;
+    if (yearChange === '-1') {
+      this.ngOnInit()
+    }
     // this.postService.displayListChart().subscribe(data => {
     //   this.postCharList = data;
     const posts = this.postCharList.length;
@@ -245,7 +265,10 @@ export class PostChartComponent implements OnInit {
       }
     }
     this.createChart();
-    this.successToastr('Biểu đồ bài đăng năm: ' + yearChange);
+    if (yearChange !== '-1') {
+      this.successToastr('Biểu đồ bài đăng năm: ' + yearChange);
+    }
+
     // });
   }
 

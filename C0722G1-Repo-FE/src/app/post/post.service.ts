@@ -77,4 +77,16 @@ export class PostService {
   succeedConfirm(idPost: number | undefined): Observable<any> {
     return this.httpClient.patch('http://localhost:8080/api/post/confirm?id=', idPost);
   }
+
+  /**
+   * Created by: HuyDN
+   * Created date: 04/02/2023
+   *
+   * @param idCustomer: a customer' id
+   * @return a Observable that contain a Post object can be showed on Post detail screen
+   */
+
+  getAccountId(idCustomer: number | undefined): Observable<any> {
+    return this.httpClient.get<any>('http://localhost:8080/api/public/home/detail/account-id?id=' + idCustomer);
+  }
 }

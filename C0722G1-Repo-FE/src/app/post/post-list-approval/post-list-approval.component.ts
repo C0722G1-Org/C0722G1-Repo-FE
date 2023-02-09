@@ -10,6 +10,7 @@ import {ToastrService} from 'ngx-toastr';
 import {CityListService} from './city-list.service';
 import {DistrictListService} from './district-list.service';
 import {WardsListService} from './wards-list.service';
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-post-list-approval',
@@ -25,7 +26,15 @@ export class PostListApprovalComponent implements OnInit {
   districtList: District[] = [];
   wardsList: Wards[] = [];
   flag = false;
-
+  minPriceSearch: any = '';
+  maxPriceSearch: any = '';
+  minAreaSearch = '';
+  maxAreaSearch = '';
+  demandTypeSearch = '';
+  landTypeSearch = '';
+  citySearch = '';
+  districtSearch = '';
+  wardsSearch = '';
   constructor(private postListApprovalService: PostListApprovalService,
               private toastrService: ToastrService,
               private cityListService: CityListService,
@@ -67,8 +76,10 @@ export class PostListApprovalComponent implements OnInit {
       landTypeSearch: new FormControl(''),
       citySearch: new FormControl(''),
       districtSearch: new FormControl(''),
-      wardsSearch: new FormControl('')
-    }, this.validateMaxPriceSearch);
+      wardsSearch: new FormControl(''),
+      minAreaSearch: new FormControl('', [Validators.min(0)]),
+      maxAreaSearch: new FormControl('', [Validators.min(0)]),
+    }, [this.validatePriceSearch, this.validateAreaSearch ]);
     this.getAllCity();
   }
 
@@ -80,12 +91,15 @@ export class PostListApprovalComponent implements OnInit {
    * compare value of minPrice and maxPrice when search
    */
 // tslint:disable-next-line:typedef
-  validateMaxPriceSearch(postApprovalSearch: any) {
+  validatePriceSearch(postApprovalSearch: any) {
     const minPriceSearch = postApprovalSearch.controls.minPriceSearch.value;
     const maxPriceSearch = postApprovalSearch.controls.maxPriceSearch.value;
-    console.log(minPriceSearch);
-    console.log(maxPriceSearch);
     return (minPriceSearch > maxPriceSearch) ? {priceCompare: true} : null;
+  }
+  validateAreaSearch(postApprovalSearch: any) {
+    const minAreaSearch = postApprovalSearch.controls.minAreaSearch.value;
+    const maxAreaSearch = postApprovalSearch.controls.maxAreaSearch.value;
+    return (minAreaSearch > maxAreaSearch) ? {areaCompare: true} : null;
   }
 
   /**
@@ -112,11 +126,40 @@ export class PostListApprovalComponent implements OnInit {
    * @return return this page which all element which is math with value is selected when search
    */
 // tslint:disable-next-line:max-line-length
-  getSearchPagePost(demandTypeSearch: any, landTypeSearch: any, minPriceSearch: any, maxPriceSearch: any, citySearch: any, districtSearch: any, wardsSearch: any, pageNumber: any): void {
+  getSearchPagePost(demandTypeSearch: any, landTypeSearch: any, minPriceSearch: any, maxPriceSearch: any, citySearch: any, districtSearch: any, wardsSearch: any,  minAreaSearch: any, maxAreaSearch: any, pageNumber: any): void {
     // tslint:disable-next-line:max-line-length
-    this.postListApprovalService.getPostApprovalsBySearch(demandTypeSearch, landTypeSearch, minPriceSearch, maxPriceSearch, citySearch, districtSearch, wardsSearch, pageNumber).subscribe(data => {
+    this.postListApprovalService.getPostApprovalsBySearch(demandTypeSearch, landTypeSearch, minPriceSearch, maxPriceSearch, citySearch, districtSearch, wardsSearch, minAreaSearch, maxAreaSearch , pageNumber).subscribe(data => {
       this.postApprovalList = data;
     });
+  }
+  /**
+   * Create by: NgocLV
+   * Date created: 08/02/2023
+   * Function: transfer Value
+   *
+   * @return return the value which is match type to search
+   */
+  transferValue(){
+    if(this.postApprovalSearch.value.minPriceSearch == null || this.postApprovalSearch.value.minPriceSearch === '' ){
+      this.minPriceSearch = '' ;
+    }
+    else {
+      this.minPriceSearch = this.postApprovalSearch.value.minPriceSearch * 1000000 ;
+
+    }
+    if(this.postApprovalSearch.value.maxPriceSearch == null || this.postApprovalSearch.value.maxPriceSearch === ''){
+      this.maxPriceSearch = '';
+    }
+    else {
+      this.maxPriceSearch = this.postApprovalSearch.value.maxPriceSearch * 1000000;
+    }
+    this.postApprovalSearch.value.minAreaSearch == null ? this.minAreaSearch = '' : this.minAreaSearch = this.postApprovalSearch.value.minAreaSearch;
+    this.postApprovalSearch.value.maxAreaSearch == null ? this.maxAreaSearch = '' : this.maxAreaSearch = this.postApprovalSearch.value.maxAreaSearch;
+    this.demandTypeSearch = this.postApprovalSearch.value.demandTypeSearch;
+    this.landTypeSearch = this.postApprovalSearch.value.landTypeSearch;
+    this.citySearch = this.postApprovalSearch.value.citySearch;
+    this.districtSearch = this.postApprovalSearch.value.districtSearch;
+    this.wardsSearch = this.postApprovalSearch.value.wardsSearch;
   }
 
   /**
@@ -128,47 +171,30 @@ export class PostListApprovalComponent implements OnInit {
    */
 // tslint:disable-next-line:typedef
   onSubmit(){
+    this.transferValue()
     if (this.postApprovalSearch.valid){
-      if (this.postApprovalSearch.value.minPriceSearch == null && this.postApprovalSearch.value.maxPriceSearch == null ) {
-        this.getSearchPagePost(this.postApprovalSearch.value.demandTypeSearch,
-          this.postApprovalSearch.value.landTypeSearch,
-          '',
-          '',
-          this.postApprovalSearch.value.citySearch,
-          this.postApprovalSearch.value.districtSearch,
-          this.postApprovalSearch.value.wardsSearch, 0);
-      }
-      else if (this.postApprovalSearch.value.minPriceSearch == null  ) {
-        const tempMaxPrice = this.postApprovalSearch.value.maxPriceSearch * 1000000;
-        this.getSearchPagePost(this.postApprovalSearch.value.demandTypeSearch,
-          this.postApprovalSearch.value.landTypeSearch,
-          '',
-          tempMaxPrice,
-          this.postApprovalSearch.value.citySearch,
-          this.postApprovalSearch.value.districtSearch,
-          this.postApprovalSearch.value.wardsSearch, 0);
-      }
-      else if (!this.postApprovalSearch.controls.minPriceSearch.dirty && !this.postApprovalSearch.controls.maxPriceSearch.dirty ) {
-        this.getSearchPagePost(this.postApprovalSearch.value.demandTypeSearch,
-          this.postApprovalSearch.value.landTypeSearch,
-          this.postApprovalSearch.value.minPriceSearch,
-          this.postApprovalSearch.value.maxPriceSearch,
-          this.postApprovalSearch.value.citySearch,
-          this.postApprovalSearch.value.districtSearch,
-          this.postApprovalSearch.value.wardsSearch, 0);
-      }
-      else {
-        const tempMinPrice = this.postApprovalSearch.value.minPriceSearch * 1000000;
-        const tempMaxPrice = this.postApprovalSearch.value.maxPriceSearch * 1000000;
-        this.getSearchPagePost(this.postApprovalSearch.value.demandTypeSearch,
-          this.postApprovalSearch.value.landTypeSearch,
-          tempMinPrice,
-          tempMaxPrice,
-          this.postApprovalSearch.value.citySearch,
-          this.postApprovalSearch.value.districtSearch,
-          this.postApprovalSearch.value.wardsSearch, 0);
-      }
-    }}
+      this.getSearchPagePost(this.demandTypeSearch,
+        this.landTypeSearch,
+        this.minPriceSearch,
+        this.maxPriceSearch,
+        this.citySearch,
+        this.districtSearch,
+        this.wardsSearch,
+        this.minAreaSearch,
+        this.maxAreaSearch,0);
+    }
+    else if (!this.postApprovalSearch.controls.minPriceSearch.dirty && !this.postApprovalSearch.controls.maxPriceSearch.dirty || !this.postApprovalSearch.controls.minAreaSearch.dirty && !this.postApprovalSearch.controls.maxAreaSearch.dirty ) {
+      this.getSearchPagePost(this.postApprovalSearch.value.demandTypeSearch,
+        this.postApprovalSearch.value.landTypeSearch,
+        this.postApprovalSearch.value.minPriceSearch,
+        this.postApprovalSearch.value.maxPriceSearch,
+        this.postApprovalSearch.value.citySearch,
+        this.postApprovalSearch.value.districtSearch,
+        this.postApprovalSearch.value.wardsSearch,
+        this.postApprovalSearch.value.minAreaSearch,
+        this.postApprovalSearch.value.maxAreaSearch,0);
+    }
+  }
 
   /**
    * Create by: NgocLV
@@ -180,44 +206,27 @@ export class PostListApprovalComponent implements OnInit {
 
   gotoPage(pageNumber: number): void {
     if (this.postApprovalSearch.dirty){
-      if (this.postApprovalSearch.value.minPriceSearch == null && this.postApprovalSearch.value.maxPriceSearch == null ) {
-        this.getSearchPagePost(this.postApprovalSearch.value.demandTypeSearch,
-          this.postApprovalSearch.value.landTypeSearch,
-          '',
-          '',
-          this.postApprovalSearch.value.citySearch,
-          this.postApprovalSearch.value.districtSearch,
-          this.postApprovalSearch.value.wardsSearch, pageNumber);
+      if (this.postApprovalSearch.valid){
+        this.getSearchPagePost(this.demandTypeSearch,
+          this.landTypeSearch,
+          this.minPriceSearch,
+          this.maxPriceSearch,
+          this.citySearch,
+          this.districtSearch,
+          this.wardsSearch,
+          this.minAreaSearch,
+          this.maxAreaSearch,pageNumber);
       }
-      else if (this.postApprovalSearch.value.minPriceSearch == null ) {
-        const tempMaxPrice = this.postApprovalSearch.value.maxPriceSearch * 1000000;
-        this.getSearchPagePost(this.postApprovalSearch.value.demandTypeSearch,
-          this.postApprovalSearch.value.landTypeSearch,
-          '',
-          tempMaxPrice,
-          this.postApprovalSearch.value.citySearch,
-          this.postApprovalSearch.value.districtSearch,
-          this.postApprovalSearch.value.wardsSearch, pageNumber);
-      }
-      else if (!this.postApprovalSearch.controls.minPriceSearch.dirty && !this.postApprovalSearch.controls.maxPriceSearch.dirty ) {
+      else if (!this.postApprovalSearch.controls.minPriceSearch.dirty && !this.postApprovalSearch.controls.maxPriceSearch.dirty || !this.postApprovalSearch.controls.minAreaSearch.dirty && !this.postApprovalSearch.controls.maxAreaSearch.dirty ) {
         this.getSearchPagePost(this.postApprovalSearch.value.demandTypeSearch,
           this.postApprovalSearch.value.landTypeSearch,
           this.postApprovalSearch.value.minPriceSearch,
           this.postApprovalSearch.value.maxPriceSearch,
           this.postApprovalSearch.value.citySearch,
           this.postApprovalSearch.value.districtSearch,
-          this.postApprovalSearch.value.wardsSearch, pageNumber);
-      }
-      else {
-        const tempMinPrice = this.postApprovalSearch.value.minPriceSearch * 1000000;
-        const tempMaxPrice = this.postApprovalSearch.value.maxPriceSearch * 1000000;
-        this.getSearchPagePost(this.postApprovalSearch.value.demandTypeSearch,
-          this.postApprovalSearch.value.landTypeSearch,
-          tempMinPrice,
-          tempMaxPrice,
-          this.postApprovalSearch.value.citySearch,
-          this.postApprovalSearch.value.districtSearch,
-          this.postApprovalSearch.value.wardsSearch, pageNumber);
+          this.postApprovalSearch.value.wardsSearch,
+          this.postApprovalSearch.value.minAreaSearch,
+          this.postApprovalSearch.value.maxAreaSearch,pageNumber);
       }
     }
     else {
@@ -263,7 +272,6 @@ export class PostListApprovalComponent implements OnInit {
   getAllDistrict(idCity: number): void {
     this.districtListService.getAllDistrict(idCity).subscribe(data => {
       this.districtList = data;
-      console.log(this.districtList);
     }, error => {
       console.log('Lỗi truy xuất');
     }, () => {

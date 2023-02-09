@@ -9,12 +9,14 @@ import {CustomerAddComponent} from './customer-add/customer-add.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
+import { CustomerPipe } from './customer-list/customer.pipe';
 
 
 @NgModule({
   declarations: [CustomerCreateComponent, CustomerEditComponent, CustomerListComponent, CustomerDeleteComponent, CustomerDetailComponent,
     CustomerApprovalComponent,
-    CustomerAddComponent],
+    CustomerAddComponent,
+    CustomerPipe],
   imports: [
     CommonModule,
     CustomerRoutingModule,

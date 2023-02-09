@@ -8,6 +8,7 @@ import {PostListHome} from '../../entity/post/post-list-home';
 import {Image} from '../../entity/post/image';
 import {PostListService} from '../../post/post-list/post-list.service';
 import {Title} from '@angular/platform-browser';
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-home',
@@ -26,9 +27,13 @@ export class HomeComponent implements OnInit {
   mess = '';
   imageList: Image[] = [];
   image = '';
+  code: number | undefined = 0;
+
   constructor(private postListService: PostListService,
               private fb: FormBuilder,
-              private titleService: Title, private toastrService: ToastrService) {
+              private titleService: Title,
+              private toastrService: ToastrService,
+              private activatedRoute: ActivatedRoute) {
     this.titleService.setTitle('Trang chủ');
     this.formSearch = this.fb.group({
       area: [''],
@@ -43,8 +48,52 @@ export class HomeComponent implements OnInit {
     this.getLandType();
     this.getCity();
     this.getDirection();
-    this.getPostPage();
+    this.postListService.getPostPage(
+      this.formSearch.controls.area.value,
+      this.formSearch.controls.price.value,
+      this.formSearch.controls.landType.value,
+      this.formSearch.controls.direction.value,
+      this.formSearch.controls.city.value, this.page).subscribe(data => {
+        this.mess = '';
+        this.postListTemp = data.content;
+        this.totalPage = data.totalPages;
+        this.page = data.pageable.pageNumber;
+        if (this.postListTemp.length > 0) {
+          this.getImageByIdPost(this.postListTemp);
+        }
+        this.postList = this.postList.concat(this.postListTemp);
+        this.activatedRoute.paramMap.subscribe(data => {
+          const code = data.get('code');
+          if (code !== null) {
+            this.postList = [];
+            this.code = parseInt(code);
+            switch (this.code) {
+              case 1:
+                this.searchSellPostList();
+                this.code = 1;
+                break;
+              case 2:
+                this.searchRentPostList();
+                this.code = 2;
+                break;
+              case 3:
+                this.searchBuyPostList();
+                this.code = 3;
+                break;
+              default:
+                this.getPostPage();
+                this.code = 0;
+            }
+          }
+        }, error1 => {
+        });
+      }, error => {
+        this.mess = 'Không có dữ liệu';
+      },
+      () => {
+      });
   }
+
   /**
    * Create by: SangNP
    * Date created: 03/02/2023
@@ -148,7 +197,19 @@ export class HomeComponent implements OnInit {
   showMore(): void {
     if (this.page < this.totalPage - 1) {
       this.page = this.page + 1;
-      this.getPostPage();
+      switch (this.code) {
+        case 1:
+          this.searchSellPostList();
+          break;
+        case 2:
+          this.searchRentPostList();
+          break;
+        case 3:
+          this.searchBuyPostList();
+          break;
+        default:
+          this.getPostPage();
+      }
     }
   }
 
@@ -160,26 +221,99 @@ export class HomeComponent implements OnInit {
    */
   showLess(): void {
     this.page = 0;
-    this.postListService.getPostPage(
-      this.formSearch.controls.area.value,
-      this.formSearch.controls.price.value,
-      this.formSearch.controls.landType.value,
-      this.formSearch.controls.direction.value,
-      this.formSearch.controls.city.value, this.page).subscribe(data => {
-        this.mess = '';
-        this.postListTemp = data.content;
-        this.totalPage = data.totalPages;
-        this.page = data.pageable.pageNumber;
-        if (this.postListTemp.length > 0) {
-          this.getImageByIdPost(this.postListTemp);
-        }
-        this.postList = [];
-        this.postList = this.postList.concat(this.postListTemp);
-      }, error => {
-        this.mess = 'Không có dữ liệu';
-      },
-      () => {
-      });
+    switch (this.code) {
+      case 1:
+        this.postListService.getPostPageSell(
+          this.formSearch.controls.area.value,
+          this.formSearch.controls.price.value,
+          this.formSearch.controls.landType.value,
+          this.formSearch.controls.direction.value,
+          this.formSearch.controls.city.value, this.page).subscribe(data => {
+            this.code = 1;
+            this.mess = '';
+            this.postListTemp = data.content;
+            this.postList = [];
+            this.totalPage = data.totalPages;
+            this.page = data.pageable.pageNumber;
+            if (this.postListTemp.length > 0) {
+              this.getImageByIdPost(this.postListTemp);
+            }
+            this.postList = this.postList.concat(this.postListTemp);
+          }, error => {
+            this.postList = [];
+          },
+          () => {
+          });
+        break;
+      case 2:
+        this.postListService.getPostPageRent(
+          this.formSearch.controls.area.value,
+          this.formSearch.controls.price.value,
+          this.formSearch.controls.landType.value,
+          this.formSearch.controls.direction.value,
+          this.formSearch.controls.city.value, this.page).subscribe(data => {
+            this.code = 2;
+            this.mess = '';
+            this.postListTemp = data.content;
+            this.postList = [];
+            this.totalPage = data.totalPages;
+            this.page = data.pageable.pageNumber;
+            if (this.postListTemp.length > 0) {
+              this.getImageByIdPost(this.postListTemp);
+            }
+            this.postList = this.postList.concat(this.postListTemp);
+          }, error => {
+            this.postList = [];
+          },
+          () => {
+          });
+        break;
+      case 3:
+        this.postListService.getPostPageBuy(
+          this.formSearch.controls.area.value,
+          this.formSearch.controls.price.value,
+          this.formSearch.controls.landType.value,
+          this.formSearch.controls.direction.value,
+          this.formSearch.controls.city.value, this.page).subscribe(data => {
+            this.code = 3;
+            this.mess = '';
+            this.postListTemp = data.content;
+            this.postList = [];
+            this.totalPage = data.totalPages;
+            this.page = data.pageable.pageNumber;
+            if (this.postListTemp.length > 0) {
+              this.getImageByIdPost(this.postListTemp);
+            }
+            this.postList = this.postList.concat(this.postListTemp);
+          }, error => {
+            this.postList = [];
+          },
+          () => {
+          });
+        break;
+      default:
+        this.postListService.getPostPage(
+          this.formSearch.controls.area.value,
+          this.formSearch.controls.price.value,
+          this.formSearch.controls.landType.value,
+          this.formSearch.controls.direction.value,
+          this.formSearch.controls.city.value, this.page).subscribe(data => {
+            this.code = 0;
+            this.mess = '';
+            this.postListTemp = data.content;
+            this.postList = [];
+            this.totalPage = data.totalPages;
+            this.page = data.pageable.pageNumber;
+            if (this.postListTemp.length > 0) {
+              this.getImageByIdPost(this.postListTemp);
+            }
+            this.postList = this.postList.concat(this.postListTemp);
+          }, error => {
+            this.postList = [];
+          },
+          () => {
+          });
+    }
   }
 
   /**
@@ -189,28 +323,111 @@ export class HomeComponent implements OnInit {
    * @return void
    */
   search(): void {
-    this.postListService.getPostPage(
-      this.formSearch.controls.area.value,
-      this.formSearch.controls.price.value,
-      this.formSearch.controls.landType.value,
-      this.formSearch.controls.direction.value,
-      this.formSearch.controls.city.value, this.page).subscribe(data => {
-        this.mess = '';
-        this.postListTemp = data.content;
-        this.postList = [];
-        this.totalPage = data.totalPages;
-        this.page = data.pageable.pageNumber;
-        if (this.postListTemp.length > 0) {
-          this.getImageByIdPost(this.postListTemp);
-        }
-        this.postList = this.postList.concat(this.postListTemp);
-        this.success('Tìm kiếm thành công');
-      }, error => {
-        this.mess = 'Không có dữ liệu';
-        this.error('Tìm kiếm thất bại');
-      },
-      () => {
-      });
+    switch (this.code) {
+      case 1:
+        this.postListService.getPostPageSell(
+          this.formSearch.controls.area.value,
+          this.formSearch.controls.price.value,
+          this.formSearch.controls.landType.value,
+          this.formSearch.controls.direction.value,
+          this.formSearch.controls.city.value, this.page).subscribe(data => {
+            this.code = 1;
+            this.mess = '';
+            this.postListTemp = data.content;
+            this.postList = [];
+            this.totalPage = data.totalPages;
+            this.page = data.pageable.pageNumber;
+            if (this.postListTemp.length > 0) {
+              this.getImageByIdPost(this.postListTemp);
+            }
+            this.postList = this.postList.concat(this.postListTemp);
+            this.success('Tìm kiếm thành công');
+          }, error => {
+            this.postList = [];
+            this.mess = 'Không có dữ liệu';
+            this.error('Tìm kiếm thất bại');
+          },
+          () => {
+          });
+        break;
+      case 2:
+        this.postListService.getPostPageRent(
+          this.formSearch.controls.area.value,
+          this.formSearch.controls.price.value,
+          this.formSearch.controls.landType.value,
+          this.formSearch.controls.direction.value,
+          this.formSearch.controls.city.value, this.page).subscribe(data => {
+            this.code = 2;
+            this.mess = '';
+            this.postListTemp = data.content;
+            this.postList = [];
+            this.totalPage = data.totalPages;
+            this.page = data.pageable.pageNumber;
+            if (this.postListTemp.length > 0) {
+              this.getImageByIdPost(this.postListTemp);
+            }
+            this.postList = this.postList.concat(this.postListTemp);
+            this.success('Tìm kiếm thành công');
+          }, error => {
+            this.postList = [];
+            this.mess = 'Không có dữ liệu';
+            this.error('Tìm kiếm thất bại');
+          },
+          () => {
+          });
+        break;
+      case 3:
+        this.postListService.getPostPageBuy(
+          this.formSearch.controls.area.value,
+          this.formSearch.controls.price.value,
+          this.formSearch.controls.landType.value,
+          this.formSearch.controls.direction.value,
+          this.formSearch.controls.city.value, this.page).subscribe(data => {
+            this.code = 3;
+            this.mess = '';
+            this.postListTemp = data.content;
+            this.postList = [];
+            this.totalPage = data.totalPages;
+            this.page = data.pageable.pageNumber;
+            if (this.postListTemp.length > 0) {
+              this.getImageByIdPost(this.postListTemp);
+            }
+            this.postList = this.postList.concat(this.postListTemp);
+            this.success('Tìm kiếm thành công');
+          }, error => {
+            this.postList = [];
+            this.mess = 'Không có dữ liệu';
+            this.error('Tìm kiếm thất bại');
+          },
+          () => {
+          });
+        break;
+      default:
+        this.postListService.getPostPage(
+          this.formSearch.controls.area.value,
+          this.formSearch.controls.price.value,
+          this.formSearch.controls.landType.value,
+          this.formSearch.controls.direction.value,
+          this.formSearch.controls.city.value, this.page).subscribe(data => {
+            this.code = 0;
+            this.mess = '';
+            this.postListTemp = data.content;
+            this.postList = [];
+            this.totalPage = data.totalPages;
+            this.page = data.pageable.pageNumber;
+            if (this.postListTemp.length > 0) {
+              this.getImageByIdPost(this.postListTemp);
+            }
+            this.postList = this.postList.concat(this.postListTemp);
+            this.success('Tìm kiếm thành công');
+          }, error => {
+            this.postList = [];
+            this.mess = 'Không có dữ liệu';
+            this.error('Tìm kiếm thất bại');
+          },
+          () => {
+          });
+    }
   }
 
   /**
@@ -241,5 +458,89 @@ export class HomeComponent implements OnInit {
    */
   error(mess: string): void {
     this.toastrService.error(mess);
+  }
+
+  /**
+   * Create by: SangNP
+   * Date created: 04/02/2023
+   * Function: take post list buy
+   * @return void
+   */
+  searchBuyPostList(): void {
+    this.postListService.getPostPageBuy(
+      this.formSearch.controls.area.value,
+      this.formSearch.controls.price.value,
+      this.formSearch.controls.landType.value,
+      this.formSearch.controls.direction.value,
+      this.formSearch.controls.city.value, this.page).subscribe(data => {
+        this.mess = '';
+        this.postListTemp = data.content;
+        this.totalPage = data.totalPages;
+        this.page = data.pageable.pageNumber;
+        if (this.postListTemp.length > 0) {
+          this.getImageByIdPost(this.postListTemp);
+        }
+        this.postList = this.postList.concat(this.postListTemp);
+      }, error => {
+        this.mess = 'Không có dữ liệu';
+      },
+      () => {
+      });
+  }
+
+  /**
+   * Create by: SangNP
+   * Date created: 04/02/2023
+   * Function: take post list sell
+   * @return void
+   */
+  searchSellPostList(): void {
+    this.postListService.getPostPageSell(
+      this.formSearch.controls.area.value,
+      this.formSearch.controls.price.value,
+      this.formSearch.controls.landType.value,
+      this.formSearch.controls.direction.value,
+      this.formSearch.controls.city.value, this.page).subscribe(data => {
+        this.mess = '';
+        this.postListTemp = data.content;
+        this.totalPage = data.totalPages;
+        this.page = data.pageable.pageNumber;
+        if (this.postListTemp.length > 0) {
+          this.getImageByIdPost(this.postListTemp);
+        }
+        this.postList = this.postList.concat(this.postListTemp);
+      }, error => {
+        this.mess = 'Không có dữ liệu';
+      },
+      () => {
+      });
+  }
+
+  /**
+   * Create by: SangNP
+   * Date created: 04/02/2023
+   * Function: take post list rent
+   * @return void
+   */
+  searchRentPostList(): void {
+    this.postListService.getPostPageRent(
+      this.formSearch.controls.area.value,
+      this.formSearch.controls.price.value,
+      this.formSearch.controls.landType.value,
+      this.formSearch.controls.direction.value,
+      this.formSearch.controls.city.value, this.page).subscribe(data => {
+        this.mess = '';
+        this.postListTemp = data.content;
+        this.totalPage = data.totalPages;
+        this.page = data.pageable.pageNumber;
+        if (this.postListTemp.length > 0) {
+          this.getImageByIdPost(this.postListTemp);
+        }
+        this.postList = this.postList.concat(this.postListTemp);
+      }, error => {
+        this.mess = 'Không có dữ liệu';
+      },
+      () => {
+      });
   }
 }

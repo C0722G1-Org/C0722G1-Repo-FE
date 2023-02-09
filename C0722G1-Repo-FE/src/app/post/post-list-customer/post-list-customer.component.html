@@ -1,11 +1,6 @@
 <div>
-  <div style="height: 150px; background-color: silver">
-    <h3 style="text-align: center">
-      HEADER
-    </h3>
-  </div>
   <div>
-    <h3 style="text-align: center">DANH SÁCH NHU CẦU CỦA KHÁCH HÀNG {{nameCustomer}}</h3>
+    <h4 style="text-align: center">DANH SÁCH BÀI ĐĂNG CỦA KHÁCH HÀNG {{nameCustomer}}</h4>
   </div>
   <div class="container">
     <div class="header-nav " style="position: sticky;z-index: 1;top: 0">
@@ -14,12 +9,12 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item" style="margin-right: 30px">
-                <button class="btn btn-outline-secondary" routerLink="/home"><i class="fa-solid fa-chevron-left"></i>
+                <button class="btn btn-outline-secondary" (click)="back()"><i class="fa-solid fa-chevron-left"></i>
                   Trở về
                 </button>
               </li>
               <li class="nav-item">
-                <button class="btn btn-outline-primary" [routerLink]="['/post/create',idCustomer]">Thêm nhu cầu</button>
+                <button *ngIf="!idCustomer" class="btn btn-outline-primary" [routerLink]="['/post/create',idCustomer]">Thêm nhu cầu</button>
               </li>
             </ul>
             <div>

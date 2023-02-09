@@ -50,7 +50,7 @@
     <div class="col-lg-1"></div>
   </div>
   <div class="row container-fluid">
-    <div class="col-12" *ngIf="mess!=''" style="height: 280px">
+    <div class="col-12 d-flex justify-content-center" *ngIf="mess!=''" style="height: 280px">
       <h1>{{mess}}</h1>
     </div>
     <div class="col-lg-3 d-flex justify-content-center" *ngFor="let item of postList" style="text-decoration: none">
@@ -85,12 +85,12 @@
         </div>
       </a>
     </div>
-
+    ​
   </div>
   <div class="text-center my-3">
     <button *ngIf="page != totalPage-1 && mess==''" class="btn btn-outline-dark" (click)="showMore()">Xem thêm</button>
-    <button *ngIf="page == totalPage-1 && mess=='' && totalPage != 1" class="btn btn-outline-dark" (click)="showLess()">
-      Ẩn đi
+    <button *ngIf="page == totalPage-1 && mess=='' && totalPage > 1" class="btn btn-outline-dark" (click)="showLess()">
+      Ẩn bớt
     </button>
   </div>
 </div>

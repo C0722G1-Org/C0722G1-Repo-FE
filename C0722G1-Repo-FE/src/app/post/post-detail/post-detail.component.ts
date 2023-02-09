@@ -18,6 +18,7 @@ export class PostDetailComponent implements OnInit {
   imageList: Image[] = [];
 // @ts-ignore
   accountId: string | null = '';
+  idCheck = 0;
   million = 1000000;
   billion = 1000000000;
   postDetail: PostDetailDto = {};
@@ -27,7 +28,7 @@ export class PostDetailComponent implements OnInit {
   phoneNumber: string | undefined = '';
 // @ts-ignore
   displayPhoneNumber: string | undefined = '';
-  url: string | undefined = '';
+  url: string | undefined = 'https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921';
 
   constructor(private postService: PostService,
               private activatedRoute: ActivatedRoute,
@@ -49,15 +50,19 @@ export class PostDetailComponent implements OnInit {
          */
 
         this.postService.findPostById(Number(id)).subscribe(dataPost => {
-          // if (HttpErrorResponse. === 502) {
-          //   this.router.navigateByUrl('/error');
-          // }
+          console.log(dataPost.approval);
           if (dataPost.approval === false || dataPost.flagDeleted === true) {
-            this.router.navigateByUrl('/error');
+            this.router.navigateByUrl('/post/error');
           }
           this.postDetail = dataPost;
-          this.phoneNumber = dataPost.phoneCustomer1.slice(0, 6) + '*** • Hiện thêm';
+          this.phoneNumber = dataPost.phoneCustomer1.slice(0, 4) + ' ' + dataPost.phoneCustomer1.slice(4, 7) + ' *** • Hiện số';
+          console.log(this.phoneNumber)
           this.displayPhoneNumber = dataPost.phoneCustomer1;
+          this.postService.getAccountId(this.postDetail.idCustomer).subscribe(idAccount => {
+            console.log(this.postDetail.idCustomer);
+            this.idCheck = idAccount;
+            console.log(this.accountId);
+          });
           /**
            * Method uses:
            * Send a request to backend API to get a ImageSet by parameter Id
@@ -101,7 +106,10 @@ export class PostDetailComponent implements OnInit {
    * Created Date: 03/02/2023
    */
   showPhoneNumber(): void {
-    this.phoneNumber = this.displayPhoneNumber + ' • Sao chép';
+    // @ts-ignore
+    this.phoneNumber = this.displayPhoneNumber?.slice(0, 4) + ' '
+      + this.displayPhoneNumber?.slice(4, 7) + ' '
+      + this.displayPhoneNumber?.slice(7, 10) + ' • Sao chép';
   }
 
   /**
@@ -154,14 +162,34 @@ export class PostDetailComponent implements OnInit {
     this.displayPrice = (this.postDetail.price / this.billion) + ' Tỷ';
   }
 
-  copyPhoneNumber(phoneNumber: string | undefined): void {
-    if (this.displayPhoneNumber != null && phoneNumber === this.displayPhoneNumber + ' • Sao chép') {
-      navigator.clipboard.writeText(this.displayPhoneNumber);
+  copyPhoneNumber(): void {
+    if (this.phoneNumber === this.displayPhoneNumber?.slice(0, 4) + ' '
+      + this.displayPhoneNumber?.slice(4, 7) + ' '
+      + this.displayPhoneNumber?.slice(7, 10) + ' • Sao chép') {
+      if (this.postDetail.phoneCustomer1 != null) {
+        navigator.clipboard.writeText(this.postDetail.phoneCustomer1);
+      }
       this.toastr.info('Đã sao chép số điện thoại');
     }
   }
 
   changeImage(url: string | undefined): void {
     this.url = url;
+  }
+
+  addHashTag(event: any, land: any): void {
+    event.target.innerText = '#' + land;
+  }
+
+  removeHashTag(event: any, land: any): void {
+    event.target.innerText = land;
+  }
+
+  addHashTagDirection(event: any, nameDirection: any): void {
+    event.target.innerText = '#hướng ' + nameDirection;
+  }
+
+  removeHashTagDirection(event: any, nameDirection: any): void {
+    event.target.innerText = 'hướng ' + nameDirection;
   }
 }

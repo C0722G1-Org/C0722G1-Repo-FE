@@ -6,6 +6,7 @@ import {AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, 
 import {Router} from '@angular/router';
 import {Title} from '@angular/platform-browser';
 import {ToastrService} from 'ngx-toastr';
+import {CustomerDtoEmailAndUsername} from "../../dto/customer/customerDtoEmailAndUsername";
 
 
 export const checkBirthDay: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
@@ -28,8 +29,7 @@ export const checkBirthDay: ValidatorFn = (control: AbstractControl): Validation
 })
 export class CustomerAddComponent implements OnInit {
   rfAddCustomer: FormGroup | undefined;
-  private listMailCustomerAndUsernameAccount: Customer[] | undefined;
-
+  private listMailCustomerAndUsernameAccount: CustomerDtoEmailAndUsername[] | undefined;
 
   constructor(private builder: FormBuilder,
               private router: Router,
@@ -50,27 +50,28 @@ export class CustomerAddComponent implements OnInit {
           nameCustomer: ['', [Validators.required, Validators.pattern('^[AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬBCDĐEÈẺẼÉẸÊỀỂỄẾỆFGHIÌỈĨÍỊJKLMNOÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢPQRSTUÙỦŨÚỤƯỪỬỮỨỰVWXYỲỶỸÝỴZ][aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz]+ [AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬBCDĐEÈẺẼÉẸÊỀỂỄẾỆFGHIÌỈĨÍỊJKLMNOÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢPQRSTUÙỦŨÚỤƯỪỬỮỨỰVWXYỲỶỸÝỴZ][aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz]+(?: [AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬBCDĐEÈẺẼÉẸÊỀỂỄẾỆFGHIÌỈĨÍỊJKLMNOÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢPQRSTUÙỦŨÚỤƯỪỬỮỨỰVWXYỲỶỸÝỴZ][aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz]*)*$'),
             Validators.maxLength(50),
             Validators.minLength(5)]],
-          usernameAccount: ['', [Validators.required,
-            Validators.pattern('^[a-zA-Z0-9.!#$%&\'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$')]],
+          usernameAccount: [''],
           addressCustomer: ['', Validators.required],
           idCardCustomer: ['', [Validators.required, Validators.pattern('\\d{12}')]],
           codeCustomer: [''],
           flagDelete: [false],
           genderCustomer: [''],
           dateOfBirth: ['', [Validators.required]],
-          phoneCustomer1: ['', [Validators.required, Validators.pattern('[0][9][0]\\d{7}')]],
-          phoneCustomer2: ['', [Validators.pattern('[0][9][0]\\d{7}')]],
-          emailCustomer: [''],
+          phoneCustomer1: ['', [Validators.required, Validators.pattern('(((\\+|)84)|0)(3|5|7|8|9)+([0-9]{8})')]],
+          phoneCustomer2: ['', [Validators.pattern('(((\\+|)84)|0)(3|5|7|8|9)+([0-9]{8})')]],
+          emailCustomer: ['', [Validators.required,
+            Validators.pattern('^[a-zA-Z0-9.!#$%&\'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$')]],
           encryptPassword: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]]
         }, {validators: [checkBirthDay, this.isExist]}
       );
     });
   }
 
+
   addCustomer(): void {
     if (this.rfAddCustomer?.valid) {
       // console.log(JSON.parse(this.rfAddCustomer.value));
-      console.log(this.rfAddCustomer.value);
+      // console.log(this.rfAddCustomer.value);
       this.customerService.createCustomer(this.rfAddCustomer?.value).subscribe(
         data => {
           this.router.navigateByUrl('customer/add');
@@ -81,6 +82,7 @@ export class CustomerAddComponent implements OnInit {
     }
   }
 
+
   isExist: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
     // @ts-ignore
     const email = control.get('emailCustomer').value;
@@ -88,12 +90,12 @@ export class CustomerAddComponent implements OnInit {
     // @ts-ignore
     this.listMailCustomerAndUsernameAccount.forEach(value => {
       // @ts-ignore
-      if (email === value.emailCustomer) {
+      if (email === value.email) {
         result = {isExist: true};
       }
     });
     return result;
-  };
+  }
 
   resetFormAndData(): void {
     this.ngOnInit();
