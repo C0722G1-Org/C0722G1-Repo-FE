@@ -55,7 +55,6 @@ export class PostCreateComponent implements OnInit {
   nameImageList: string[] = ['Chưa có ảnh'];
   imageList: any[] = [];
   imagePathFireBase = '/post/image';
-  imageDownloadUrl: string[] = [];
   createPostDto: CreatePostDto = {
     area: 0,
     idCustomer: 0,
@@ -168,22 +167,22 @@ export class PostCreateComponent implements OnInit {
       });
   }
 
-  savePost(): void {
+  async savePost() {
     this.submitTimes++;
+
     if (this.createPostDtoUnit.invalid) {
       this.toastrService.error('Gửi bài đăng thất bại. Vui lòng kiểm tra lại thông tin đã điền');
       this.createPostDtoUnit.markAllAsTouched();
       this.createPostDtoUnit.markAsDirty();
       return;
     }
+
     if (this.createPostDtoUnit.valid) {
-      this.getDownloadImageURLList();
+      let urls = await this.getDownloadImageURLs()
       this.createPostDto = this.createPostDtoUnit.value;
-      this.createPostDto.imageListURL = this.imageDownloadUrl;
-      console.log(this.imageDownloadUrl);
+      this.createPostDto.imageListURL = urls;
       this.createPostService.savePost(this.createPostDto).subscribe((payload) => {
         this.baseResponse = payload;
-        console.log(this.baseResponse);
         if (this.baseResponse.code === 200) {
           this.resetCreatePostDtoUnit();
           this.submitTimes = 0;
@@ -198,24 +197,24 @@ export class PostCreateComponent implements OnInit {
     }
   }
 
-  private getDownloadImageURLList(): void {
-    const amountOfFile = this.imageList.length;
-    if (amountOfFile !== 0) {
-      for (let i = 0; i < amountOfFile; i++) {
-        const filePath = this.imagePathFireBase + this.nameImageList[i];
+  async getDownloadImageURLs(): Promise<string[]> {
+    let imageURLs: string[] = [];
+    for (const image of this.imageList) {
+      await new Promise((resolve, reject) => {
+        const filePath = this.imagePathFireBase + image.name;
         const storageRef = this.fireStorage.ref(filePath);
-        const uploadTask = this.fireStorage.upload(filePath, this.imageList[i]);
-
+        const uploadTask = this.fireStorage.upload(filePath, image);
         uploadTask.snapshotChanges().pipe(
           finalize(() => {
             storageRef.getDownloadURL().subscribe(downloadURL => {
-              this.imageDownloadUrl = [];
-              this.imageDownloadUrl.push(downloadURL);
+              imageURLs.push(downloadURL);
+              resolve();
             });
           })
         ).subscribe();
-      }
+      });
     }
+    return imageURLs;
   }
 
   getDistrictsListOnCity(value: string): void {

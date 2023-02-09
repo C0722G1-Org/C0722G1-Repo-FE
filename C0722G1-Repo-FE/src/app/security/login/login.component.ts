@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
    * Date: 02/02/2023
    * Function: login using Account
    */
-  login() {
+  login(): void {
     const signInForm = this.signInForm?.value;
     this.securityService.signIn(signInForm).subscribe(data => {
         if (data.token !== undefined) {
@@ -85,5 +85,4 @@ export class LoginComponent implements OnInit {
     )
     ;
   }
-
 }
