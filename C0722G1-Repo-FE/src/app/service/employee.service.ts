@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Employee} from '../entity/employee/employee';
+import {EmployeeInfo} from '../dto/employee/employee-info';
+import {EmployeeInfoJson} from '../dto/employee/employee-info-json';
 import {ToastrService} from 'ngx-toastr';
 
 @Injectable({
@@ -12,8 +14,6 @@ export class EmployeeService {
   URL_EMPLOYEE = 'http://localhost:8080/api/employees';
   URL_EMPLOYEE_CREATE = 'http://localhost:8080/api/employees/save';
   URL_EMPLOYEE_UPDATE = 'http://localhost:8080/api/employees/update';
-
-
   constructor(private httpClient: HttpClient,
               private toast: ToastrService) {
   }
@@ -98,7 +98,7 @@ export class EmployeeService {
    * Function: get employee by id
    * @param id: number
    */
-  findById(id: number): Observable<Employee> {
+  findById(id: number ): Observable<Employee> {
     return this.httpClient.get<Employee>(`${(this.URL_EMPLOYEE)}/${id}`);
   }
 
@@ -121,7 +121,7 @@ export class EmployeeService {
   showSuccess(message: string, title: string): void {
     this.toast.success(message, title);
   }
-
+  
   /**
    * Created: NhanUQ
    * Function: notification error

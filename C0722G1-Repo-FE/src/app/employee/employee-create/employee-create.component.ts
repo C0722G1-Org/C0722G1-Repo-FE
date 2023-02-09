@@ -5,6 +5,8 @@ import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
+import {EmployeeService} from '../../service/employee.service';
+import {DivisionService} from '../../service/division.service';
 
 export const checkBirthDay: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
   // @ts-ignore
@@ -55,7 +57,6 @@ export class EmployeeCreateComponent implements OnInit {
       flagDelete: new FormControl('')
     })
   }, {validators: [checkBirthDay]});
-
   constructor(private employeeService: EmployeeService,
               private divisionService: DivisionService,
               private router: Router,
@@ -70,6 +71,10 @@ export class EmployeeCreateComponent implements OnInit {
   createEmployee(): void {
     const employee = this.formCreateEmployee.value;
     this.employeeService.saveEmployee(employee).subscribe(data => {
+
+      if (data == null) {
+        this.toastrService.error('Thêm mới không thành công.', 'Thông báo');
+      } else {
         this.toastrService.success('Thêm mới thành công!', 'Thông báo');
         this.router.navigateByUrl('/employee');
     }, error => {

@@ -25,7 +25,7 @@
                 <input formControlName="codeEmployee" id="code" type="text" class="form-control"
                        placeholder="NV-XXXX (X: số nguyên dương)"/>
                 <div class="text-danger"
-                     *ngIf="formCreateEmployee.controls.codeEmployee.touched && formCreateEmployee.controls.codeEmployee.touched else elseBlock">
+                     *ngIf="formCreateEmployee.controls.codeEmployee.invalid && formCreateEmployee.controls.codeEmployee.invalid else elseBlock">
                   <span *ngIf="formCreateEmployee.controls.codeEmployee.hasError('required')">Mã nhân viên không được trống</span>
                   <span *ngIf="formCreateEmployee.controls.codeEmployee.hasError('pattern')">Mã nhân viên chưa đúng định dạng</span>
                 </div>
@@ -42,7 +42,8 @@
                 <input formControlName="nameEmployee" id="name" type="text" class="form-control"
                        placeholder="Nhập tên nhân viên.."/>
                 <div class="text-danger"
-                     *ngIf="formCreateEmployee.controls.nameEmployee.touched && formCreateEmployee.controls.nameEmployee.touched else elseBlock">
+                     *ngIf="formCreateEmployee.controls.nameEmployee.invalid && formCreateEmployee.controls.nameEmployee.invalid else elseBlock">
+
                   <span
                     *ngIf="formCreateEmployee.controls.nameEmployee.hasError('required')">Tên không được trống</span>
                   <span
