@@ -51,7 +51,7 @@ export class EmployeeDeleteComponent implements OnInit {
    * Function: show message notification delete error
    */
   private showToastrError(): void {
-    this.employeeService.showError('Có lỗi khi thực hiện.', 'Thông báo!');
+    this.employeeService.showError('Có lỗi khi thực hiện', 'Thông báo!');
   }
 
 }

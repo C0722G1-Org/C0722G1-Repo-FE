@@ -7,7 +7,6 @@ import {EmployeeInfo} from '../../dto/employee/employee-info';
 import {Title} from '@angular/platform-browser';
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-employee-list',
@@ -30,16 +29,11 @@ export class EmployeeListComponent implements OnInit {
   request = {page: 0, size: 5};
   pageNumber = 0;
   totalPages = 0;
-  codePattern = '^NV-[0-9]{4}$'
-  searchForm: FormGroup = new FormGroup({});
-  namePattern = '^[a-zA-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+$' ;
-  emailPattern = '^[A-Za-z0-9]+[A-Za-z0-9]*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)$';
 
   constructor(private employeeService: EmployeeService,
               private divisionService: DivisionService,
               private route: Router,
-              private titleService: Title,
-              private formBuilder: FormBuilder) {
+              private titleService: Title) {
     this.titleService.setTitle('Danh sách nhân viên');
     this.getAllDivisionListComponent();
   }
@@ -187,19 +181,12 @@ export class EmployeeListComponent implements OnInit {
     this.ngOnInit();
   }
 
-  createSearchForm(): void {
-    this.searchForm = this.formBuilder.group({
-      codeEmployeeSearch: ['', [Validators.maxLength(50), Validators.pattern(this.codePattern)]],
-      nameEmployeeSearch: ['', [Validators.maxLength(50), Validators.pattern(this.namePattern)]],
-      emailEmployeeSearch: ['', [Validators.maxLength(50), Validators.pattern(this.emailPattern)]],
-      divisionSearch: [''],
-    })
-  }
-
   resetSearch() {
     this.inputCode.nativeElement.value = '';
     this.inputName.nativeElement.value = '';
     this.inputEmail.nativeElement.value = '';
     this.inputDivision.nativeElement.value = '';
+    this.request.page = 0;
+    this.getAllEmployeeListComponent(this.request);
   }
 }
