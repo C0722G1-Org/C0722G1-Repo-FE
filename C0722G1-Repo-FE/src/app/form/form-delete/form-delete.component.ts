@@ -1,8 +1,11 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {DataForm} from '../../entity/form/data-form';
-import {DataFormService} from '../../service/data-form.service';
 import {Router} from '@angular/router';
+import {DataFormService} from '../../service/data-form.service';
 import {AlertService} from '../../service/alert.service';
+
+
+
 
 @Component({
   selector: 'app-form-delete',
@@ -10,10 +13,13 @@ import {AlertService} from '../../service/alert.service';
   styleUrls: ['./form-delete.component.css']
 })
 export class FormDeleteComponent implements OnInit {
+
   @Input()
   dataFormDelete: DataForm = {};
 // Tạo output để goi phương thức reload lại trang list
   @Output() deleteEvent = new EventEmitter();
+
+
   constructor(private  dataFormService: DataFormService , private router: Router, private alertService: AlertService) {
   }
 
@@ -26,11 +32,10 @@ export class FormDeleteComponent implements OnInit {
    * Function: deleteDataForm()
    */
   deleteDataForm(): void {
-    this.dataFormService.deleteById(this.dataFormDelete.idDataForm).subscribe(data => {
+    this.dataFormService.deleteById(this.dataFormDelete.idDataForm).subscribe(() => {
         this.alertService.showMessage('xóa thành công!');
         this.deleteEvent.emit();
-      }
-      , error => {
+      }, (error: any) => {
         this.alertService.showMessageErrors('xóa không thành công!');
       }
       , () => {
@@ -40,4 +45,3 @@ export class FormDeleteComponent implements OnInit {
   }
 
 }
-

@@ -1,0 +1,261 @@
+<div class="p-1 px-2">
+  <div style="margin-left: 15px; margin-top: 15px" class="d-flex justify-content-between">
+    <div class="row" style="margin: 0 20px">
+      <div class="row g-0" style="margin-bottom: 10px">
+        <h2 class="text-center fw-bold mt-3">DANH SÁCH NHU CẦU </h2>
+      </div>
+      <div class="row g-0" style="border: red 1px solid; min-height: 100px; border-radius: 10px">
+        <form autocomplete="off" [formGroup]="postApprovalSearch">
+          <div class="col-md-12 g-0">
+            <div class="row" style="margin: 10px 5px">
+              <div class="col-md-12 col-lg-6 col-xl-5 col-xxl-4" style="height: 40px">
+                <span>Giá: </span>
+                <span> <input type="number" style="width: 5rem" id="minPriceSearch" name="minPriceSearch"
+                              formControlName="minPriceSearch"> </span> (Triệu VNĐ) -
+                <span><input type="number" style="width: 5rem" id="maxPriceSearch" name="maxPriceSearch"
+                             formControlName="maxPriceSearch"> </span> (Triệu VNĐ) <br>
+                <span style="color: red" *ngIf="postApprovalSearch.controls.minPriceSearch.hasError('min')&& postApprovalSearch.controls.minPriceSearch.dirty"> Giá phải lớn hơn không.</span>
+              </div>
+              <div class="col-md-12 col-lg-6 col-xl-4 col-xxl-5" style="margin-top: 3px" style="height: 40px">
+                <span>Diện Tích: </span>
+                <span> <input type="number" style="width: 5rem" id="minAreaSearch" name="minAreaSearch"
+                              formControlName="minAreaSearch"> </span> (m<sup style="font-size: 12px">2</sup>) -
+                <span><input type="number" style="width: 5rem" id="maxAreaSearch" name="maxAreaSearch"
+                             formControlName="maxAreaSearch"> </span> (m<sup style="font-size: 12px">2</sup>) <br>
+                <span style="color: red" *ngIf="postApprovalSearch.controls.minAreaSearch.hasError('min')&& postApprovalSearch.controls.minAreaSearch.dirty"> Diện tích phải lớn hơn không.</span>
+              </div>
+              <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-3">
+                <span>Loại BĐS: </span>
+                <input id="land" class="me-2" type="radio" formControlName="landTypeSearch" value="Đất" name="landTypeSearch"/>
+                <label for="land" class="me-2"> Đất </label>
+                <input id="house" class="me-2" type="radio" formControlName="landTypeSearch" value="Nhà" name="landTypeSearch"/>
+                <label for="house" class="me-2">Nhà </label>
+                <input id="totalLandType" class="me-2" type="radio" formControlName="landTypeSearch" value="" name="landTypeSearch"/>
+                <label for="totalLandType" class="me-2">Tất cả </label>
+              </div>
+            </div>
+            <div class="row" style="margin: 10px 5px">
+              <div class="col-md-12 col-lg-5 col-xl-4 col-xxl-4 mt-2">
+                <label>Loại NC: </label>
+                <input id="by" class="me-2 ms-2" formControlName="demandTypeSearch" value="Mua" type="radio" name="demandTypeSearch"/>
+                <label for="by" class="me-2"> Mua </label>
+                <input id="sale"class="me-2" formControlName="demandTypeSearch" value="Bán" type="radio" name="demandTypeSearch"/>
+                <label for="sale" class="me-2"> Bán </label>
+                <input id="rent" class="me-2" formControlName="demandTypeSearch" value="Thuê" type="radio" name="demandTypeSearch"/>
+                <label for="rent" class="me-2"> Thuê </label>
+                <input id="totalDemandType" class="me-2" formControlName="demandTypeSearch" value="" type="radio" name="demandTypeSearch"/>
+                <label for="totalDemandType" class="me-2"> Tất cả </label>
+
+              </div>
+
+              <div class="col-md-12 col-lg-12 col-xl-6 col-xxl-5 mt-2">
+                <span>Vị Trí: </span>
+                <select class="form-select-sm ms-2 me-2"  id="citySearch" (ngModelChange)="getDistrict()" name="citySearch"
+                        formControlName="citySearch">
+                  <option value="">
+                    -- Chọn thành phố --
+                  </option>
+                  <option [ngValue]="positionSearch.idCity" *ngFor="let positionSearch of cityList">
+                    {{positionSearch.nameCity}}
+                  </option>
+                </select>
+                <select class="form-select-sm me-2"  id="districtSearch" (ngModelChange)="getWards()" name="districtSearch"
+                        formControlName="districtSearch">
+                  <option value="">
+                    -- Chọn quận --
+                  </option>
+                  <option [ngValue]="districtSearch.idDistrict" *ngFor="let districtSearch of districtList">
+                    {{districtSearch.nameDistrict}}
+                  </option>
+                </select>
+                <select class="form-select-sm"  id="wardsSearch" name="wardsSearch" formControlName="wardsSearch">
+                  <option value="">
+                    -- Chọn phường --
+                  </option>
+                  <option [ngValue]="wardsSearch.idWards" *ngFor="let wardsSearch of wardsList">
+                    {{wardsSearch.nameWards}}
+                  </option>
+                </select>
+
+              </div>
+              <div class="col-md-12 col-lg-8 col-xl-6 col-xxl-3 mt-2" >
+                <button type="submit" class="btn btn-outline-danger me-2 " style="width: 135px" (click)="onSubmit()" [disabled]="postApprovalSearch.invalid">
+                  <i class="fa-solid fa-magnifying-glass"></i>
+                  Tìm kiếm
+                </button>
+                <button class="btn btn-outline-secondary " style="width: 135px" (click)="resetSearchValue()">
+                  <i class="fa-solid fa-arrows-rotate"></i>
+                  Làm mới
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="row g-0" style=" min-height: 43vh; margin-top: 20px">
+        <table class="table table-striped">
+          <thead class="table-dark">
+          <tr >
+            <th style="padding-left: 3px; width: 4%">STT</th>
+            <th style="width: 7%">Mã NC</th>
+            <th style="width: 7%">Mã KH</th>
+            <th style="width: 7%">Loại NC</th>
+            <th style="width: 7%">Loại BĐS</th>
+            <th style="width: 21%">Vị Trí</th>
+            <th style="width: 11%; padding-left: 1%">Giá (VNĐ) </th>
+            <th style="width: 9%">Diện tích (m<sup style="font-size: 12px">2</sup>)</th>
+            <th style="width: 15%">Ghi chú</th>
+            <th >Trạng thái</th>
+            <th >Chức năng</th>
+          </tr>
+          </thead>
+          <tr *ngIf="(postApprovalList) == null; else elseBlock">
+            <td colspan="10" class="text-danger" style="text-align: center; vertical-align: top"><h5>Không có dữ liệu cần tìm.</h5> </td>
+          </tr>
+          <ng-template #elseBlock>
+            <tbody>
+            <tr *ngFor="let postApproval of postApprovalList.content; index as i">
+              <td style="padding-left: 3px">{{i + 1 + postApprovalList.number * 5}}</td>
+              <td *ngIf="postApproval.idPost != undefined && postApproval.idPost < 10; else elseCase">NC-00{{postApproval.idPost}}</td>
+              <ng-template #elseCase>
+                <td *ngIf="postApproval.idPost != undefined && postApproval.idPost < 100; else elseCase2">NC-0{{postApproval.idPost}}</td>
+                <ng-template #elseCase2>
+                  <td *ngIf="postApproval.idPost != undefined && postApproval.idPost < 1000">NC-{{postApproval.idPost}}</td>
+                </ng-template>
+              </ng-template>
+              <td>{{postApproval.codeCustomer}}</td>
+              <td>{{postApproval.demandType}}</td>
+              <td>{{postApproval.landType}}</td>
+              <td *ngIf="postApproval.wards != undefined && postApproval.district != undefined && postApproval.city != undefined">
+                <div id="collapsedContent{{postApproval.idPost}}" style="display: inline-block">
+                  {{postApproval.city}}, {{postApproval.district}}, {{postApproval.wards | truncate}}
+                  <a style="color: blue; text-decoration: none" class="text-primary" role="button" id="expandButton{{postApproval.idPost}}" *ngIf="(postApproval.city.length + postApproval.district.length + postApproval.wards.length) > 20"
+                     (click)="expandOrCollapsePosition(postApproval.idPost, 'expand')">
+                    xem thêm
+                  </a>
+                </div>
+                <div id="expandedContent{{postApproval.idPost}}" style="display: none">
+                  {{postApproval.city}}, {{postApproval.district}}, {{postApproval.wards}}<br>
+                  <a style=" color: blue" role="button" id="collapseButton{{postApproval.idPost}}"
+                     (click)="expandOrCollapsePosition(postApproval.idPost, 'collapse')">
+                    thu gọn
+                  </a>
+                </div>
+              </td>
+              <td style="padding-left: 1%" *ngIf="postApproval.price != undefined && postApproval.price < 1000000000 && postApproval.demandType !== 'Thuê'; else elsePrice">{{(postApproval.price/1000000| number :'1.1-1' )}} Triệu</td>
+              <ng-template #elsePrice>
+                <td style="padding-left: 1%" *ngIf="postApproval.demandType !== 'Thuê'; else elsePrice2">{{postApproval.price/1000000000| number :'1.1-1' }} Tỷ </td>
+                <ng-template #elsePrice2>
+                  <td style="padding-left: 1%" *ngIf="postApproval.price < 1000000000 && postApproval.demandType === 'Thuê'; else elsePrice3">{{postApproval.price/1000000| number :'1.1-1' }} Triệu/Tháng </td>
+                  <ng-template #elsePrice3>
+                    <td style="padding-left: 1%" *ngIf=" postApproval.demandType === 'Thuê'">{{postApproval.price/1000000000| number :'1.1-1' }} Tỷ/Tháng </td>
+                  </ng-template>
+                </ng-template>
+              </ng-template>
+              <td>{{postApproval.area}}</td>
+              <td>
+                <div id="collapsedContentNote{{postApproval.idPost}}" style="display: inline-block">
+                  {{postApproval.note | truncateNote}}
+                  <a style="color: blue; text-decoration: none" class="text-primary " id="expandButtonn{{postApproval.idPost}}" role="button" *ngIf="(postApproval.note.length) > 10"
+                     (click)="expandOrCollapseNote(postApproval.idPost, 'expand')">
+                    xem thêm
+                  </a>
+                </div>
+                <div id="expandedContentNote{{postApproval.idPost}}" style="display: none">
+                  {{postApproval.note}}<br>
+                  <a style=" color: blue" role="button" id="collapseButtonn{{postApproval.idPost}}"
+                     (click)="expandOrCollapseNote(postApproval.idPost, 'collapse')">
+                    thu gọn
+                  </a>
+                </div>
+              </td>
+              <td>
+        <span *ngIf="postApproval.approval == true; else elseApproval" class="text-success"><i
+          class="bi bi-check-lg"></i> Đã duyệt</span>
+                <ng-template #elseApproval>
+                  <button type="button" class="btn btn-outline-primary" style="padding: 3px 6px; width: 80%" data-bs-toggle="modal"
+                          data-bs-target="#approvalModal" (click)="temp = postApproval">
+                    Duyệt
+                  </button>
+                </ng-template>
+              </td>
+              <td>
+                <button class="btn" data-bs-toggle="modal" data-bs-target="#deleteModal" (click)="temp = postApproval">
+                  <i class="bi bi-trash3"></i></button>
+              </td>
+            </tr>
+            <tr style="height: 47px" *ngFor="let size of [].constructor(5 - postApprovalList.numberOfElements)">
+              <td *ngFor="let height of [].constructor(11)"></td>
+            </tr>
+            </tbody>
+          </ng-template>
+
+        </table>
+
+
+        <!--  Phân trang -->
+        <div *ngIf="postApprovalList" class="d-flex justify-content-center" id="last-row">
+          <div>
+          </div>
+          <div>
+            <nav aria-label="Page navigation example">
+              <ul class="pagination">
+                <li class="page-item" [ngClass]="postApprovalList.first ? 'disabled': ''">
+                  <a role="button" class="page-link" (click)="gotoPage(0)">Trang đầu</a>
+                </li>
+                <li class="page-item" [ngClass]="postApprovalList.first ? 'disabled': ''">
+                  <a role="button" class="page-link" (click)="gotoPage(postApprovalList.number - 1)"><</a>
+                </li>
+                <li class="page-item" *ngIf="postApprovalList.number - 3 > 0">
+                  <a role="button" class="page-link"
+                     (click)="gotoPage(postApprovalList.number - 4)">{{postApprovalList.number - 3}}</a>
+                </li>
+                <li class="page-item" *ngIf="postApprovalList.number - 2 > 0">
+                  <a role="button" class="page-link"
+                     (click)="gotoPage(postApprovalList.number - 3)">{{postApprovalList.number - 2}}</a>
+                </li>
+                <li class="page-item" *ngIf="postApprovalList.number - 1 > 0">
+                  <a role="button" class="page-link"
+                     (click)="gotoPage(postApprovalList.number - 2)">{{postApprovalList.number - 1}}</a>
+                </li>
+                <li class="page-item" *ngIf="postApprovalList.number > 0">
+                  <a role="button" class="page-link"
+                     (click)="gotoPage(postApprovalList.number - 1)">{{postApprovalList.number}}</a>
+                </li>
+
+                <li class="page-item active"><a class="page-link">{{postApprovalList.number + 1}}</a></li>
+
+                <li class="page-item" *ngIf="postApprovalList.number + 2 <= postApprovalList.totalPages">
+                  <a role="button" class="page-link"
+                     (click)="gotoPage(postApprovalList.number + 1)">{{postApprovalList.number + 2}}</a>
+                </li>
+                <li class="page-item" *ngIf="postApprovalList.number + 3 <= postApprovalList.totalPages">
+                  <a role="button" class="page-link"
+                     (click)="gotoPage(postApprovalList.number + 2)">{{postApprovalList.number + 3}}</a>
+                </li>
+                <li class="page-item" *ngIf="postApprovalList.number + 4 <= postApprovalList.totalPages">
+                  <a role="button" class="page-link"
+                     (click)="gotoPage(postApprovalList.number + 3)">{{postApprovalList.number + 4}}</a>
+                </li>
+                <li class="page-item" *ngIf="postApprovalList.number + 5 <= postApprovalList.totalPages">
+                  <a role="button" class="page-link"
+                     (click)="gotoPage(postApprovalList.number + 4)">{{postApprovalList.number + 5}}</a>
+                </li>
+                <li class="page-item" [ngClass]="postApprovalList.last ? 'disabled': ''">
+                  <a role="button" class="page-link" (click)="gotoPage(postApprovalList.number + 1)">></a>
+                </li>
+                <li class="page-item" [ngClass]="postApprovalList.last ? 'disabled': ''">
+                  <a role="button" class="page-link" (click)="gotoPage(postApprovalList.totalPages - 1)">Trang cuối</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<app-post-delete [postApproval]="temp" (emiter)="onSubmitAfterAction()"></app-post-delete>
+<app-post-approval [postApproval]="temp" (emiter)="onSubmitAfterAction()"></app-post-approval>

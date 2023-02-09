@@ -1,12 +1,13 @@
+<ng-template #noData ><h1 class="text-center fw-bold  mt-3">Không có dữ liệu này!</h1></ng-template>
+<form [formGroup]="formDataFormUpdate" (ngSubmit)="updateDataForm()" *ngIf="checkError else noData">
 
-        <form [formGroup]="formDataFormUpdate" (ngSubmit)="updateDataForm()">
 
   <div class="row m-0">
     <div class=" d-flex justify-content-center align-items-center mt-2 mb-2 " >
       <div class="boxed shadow h-100" style="align-content: center" >
         <div class="mb-2 row">
           <div class="d-flex align-items-center mb-2">
-            <a class="btn text-center" href="#"><i class="fa-solid fa-arrow-left"></i> Quay lại</a>
+            <a class="btn text-center" routerLink="/form"><i class="fa-solid fa-arrow-left"></i> Quay lại</a>
           </div>
           <div class="mb-2 row">
             <fieldset>
@@ -59,28 +60,36 @@
         </div>
 
         <div class="mb-2">
-            <span style="font-size: 15px" class="fst-italic">
-              Trường có dấu <span style="color: red"> (*)</span> là bắt
-              buộc,không được bỏ trống
-            </span>
+          <span style="font-size: 15px" class="fst-italic">
+            Trường có dấu <span style="color: red"> (*)</span> là bắt
+            buộc,không được bỏ trống
+          </span>
         </div>
 
-        <div class="d-flex mt-3 mb-2 w-100">
-          <button [disabled]="formDataFormUpdate.invalid" type="submit" style="margin-right: 5px ;height: 20%;width: 20%"
-                  class="btn btn-primary d-flex justify-content-center" >
-            <p>Chỉnh sửa</p>
-          </button>
-          <button type="button" style="margin-right: 5px;height: 20%;width: 20%"
-                  class="btn btn-outline btn-outline-primary ms-auto d-flex justify-content-center" (click)="return()">
+<!--        <div class="d-flex mt-3 mb-2 w-100">-->
+<!--          <button [disabled]="formDataFormUpdate.invalid" type="submit" style="margin-right: 5px ;height: 20%;width: 20%"-->
+<!--                  class="btn btn-primary d-flex justify-content-center" >-->
+<!--            <p>Chỉnh sửa</p>-->
+<!--          </button>-->
+<!--          <button type="button" style="margin-right: 5px;height: 20%;width: 20%"-->
+<!--                  class="btn btn-outline btn-outline-primary ms-auto d-flex justify-content-center" (click)="return()">-->
+<!--            <p>Nhập lại</p>-->
+<!--          </button>-->
+<!--          <button type="button" style="margin-right: 5px;height: 20%;width: 20%" class="btn btn-outline btn-outline-danger ms-auto d-flex justify-content-center" routerLink="/form">-->
+<!--            Hủy-->
+<!--          </button>-->
+<!--        </div>-->
+        <div class="d-flex justify-content-center" style="margin-bottom: 15px ; margin-top: 30px">
+          <button type="submit"  [disabled]="formDataFormUpdate.invalid" class="btn btn-primary">Lưu thông tin</button>
+<!--          <input style="margin-left: 15px" type="reset" class="btn btn-light" value="Nhập lại" >-->
+          <button type="button" style="margin-left: 15px"
+                  class="btn btn-light" (click)="return()">
             <p>Nhập lại</p>
           </button>
-          <button type="button" style="margin-right: 5px;height: 20%;width: 20%" class="btn btn-outline btn-outline-danger ms-auto d-flex justify-content-center" routerLink="/form">
-            Hủy
-          </button>
         </div>
+
       </div>
     </div>
   </div>
 
-        </form>
-
+</form>

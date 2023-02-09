@@ -7,8 +7,8 @@
           <legend>
             <div>
               <div style="margin-left: 15px; margin-top: 15px">
-                <a href="#" type="button"><i class="fa-solid fa-arrow-left"></i></a>
-                <span style="font-size: 35px; margin-left: 180px">Thêm Nhân viên</span>
+                <a routerLink="/employee" type="button"><i class="fa-solid fa-arrow-left"></i></a>
+                <span style="font-size: 35px; margin-left: 180px">Thêm Nhân Viên</span>
               </div>
             </div>
           </legend>
@@ -25,7 +25,7 @@
                 <input formControlName="codeEmployee" id="code" type="text" class="form-control"
                        placeholder="NV-XXXX (X: số nguyên dương)"/>
                 <div class="text-danger"
-                     *ngIf="formCreateEmployee.controls.codeEmployee.invalid && formCreateEmployee.controls.codeEmployee.invalid else elseBlock">
+                     *ngIf="formCreateEmployee.controls.codeEmployee.touched && formCreateEmployee.controls.codeEmployee.touched else elseBlock">
                   <span *ngIf="formCreateEmployee.controls.codeEmployee.hasError('required')">Mã nhân viên không được trống</span>
                   <span *ngIf="formCreateEmployee.controls.codeEmployee.hasError('pattern')">Mã nhân viên chưa đúng định dạng</span>
                 </div>
@@ -42,37 +42,44 @@
                 <input formControlName="nameEmployee" id="name" type="text" class="form-control"
                        placeholder="Nhập tên nhân viên.."/>
                 <div class="text-danger"
-                     *ngIf="formCreateEmployee.controls.nameEmployee.invalid && formCreateEmployee.controls.nameEmployee.invalid else elseBlock">
+                     *ngIf="formCreateEmployee.controls.nameEmployee.touched && formCreateEmployee.controls.nameEmployee.touched else elseBlock">
                   <span
-                    *ngIf="formCreateEmployee.controls.nameEmployee.hasError('required')">Tên không được trống</span>
+                    *ngIf="formCreateEmployee.controls.nameEmployee.hasError('required')">Tên không được trống.</span>
                   <span
-                    *ngIf="formCreateEmployee.controls.nameEmployee.hasError('pattern')">Tên chưa đúng định dạng</span>
+                    *ngIf="formCreateEmployee.controls.nameEmployee.hasError('pattern')">Tên phải ghi hoa chữ cái đầu tiên.</span>
                 </div>
                 <ng-template #elseBlock><br></ng-template>
+
               </div>
             </div>
           </div>
-          <div class="mb-2">
-            <div class="d-flex align-items-center mb-2">
-              <div class="col-4">
-                <label for="username" class="form-label ms-2">Tài khoản đăng nhập<span
-                  style="color: red">(*)</span>:</label>
-              </div>
-              <div class="col-8">
-                <input formControlName="usernameAccount" required="required" id="username" type="text"
-                       class="form-control"
-                       placeholder="Nhập tên tài khoản nhân viên.."/>
+          <div formGroupName="account">
+            <div class="mb-2">
+              <div class="d-flex align-items-center mb-2">
+                <div class="col-4">
+                  <label for="username" class="form-label ms-2">Tài khoản đăng nhập<span
+                    style="color: red">(*)</span>:</label>
+                </div>
+                <div class="col-8">
+                  <input formControlName="usernameAccount" required="required" id="username" type="text"
+                         class="form-control"
+                         placeholder="Nhập tên tài khoản nhân viên.."/>
+                  <span *ngIf="formCreateEmployee.errors?.checkAccount"
+                        style="color: red">
+                Tên tài khoản của bạn đã tồn tại.
+                    </span>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="mb-2">
-            <div class="d-flex align-items-center mb-2">
-              <div class="col-4">
-                <label for="password" class="form-label ms-2">Mật khẩu<span style="color: red">(*)</span>:</label>
-              </div>
-              <div class="col-8">
-                <input formControlName="encryptPassword" id="password" type="password" class="form-control"
-                       placeholder="Nhập mật khẩu.."/>
+            <div class="mb-2">
+              <div class="d-flex align-items-center mb-2">
+                <div class="col-4">
+                  <label for="password" class="form-label ms-2">Mật khẩu<span style="color: red">(*)</span>:</label>
+                </div>
+                <div class="col-8">
+                  <input formControlName="encryptPassword" id="password" type="password" class="form-control"
+                         placeholder="Nhập mật khẩu.." />
+                </div>
               </div>
             </div>
           </div>
@@ -84,9 +91,13 @@
               </div>
               <div class="col-8">
                 <input formControlName="dateOfBirth" id="initialPrice" type="date" class="form-control"/>
-                <div class="text-danger" *ngIf="formCreateEmployee.controls.dateOfBirth.invalid else elseBlock">
+                <div class="text-danger" *ngIf="formCreateEmployee.controls.dateOfBirth.touched else elseBlock">
                   <span
-                    *ngIf="formCreateEmployee.controls.dateOfBirth.hasError('required')">Ngày sinh không được trống</span>
+                    *ngIf="formCreateEmployee.controls.dateOfBirth.hasError('required')">Ngày sinh không được trống.</span>
+                </div>
+                <div *ngIf="formCreateEmployee.errors?.checkBirthDay"
+                     style="color: red">
+                  Tuổi phải nằm trong khoảng 18 đến 100.
                 </div>
                 <ng-template #elseBlock><br></ng-template>
               </div>
@@ -98,19 +109,21 @@
                 <label class="form-label ms-2">Giới tính<span style="color: red">(*)</span>:</label>
               </div>
               <div class="d-flex align-items-center mb-2 col-8">
-                  <div class="col-4">
-                    <input type="radio" id="male" name="gender" [value]="true" formControlName="genderEmployee">
-                    <label for="male">Nam</label><br>
-                  </div>
-                  <div class="col-4">
-                    <input type="radio" id="female" name="gender" [value]="false" formControlName="genderEmployee">
-                    <label for="female">Nữ</label><br>
-                  </div>
+
+                <div class="col-4">
+                  <input type="radio" id="male" [value]="true" formControlName="genderEmployee">
+                  <label for="male">Nam</label><br>
+                </div>
+                <div class="col-4">
+                  <input type="radio" id="female" [value]="false" formControlName="genderEmployee">
+                  <label for="female">Nữ</label><br>
+                </div>
+
               </div>
             </div>
-            <div class="text-danger" style="margin-left: 220px" *ngIf="formCreateEmployee.controls.genderEmployee.invalid else elseBlock">
+            <div class="text-danger" style="margin-left: 220px" *ngIf="formCreateEmployee.controls.genderEmployee.touched else elseBlock">
               <p
-                *ngIf="formCreateEmployee.controls.genderEmployee.hasError('required')">Giới tính không được trống</p>
+                *ngIf="formCreateEmployee.controls.genderEmployee.hasError('required')">Giới tính không được trống.</p>
             </div>
             <ng-template #elseBlock><br></ng-template>
           </div>
@@ -122,8 +135,8 @@
               <div class="col-8">
                 <input formControlName="addressEmployee" id="address" type="text" class="form-control"
                        placeholder="Nhập địa chỉ nhân viên.."/>
-                <div class="text-danger" *ngIf="formCreateEmployee.controls.addressEmployee.invalid else elseBlock">
-                  <span *ngIf="formCreateEmployee.controls.addressEmployee.hasError('required')">Địa chỉ không được trống</span>
+                <div class="text-danger" *ngIf="formCreateEmployee.controls.addressEmployee.touched else elseBlock">
+                  <span *ngIf="formCreateEmployee.controls.addressEmployee.hasError('required')">Địa chỉ không được trống.</span>
                 </div>
                 <ng-template #elseBlock><br></ng-template>
               </div>
@@ -138,11 +151,11 @@
                 <input formControlName="phoneEmployee" id="phone" type="text" class="form-control"
                        placeholder="Nhập số điện thoại nhân viên.."/>
                 <div class="text-danger"
-                     *ngIf="formCreateEmployee.controls.phoneEmployee.invalid && formCreateEmployee.controls.phoneEmployee.invalid else elseBlock">
+                     *ngIf="formCreateEmployee.controls.phoneEmployee.touched && formCreateEmployee.controls.phoneEmployee.touched else elseBlock">
                   <span
-                    *ngIf="formCreateEmployee.controls.phoneEmployee.hasError('required')">SDT không được trống</span>
+                    *ngIf="formCreateEmployee.controls.phoneEmployee.hasError('required')">SDT không được trống.</span>
                   <span
-                    *ngIf="formCreateEmployee.controls.phoneEmployee.hasError('pattern')">SDT chưa đúng định dạng</span>
+                    *ngIf="formCreateEmployee.controls.phoneEmployee.hasError('pattern')">SDT chưa đúng định dạng.</span>
                 </div>
                 <ng-template #elseBlock><br></ng-template>
               </div>
@@ -157,13 +170,17 @@
                 <input formControlName="emailEmployee" id="email" type="text" class="form-control"
                        placeholder="Nhập email nhân viên.."/>
                 <div class="text-danger"
-                     *ngIf="formCreateEmployee.controls.emailEmployee.invalid && formCreateEmployee.controls.emailEmployee.invalid else elseBlock">
+                     *ngIf="formCreateEmployee.controls.emailEmployee.touched && formCreateEmployee.controls.emailEmployee.touched else elseBlock">
                   <span
-                    *ngIf="formCreateEmployee.controls.emailEmployee.hasError('required')">Email không được trống</span>
+                    *ngIf="formCreateEmployee.controls.emailEmployee.hasError('required')">Email không được trống.</span>
                   <span
-                    *ngIf="formCreateEmployee.controls.emailEmployee.hasError('email')">Email chưa đúng định dạng</span>
+                    *ngIf="formCreateEmployee.controls.emailEmployee.hasError('email')">Email phải đúng định dạng (abc@gmail.com).</span>
                 </div>
                 <ng-template #elseBlock><br></ng-template>
+                <span *ngIf="formCreateEmployee.errors?.checkEmail && formCreateEmployee.controls['emailEmployee'].touched"
+                      style="color: red">
+                Email đã tồn tại.
+                    </span>
               </div>
             </div>
           </div>
@@ -174,6 +191,7 @@
               </div>
               <div class="col-8">
                 <select class="form-select" formControlName="division">
+                  <option [value]="" selected>--Chọn chức vụ--</option>
                   <option *ngFor="let i of divisions" [ngValue]="i">{{i.nameDivision}}</option>
                 </select>
               </div>
@@ -183,7 +201,6 @@
         <div class="d-flex justify-content-center" style="margin-bottom: 15px">
           <button type="submit" class="btn btn-primary" [disabled]="!formCreateEmployee.valid">Lưu thông tin</button>
           <input style="margin-left: 15px" type="reset" class="btn btn-light" value="Nhập lại">
-          <button style="margin-left: 15px" type="button" class="btn btn-danger" routerLink="/employee">Hủy</button>
         </div>
       </div>
     </div>
