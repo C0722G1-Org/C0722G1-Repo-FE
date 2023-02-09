@@ -56,11 +56,11 @@ export class CustomerListComponent implements OnInit {
   }
 
   private showToastrError(): void {
-    this.showError('Không có kết quả cần tìm', 'Thông báo!');
+    this.showError('Không có kết quả cần tìm.', 'Thông báo!');
   }
 
   private showToastrSuccess(): void {
-    this.showSuccess('Tìm kiếm thành công', 'Thông báo!',{
+    this.showSuccess('Tìm kiếm thành công.', 'Thông báo!',{
       timeOut: 1000,
       progressBar: true,
       positionClass: 'toast-top-right',

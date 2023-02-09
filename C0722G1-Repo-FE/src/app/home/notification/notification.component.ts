@@ -173,7 +173,6 @@ export class NotificationComponent implements OnInit {
     this.notificationService.findByListId(this.deleteIds).subscribe(data => {
       this.deleteNotifications = data;
     }, error => {
-      console.log('Đã xảy ra lỗi, không tìm thấy sản phẩm.');
     });
   }
 
@@ -184,14 +183,14 @@ export class NotificationComponent implements OnInit {
    */
   delete(): void {
     this.notificationService.delete(this.deleteIds).subscribe(next => {
-      this.toastrService.success('Xóa thành công', 'Thông báo', {
+      this.toastrService.success('Xóa thành công.', 'Thông báo', {
         timeOut: 2000,
         progressBar: true,
         positionClass: 'toast-top-right',
         easing: 'ease-in'
       });
     }, error => {
-      this.toastrService.error('Đã xảy ra lỗi khi xóa', 'Lỗi', {
+      this.toastrService.error('Đã xảy ra lỗi khi xóa.', 'Lỗi', {
         timeOut: 2000,
         progressBar: true,
         positionClass: 'toast-top-right',

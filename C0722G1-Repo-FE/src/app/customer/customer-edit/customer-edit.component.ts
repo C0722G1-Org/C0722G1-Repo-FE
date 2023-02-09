@@ -37,7 +37,7 @@ export class CustomerEditComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               private toastrService: ToastrService) {
     // @ts-ignore
-    this.titleService.setTitle('Sửa Thông Tin Khách Hàng');
+    this.titleService.setTitle('Sửa thông tin khách hàng');
     this.editForm = new FormGroup({
       idCustomer: new FormControl(this.customer.idCustomer),
       // tslint:disable-next-line:max-line-length

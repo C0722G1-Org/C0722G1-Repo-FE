@@ -5,6 +5,8 @@ import {PostListCustomerService} from '../../service/post-list-customer/post-lis
 import {Component, OnInit} from '@angular/core';
 // @ts-ignore
 import {ActivatedRoute, Router} from '@angular/router';
+import {Title} from "@angular/platform-browser";
+import {CustomerService} from "../../service/customer.service";
 
 @Component({
   selector: 'app-post-list-customer',
@@ -24,7 +26,11 @@ export class PostListCustomerComponent implements OnInit {
   post: Post | undefined;
   nameCustomer: string = "";
 
-  constructor(private postListCustomerService: PostListCustomerService, private activatedRoute: ActivatedRoute, private router: Router) {
+  constructor(private postListCustomerService: PostListCustomerService, private activatedRoute: ActivatedRoute,
+              private router: Router, private customerService:CustomerService,
+              private title: Title
+              ) {
+    this.title.setTitle('Danh sách nhu cầu khách hàng')
   }
 
   /**
@@ -74,13 +80,18 @@ export class PostListCustomerComponent implements OnInit {
   goToPageWithRoleAdmin(idCustomer: string, nameDemandType: string, pageNumber: number): void {
     this.pageNumber = pageNumber;
     this.postListCustomerService.getAllAndSearchWithRoleAdmin(idCustomer, nameDemandType, pageNumber).subscribe(data => {
+      // @ts-ignore
+      this.customerService.findById(idCustomer).subscribe(value => {
+        this.nameCustomer = value.nameCustomer.toUpperCase();
+      })
+      if(!data){
+        this.postListCustomer = undefined;
+      }
       this.pageTotal = data.totalPages;
       // @ts-ignore
       this.pageNumber = data.pageable?.pageNumber;
       this.postListCustomer = data.content;
       this.resultPage = data;
-      // @ts-ignore
-      this.nameCustomer = this.postListCustomer[0].customer.nameCustomer.toUpperCase();
     });
   }
 
@@ -92,12 +103,10 @@ export class PostListCustomerComponent implements OnInit {
    * @param pageNumber
    * @return call function getAllAndSearch(nameDemandType, idAccount, pageNumber) from service to display list post of customer have paging
    */
+
   goToPageWithRoleCustomer(idAccount: string, nameDemandType: string, pageNumber: number): void {
     this.pageNumber = pageNumber;
     this.postListCustomerService.getAllAndSearchWithRoleCustomer(idAccount, nameDemandType, pageNumber).subscribe(data => {
-      if (!data) {
-        this.router.navigateByUrl('/**');
-      }
       this.pageTotal = data.totalPages;
       // @ts-ignore
       this.pageNumber = data.pageable?.pageNumber;

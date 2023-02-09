@@ -87,12 +87,12 @@
                   {{post.price * 0.03 |number: '1.0-0'}}</td>
                 <td
                   *ngIf="post.price!= undefined && 1000000000 <=post.price && post.price<3000000000 ">
-                  {{post.price * 0.03 |number: '1.0-0'}}</td>
+                  {{post.price * 0.04 |number: '1.0-0'}}</td>
                 <td
                   *ngIf="post.price!= undefined && 3000000000 <=post.price && post.price<5000000000 ">
-                  {{post.price * 0.04 |number: '1.0-0'}}</td>
-                <td *ngIf="post.price != undefined && 5000000000<=post.price">
                   {{post.price * 0.05 |number: '1.0-0'}}</td>
+                <td *ngIf="post.price != undefined && 5000000000<=post.price">
+                  {{post.price * 0.06 |number: '1.0-0'}}</td>
               </ng-template>
             <tr>
             <tr>

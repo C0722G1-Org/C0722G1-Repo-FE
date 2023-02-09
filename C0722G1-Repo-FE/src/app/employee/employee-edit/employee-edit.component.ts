@@ -111,9 +111,9 @@ export class EmployeeEditComponent implements OnInit {
   updateEmployee(): void {
     this.employeeService.updateEmployee(this.formUpdateEmployee.value).subscribe(data => {
       if (data != null) {
-        this.toastrService.error('Chỉnh sủa không thành công.', 'Cảnh báo');
+        this.toastrService.warning('Chỉnh sủa không thành công.', 'Cảnh báo');
       } else {
-        this.toastrService.success('Chỉnh sửa thành công!', 'Thông báo');
+        this.toastrService.success('Chỉnh sửa thành công.', 'Thông báo');
         this.router.navigateByUrl('/employee');
       }
     }, error => {

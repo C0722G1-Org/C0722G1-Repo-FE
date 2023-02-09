@@ -27,7 +27,7 @@ export class CustomerApprovalComponent implements OnInit {
   approvalCustomer() {
     this.customerApprovalService.approvalCustomerById(this.customerApproval.id_customer).subscribe(data => {
         this.emiter.emit('');
-        this.toastrService.success('Duyệt thành công', 'Thông báo', {
+        this.toastrService.success('Duyệt thành công.', 'Thông báo', {
           timeOut: 2000,
           progressBar: true,
           positionClass: 'toast-top-right',
@@ -35,7 +35,7 @@ export class CustomerApprovalComponent implements OnInit {
         });
       }
       , error => {
-        this.toastrService.error('Đã xảy ra lỗi khi duyệt', 'Lỗi', {
+        this.toastrService.error('Đã xảy ra lỗi khi duyệt.', 'Lỗi', {
           timeOut: 2000,
           progressBar: true,
           positionClass: 'toast-top-right',

@@ -15,6 +15,7 @@ import {BaseResponseCreatePost} from '../../dto/post/post-create/base-response-c
 import {ResponseStatusEnum} from '../../dto/post/post-create/response-status-enum.enum';
 import {TokenService} from '../../service/token.service';
 import {CreatePostDtoCustomer} from '../../dto/post/post-create/create-post-dto-customer';
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-post-create',
@@ -95,7 +96,10 @@ export class PostCreateComponent implements OnInit {
     private createPostService: PostCreateServiceService,
     @Inject(AngularFireStorage) private fireStorage: AngularFireStorage,
     private toastrService: ToastrService,
-    private tokenService: TokenService) {
+    private tokenService: TokenService,
+    private title: Title
+    ) {
+    this.title.setTitle('Tạo bài đăng');
   }
 
   ngOnInit(): void {
@@ -174,7 +178,7 @@ export class PostCreateComponent implements OnInit {
     this.submitTimes++;
 
     if (this.createPostDtoUnit.invalid || this.isOverSizeImage || this.isNotImage) {
-      this.toastrService.error('Gửi bài đăng thất bại. Vui lòng kiểm tra lại thông tin đã điền');
+      this.toastrService.error('Gửi bài đăng thất bại. Vui lòng kiểm tra lại thông tin đã điền.');
       this.createPostDtoUnit.markAllAsTouched();
       this.createPostDtoUnit.markAsDirty();
       return;
@@ -192,7 +196,7 @@ export class PostCreateComponent implements OnInit {
           this.resetCreatePostDtoUnit();
           this.submitTimes = 0;
           this.messageFormServer = '';
-          this.toastrService.success('Thêm mới thành công');
+          this.toastrService.success('Thêm mới thành công.');
           this.districtsListOnCity = [];
           return;
         }

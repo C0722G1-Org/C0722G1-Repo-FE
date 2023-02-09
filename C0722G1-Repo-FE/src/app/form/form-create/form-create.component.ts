@@ -22,7 +22,7 @@ export class FormCreateComponent implements OnInit {
   constructor(private dataFormService: DataFormService, private route: Router, @Inject(AngularFireStorage)
               private storage: AngularFireStorage,
               private toastrService: ToastrService, private titleService: Title) {
-    this.titleService.setTitle('Thêm mới hồ sơ');
+    this.titleService.setTitle('Thêm mới biểu mẫu');
   }
 
   /**

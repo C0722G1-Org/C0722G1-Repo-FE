@@ -152,7 +152,7 @@ export class HomeComponent implements OnInit {
         this.postList = this.postList.concat(this.postListTemp);
       }, error => {
         this.postList = [];
-        this.mess = 'Không có dữ liệu';
+        this.mess = 'Không có dữ liệu.';
       },
       () => {
       });
@@ -257,7 +257,7 @@ export class HomeComponent implements OnInit {
         this.postList = this.postList.concat(this.postListTemp);
       }, error => {
         this.postList = [];
-        this.mess = 'Không có dữ liệu';
+        this.mess = 'Không có dữ liệu.';
       },
       () => {
       });
@@ -286,7 +286,7 @@ export class HomeComponent implements OnInit {
         this.postList = this.postList.concat(this.postListTemp);
       }, error => {
         this.postList = [];
-        this.mess = 'Không có dữ liệu';
+        this.mess = 'Không có dữ liệu.';
       },
       () => {
       });
@@ -315,7 +315,7 @@ export class HomeComponent implements OnInit {
         this.postList = this.postList.concat(this.postListTemp);
       }, error => {
         this.postList = [];
-        this.mess = 'Không có dữ liệu';
+        this.mess = 'Không có dữ liệu.';
       },
       () => {
       });

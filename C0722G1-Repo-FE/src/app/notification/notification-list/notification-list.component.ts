@@ -33,7 +33,7 @@ export class NotificationListComponent implements OnInit {
               private formBuilder: FormBuilder,
               private toastrService: ToastrService,
               private titleService: Title) {
-    this.titleService.setTitle('DANH SÁCH THÔNG BÁO');
+    this.titleService.setTitle('Danh sách thông báo');
   }
 
   ngOnInit(): void {
@@ -51,7 +51,7 @@ export class NotificationListComponent implements OnInit {
     this.notificationService.getPageNotifications(notificationToSearch, pageNumber, this.recordPerPage).subscribe(data => {
       if (data == null) {
         this.pageNotifications = data;
-        this.toastrService.warning('Không tìm thấy kết quả phù hợp!', '', {
+        this.toastrService.warning('Không tìm thấy kết quả phù hợp.', '', {
           timeOut: 2000,
           progressBar: true,
           positionClass: 'toast-top-right',
@@ -61,7 +61,7 @@ export class NotificationListComponent implements OnInit {
       }
       if (notificationToSearch.title == '%' || notificationToSearch.title == '/' ||
         notificationToSearch.content == '%' || notificationToSearch.content == '/') {
-        this.toastrService.error('Không được nhập duy nhất ký tự "%" hoặc "/" trong ô tìm kiếm', 'Lỗi tìm kiếm', {
+        this.toastrService.error('Không được nhập duy nhất ký tự "%" hoặc "/" trong ô tìm kiếm.', 'Lỗi tìm kiếm', {
           timeOut: 5000,
           progressBar: true,
           positionClass: 'toast-top-right',
@@ -73,7 +73,7 @@ export class NotificationListComponent implements OnInit {
       if (this.flagNotToastReset == false && flagSearchToast == true && data !== null && notificationToSearch.title !== '%' && notificationToSearch.title !== '/' &&
         notificationToSearch.content !== '%' && notificationToSearch.content !== '/') {
         this.pageNotifications = data;
-        this.toastrService.success('Tìm kiếm thành công', 'Thông báo', {
+        this.toastrService.success('Tìm kiếm thành công.', 'Thông báo', {
           timeOut: 2000,
           progressBar: true,
           positionClass: 'toast-top-right',
@@ -84,7 +84,7 @@ export class NotificationListComponent implements OnInit {
       if (this.flagNotToastReset == true && flagSearchToast == true && data !== null && notificationToSearch.title !== '%' && notificationToSearch.title !== '/' &&
         notificationToSearch.content !== '%' && notificationToSearch.content !== '/') {
         this.pageNotifications = data;
-        this.toastrService.success('Làm mới thành công', 'Thông báo', {
+        this.toastrService.success('Làm mới thành công.', 'Thông báo', {
           timeOut: 2000,
           progressBar: true,
           positionClass: 'toast-top-right',
@@ -93,7 +93,7 @@ export class NotificationListComponent implements OnInit {
       }
       this.pageNotifications = data;
     }, error => {
-      this.toastrService.error('Đã xảy ra lỗi khi tìm kiếm', 'Lỗi', {
+      this.toastrService.error('Đã xảy ra lỗi khi tìm kiếm.', 'Lỗi', {
         timeOut: 2000,
         progressBar: true,
         positionClass: 'toast-top-right',
@@ -194,7 +194,7 @@ export class NotificationListComponent implements OnInit {
     this.notificationService.findByListId(this.deleteIds).subscribe(data => {
       this.deleteNotifications = data;
     }, error => {
-      this.toastrService.error('Đã xảy ra lỗi', 'Lỗi', {
+      this.toastrService.error('Đã xảy ra lỗi.', 'Lỗi', {
         timeOut: 2000,
         progressBar: true,
         positionClass: 'toast-top-right',
@@ -205,14 +205,14 @@ export class NotificationListComponent implements OnInit {
 
   delete(): void {
     this.notificationService.delete(this.deleteIds).subscribe(next => {
-      this.toastrService.info('Xóa thành công', 'Thông báo', {
+      this.toastrService.info('Xóa thành công.', 'Thông báo', {
         timeOut: 2000,
         progressBar: true,
         positionClass: 'toast-top-right',
         easing: 'ease-in'
       });
     }, error => {
-      this.toastrService.error('Đã xảy ra lỗi khi xóa', 'Lỗi', {
+      this.toastrService.error('Đã xảy ra lỗi khi xóa.', 'Lỗi', {
         timeOut: 2000,
         progressBar: true,
         positionClass: 'toast-top-right',

@@ -25,7 +25,7 @@ export class NotificationCreateComponent implements OnInit {
               private router: Router,
               private formBuilder: FormBuilder,
               private titleService: Title) {
-    this.titleService.setTitle('TẠO THÔNG BÁO MỚI');
+    this.titleService.setTitle('Tạo Thông Báo Mới');
   }
 
   ngOnInit(): void {
@@ -46,14 +46,14 @@ export class NotificationCreateComponent implements OnInit {
     // @ts-ignore
     // @ts-ignore
     this.notificationService.create(notification).subscribe(() => {
-      this.toast.success('Thêm mới thành công', 'Thông báo', {
+      this.toast.success('Thêm mới thành công.', 'Thông báo', {
         timeOut: 2000,
         progressBar: true,
         positionClass: 'toast-top-right',
         easing: 'ease-in'
       });
     }, (error: any) => {
-      this.toast.error('Đã xảy ra lỗi khi thêm mới', 'Lỗi', {
+      this.toast.error('Đã xảy ra lỗi khi thêm mới.', 'Lỗi', {
         timeOut: 2000,
         progressBar: true,
         positionClass: 'toast-top-right',

@@ -25,7 +25,7 @@ export class NotificationUpdateComponent implements OnInit {
               private formBuilder: FormBuilder,
               private titleService: Title,
               private toastrService: ToastrService) {
-    this.titleService.setTitle('CHỈNH SỬA THÔNG BÁO');
+    this.titleService.setTitle('Chỉnh Sửa Thông Báo');
   }
 
   ngOnInit(): void {
@@ -90,14 +90,14 @@ export class NotificationUpdateComponent implements OnInit {
     const notification = this.notificationForm.value;
     console.log('notification', notification);
     this.notificationService.update(id, notification).subscribe(() => {
-      this.toastrService.success('Sửa thành công', 'Thông báo', {
+      this.toastrService.success('Sửa thành công.', 'Thông báo', {
         timeOut: 2000,
         progressBar: true,
         positionClass: 'toast-top-right',
         easing: 'ease-in'
       });
     }, err => {
-      this.toastrService.error('Đã xảy ra lỗi', 'Lỗi', {
+      this.toastrService.error('Đã xảy ra lỗi.', 'Lỗi', {
         timeOut: 2000,
         progressBar: true,
         positionClass: 'toast-top-right',

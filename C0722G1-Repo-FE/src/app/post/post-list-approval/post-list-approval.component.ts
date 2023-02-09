@@ -101,7 +101,7 @@ export class PostListApprovalComponent implements OnInit {
     this.postListApprovalService.getAllPostApproval(pageNumber).subscribe(next => {
       this.postApprovalList = next;
     }, error => {
-      console.log('Lỗi truy xuất');
+      console.log('Lỗi truy xuất.');
     });
   }
 
@@ -118,14 +118,14 @@ export class PostListApprovalComponent implements OnInit {
     this.postListApprovalService.getPostApprovalsBySearch(demandTypeSearch, landTypeSearch, minPriceSearch, maxPriceSearch, citySearch, districtSearch, wardsSearch, minAreaSearch, maxAreaSearch, pageNumber).subscribe(data => {
       this.postApprovalList = data;
       if (this.postApprovalList != null) {
-        this.toastrService.success('Tìm kiếm thành công', 'Thông báo', {
+        this.toastrService.success('Tìm kiếm thành công.', 'Thông báo', {
           timeOut: 2000,
           progressBar: true,
           positionClass: 'toast-top-right',
           easing: 'ease-in'
         })
       } else {
-        this.toastrService.error('Không tìm thấy dữ liệu', 'Lỗi', {
+        this.toastrService.error('Không tìm thấy dữ liệu.', 'Lỗi', {
           timeOut: 2000,
           progressBar: true,
           positionClass: 'toast-top-right',
@@ -134,7 +134,7 @@ export class PostListApprovalComponent implements OnInit {
       }
       ;
     }, (error: any) => {
-      this.toastrService.error('Lỗi kết nối', 'Lỗi', {
+      this.toastrService.error('Lỗi kết nối.', 'Lỗi', {
         timeOut: 2000,
         progressBar: true,
         positionClass: 'toast-top-right',
@@ -313,7 +313,6 @@ export class PostListApprovalComponent implements OnInit {
     this.cityListService.getAllCity().subscribe(data => {
       this.cityList = data;
     }, error => {
-      console.log('Lỗi truy xuất');
     }, () => {
     });
   }
@@ -328,9 +327,7 @@ export class PostListApprovalComponent implements OnInit {
   getAllDistrict(idCity: number): void {
     this.districtListService.getAllDistrict(idCity).subscribe(data => {
       this.districtList = data;
-      console.log(this.districtList);
     }, error => {
-      console.log('Lỗi truy xuất');
     }, () => {
     });
   }
@@ -346,7 +343,6 @@ export class PostListApprovalComponent implements OnInit {
     this.wardsListService.getAllWards(idDistrict).subscribe(data => {
       this.wardsList = data;
     }, error => {
-      console.log('Lỗi truy xuất', error);
     }, () => {
     });
   }

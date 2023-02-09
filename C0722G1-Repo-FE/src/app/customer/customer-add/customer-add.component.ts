@@ -36,7 +36,7 @@ export class CustomerAddComponent implements OnInit {
               private titleService: Title,
               private toast: ToastrService,
               private customerService: CustomerService) {
-    this.titleService.setTitle('Thêm Mới Khách Hàng');
+    this.titleService.setTitle('Thêm mới khách hàng');
   }
 
   ngOnInit(): void {
@@ -76,7 +76,7 @@ export class CustomerAddComponent implements OnInit {
       this.customerService.createCustomer(this.rfAddCustomer?.value).subscribe(
         data => {
           this.router.navigateByUrl('customer');
-          this.toast.success('Đăng Ký Thành Công');
+          this.toast.success('Đăng ký thành công.', 'Thông báo');
           this.resetFormAndData();
         }
       );

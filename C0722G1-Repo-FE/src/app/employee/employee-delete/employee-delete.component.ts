@@ -42,7 +42,7 @@ export class EmployeeDeleteComponent implements OnInit {
    * Function: show message notification delete success
    */
   private showToastrSuccess(): void {
-    this.employeeService.showSuccess('Xóa nhân viên ' + this.employee.nameEmployee + ' thành công.', 'Thông báo!');
+    this.employeeService.showSuccess('Xóa nhân viên ' + this.employee.nameEmployee + ' thành công.', 'Thông báo');
   }
 
   /**
@@ -51,7 +51,7 @@ export class EmployeeDeleteComponent implements OnInit {
    * Function: show message notification delete error
    */
   private showToastrError(): void {
-    this.employeeService.showError('Có lỗi khi thực hiện', 'Thông báo!');
+    this.employeeService.showError('Có lỗi khi thực hiện', 'Thông báo');
   }
 
 }

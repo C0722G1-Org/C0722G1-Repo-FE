@@ -158,7 +158,7 @@ export class PostListComponent implements OnInit {
         }
         this.postList = this.postList.concat(this.postListTemp);
       }, error => {
-        this.mess = 'Không có dữ liệu';
+        this.mess = 'Không có dữ liệu.';
       },
       () => {
       });
@@ -201,7 +201,7 @@ export class PostListComponent implements OnInit {
         this.postList = [];
         this.postList = this.postList.concat(this.postListTemp);
       }, error => {
-        this.mess = 'Không có dữ liệu';
+        this.mess = 'Không có dữ liệu.';
       },
       () => {
       });
@@ -229,10 +229,10 @@ export class PostListComponent implements OnInit {
           this.getImageByIdPost(this.postListTemp);
         }
         this.postList = this.postList.concat(this.postListTemp);
-        this.success('Tìm kiếm thành công');
+        this.success('Tìm kiếm thành công.');
       }, error => {
-        this.mess = 'Không có dữ liệu';
-        this.error('Tìm kiếm thất bại');
+        this.mess = 'Không có dữ liệu.';
+        this.error('Tìm kiếm thất bại.');
       },
       () => {
       });

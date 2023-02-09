@@ -122,7 +122,7 @@ export class PostDetailComponent implements OnInit {
    */
   showSucceedCopyLink(): void {
     navigator.clipboard.writeText('http://localhost:4200/post/detail/' + this.idPost);
-    this.toastr.info('Đã sao chép đường dẫn URL');
+    this.toastr.info('Đã sao chép đường dẫn URL.');
   }
 
   /**
@@ -139,7 +139,7 @@ export class PostDetailComponent implements OnInit {
   showSucceedConfirmation(): void {
     // @ts-ignore
     this.postService.succeedConfirm(this.idPost);
-    this.toastr.success('Xác nhận giao dịch', 'Thành công!');
+    this.toastr.success('Xác nhận giao dịch.', 'Thành công');
   }
 
   /**
@@ -172,7 +172,7 @@ export class PostDetailComponent implements OnInit {
       if (this.postDetail.phoneCustomer1 != null) {
         navigator.clipboard.writeText(this.postDetail.phoneCustomer1);
       }
-      this.toastr.info('Đã sao chép số điện thoại');
+      this.toastr.info('Đã sao chép số điện thoại.');
     }
   }
 
