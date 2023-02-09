@@ -61,6 +61,7 @@ export class HomeComponent implements OnInit {
           this.getImageByIdPost(this.postListTemp);
         }
         this.postList = this.postList.concat(this.postListTemp);
+        console.log(this.postList)
         this.activatedRoute.paramMap.subscribe(data => {
           const code = data.get('code');
           if (code !== null) {
@@ -209,6 +210,7 @@ export class HomeComponent implements OnInit {
     });
     this.postList = [];
     this.code = 0;
+    this.page = 0;
     this.router.navigateByUrl("/home");
   }
 
