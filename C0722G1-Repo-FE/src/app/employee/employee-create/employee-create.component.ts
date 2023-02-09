@@ -1,6 +1,4 @@
 import {Division} from '../../entity/employee/division';
-import {EmployeeService} from '../../service/employee.service';
-import {DivisionService} from '../../service/division.service';
 import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
@@ -77,7 +75,7 @@ export class EmployeeCreateComponent implements OnInit {
       } else {
         this.toastrService.success('Thêm mới thành công!', 'Thông báo');
         this.router.navigateByUrl('/employee');
-    }, error => {
+    }}, error => {
       this.toastrService.error('Thêm mới không thành công.', 'Thông báo');
       console.log(error);
     });

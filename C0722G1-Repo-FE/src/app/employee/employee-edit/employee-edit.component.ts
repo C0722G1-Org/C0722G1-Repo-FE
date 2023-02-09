@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Employee} from '../../entity/employee/employee';
 import {Division} from '../../entity/employee/division';
-import {EmployeeService} from '../../service/employee.service';
-import {DivisionService} from '../../service/division.service';
 import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';

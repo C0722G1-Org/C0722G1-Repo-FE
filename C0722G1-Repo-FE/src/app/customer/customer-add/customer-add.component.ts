@@ -74,7 +74,7 @@ export class CustomerAddComponent implements OnInit {
       // console.log(this.rfAddCustomer.value);
       this.customerService.createCustomer(this.rfAddCustomer?.value).subscribe(
         data => {
-          this.router.navigateByUrl('customer/add');
+          this.router.navigateByUrl('customer');
           this.toast.success('Đăng Ký Thành Công');
           this.resetFormAndData();
         }
