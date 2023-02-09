@@ -30,3 +30,7 @@ footer {
 p {
   line-height: 1;
 }
+
+#postCard:hover{
+  background-color: #ececec;
+}

@@ -1,1 +1,126 @@
-<p>form-list works!</p>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  * {
+    font-family: Arial;
+  }
+</style>
+<div class="row mt-0">
+  <h1 class="align-bottom text-center fw-bold" style=" margin-top: 25px ">HỒ SƠ VÀ BIỂU MẪU</h1>
+  <div class="container " style="margin-top: 10px">
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-8">
+        <div class="row">
+          <form class="d-flex" style="text-align: center">
+            <a class="btn btn-outline-primary my-2 my-sm-0" routerLink="/form/create">
+              Tạo mới
+            </a>
+            <input style="width: 300px;margin-left: 782px" class="form-control me-2" #contentDataForm type="search"
+                   placeholder="Tìm kiếm theo nội dung " aria-label="Search">
+
+            <button class="btn btn-outline-danger" type="button" (click)="searchByContent(contentDataForm.value,false)">
+              Tìm
+              kiếm
+            </button>
+          </form>
+        </div>
+        <div>
+          <table class="table table-striped center" style="margin-top: 30px">
+            <thead class="table table-dark">
+            <tr>
+              <th style="text-align: center">STT</th>
+              <th style="text-align: left">Nội Dung</th>
+              <th class="text-center">In Biểu Mẫu</th>
+              <th class="text-center">Sửa</th>
+              <th class="text-center">Xóa</th>
+            </tr>
+            </thead>
+            <tr *ngIf="dataFormList.length == 0 ; else elseBlock">
+              <td colspan="5" class="table-danger" style="text-align: center;color: red">Không có dữ liệu.</td>
+            </tr>
+            <ng-template #elseBlock>
+              <tbody>
+              <tr *ngFor="let data of dataFormList; index as i ">
+                <th style="text-align: center">{{(page * 5) + (i + 1)}}</th>
+                <td style="text-align: left">{{data.contentDataForm}}</td>
+                <td class="text-center">
+                  <a href="{{data.urlDataForm}}" download class="btn"><i class="fa-solid fa-download"></i></a>
+                  <img src="" alt="" id="image"></td>
+                <td [routerLink]="['/form/edit',data.idDataForm]" class="text-center"><a class="btn"><i
+                  class="fa-regular fa-pen-to-square"></i></a></td>
+                <td class="text-center">
+                  <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#deleteFormModal"
+                          (click)="dataForm=data">
+                    <i class="fa-regular fa-trash-can"></i>
+                  </button>
+                </td>
+              </tbody>
+            </ng-template>
+          </table>
+          <!--  Phân trang -->
+          <div *ngIf="dataFormPage" class="d-flex justify-content-center" id="last-row">
+            <div>
+              <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                  <li class="page-item" [ngClass]="dataFormPage.first ? 'disabled': ''">
+                    <a role="button" class="page-link" (click)="gotoPage(0)">Trang đầu</a>
+                  </li>
+                  <li class="page-item" [ngClass]="dataFormPage.first ? 'disabled': ''">
+                    <a role="button" class="page-link" (click)="gotoPage(dataFormPage.number - 1)"><</a>
+                  </li>
+                  <li class="page-item" *ngIf="dataFormPage.number - 3 > 0">
+                    <a role="button" class="page-link"
+                       (click)="gotoPage(dataFormPage.number - 4)">{{dataFormPage.number - 3}}</a>
+                  </li>
+                  <li class="page-item" *ngIf="dataFormPage.number - 2 > 0">
+                    <a role="button" class="page-link"
+                       (click)="gotoPage(dataFormPage.number - 3)">{{dataFormPage.number - 2}}</a>
+                  </li>
+                  <li class="page-item" *ngIf="dataFormPage.number - 1 > 0">
+                    <a role="button" class="page-link"
+                       (click)="gotoPage(dataFormPage.number - 2)">{{dataFormPage.number - 1}}</a>
+                  </li>
+                  <li class="page-item" *ngIf="dataFormPage.number > 0">
+                    <a role="button" class="page-link"
+                       (click)="gotoPage(dataFormPage.number - 1)">{{dataFormPage.number}}</a>
+                  </li>
+                  ​
+                  <li class="page-item active"><a class="page-link">{{dataFormPage.number + 1}}</a></li>
+                  ​
+                  <li class="page-item" *ngIf="dataFormPage.number + 2 <= dataFormPage.totalPages">
+                    <a role="button" class="page-link"
+                       (click)="gotoPage(dataFormPage.number + 1)">{{dataFormPage.number + 2}}</a>
+                  </li>
+                  <li class="page-item" *ngIf="dataFormPage.number + 3 <= dataFormPage.totalPages">
+                    <a role="button" class="page-link"
+                       (click)="gotoPage(dataFormPage.number + 2)">{{dataFormPage.number + 3}}</a>
+                  </li>
+                  <li class="page-item" *ngIf="dataFormPage.number + 4 <= dataFormPage.totalPages">
+                    <a role="button" class="page-link"
+                       (click)="gotoPage(dataFormPage.number + 3)">{{dataFormPage.number + 4}}</a>
+                  </li>
+                  <li class="page-item" *ngIf="dataFormPage.number + 5 <= dataFormPage.totalPages">
+                    <a role="button" class="page-link"
+                       (click)="gotoPage(dataFormPage.number + 4)">{{dataFormPage.number + 5}}</a>
+                  </li>
+                  <li class="page-item" [ngClass]="dataFormPage.last ? 'disabled': ''">
+                    <a role="button" class="page-link" (click)="gotoPage(dataFormPage.number + 1)">></a>
+                  </li>
+                  <li class="page-item" [ngClass]="dataFormPage.last ? 'disabled': ''">
+                    <a role="button" class="page-link" (click)="gotoPage(dataFormPage.totalPages - 1)">Trang cuối</a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2"></div>
+    </div>
+  </div>
+</div>
+<app-form-delete [dataFormDelete]="dataForm" (deleteEvent)="reloadList()"></app-form-delete>
+
+

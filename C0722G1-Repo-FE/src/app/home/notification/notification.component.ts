@@ -221,5 +221,4 @@ export class NotificationComponent implements OnInit {
       document.getElementById('collapsedContent' + id).style.display = 'inline-block';
     }
   }
-
 }
