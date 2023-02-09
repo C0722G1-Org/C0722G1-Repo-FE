@@ -24,16 +24,16 @@
         <div class="text-danger"
              *ngIf="createPostDtoUnit.controls['namePost'].invalid && (createPostDtoUnit.controls['namePost'].touched||createPostDtoUnit.controls['namePost'].dirty)">
           <div *ngIf="createPostDtoUnit.controls['namePost'].errors?.required">
-            Tên bài đăng không được để trống
+            Tên bài đăng không được để trống.
           </div>
           <div *ngIf="createPostDtoUnit.controls['namePost'].errors?.pattern">
-            Tên bài viết chứa các kí tự đặc biệt (chỉ cho phép chữ cái, chữ số , dấu cách và dấu /)
+            Tên bài viết chứa các kí tự đặc biệt (chỉ cho phép chữ cái, chữ số , dấu cách và dấu /).
           </div>
           <div *ngIf="createPostDtoUnit.controls['namePost'].errors?.maxlength">
-            Tên bài đăng không hợp lệ (Tối đa 50 kí tự và tối thiểu 10 kí tự)
+            Tên bài đăng không hợp lệ (Tối đa 50 kí tự và tối thiểu 10 kí tự).
           </div>
           <div *ngIf="createPostDtoUnit.controls['namePost'].errors?.minlength">
-            Tên bài đăng không hợp lệ (Tối đa 50 kí tự và tối thiểu 10 kí tự)
+            Tên bài đăng không hợp lệ (Tối đa 50 kí tự và tối thiểu 10 kí tự).
           </div>
         </div>
       </div>
@@ -59,11 +59,11 @@
       <div class="col-5">
         <div class="form-text"
              *ngIf="(createPostDtoUnit.controls['idDemand'].pristine && createPostDtoUnit.controls['idDemand'].untouched)">
-          Vui lòng chọn nhu cầu
+          Vui lòng chọn nhu cầu.
         </div>
         <div class="text-danger"
              *ngIf="(createPostDtoUnit.controls['idDemand'].invalid && (createPostDtoUnit.controls['idDemand'].touched||createPostDtoUnit.controls['idDemand'].dirty) && createPostDtoUnit.controls['idDemand'].value == -1)">
-          Vui lòng chọn loại bất động sản
+          Vui lòng chọn loại bất động sản.
         </div>
       </div>
     </div>
@@ -87,11 +87,11 @@
       <div class="col-5">
         <div class="form-text"
              *ngIf="(createPostDtoUnit.controls['idLandType'].pristine && createPostDtoUnit.controls['idLandType'].untouched)">
-          Vui lòng chọn loại bất động sản
+          Vui lòng chọn loại bất động sản.
         </div>
         <div class="text-danger"
              *ngIf="(createPostDtoUnit.controls['idLandType'].invalid && (createPostDtoUnit.controls['idLandType'].touched||createPostDtoUnit.controls['idLandType'].dirty) && createPostDtoUnit.controls['idLandType'].value == -1)">
-          Vui lòng chọn loại bất động sản
+          Vui lòng chọn loại bất động sản.
         </div>
       </div>
     </div>
@@ -103,20 +103,20 @@
       </div>
       <div class="col-4">
         <input formControlName="numberAddress" class="form-control" type="text" id="numberAddress" required>
-        <div class="form-text">VD: 122B đường Trần Hưng Đạo</div>
+        <div class="form-text">VD: 122B đường Trần Hưng Đạo.</div>
         <div class="text-danger"
              *ngIf="createPostDtoUnit.controls['numberAddress'].invalid && (createPostDtoUnit.controls['numberAddress'].touched||createPostDtoUnit.controls['numberAddress'].dirty)">
           <div *ngIf="createPostDtoUnit.controls['numberAddress'].errors?.required">
-            Địa chỉ cụ thể không được để trống
+            Địa chỉ cụ thể không được để trống.
           </div>
           <div *ngIf="createPostDtoUnit.controls['numberAddress'].errors?.pattern">
-            Địa chỉ cụ thể chứa các kí tự đặc biệt (chỉ cho phép chữ cái, chữ số , dấu cách và dấu /)
+            Địa chỉ cụ thể chứa các kí tự đặc biệt (chỉ cho phép chữ cái, chữ số , dấu cách và dấu /).
           </div>
           <div *ngIf="createPostDtoUnit.controls['numberAddress'].errors?.maxlength">
-            Địa chỉ cụ thể không hợp lệ (Tối đa 50 kí tự và tối thiểu 5 kí tự)
+            Địa chỉ cụ thể không hợp lệ (Tối đa 50 kí tự và tối thiểu 5 kí tự).
           </div>
           <div *ngIf="createPostDtoUnit.controls['numberAddress'].errors?.minlength">
-            Địa chỉ cụ thể không hợp lệ (Tối đa 50 kí tự và tối thiểu 5 kí tự)
+            Địa chỉ cụ thể không hợp lệ (Tối đa 50 kí tự và tối thiểu 5 kí tự).
           </div>
         </div>
       </div>
@@ -140,13 +140,13 @@
       <div class="col-5">
         <div class="form-text"
              *ngIf="(createPostDtoUnit.controls['idDirection'].pristine && createPostDtoUnit.controls['idDirection'].untouched)">
-          Vui lòng chọn hướng bất động sản
+          Vui lòng chọn hướng bất động sản.
         </div>
         <div class="text-danger"
              *ngIf="createPostDtoUnit.controls['idDirection'].invalid && (createPostDtoUnit.controls['idDirection'].touched||createPostDtoUnit.controls['idDirection'].dirty)">
           <div
             *ngIf="createPostDtoUnit.controls['idDirection'].errors?.required || createPostDtoUnit.controls['idDirection'].errors?.min">
-            Hướng bất động sản không được để trống
+            Hướng bất động sản không được để trống.
           </div>
         </div>
       </div>
@@ -196,13 +196,13 @@
       <div class="col-5">
         <div class="form-text"
              *ngIf="(createPostDtoUnit.controls['idWards'].pristine && createPostDtoUnit.controls['idWards'].untouched)">
-          Vui lòng chọn đầy đủ tỉnh/thành phố, quận/huyện,phường/xã
+          Vui lòng chọn đầy đủ tỉnh/thành phố, quận/huyện,phường/xã.
         </div>
         <div class="text-danger"
              *ngIf="createPostDtoUnit.controls['idWards'].invalid && (createPostDtoUnit.controls['idWards'].touched||createPostDtoUnit.controls['idWards'].dirty)">
           <div
             *ngIf="createPostDtoUnit.controls['idWards'].errors?.required || createPostDtoUnit.controls['idWards'].errors?.min">
-            Vui lòng chọn đầy đủ tỉnh/thành phố, quận/huyện,phường/xã
+            Vui lòng chọn đầy đủ tỉnh/thành phố, quận/huyện,phường/xã.
           </div>
         </div>
       </div>
@@ -227,16 +227,16 @@
         <div class="text-danger"
              *ngIf="createPostDtoUnit.controls['price'].invalid && (createPostDtoUnit.controls['price'].touched||createPostDtoUnit.controls['price'].dirty)">
           <div *ngIf="createPostDtoUnit.controls['price'].errors?.required">
-            Giá tiền không được để trống
+            Giá tiền không được để trống.
           </div>
           <div *ngIf="createPostDtoUnit.controls['price'].errors?.pattern">
-            Giá tiền sai định dạng (chứa kí tự)
+            Giá tiền sai định dạng (chứa kí tự).
           </div>
           <div *ngIf="createPostDtoUnit.controls['price'].errors?.max">
-            Giá tiền không được hỗ trợ (phải bé hơn 100 tỷ và lớn hơn 1 triệu)
+            Giá tiền không được hỗ trợ (phải bé hơn 100 tỷ và lớn hơn 1 triệu).
           </div>
           <div *ngIf="createPostDtoUnit.controls['price'].errors?.min">
-            Giá tiền không được hỗ trợ (phải bé hơn 100 tỷ và lớn hơn 1 triệu)
+            Giá tiền không được hỗ trợ (phải bé hơn 100 tỷ và lớn hơn 1 triệu).
           </div>
         </div>
       </div>
@@ -255,16 +255,16 @@
         <div class="text-danger"
              *ngIf="createPostDtoUnit.controls['area'].invalid && (createPostDtoUnit.controls['area'].touched||createPostDtoUnit.controls['area'].dirty)">
           <div *ngIf="createPostDtoUnit.controls['area'].errors?.required">
-            Diện tích không được để trống
+            Diện tích không được để trống.
           </div>
           <div *ngIf="createPostDtoUnit.controls['area'].errors?.pattern">
-            Diện tích không hợp lệ (chứa kí tự)
+            Diện tích không hợp lệ (chứa kí tự).
           </div>
           <div *ngIf="createPostDtoUnit.controls['area'].errors?.max">
-            Diện tích không được hỗ trợ (phải bé hơn 10000m2 và lớn hơn 1m2)
+            Diện tích không được hỗ trợ (phải bé hơn 10000m2 và lớn hơn 1m2).
           </div>
           <div *ngIf="createPostDtoUnit.controls['area'].errors?.min">
-            Diện tích không được hỗ trợ (phải bé hơn 10000m2 và lớn hơn 1m2)
+            Diện tích không được hỗ trợ (phải bé hơn 10000m2 và lớn hơn 1m2).
           </div>
         </div>
       </div>
@@ -285,11 +285,11 @@
       <div class="col-2"></div>
       <div class="col-5">
         <div class="form-text" *ngIf="submitTimes<=0">
-          Vui lòng thêm ảnh
+          Vui lòng thêm ảnh.
         </div>
         <div class="text-danger"
              *ngIf="(submitTimes>0 && (imageList.length == 0||nameImageList.length == 0))">
-          Vui lòng thêm ảnh
+          Vui lòng thêm ảnh.
         </div>
       </div>
     </div>
@@ -303,18 +303,17 @@
         <div class="text-danger"
              *ngIf="createPostDtoUnit.controls['note'].invalid && (createPostDtoUnit.controls['note'].touched||createPostDtoUnit.controls['note'].dirty)">
           <div *ngIf="createPostDtoUnit.controls['note'].errors?.pattern">
-            Mô tả chi tiết chứa các kí tự đặc biệt (chỉ cho phép chữ cái, chữ số , dấu cách và dấu /)
+            Mô tả chi tiết chứa các kí tự đặc biệt (chỉ cho phép chữ cái, chữ số , dấu cách và dấu /).
           </div>
           <div *ngIf="createPostDtoUnit.controls['note'].errors?.maxlength">
-            Mô tả chi tiết không hợp lệ (Tối đa 255 kí tự)
+            Mô tả chi tiết không hợp lệ (Tối đa 255 kí tự).
           </div>
         </div>
       </div>
     </div>
     <div class="row mx-3 mb-4">
       <div class="col-2"></div>
-      <div class="col-2">
-      </div>
+      <div class="col-2"><p class="text-danger" *ngIf="messageFormServer.length != 0">Lỗi hệ thống: </p></div>
       <div class="col-6">
         <p class="text-danger" *ngIf="messageFormServer.length != 0">{{messageFormServer}}</p>
       </div>
