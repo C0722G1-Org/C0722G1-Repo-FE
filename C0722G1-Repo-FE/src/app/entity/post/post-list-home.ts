@@ -12,5 +12,5 @@ export interface PostListHome {
   dateCreation?: string;
   nameLandType?: string;
   nameDirection?: string;
-  idStatus?: number;
+  idDemandType?: number;
 }

@@ -325,18 +325,18 @@ export class HomeComponent implements OnInit {
    * @return void
    */
   checkCode(code: number): void{
-    switch (code) {
-      case 1:
-        this.getPostPageSell();
-        break;
-      case 2:
-        this.getPostPageRent();
-        break;
-      case 3:
-        this.getPostPageBuy();
-        break;
-      default:
-        this.getPostPage();
-    }
+      switch (code) {
+        case 1:
+          this.getPostPageSell();
+          break;
+        case 2:
+          this.getPostPageRent();
+          break;
+        case 3:
+          this.getPostPageBuy();
+          break;
+        default:
+          this.getPostPage();
+      }
   }
 }
