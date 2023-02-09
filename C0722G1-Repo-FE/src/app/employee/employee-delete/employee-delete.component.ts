@@ -42,7 +42,7 @@ export class EmployeeDeleteComponent implements OnInit {
    * Function: show message notification delete success
    */
   private showToastrSuccess(): void {
-    this.employeeService.showSuccess('Xóa nhân viên thành công', 'Thông báo!');
+    this.employeeService.showSuccess('Xóa nhân viên ' + this.employee.nameEmployee + ' thành công.', 'Thông báo!');
   }
 
   /**

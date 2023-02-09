@@ -9,7 +9,7 @@
             <legend>
               <div>
                 <div style="margin-left: 15px; margin-top: 15px">
-                  <a href="#" type="button"><i class="fa-solid fa-arrow-left"></i></a>
+                  <a routerLink="/notification" type="button"><i class="fa-solid fa-arrow-left"></i></a>
                   <span style="font-size: 35px; margin-left: 180px"><b>SỬA THÔNG BÁO</b></span>
                 </div>
               </div>
@@ -25,26 +25,10 @@
                      readonly>
             </div>
           </div>
-          <!--        <div class="mb-2 ">-->
-          <!--          <div class="d-flex align-items-center mb-2">-->
-          <!--            <div class="col-4">-->
-          <!--              <label for="postingDate" class="form-label ms-2">Ngày Tạo<span style="color: red">(*)</span>:</label>-->
-          <!--            </div>-->
-          <!--            <div class="col-8">-->
-          <!--              <input id="postingDate" type="date" class="form-control customer-infor" formControlName="postingDate"-->
-          <!--                     [ngClass]="(notificationForm.controls['postingDate'].touched)?-->
-          <!--                                     notificationForm.controls['postingDate'].invalid?'is-invalid':'is-valid':''"/>-->
-          <!--              <div *ngIf="notificationForm.controls['postingDate'].hasError('required') &&-->
-          <!--                                             notificationForm.controls['postingDate'].touched" style="color: red">-->
-          <!--                Ngày tạo không được bỏ trống-->
-          <!--              </div>-->
-          <!--            </div>-->
-          <!--          </div>-->
-          <!--        </div>-->
           <div class="mb-2 ">
             <div class="d-flex align-items-center mb-2">
               <div class="col-4">
-                <label for="title" class="form-label ms-2">Tiêu Đề<span style="color: red">(*)</span>:</label>
+                <label for="title" class="form-label ms-2">Tiêu đề<span style="color: red">(*)</span>:</label>
               </div>
               <div class="col-8">
                 <input id="title" type="text" class="form-control customer-infor" formControlName="title"
@@ -70,28 +54,11 @@
             </div>
           </div>
           ​
-          <!--        <div class="mb-2 ">-->
-          <!--          <div class="d-flex align-items-center mb-2">-->
-          <!--            <div class="col-4">-->
-          <!--              <label for="postingDate" class="form-label ms-2">Ngày Tạo<span style="color: red">(*)</span>:</label>-->
-          <!--            </div>-->
-          <!--            <div class="col-8">-->
-          <!--              <input id="postingDate" type="date" class="form-control customer-infor" formControlName="postingDate"-->
-          <!--                     [ngClass]="(notificationForm.controls['postingDate'].touched)?-->
-          <!--                             notificationForm.controls['postingDate'].invalid?'is-invalid':'is-valid':''"/>-->
-          <!--              <div *ngIf="notificationForm.controls['postingDate'].hasError('required') &&-->
-          <!--                                     notificationForm.controls['postingDate'].touched" style="color: red">-->
-          <!--                Ngày tạo không được bỏ trống-->
-          <!--              </div>-->
-          <!--            </div>-->
-          <!--          </div>-->
-          <!--        </div>-->
-          ​
           ​
           <div class="mb-2 ">
             <div class="d-flex align-items-center mb-2">
               <div class="col-4">
-                <label for="content" class="form-label ms-2">Nội Dung<span style="color: red">(*)</span>:</label>
+                <label for="content" class="form-label ms-2">Nội dung<span style="color: red">(*)</span>:</label>
               </div>
               <div class="col-8">
               <textarea id="content" type="text" class="form-control customer-infor" formControlName="content"
@@ -119,7 +86,7 @@
             <button type="button" style="margin-right: 33px"
                     class="btn btn-outline btn-outline-primary ms-auto d-flex justify-content-center"
                     (click)="resetForm()">
-              <p>Nhập lại</p>
+              <p>Khôi phục</p>
             </button>
             <button type="submit" style="margin-right: 0" [disabled]="(!notificationForm.valid)"
                     class="btn btn-primary d-flex justify-content-center">

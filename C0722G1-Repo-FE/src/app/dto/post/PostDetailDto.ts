@@ -42,6 +42,4 @@ export interface PostDetailDto {
   approval?: boolean;
 
   flagDeleted?: boolean;
-
-  idAccount?: number;
 }

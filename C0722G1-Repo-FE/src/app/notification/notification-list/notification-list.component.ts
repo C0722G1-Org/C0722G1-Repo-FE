@@ -39,17 +39,57 @@ export class NotificationListComponent implements OnInit {
 
   ngOnInit(): void {
     this.createSearchForm();
-    this.searchNotification(0);
+    this.searchNotification(0,true);
     this.deleteIds = [];
     this.checkedAll = false;
   }
 
 ​
 
-  searchNotification(pageNumber: number): void {
-    this.notificationService.getPageNotifications(this.rfSearch.value, pageNumber).subscribe(next => {
-      this.pageNotifications = next;
+  searchNotification(pageNumber: number,flag: boolean): void {
+    let notificationToSearch = this.rfSearch.value;
+    notificationToSearch.startDate = this.rfSearch.value.startDate.trim();
+    notificationToSearch.title = this.rfSearch.value.title.trim();
+    notificationToSearch.content = this.rfSearch.value.content.trim();
+    this.notificationService.getPageNotifications(notificationToSearch, pageNumber).subscribe(data => {
+      if (data == null) {
+        this.pageNotifications = data;
+        this.toastrService.warning('Không tìm thấy kết quả phù hợp!', '', {
+          timeOut: 2000,
+          progressBar: true,
+          positionClass: 'toast-top-right',
+          easing: 'ease-in'
+        });
+        return;
+      }
+      if (notificationToSearch.title == '%' || notificationToSearch.title == '/' ||
+        notificationToSearch.content == '%' || notificationToSearch.content == '/') {
+        this.toastrService.error('Không được nhập duy nhất ký tự "%" hoặc "/" trong ô tìm kiếm', 'Lỗi tìm kiếm', {
+          timeOut: 5000,
+          progressBar: true,
+          positionClass: 'toast-top-right',
+          easing: 'ease-in'
+        });
+        this.pageNotifications.content = [];
+        return;
+      }
+      if (flag == false && data !== null && (notificationToSearch.title !== '%' && notificationToSearch.title !== '/' &&
+        notificationToSearch.content !== '%' && notificationToSearch.content !== '/')) {
+        this.toastrService.success('Tìm kiếm thành công', 'Thông báo', {
+          timeOut: 2000,
+          progressBar: true,
+          positionClass: 'toast-top-right',
+          easing: 'ease-in'
+        });
+      }
+      this.pageNotifications = data;
     }, error => {
+      this.toastrService.error('Đã xảy ra lỗi khi tìm kiếm', 'Lỗi', {
+        timeOut: 2000,
+        progressBar: true,
+        positionClass: 'toast-top-right',
+        easing: 'ease-in'
+      });
     });
   }
 
@@ -105,7 +145,7 @@ export class NotificationListComponent implements OnInit {
 ​
 
   gotoPage(pageNumber: number): void {
-    this.searchNotification(pageNumber);
+    this.searchNotification(pageNumber,true);
   }
 
 ​
@@ -151,6 +191,12 @@ export class NotificationListComponent implements OnInit {
     this.notificationService.findByListId(this.deleteIds).subscribe(data => {
       this.deleteNotifications = data;
     }, error => {
+      this.toastrService.error('Đã xảy ra lỗi', 'Lỗi', {
+        timeOut: 2000,
+        progressBar: true,
+        positionClass: 'toast-top-right',
+        easing: 'ease-in'
+      });
     });
   }
 

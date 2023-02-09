@@ -183,7 +183,7 @@
                 <label class="form-label ms-2">Chức vụ<span style="color: red">(*)</span>:</label>
               </div>
               <div class="col-8">
-                <select class="form-select" formGroupName="division">
+                <select class="form-select" formControlName="division">
                   <option *ngFor="let i of divisions" [ngValue]="i">{{i.nameDivision}}</option>
                 </select>
               </div>

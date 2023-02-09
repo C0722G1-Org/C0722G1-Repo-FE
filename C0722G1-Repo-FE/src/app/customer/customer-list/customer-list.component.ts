@@ -4,6 +4,7 @@ import {CustomerService} from '../../service/customer.service';
 import {Router} from '@angular/router';
 import {Title} from '@angular/platform-browser';
 import {Component, OnInit} from '@angular/core';
+import {IndividualConfig, ToastrService} from "ngx-toastr";
 
 
 
@@ -18,11 +19,12 @@ export class CustomerListComponent implements OnInit {
   temp: Customer = {};
   allSearch = '';
   pageable: any;
+  emptyCase= "Không có";
 
   constructor(private customerService: CustomerService,
               private router: Router,
-              private titleService: Title) {
-    this.titleService.setTitle('Danh sách khách hàng');
+              private titleService: Title, private toast: ToastrService) {
+    this.titleService.setTitle("Danh sách khách hàng");
 
   }
 
@@ -31,13 +33,40 @@ export class CustomerListComponent implements OnInit {
   }
 
   private getAllCustomerListComponent(pageable: any): void {
-    this.customerService.getAllCustomerPaging(pageable, this.allSearch).subscribe(data => {
+    this.customerService.getAllCustomerPaging(pageable, this.allSearch.trim()).subscribe(data => {
       this.customer = data;
-      console.log(this.customer);
     }, error => {
     }, () => {
     });
+    if (this.allSearch !== ''){
+      this.showToastrSuccess();
+    }
+    // else {
+    //   this.showToastrError();
+    // }
   }
+
+  showSuccess(message: string, title: string, override: Partial<IndividualConfig>): void {
+    this.toast.success(message, title, override);
+  }
+
+  showError(message: string, title: string): void {
+    this.toast.error(message, title);
+  }
+
+  private showToastrError(): void {
+    this.showError('Không có kết quả cần tìm', 'Thông báo!');
+  }
+
+  private showToastrSuccess(): void {
+    this.showSuccess('Tìm kiếm thành công', 'Thông báo!',{
+      timeOut: 1000,
+      progressBar: true,
+      positionClass: 'toast-top-right',
+      easing: 'ease-in'
+    });
+  }
+
 
   gotoPage(pageNumber: number): void {
     this.getAllCustomerListComponent(pageNumber);
@@ -50,11 +79,23 @@ export class CustomerListComponent implements OnInit {
   searchByMore(): void {
     this.pageable = 0;
     this.getAllCustomerListComponent(this.pageable);
-    console.log(this.customer);
+    // this.allSearch != '&';
   }
 
   reload(): void {
-    console.log(this.pageable);
     this.getAllCustomerListComponent(this.pageable);
   }
+  // expandOrCollapse(id: number, action: string) {
+  //   if (action === 'expand') {
+  //     // @ts-ignore
+  //     document.getElementById('expandedContent' + id).style.display = 'inline-block';
+  //     // @ts-ignore
+  //     document.getElementById('collapsedContent' + id).style.display = 'none';
+  //   } else {
+  //     // @ts-ignore
+  //     document.getElementById('expandedContent' + id).style.display = 'none';
+  //     // @ts-ignore
+  //     document.getElementById('collapsedContent' + id).style.display = 'inline-block';
+  //   }
+  // }
 }

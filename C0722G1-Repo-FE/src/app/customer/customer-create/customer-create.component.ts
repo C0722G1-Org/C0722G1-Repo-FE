@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
 import {Component, OnInit} from '@angular/core';
 import {ToastrService} from 'ngx-toastr';
+import {CustomerDtoEmailAndUsername} from "../../dto/customer/customerDtoEmailAndUsername";
 
 
 export const checkBirthDay: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
@@ -20,12 +21,14 @@ export const checkBirthDay: ValidatorFn = (control: AbstractControl): Validation
   }
 };
 
+
 @Component({
   selector: 'app-customer-create',
   templateUrl: './customer-create.component.html',
   styleUrls: ['./customer-create.component.css']
 })
 export class CustomerCreateComponent implements OnInit {
+
   constructor(private customerService: CustomerService,
               private router: Router,
               private formBuilder: FormBuilder,
@@ -40,7 +43,8 @@ export class CustomerCreateComponent implements OnInit {
   customer: Customer | undefined;
   result = false;
   private customerForm: FormGroup | undefined;
-  private listMailCustomerAndUsernameAccount: Customer[] | undefined;
+  private listMailCustomerAndUsernameAccount: CustomerDtoEmailAndUsername[] | undefined;
+
 
   ngOnInit(): void {
     this.getListMailCustomer();
@@ -56,29 +60,9 @@ export class CustomerCreateComponent implements OnInit {
     };
   }
 
-  submit(): void {
-    this.submitted = true;
-    // @ts-ignore
-    this.customer = this.customerForm.value;
-    // @ts-ignore
-    this.account.usernameAccount = this.customerForm.value.usernameAccount;
-    // @ts-ignore
-    this.account.encryptPassword = this.customerForm.get('passGroup').get('encryptPassword').value;
-    // @ts-ignore
-    this.account.email = this.customerForm.value.emailCustomer;
-    // @ts-ignore
-    this.account.name = this.customerForm.value.nameCustomer;
-    // @ts-ignore
-    this.customer?.account = this.account;
-    // @ts-ignore
-    this.customerService.saveCustomer(this.customer).subscribe(value => {
-      this.router.navigateByUrl('/customer/create');
-      this._toast.success('Đăng Ký Thành Công');
-    }, error => {
-      this.action = false;
-    }, () => {
-    });
-  }
+
+
+
 
   checkPasswords(group: AbstractControl): any {
     const passwordCheck = group.value;
@@ -89,11 +73,12 @@ export class CustomerCreateComponent implements OnInit {
     const formYear = Number(new Date(abstractControl.value).getFullYear());
     const formMonth = Number(new Date(abstractControl.value).getMonth() + 1);
     const formDay = Number(new Date(abstractControl.value).getDate());
+
     return (new Date().getFullYear() - formYear > 15) ? null : {invalidDateOfBirth: true};
   }
 
   getListMailCustomer(): void {
-    this.customerService.findListMailCustomerr().subscribe((list) => {
+    this.customerService.findListMailCustomerr().subscribe(list => {
       this.listMailCustomerAndUsernameAccount = list;
       console.log(list);
       // tslint:disable-next-line:no-unused-expression
@@ -135,6 +120,33 @@ export class CustomerCreateComponent implements OnInit {
     });
   }
 
+  submit(): void {
+    this.submitted = true;
+    // @ts-ignore
+    this.customer = this.customerForm.value;
+    // @ts-ignore
+    this.account?.userNameAccount = this.customerForm.value.usernameAccount;
+    // @ts-ignore
+    this.account?.encryptPassword = this.customerForm.get('passGroup').get('encryptPassword').value;
+    // @ts-ignore
+    this.account?.email = this.customerForm.value.emailCustomer;
+    // @ts-ignore
+    this.account?.name = this.customerForm.value.nameCustomer;
+    // @ts-ignore
+    this.customer?.account = this.account;
+    // @ts-ignore
+    this.customer?.encryptPassword = this.customerForm.get('passGroup').get('encryptPassword').value;
+    // @ts-ignore
+    this.customerService.saveCustomer(this.customer).subscribe(value => {
+      this.router.navigateByUrl('/customer/create');
+      this._toast.success('Đăng Ký Thành Công');
+    }, error => {
+      this.action = false;
+    }, () => {
+    });
+  }
+
+
   // tslint:disable-next-line:typedef
   onchangeStautus() {
     this.status = !this.status;
@@ -147,23 +159,22 @@ export class CustomerCreateComponent implements OnInit {
     // @ts-ignore
     this.listMailCustomerAndUsernameAccount.forEach(value => {
       // @ts-ignore
-      if (email === value.emailCustomer) {
+      if (email === value.email) {
         result = {isExist: true};
       }
     });
     return result;
-  };
+  }
   areEqual: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
     // @ts-ignore
     const username = control.get('usernameAccount').value;
     let result = null;
     // @ts-ignore
     this.listMailCustomerAndUsernameAccount.forEach(value => {
-      // @ts-ignore
-      if (username === value.account.usernameAccount) {
+      if (username === value.usernameAccount) {
         result = {areEqual: true};
       }
     });
     return result;
-  };
+  }
 }

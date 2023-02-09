@@ -8,7 +8,7 @@
           <legend>
             <div>
               <div style="margin-left: 15px; margin-top: 15px" class="d-flex justify-content-between">
-                <div><a href="/notification" type="button"><i class="fa-solid fa-arrow-left"></i></a></div>
+                <div><a routerLink="/notification" type="button"><i class="fa-solid fa-arrow-left"></i></a></div>
                 <div style="all: revert"><h2>TẠO THÔNG BÁO MỚI</h2></div>
                 <div></div>
               </div>
@@ -87,7 +87,7 @@
           <button type="button" style="margin-right: 33px"
                   class="btn btn-outline btn-outline-primary ms-auto d-flex justify-content-center"
                   (click)="resetForm()">
-            <p>Nhập lại</p>
+            <p>Làm mới</p>
           </button>
           <button type="submit" style="margin-right: 0" [disabled]="(!notificationForm.valid)"
                   class="btn btn-primary d-flex justify-content-center">

@@ -1,6 +1,6 @@
 <div style="height: 100vh; display: flex; justify-content: center; align-items: center">
   <div class="container h-100">
-    <div class="row h-100" style="display: flex; justify-content: center; align-items: center; box-sizing: border-box">
+    <div class="row h-100 " style="display: flex; justify-content: center; align-items: center; box-sizing: border-box">
       <div class="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
         <div class="card shadow-lg" style="box-sizing: border-box">
           <div class="card-body">
@@ -12,10 +12,8 @@
                 <label for="floatingInput">Tên tài khoản<small> *</small></label>
                 <div class="text-danger"
                      *ngIf="signInForm.controls.username.invalid && signInForm.controls.username.touched else elseBlock">
-                  <span
-                    *ngIf="signInForm.controls.username.hasError('required')">Tên tài khoản không được để trống.</span>
-                  <span
-                    *ngIf="signInForm.controls.username.hasError('minlength')">Tên tài khoản Không nhỏ hơn 3 ký tự.</span>
+                  <span *ngIf="signInForm.controls.username.hasError('required')"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;Tên tài khoản không được để trống.</span>
+                  <span *ngIf="signInForm.controls.username.hasError('minlength')"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;Tên tài khoản Không nhỏ hơn 3 ký tự.</span>
                 </div>
                 <ng-template #elseBlock><br></ng-template>
               </div>
@@ -26,9 +24,8 @@
                 <label for="floatingPassword">Mật khẩu<small> *</small></label>
                 <div class="text-danger"
                      *ngIf="signInForm.controls.password.invalid && signInForm.controls.password.touched else elseBlock">
-                  <span *ngIf="signInForm.controls.password.hasError('required')">Mật khẩu không được để trống.</span>
-                  <span
-                    *ngIf="signInForm.controls.password.hasError('minlength')">Mật khẩu Không nhỏ hơn 5 ký tự.</span>
+                  <span *ngIf="signInForm.controls.password.hasError('required')"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;Mật khẩu không được để trống.</span>
+                  <span *ngIf="signInForm.controls.password.hasError('minlength')"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;Mật khẩu Không nhỏ hơn 5 ký tự.</span>
                 </div>
                 <ng-template #elseBlock><br></ng-template>
               </div>
