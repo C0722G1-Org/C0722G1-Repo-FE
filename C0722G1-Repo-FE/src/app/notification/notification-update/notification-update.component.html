@@ -1,0 +1,106 @@
+<h1 *ngIf="!notificationHasContent else show" style="color: red; text-align: center">Đã xảy ra lỗi vui lòng thử lại</h1>
+<ng-template #show>
+  <div class="row m-0">
+    <div class=" d-flex justify-content-center align-items-center mt-2 mb-2">
+      <div class="boxed shadow h-100">
+        <form novalidate="novalidate" [formGroup]="notificationForm"
+              (ngSubmit)="submit(id)">
+          <fieldset>
+            <legend>
+              <div>
+                <div style="margin-left: 15px; margin-top: 15px">
+                  <a routerLink="/notification" type="button"><i class="fa-solid fa-arrow-left"></i></a>
+                  <span style="font-size: 35px; margin-left: 180px"><b>SỬA THÔNG BÁO</b></span>
+                </div>
+              </div>
+            </legend>
+          </fieldset>
+          <br><br><br>
+          <div class="mb-2 ">
+            <div class="d-flex align-items-center mb-2">
+              <div class="col-4">
+                <label for="postingDate" class="form-label ms-2">Ngày tạo<span style="color: red">(*)</span>:</label>
+              </div>
+              <input value="{{getToday()}}" class="col-8" id="postingDate" type="date" formControlName="postingDate"
+                     readonly>
+            </div>
+          </div>
+          <div class="mb-2 ">
+            <div class="d-flex align-items-center mb-2">
+              <div class="col-4">
+                <label for="title" class="form-label ms-2">Tiêu đề<span style="color: red">(*)</span>:</label>
+              </div>
+              <div class="col-8">
+                <input id="title" type="text" class="form-control customer-infor" formControlName="title"
+                       [ngClass]="(notificationForm.controls['title'].touched)?
+                      notificationForm.controls['title'].invalid?'is-invalid':'is-valid':''">
+                <div *ngIf="notificationForm.controls['title'].hasError('required') &&
+                                     notificationForm.controls['title'].touched" style="color: red">
+                  <i class="fa-solid fa-triangle-exclamation"></i>
+                  Lưu ý: Tiêu đề không được bỏ trống.
+                </div>
+                <div *ngIf="notificationForm.controls['title'].hasError('minlength') &&
+                                     notificationForm.controls['title'].touched" style="color: red">
+                  <i class="fa-solid fa-triangle-exclamation"></i>
+                  Lưu ý: Tiêu đề tối thiểu 5 kí tự.
+                </div>
+                <div *ngIf="notificationForm.controls['title'].hasError('maxlength') &&
+                                     notificationForm.controls['title'].touched" style="color: red">
+                  <i class="fa-solid fa-triangle-exclamation"></i>
+                  Lưu ý: Tiêu đề tối đa 45 kí tự.
+                </div>
+                ​
+              </div>
+            </div>
+          </div>
+          ​
+          ​
+          <div class="mb-2 ">
+            <div class="d-flex align-items-center mb-2">
+              <div class="col-4">
+                <label for="content" class="form-label ms-2">Nội dung<span style="color: red">(*)</span>:</label>
+              </div>
+              <div class="col-8">
+              <textarea id="content" type="text" class="form-control customer-infor" formControlName="content"
+                        [ngClass]="(notificationForm.controls['content'].touched)?
+                      notificationForm.controls['content'].invalid?'is-invalid':'is-valid':''"></textarea>
+                <div *ngIf="notificationForm.controls['content'].hasError('required') &&
+                                     notificationForm.controls['content'].touched" style="color: red">
+                  <i class="fa-solid fa-triangle-exclamation"></i>
+                  Lưu ý: Nội dung không được bỏ trống.
+                </div>
+                <div *ngIf="notificationForm.controls['content'].hasError('maxlength') &&
+                                     notificationForm.controls['content'].touched" style="color: red">
+                  <i class="fa-solid fa-triangle-exclamation"></i>
+                  Lưu ý: Nội dung tối đa 400 kí tự.
+                </div>
+                <div *ngIf="notificationForm.controls['content'].hasError('minlength') &&
+                                     notificationForm.controls['content'].touched" style="color: red">
+                  <i class="fa-solid fa-triangle-exclamation"></i>
+                  Lưu ý: Nội dung tối thiểu 7 kí tự.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex mt-3 mb-2 w-100">
+            <button type="button" style="margin-right: 33px"
+                    class="btn btn-outline btn-outline-primary ms-auto d-flex justify-content-center"
+                    (click)="resetForm()">
+              <p>Khôi phục</p>
+            </button>
+            <button type="submit" style="margin-right: 0" [disabled]="(!notificationForm.valid)"
+                    class="btn btn-primary d-flex justify-content-center">
+              <p>Sửa</p>
+            </button>
+          </div>
+        </form>
+        <div class="mb-2">
+            <span style="font-size: 15px" class="fst-italic">
+              Trường có dấu <span style="color: red"> (*)</span> là bắt
+              buộc,không được bỏ trống
+            </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

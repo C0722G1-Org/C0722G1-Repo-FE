@@ -1,15 +1,18 @@
 <div class="p-3 px-5">
-  <h2 class="text-center fw-bold text-dark mt-3" style="font-family: Arial,serif;font-size: 24px">
-    DANH SÁCH THÔNG BÁO
-  </h2>
-  <a href="#">
+  <div style="margin-left: 15px; margin-top: 15px" class="d-flex justify-content-between">
+    <div><a routerLink="" type="button"><i class="fa-solid fa-arrow-left"></i></a></div>
+    <div><h2>DANH SÁCH THÔNG BÁO</h2></div>
+    <div></div>
+  </div>
+  <a routerLink="/notification/create">
     <button class="btn btn-primary btn-outline-secondary mx-1">
       <span class="text-light"> Thêm mới thông báo </span>
     </button>
   </a>
   <div class="row">
-    <form class="pb-3" *ngIf="rfSearch" [formGroup]="rfSearch" (ngSubmit)="searchNotification(0)">
-      <fieldset style="all: revert; background-color: #eeeeee;">
+    <form class="pb-3" *ngIf="rfSearch" [formGroup]="rfSearch" (ngSubmit)="searchNotification(0,false)">
+      <!--      <fieldset style="all: revert; background-color: #eeeeee;">-->
+      <fieldset style="all: revert;">
         <legend style="all: revert; background-color: white;padding: 5px 10px"
                 class="text-center border border-secondary">
           <strong style="color:#a67802">Tìm kiếm</strong>
@@ -22,7 +25,7 @@
             <p class="mb-2" *ngIf="!rfSearch.controls['title'].hasError('maxlength')">&nbsp;</p>
             <p class="mb-2" *ngIf="rfSearch.controls['title'].hasError('maxlength')" style="color: red">
               <i class="fa-solid fa-triangle-exclamation"></i>
-              Lưu ý: Nhập tiêu đề tối đa 70 ký tự.
+              Lưu ý: Nhập tiêu đề tối đa 45 ký tự.
             </p>
           </div>
           <div class="col-4">
@@ -30,7 +33,7 @@
               <div class="col-6">
                 <strong style="color:#a67802">Chọn ngày cụ thể: </strong>
                 <input formControlName="startDate" type="date" class="form-control rounded-0 mt-2"
-                       id="startDate1" placeholder="Nhập cột mốc ngày tháng..."
+                       id="startDate1" placeholder="dd-mm-yyyy"
                        onfocus="document.getElementById('startDate2').value = ''">
               </div>
               <div class="col-6">
@@ -58,7 +61,8 @@
                 </div>
               </div>
               <p class="mb-0" *ngIf="!rfSearch.controls['startDate'].hasError('invalidSearchDate')">&nbsp;</p>
-              <p class="mb-0" *ngIf="rfSearch.controls['startDate'].hasError('invalidSearchDate')" id="invalidSearchDate"
+              <p class="mb-0" *ngIf="rfSearch.controls['startDate'].hasError('invalidSearchDate')"
+                 id="invalidSearchDate"
                  style="color: red">
                 <i class="fa-solid fa-triangle-exclamation"></i>
                 Lưu ý: Nhập thời gian từ ngày hôm nay trở về trước.
@@ -83,7 +87,7 @@
             <div class="row">
               <div class="col-6">
                 <div class="input-group">
-                  <button class="btn btn-danger w-100 mt-2" [disabled]="rfSearch.invalid">
+                  <button class="btn btn-outline-danger w-100 mt-2" [disabled]="rfSearch.invalid">
                     <i class="fa-solid fa-magnifying-glass"></i>
                     Tìm kiếm
                   </button>
@@ -91,7 +95,7 @@
               </div>
               <div class="col-6">
                 <div class="input-group">
-                  <button class="btn btn-secondary w-100 mt-2" (click)="resetFormAndData()"
+                  <button class="btn btn-outline-secondary w-100 mt-2" (click)="resetFormAndData()"
                           onclick="document.getElementById('startDate').type='text'">
                     <i class="fa-solid fa-arrows-rotate"></i>
                     Làm mới bộ tìm kiếm
@@ -108,10 +112,9 @@
     <thead>
     <tr class="table-dark text-light">
       <th class="text-center align-middle">STT</th>
-      <th class="text-center align-middle">Ngày đăng <i class="fa-regular fa-calendar"></i></th>
-      <th class="text-center align-middle" style="width: 378px">Tiêu đề thông báo <i
-        class="fa-solid fa-layer-group"></i></th>
-      <th class="text-center align-middle" style="width: 712px">Nội dung thông báo <i class="fa-solid fa-book"></i></th>
+      <th class="text-center align-middle">Ngày đăng </th>
+      <th class="text-center align-middle" style="width: 378px">Tiêu đề thông báo </th>
+      <th class="text-center align-middle" style="width: 712px">Nội dung thông báo </th>
       <th class="text-center align-middle">Sửa</th>
       <th class="text-center align-middle" style="width: 20px;">
         <button class="btn text-light" (click)="addAllToDelete()">
@@ -122,10 +125,10 @@
     </thead>
     <tbody>
     <tr style="height: 47px" *ngFor="let item of pageNotifications.content;index as i">
-      <td class="text-center align-middle">{{i + 1 + pageNotifications.number * 5}}</td>
-      <td class="text-center align-middle">{{item.postingDate | date: 'dd/MM/yyyy' }}</td>
-      <td class="align-middle" style="width: 378px">{{item.title}}</td>
-      <td class="align-middle" style="width: 712px">
+      <td class="text-center align-top pt-2">{{i + 1 + pageNotifications.number * 5}}</td>
+      <td class="text-center align-top pt-2">{{item.postingDate | date: 'dd/MM/yyyy' }}</td>
+      <td class="align-top pt-2" style="width: 378px">{{item.title}}</td>
+      <td class="align-top pt-2" style="width: 712px">
         <div id="collapsedContent{{item.idNotification}}" style="display: inline-block">
           {{item.content | NotificationPipe}}
           <a style="color:blue;" role="button" id="expandButton{{item.idNotification}}" *ngIf="item.content.length > 70"
@@ -141,20 +144,23 @@
           </a>
         </div>
       </td>
-      <td class="text-center align-middle">
-        <a href="#">
+      <td class="text-center align-top pt-2">
+        <a routerLink="/notification/edit/{{item.idNotification}}">
           <button class="btn btn-success btn-outline-secondary btn-sm text-light">
             <i class="fa-regular fa-pen-to-square"></i>
           </button>
         </a>
       </td>
       <!-- Checkbox xóa ở tbody -->
-      <td class="text-center align-middle">
-        <input type="checkbox" [checked]="deleteIds.includes(item.idNotification)" (click)="addToDelete(item.idNotification)"/>
+      <td class="text-center align-top pt-2">
+        <input type="checkbox" [checked]="deleteIds.includes(item.idNotification)"
+               (click)="addToDelete(item.idNotification)"/>
       </td>
       <!-- Hết Checkbox xóa ở tbody -->
     </tr>
+    <!--suppress TypeScriptUnresolvedFunction -->
     <tr style="height: 47px" *ngFor="let a of [].constructor(5 - pageNotifications.numberOfElements)">
+      <!--suppress TypeScriptUnresolvedFunction -->
       <td *ngFor="let b of [].constructor(6)"></td>
     </tr>
     </tbody>
@@ -233,14 +239,30 @@
      aria-labelledby="deleteModalLabel"
      aria-hidden="true">
   <div class="modal-dialog">
-    <div class="modal-content">
+    <div class="modal-content" *ngIf="deleteNotifications.length == 0">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel0">Thông báo</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <strong style="color: red">Đã xảy ra lỗi. Vui lòng thử lại. <br><br></strong>
+        <div class="modal-footer">
+          <button id="deleteAccept0" class="btn btn-secondary" data-bs-dismiss="modal">
+            Huỷ bỏ
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="modal-content" *ngIf="deleteNotifications.length !== 0">
       <div class="modal-header">
         <h5 class="modal-title" id="deleteModalLabel">Xác nhận xóa</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"
                 aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        Xoá các thông báo với các tiêu đề được liệt kê bên dưới ?
+        <div *ngIf="deleteNotifications.length > 1">Xoá các thông báo với các tiêu đề được liệt kê bên dưới ?</div>
+        <div *ngIf="deleteNotifications.length == 1">Xoá thông báo với tiêu đề bên dưới ?</div>
         <div *ngFor="let item of deleteNotifications">
           <strong style="color: red">{{item.title}} &nbsp;</strong>
         </div>
@@ -254,4 +276,3 @@
     </div>
   </div>
 </div>
-

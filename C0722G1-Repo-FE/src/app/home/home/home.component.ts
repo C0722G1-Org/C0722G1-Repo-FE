@@ -18,6 +18,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 export class HomeComponent implements OnInit {
   landTypeList: LandType[] = [];
   cityList: City[] = [];
+  directionList: Direction[] = [];
   formSearch: FormGroup;
   page = 0;
   postList: PostListHome[] = [];

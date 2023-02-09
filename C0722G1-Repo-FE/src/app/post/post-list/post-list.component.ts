@@ -3,11 +3,13 @@ import {LandType} from '../../entity/post/land-type';
 import {PostListService} from './post-list.service';
 import {City} from '../../entity/post/city';
 import {Direction} from '../../entity/post/direction';
-import {FormBuilder, FormGroup} from '@angular/forms';
 import {PostListHome} from '../../entity/post/post-list-home';
 import {Image} from '../../entity/post/image';
-import {forEachComment} from 'tslint';
-import {element} from 'protractor';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {Title} from '@angular/platform-browser';
+import {ToastrService} from 'ngx-toastr';
+import {ActivatedRoute} from '@angular/router';
+
 
 @Component({
   selector: 'app-post-list',
@@ -26,8 +28,15 @@ export class PostListComponent implements OnInit {
   mess = '';
   imageList: Image[] = [];
   image = '';
+  keySearch: string | null = '';
 
-  constructor(private postListService: PostListService, private fb: FormBuilder) {
+  // CONSTRUCTOR
+  constructor(private postListService: PostListService,
+              private fb: FormBuilder,
+              private titleService: Title,
+              private toastrService: ToastrService,
+              private activatedRoute: ActivatedRoute) {
+    this.titleService.setTitle('Trang chủ');
     this.formSearch = this.fb.group({
       area: [''],
       price: [''],
@@ -35,13 +44,30 @@ export class PostListComponent implements OnInit {
       city: [''],
       direction: ['']
     });
+    this.activatedRoute.paramMap.subscribe(data => {
+      const keySearch = data.get('search');
+      if (keySearch?.includes('1')) {
+        this.keySearch = keySearch.substring(0, keySearch.length - 1);
+        this.searchByLandType(this.keySearch);
+        this.formSearch.patchValue({landType: this.keySearch});
+      } else if (keySearch?.includes('2')) {
+        this.keySearch = keySearch.substring(0, keySearch.length - 1);
+        this.searchByDirection(this.keySearch);
+        this.formSearch.patchValue({direction: this.keySearch});
+        console.log(this.keySearch);
+      } else {
+        this.keySearch = keySearch;
+        this.searchByCity(this.keySearch);
+        this.formSearch.patchValue({city: this.keySearch});
+      }
+      console.log(this.keySearch);
+    });
   }
 
   ngOnInit(): void {
     this.getLandType();
     this.getCity();
     this.getDirection();
-    this.getPostPage();
   }
 
   /**
@@ -158,9 +184,27 @@ export class PostListComponent implements OnInit {
    * @return void
    */
   showLess(): void {
-    this.postList = [];
     this.page = 0;
-    this.getPostPage();
+    this.postListService.getPostPage(
+      this.formSearch.controls.area.value,
+      this.formSearch.controls.price.value,
+      this.formSearch.controls.landType.value,
+      this.formSearch.controls.direction.value,
+      this.formSearch.controls.city.value, this.page).subscribe(data => {
+        this.mess = '';
+        this.postListTemp = data.content;
+        this.totalPage = data.totalPages;
+        this.page = data.pageable.pageNumber;
+        if (this.postListTemp.length > 0) {
+          this.getImageByIdPost(this.postListTemp);
+        }
+        this.postList = [];
+        this.postList = this.postList.concat(this.postListTemp);
+      }, error => {
+        this.mess = 'Không có dữ liệu';
+      },
+      () => {
+      });
   }
 
   /**
@@ -170,9 +214,30 @@ export class PostListComponent implements OnInit {
    * @return void
    */
   search(): void {
-    this.postList = [];
-    this.getPostPage();
+    this.postListService.getPostPage(
+      this.formSearch.controls.area.value,
+      this.formSearch.controls.price.value,
+      this.formSearch.controls.landType.value,
+      this.formSearch.controls.direction.value,
+      this.formSearch.controls.city.value, this.page).subscribe(data => {
+        this.mess = '';
+        this.postListTemp = data.content;
+        this.postList = [];
+        this.totalPage = data.totalPages;
+        this.page = data.pageable.pageNumber;
+        if (this.postListTemp.length > 0) {
+          this.getImageByIdPost(this.postListTemp);
+        }
+        this.postList = this.postList.concat(this.postListTemp);
+        this.success('Tìm kiếm thành công');
+      }, error => {
+        this.mess = 'Không có dữ liệu';
+        this.error('Tìm kiếm thất bại');
+      },
+      () => {
+      });
   }
+
   /**
    * Create by: SangNP
    * Date created: 04/02/2023
@@ -180,16 +245,83 @@ export class PostListComponent implements OnInit {
    * @return void
    */
   resetSearch(): void {
-    this.formSearch.setValue({
-      area: [''],
-      price: [''],
-      landType: [''],
-      city: [''],
-      direction: ['']
+    location.reload();
+  }
+
+  /**
+   * Create by: SangNP
+   * Date created: 04/02/2023
+   * Function: success for toartr
+   * @return void
+   */
+  success(mess: string): void {
+    this.toastrService.success(mess);
+  }
+
+  /**
+   * Create by: SangNP
+   * Date created: 04/02/2023
+   * Function: error for toartr
+   * @return void
+   */
+  error(mess: string): void {
+    this.toastrService.error(mess);
+  }
+
+  /**
+   * Method uses:
+   * Send a request to backend API to get a list of Post by search key
+   * Created by: HuyDN
+   * Created date: 07/02/2023
+   * @param keySearch: string
+   * @return a Observable that contain a list of Post object can be showed on Post detail screen
+   */
+  private searchByLandType(keySearch: string | null): void {
+    this.postListService.searchByLandType(keySearch).subscribe(data => {
+      this.postList = data.content;
+      this.totalPage = data.totalPages;
+      this.page = data.pageable.pageNumber;
+      if (this.postList.length > 0) {
+        this.getImageByIdPost(this.postList);
+      }
     });
-    this.postList = [];
-    console.log(this.postList);
-    this.getPostPage();
-    console.log(this.postList);
+  }
+
+  /**
+   * Method uses:
+   * Send a request to backend API to get a list of Post by search key
+   * Created by: HuyDN
+   * Created date: 07/02/2023
+   * @param keySearch: string
+   * @return a Observable that contain a list of Post object can be showed on Post detail screen
+   */
+  private searchByDirection(keySearch: string | null): void {
+    this.postListService.searchByDirection(keySearch).subscribe(data => {
+      this.postList = data.content;
+      this.totalPage = data.totalPages;
+      this.page = data.pageable.pageNumber;
+      if (this.postList.length > 0) {
+        this.getImageByIdPost(this.postList);
+      }
+    });
+  }
+
+  /**
+   * Method uses:
+   * Send a request to backend API to get a list of Post by search key
+   * Created by: HuyDN
+   * Created date: 07/02/2023
+   * @param keySearch: string
+   * @return a Observable that contain a list of Post object can be showed on Post detail screen
+   */
+  private searchByCity(keySearch: string | null): void {
+    this.postListService.searchByCity(keySearch).subscribe(data => {
+      this.postList = data.content;
+      this.totalPage = data.totalPages;
+      this.page = data.pageable.pageNumber;
+      if (this.postList.length > 0) {
+        this.getImageByIdPost(this.postList);
+      }
+    });
   }
 }

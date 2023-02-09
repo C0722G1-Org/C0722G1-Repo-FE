@@ -1,9 +1,11 @@
-import {Direction} from "./direction";
-import {StatusPost} from "./status-post";
-import {Address} from "./address";
-import {DemandType} from "./demand-type";
-import {LandType} from "./land-type";
-import {Customer} from "../customer/customer";
+import {Direction} from './direction';
+// @ts-ignore
+import {StatusPost} from './status-post';
+import {Address} from './address';
+// @ts-ignore
+import {DemandType} from './demand-type';
+import {LandType} from './land-type';
+import {Customer} from '../customer/customer';
 
 export interface Post {
   idPost?: number;

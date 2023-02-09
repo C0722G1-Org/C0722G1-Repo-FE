@@ -1,45 +1,88 @@
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-xl">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 id="h5">Thông báo</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <table class="table table-bordered">
-          <thead>
-          </thead>
-          <tbody class="table" id="table">
-          <tr  *ngFor="let item of pageNotifications.content;index as i">
-            <td><b style="text-align: start">{{item.postingDate | date: 'dd/MM/yyyy' }}</b>: {{item.content}} </td>
-          </tr>
-          </tbody>
-        </table>
-        <!--  Phân trang + Nút xóa-->
-        <div *ngIf="pageNotifications" class="d-flex justify-content-between" id="last-row">
-          <div>
-          </div>
-          <div>
-            <nav aria-label="Page navigation example">
-              <ul class="pagination">
-                <li class="page-item" [ngClass]="pageNotifications.first ? 'disabled': ''">
-                  <a role="button" class="page-link" (click)="gotoPage(0)">Trang đầu</a>
-                </li>
-                <li class="page-item" [ngClass]="pageNotifications.first ? 'disabled': ''">
-                  <a role="button" class="page-link" (click)="gotoPage(pageNotifications.number - 1)"><</a>
-                </li>
-                <li class="page-item" [ngClass]="pageNotifications.last ? 'disabled': ''">
-                  <a role="button" class="page-link" (click)="gotoPage(pageNotifications.number + 1)">></a>
-                </li>
-                <li class="page-item" [ngClass]="pageNotifications.last ? 'disabled': ''">
-                  <a role="button" class="page-link" (click)="gotoPage(pageNotifications.totalPages - 1)">Trang cuối</a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+<!--<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">-->
+<!--  <div class="modal-dialog">-->
+<!--    <div class="modal-content">-->
+<!--      <div class="modal-header">-->
+<!--        <h5 style="text-align: center">Thông báo</h5>-->
+<!--        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+<!--      </div>-->
+<!--      <div class="modal-body">-->
+<!--        <table class="table table-bordered">-->
+<!--          <thead>-->
+<!--          </thead>-->
+<!--          <tbody class="table">-->
+<!--          <tr>-->
+<!--            <th >STT</th>-->
+<!--            <th >Ngày đăng </th>-->
+<!--            <th >Tiêu đề thông báo</th>-->
+<!--            <th >Nội dung thông báo </th>-->
+<!--          <tr  *ngFor="let item of pageNotifications.content;index as i">-->
+<!--            <td>{{i + 1 + pageNotifications.number * 5}}</td>-->
+<!--            <td>{{item.postingDate | date: 'dd/MM/yyyy' }}</td>-->
+<!--            <td>{{item.title}}</td>-->
+<!--            <td>{{item.content}}</td>-->
+<!--          </tr>-->
+<!--          </tbody>-->
+<!--        </table>-->
+<!--        &lt;!&ndash;  Phân trang + Nút xóa&ndash;&gt;-->
+<!--        <div *ngIf="pageNotifications" class="d-flex justify-content-between" id="last-row">-->
+<!--          <div>-->
+<!--          </div>-->
+<!--          <div>-->
+<!--            <nav aria-label="Page navigation example">-->
+<!--              <ul class="pagination">-->
+<!--                <li class="page-item" [ngClass]="pageNotifications.first ? 'disabled': ''">-->
+<!--                  <a role="button" class="page-link" (click)="gotoPage(0)">Trang đầu</a>-->
+<!--                </li>-->
+<!--                <li class="page-item" [ngClass]="pageNotifications.first ? 'disabled': ''">-->
+<!--                  <a role="button" class="page-link" (click)="gotoPage(pageNotifications.number - 1)"><</a>-->
+<!--                </li>-->
+<!--                <li class="page-item" *ngIf="pageNotifications.number - 3 > 0">-->
+<!--                  <a role="button" class="page-link"-->
+<!--                     (click)="gotoPage(pageNotifications.number - 4)">{{pageNotifications.number - 3}}</a>-->
+<!--                </li>-->
+<!--                <li class="page-item" *ngIf="pageNotifications.number - 2 > 0">-->
+<!--                  <a role="button" class="page-link"-->
+<!--                     (click)="gotoPage(pageNotifications.number - 3)">{{pageNotifications.number - 2}}</a>-->
+<!--                </li>-->
+<!--                <li class="page-item" *ngIf="pageNotifications.number - 1 > 0">-->
+<!--                  <a role="button" class="page-link"-->
+<!--                     (click)="gotoPage(pageNotifications.number - 2)">{{pageNotifications.number - 1}}</a>-->
+<!--                </li>-->
+<!--                <li class="page-item" *ngIf="pageNotifications.number > 0">-->
+<!--                  <a role="button" class="page-link"-->
+<!--                     (click)="gotoPage(pageNotifications.number - 1)">{{pageNotifications.number}}</a>-->
+<!--                </li>-->
+
+<!--                <li class="page-item active"><a class="page-link">{{pageNotifications.number + 1}}</a></li>-->
+
+<!--                <li class="page-item" *ngIf="pageNotifications.number + 2 <= pageNotifications.totalPages">-->
+<!--                  <a role="button" class="page-link"-->
+<!--                     (click)="gotoPage(pageNotifications.number + 1)">{{pageNotifications.number + 2}}</a>-->
+<!--                </li>-->
+<!--                <li class="page-item" *ngIf="pageNotifications.number + 3 <= pageNotifications.totalPages">-->
+<!--                  <a role="button" class="page-link"-->
+<!--                     (click)="gotoPage(pageNotifications.number + 2)">{{pageNotifications.number + 3}}</a>-->
+<!--                </li>-->
+<!--                <li class="page-item" *ngIf="pageNotifications.number + 4 <= pageNotifications.totalPages">-->
+<!--                  <a role="button" class="page-link"-->
+<!--                     (click)="gotoPage(pageNotifications.number + 3)">{{pageNotifications.number + 4}}</a>-->
+<!--                </li>-->
+<!--                <li class="page-item" *ngIf="pageNotifications.number + 5 <= pageNotifications.totalPages">-->
+<!--                  <a role="button" class="page-link"-->
+<!--                     (click)="gotoPage(pageNotifications.number + 4)">{{pageNotifications.number + 5}}</a>-->
+<!--                </li>-->
+<!--                <li class="page-item" [ngClass]="pageNotifications.last ? 'disabled': ''">-->
+<!--                  <a role="button" class="page-link" (click)="gotoPage(pageNotifications.number + 1)">></a>-->
+<!--                </li>-->
+<!--                <li class="page-item" [ngClass]="pageNotifications.last ? 'disabled': ''">-->
+<!--                  <a role="button" class="page-link" (click)="gotoPage(pageNotifications.totalPages - 1)">Trang cuối</a>-->
+<!--                </li>-->
+<!--              </ul>-->
+<!--            </nav>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->

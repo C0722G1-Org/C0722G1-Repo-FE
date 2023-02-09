@@ -1,10 +1,11 @@
-import {Component, DoBootstrap, OnInit, ViewChild} from '@angular/core';
-import {PostDetail} from '../../entity/post/post-detail';
 import {PostService} from '../post.service';
-import {ActivatedRoute} from '@angular/router';
-import {ToastContainerDirective, ToastrService} from 'ngx-toastr';
-import {StatusPost} from '../../entity/post/status-post';
 import {TokenService} from '../../service/token.service';
+import {Image} from '../../entity/post/image';
+import {PostDetailDto} from '../../dto/post/PostDetailDto';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ToastContainerDirective, ToastrService} from 'ngx-toastr';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-post-detail',
@@ -12,43 +13,33 @@ import {TokenService} from '../../service/token.service';
   styleUrls: ['./post-detail.component.css']
 })
 export class PostDetailComponent implements OnInit {
-  // @ts-ignore
+// @ts-ignore
   @ViewChild(ToastContainerDirective, {static: true}) toastContainer: ToastContainerDirective;
-  // statusPost: StatusPost[] = [
-  //   {idStatusPost: 1, nameStatusPost: 'Chờ giao dịch'},
-  //   {idStatusPost: 2, nameStatusPost: 'Đã giao dịch'},
-  //   {idStatusPost: 3, nameStatusPost: 'Giao dịch thất bại'}];
-  // postDetail: PostDetail = {
-  //   idPost: 1, price: 500, area: 500, note: 'alo',
-  //   customer: {
-  //     idCustomer: 1,
-  //     nameCustomer: 'Đặng Nhật Huy',
-  //     phoneCustomer1: '0799440683',
-  //     genderCustomer: 1,
-  //     emailCustomer: 'b77cwalk@gmail.com'
-  //   },
-  //   demandType: {idDemandType: 3, nameDemandType: 'Cho thuê'}, landType: {idLandType: 1, nameLandType: 'Căn hộ'},
-  //   statusPost: this.statusPost[0],
-  //   direction: {idDirection: 1, nameDirection: 'Đông Bắc'},
-  //   dateCreation: '2023/02/03'
-  // };
-  postDetail: PostDetail = {};
-
-  // @ts-ignore
-  phoneNumber: string | undefined = this.postDetail?.customer?.phoneCustomer1.slice(0, 6) + '*** · Hiện số';
-  accountId = 1;
-  price = '';
+  imageList: Image[] = [];
+// @ts-ignore
+  accountId: string | null = '';
+  idCheck = 0;
   million = 1000000;
   billion = 1000000000;
-  Slide = 'Slide ';
+  postDetail: PostDetailDto = {};
+// Information
+  idPost = 0;
+  displayPrice = '';
+  phoneNumber: string | undefined = '';
+// @ts-ignore
+  displayPhoneNumber: string | undefined = '';
+  url: string | undefined = 'https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921';
 
   constructor(private postService: PostService,
               private activatedRoute: ActivatedRoute,
               private toastr: ToastrService,
-              private tokenService: TokenService) {
+              private tokenService: TokenService,
+              private titleService: Title,
+              private router: Router) {
     this.activatedRoute.paramMap.subscribe(data => {
       const id = data.get('id');
       if (id != null) {
+        this.idPost = Number(id);
         /**
          * Method uses:
          * Send a request to backend API to get a Post by parameter Id
@@ -57,10 +48,41 @@ export class PostDetailComponent implements OnInit {
          * @param id: a Post' id
          * @return a Observable that contain a Post object can be showed on Post detail screen
          */
-        this.postService.findPostById(Number(id)).subscribe(data1 => {
-          this.postDetail = data1;
+
+        this.postService.findPostById(Number(id)).subscribe(dataPost => {
+          console.log(dataPost.approval);
+          if (dataPost.approval === false || dataPost.flagDeleted === true) {
+            this.router.navigateByUrl('/post/error');
+          }
+          this.postDetail = dataPost;
+          this.phoneNumber = dataPost.phoneCustomer1.slice(0, 4) + ' ' + dataPost.phoneCustomer1.slice(4, 7) + ' *** • Hiện số';
+          console.log(this.phoneNumber)
+          this.displayPhoneNumber = dataPost.phoneCustomer1;
+          this.postService.getAccountId(this.postDetail.idCustomer).subscribe(idAccount => {
+            console.log(this.postDetail.idCustomer);
+            this.idCheck = idAccount;
+            console.log(this.accountId);
+          });
+          /**
+           * Method uses:
+           * Send a request to backend API to get a ImageSet by parameter Id
+           * Created by: HuyDN
+           * Created date: 04/02/2023
+           * @param id: a Post' id
+           * @return a Observable that contain a ImageSet object can be showed on Post detail screen
+           */
+          this.postService.findImageByIdPost(Number(id)).subscribe(dataImage => {
+            this.imageList = dataImage;
+            this.url = this.imageList[0].url;
+            if (this.postDetail.price != null && this.postDetail.price >= this.billion) {
+              this.convertToBillion();
+            } else if (this.postDetail.price != null && this.postDetail.price >= this.million) {
+              this.convertToMillion();
+            }
+          });
         });
       }
+    }, error => {
     });
   }
 
@@ -70,14 +92,12 @@ export class PostDetailComponent implements OnInit {
    * Created Date: 03/02/2023
    */
   ngOnInit(): void {
+    this.titleService.setTitle('Chi tiết bất động sản');
     this.toastr.overlayContainer = this.toastContainer;
-    // if (this.tokenService.getToken()){
-    //   this.accountId = this.tokenService.getIdAccount();
-    // }
-    if (this.postDetail.price != null) {
-      this.convertToMillion(this.postDetail.price);
+    if (this.tokenService.getToken()) {
+      this.accountId = this.tokenService.getIdAccount();
     }
-    this.convertToBillion();
+    this.toastr.toastrConfig.positionClass = 'toast-bottom-right';
   }
 
   /**
@@ -86,7 +106,10 @@ export class PostDetailComponent implements OnInit {
    * Created Date: 03/02/2023
    */
   showPhoneNumber(): void {
-    this.phoneNumber = this.postDetail.customer?.phoneCustomer1;
+    // @ts-ignore
+    this.phoneNumber = this.displayPhoneNumber?.slice(0, 4) + ' '
+      + this.displayPhoneNumber?.slice(4, 7) + ' '
+      + this.displayPhoneNumber?.slice(7, 10) + ' • Sao chép';
   }
 
   /**
@@ -95,8 +118,8 @@ export class PostDetailComponent implements OnInit {
    * Created Date: 03/02/2023
    */
   showSucceedCopyLink(): void {
-    navigator.clipboard.writeText('http://localhost:4200/post/detail/' + this.postDetail.idPost);
-    this.toastr.info('Đã copy đường dẫn');
+    navigator.clipboard.writeText('http://localhost:4200/post/detail/' + this.idPost);
+    this.toastr.info('Đã sao chép đường dẫn URL');
   }
 
   /**
@@ -104,9 +127,6 @@ export class PostDetailComponent implements OnInit {
    * Created by HuyDN
    * Created Date: 03/02/2023
    */
-  showSucceedReport(): void {
-    this.toastr.error('Đã báo xấu bài đăng');
-  }
 
   /**
    * In order to change Post's status to Succeed
@@ -115,34 +135,61 @@ export class PostDetailComponent implements OnInit {
    */
   showSucceedConfirmation(): void {
     // @ts-ignore
-    this.postDetail.statusPost?.idStatusPost = 2;
+    this.postService.succeedConfirm(this.idPost);
     this.toastr.success('Xác nhận giao dịch', 'Thành công!');
   }
 
-  convertToMillion(price: number): void {
+  /**
+   * In order to change display of price from number to text
+   * Use for million unit
+   * Created by HuyDN
+   * Created Date: 03/02/2023
+   */
+
+  convertToMillion(): void {
     // @ts-ignore
-    if (price >= this.million && price % this.million === 0) {
-      // @ts-ignore
-      this.price = price / this.million + ' Triệu';
-    } else { // @ts-ignore
-      if (price >= this.million && price % this.million !== 0) {
-        // @ts-ignore
-        this.price = price / this.million + ' Triệu ' + price % this.million;
+    this.displayPrice = (this.postDetail.price / this.million) + ' Triệu';
+  }
+
+  /**
+   * In order to change display of price from number to text
+   * Use for billion unit
+   * Created by HuyDN
+   * Created Date: 03/02/2023
+   */
+  convertToBillion(): void {
+    // @ts-ignore
+    this.displayPrice = (this.postDetail.price / this.billion) + ' Tỷ';
+  }
+
+  copyPhoneNumber(): void {
+    if (this.phoneNumber === this.displayPhoneNumber?.slice(0, 4) + ' '
+      + this.displayPhoneNumber?.slice(4, 7) + ' '
+      + this.displayPhoneNumber?.slice(7, 10) + ' • Sao chép') {
+      if (this.postDetail.phoneCustomer1 != null) {
+        navigator.clipboard.writeText(this.postDetail.phoneCustomer1);
       }
+      this.toastr.info('Đã sao chép số điện thoại');
     }
   }
 
-  convertToBillion(): void {
-    // @ts-ignore
-    if (this.postDetail.price >= this.billion && this.postDetail.price % this.billion === 0) {
-      // @ts-ignore
-      this.price = this.postDetail.price / this.billion + ' Tỷ';
-    } else {
-      // @ts-ignore
-      if (this.postDetail.price >= this.billion && this.postDetail.price % this.billion !== 0) {
-        // @ts-ignore
-        this.price = this.postDetail.price / this.billion + ' Tỷ ' + this.convertToMillion(this.postDetail.price % this.million);
-      }
-    }
+  changeImage(url: string | undefined): void {
+    this.url = url;
+  }
+
+  addHashTag(event: any, land: any): void {
+    event.target.innerText = '#' + land;
+  }
+
+  removeHashTag(event: any, land: any): void {
+    event.target.innerText = land;
+  }
+
+  addHashTagDirection(event: any, nameDirection: any): void {
+    event.target.innerText = '#hướng ' + nameDirection;
+  }
+
+  removeHashTagDirection(event: any, nameDirection: any): void {
+    event.target.innerText = 'hướng ' + nameDirection;
   }
 }
