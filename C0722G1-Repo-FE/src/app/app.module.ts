@@ -17,7 +17,7 @@ import {HttpClientModule} from '@angular/common/http';
     AppRoutingModule,
     HttpClientModule,
     HomeModule,
-    NgxPaginationModule,
+    BrowserAnimationsModule,
     ToastrModule.forRoot()
   ],
   providers: [],
