@@ -6,9 +6,13 @@ import { AppComponent } from './app.component';
 import {HomeModule} from './home/home.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToastrModule} from 'ngx-toastr';
-import {HttpClientModule} from '@angular/common/http';
-import {NgxPaginationModule} from "ngx-pagination";
-
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {ReactiveFormsModule} from '@angular/forms';
+import {PostModule} from './post/post.module';
+import {AngularFireModule} from '@angular/fire';
+import {environment} from '../environments/environment';
+import {FormModule} from './form/form.module';
+import {AuthInterceptor} from "./service/auth.interceptor";
 @NgModule({
   declarations: [
     AppComponent
@@ -18,11 +22,20 @@ import {NgxPaginationModule} from "ngx-pagination";
     AppRoutingModule,
     HttpClientModule,
     HomeModule,
-    NgxPaginationModule,
+    // FormModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    ReactiveFormsModule,
+    PostModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig)
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true
+  }],
+  exports: [
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

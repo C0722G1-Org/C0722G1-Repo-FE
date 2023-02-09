@@ -120,6 +120,7 @@ export class EmployeeListComponent implements OnInit {
    */
   private showToastrSuccess(): void {
     this.employeeService.showSuccess('Tìm kiếm thành công.', 'Thông báo!');
+
   }
 
   /**
@@ -166,6 +167,7 @@ export class EmployeeListComponent implements OnInit {
       if (error.status === 404) {
         this.showToastrError();
       }
+
     }, () => {
     });
   }

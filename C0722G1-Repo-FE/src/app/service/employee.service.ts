@@ -14,7 +14,6 @@ export class EmployeeService {
   URL_EMPLOYEE = 'http://localhost:8080/api/employees';
   URL_EMPLOYEE_CREATE = 'http://localhost:8080/api/employees/save';
   URL_EMPLOYEE_UPDATE = 'http://localhost:8080/api/employees/update';
-
   constructor(private httpClient: HttpClient,
               private toast: ToastrService) {
   }
@@ -122,6 +121,7 @@ export class EmployeeService {
   showSuccess(message: string, title: string): void {
     this.toast.success(message, title);
   }
+  
   /**
    * Created: NhanUQ
    * Function: notification error
@@ -132,3 +132,11 @@ export class EmployeeService {
     this.toast.error(message, title);
   }
 }
+
+
+
+
+
+
+
+
