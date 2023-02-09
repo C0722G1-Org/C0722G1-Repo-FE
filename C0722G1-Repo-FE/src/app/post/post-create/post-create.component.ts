@@ -86,6 +86,8 @@ export class PostCreateComponent implements OnInit {
     codeCustomer: '',
   };
 
+  isOverSizeImage: boolean = false;
+  isNotImage: boolean = false;
   codeCustomer = 'Lỗi chưa xác định';
 
   constructor(
@@ -171,7 +173,7 @@ export class PostCreateComponent implements OnInit {
   async savePost() {
     this.submitTimes++;
 
-    if (this.createPostDtoUnit.invalid) {
+    if (this.createPostDtoUnit.invalid || this.isOverSizeImage || this.isNotImage) {
       this.toastrService.error('Gửi bài đăng thất bại. Vui lòng kiểm tra lại thông tin đã điền');
       this.createPostDtoUnit.markAllAsTouched();
       this.createPostDtoUnit.markAsDirty();
@@ -249,8 +251,22 @@ export class PostCreateComponent implements OnInit {
     if (amountOfFile !== 0) {
       this.nameImageList = [];
       for (let i = 0; i < amountOfFile; i++) {
-        this.imageList.push(event.target.files[i]);
-        this.nameImageList.push(event.target.files[i].name);
+        let file = event.target.files[i];
+        if (file.type.includes('image')) {
+          if (file.size / 1024 / 1024 < 5) {
+            this.imageList.push(event.target.files[i]);
+            this.nameImageList.push(event.target.files[i].name);
+            this.isOverSizeImage = false;
+            this.isNotImage = false;
+          } else {
+            this.isOverSizeImage = true;
+            break;
+          }
+        } else {
+          this.isNotImage = true;
+          break;
+        }
+
       }
     } else {
       this.nameImageList = ['Chưa có ảnh'];
