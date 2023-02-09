@@ -62,9 +62,10 @@ export class FormListComponent implements OnInit {
    * Function: reloadList
    *
    */
-// load lại list
+  // load lại list
   reloadList(): void {
-    this.searchByContent('', true);
+    this.page = 0;
+    this.ngOnInit();
   }
 
   /**
