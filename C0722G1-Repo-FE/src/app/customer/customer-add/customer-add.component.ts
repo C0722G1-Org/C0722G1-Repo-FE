@@ -56,6 +56,7 @@ export class CustomerAddComponent implements OnInit {
           codeCustomer: [''],
           flagDelete: [false],
           genderCustomer: [''],
+          approvalCustomer: [1],
           dateOfBirth: ['', [Validators.required]],
           phoneCustomer1: ['', [Validators.required, Validators.pattern('(((\\+|)84)|0)(3|5|7|8|9)+([0-9]{8})')]],
           phoneCustomer2: ['', [Validators.pattern('(((\\+|)84)|0)(3|5|7|8|9)+([0-9]{8})')]],

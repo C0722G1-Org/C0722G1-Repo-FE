@@ -62,7 +62,6 @@ export class HeaderComponent implements OnInit {
     this.checkNotificationMd = true;
     if (this.checkNotificationMd){
       this.numberNotification = 0
-      this.toast.info('đã hết thông báo');
     }
   }
 

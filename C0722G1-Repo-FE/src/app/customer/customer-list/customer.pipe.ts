@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class CustomerPipe implements PipeTransform {
 
-  transform(value: string, limit = 20, completeWords = false, ellipsis = ''): any {
+  transform(value: string, limit = 30, completeWords = false, ellipsis = ''): any {
     if (completeWords) {
       limit = value.substr(0, limit).lastIndexOf('findContent');
     }

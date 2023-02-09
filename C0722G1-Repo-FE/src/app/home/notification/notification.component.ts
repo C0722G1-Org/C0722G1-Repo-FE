@@ -40,7 +40,7 @@ export class NotificationComponent implements OnInit {
    * Date: 02/02/2023
    */
   searchNotification(pageNumber: number): void {
-    this.notificationService.getPageNotifications(this.rfSearch.value, pageNumber).subscribe(next => {
+    this.notificationService.getPageNotifications(this.rfSearch.value, pageNumber,5).subscribe(next => {
       this.pageNotifications = next;
     }, error => {
       console.log('Lỗi truy xuất dữ liệu.');

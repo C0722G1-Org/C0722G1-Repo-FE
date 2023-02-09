@@ -48,11 +48,9 @@ export class PostDetailComponent implements OnInit {
          * @param id: a Post' id
          * @return a Observable that contain a Post object can be showed on Post detail screen
          */
-
         this.postService.findPostById(Number(id)).subscribe(dataPost => {
-          console.log(dataPost.approval);
-          if (dataPost.approval === false || dataPost.flagDeleted === true) {
-            this.router.navigateByUrl('/post/error');
+          if (dataPost.approval === false || dataPost.flagDeleted === true ) {
+            this.router.navigateByUrl('/**');
           }
           this.postDetail = dataPost;
           this.phoneNumber = dataPost.phoneCustomer1.slice(0, 4) + ' ' + dataPost.phoneCustomer1.slice(4, 7) + ' *** • Hiện số';
@@ -80,6 +78,11 @@ export class PostDetailComponent implements OnInit {
               this.convertToMillion();
             }
           });
+        }, error => {
+          console.log('error --->', error.status)
+          if (error.status === 400 || 404 || 403) {
+            this.router.navigateByUrl('/**');
+          }
         });
       }
     }, error => {

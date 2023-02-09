@@ -120,7 +120,7 @@ export class PostListApprovalComponent implements OnInit {
         })
       }
       else {
-        this.toastrService.error('Không tìm thấy dữ liệu', 'warning', {
+        this.toastrService.error('Không tìm thấy dữ liệu', 'Lỗi', {
           timeOut: 2000,
           progressBar: true,
           positionClass: 'toast-top-right',

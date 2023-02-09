@@ -6,6 +6,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {EmployeeService} from '../../service/employee.service';
 import {DivisionService} from '../../service/division.service';
+import {Title} from "@angular/platform-browser";
 
 export const checkBirthDay: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
   // @ts-ignore
@@ -39,7 +40,8 @@ export class EmployeeEditComponent implements OnInit {
               private divisionService: DivisionService,
               private router: Router,
               private toastrService: ToastrService,
-              private activatedRoute: ActivatedRoute) {
+              private activatedRoute: ActivatedRoute, private title: Title) {
+    this.title.setTitle('Chỉnh sửa thông tin nhân viên');
     this.formUpdateEmployee = new FormGroup({
       idEmployee: new FormControl(this.employee.idEmployee),
       codeEmployee: new FormControl(this.employee.codeEmployee),

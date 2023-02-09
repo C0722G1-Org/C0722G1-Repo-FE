@@ -5,7 +5,7 @@ import {NotificationPipePipe} from './notification-list/notification-pipe.pipe';
 import {NotificationCreateComponent} from './notification-create/notification-create.component';
 import {NotificationUpdateComponent} from './notification-update/notification-update.component';
 import {CommonModule} from '@angular/common';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 // @ts-ignore
 @NgModule({
@@ -13,10 +13,11 @@ import {ReactiveFormsModule} from '@angular/forms';
   exports: [
     NotificationListComponent
   ],
-  imports: [
-    CommonModule,
-    NotificationRoutingModule,
-    ReactiveFormsModule
-  ]
+    imports: [
+        CommonModule,
+        NotificationRoutingModule,
+        ReactiveFormsModule,
+        FormsModule
+    ]
 })
 export class NotificationModule { }
