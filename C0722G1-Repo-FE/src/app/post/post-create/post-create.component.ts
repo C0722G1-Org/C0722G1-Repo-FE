@@ -180,7 +180,7 @@ export class PostCreateComponent implements OnInit {
       return;
     }
 
-    if (this.createPostDtoUnit.valid) {
+    if (this.createPostDtoUnit.valid && !this.isOverSizeImage && !this.isNotImage) {
       this.isWaitingResponse = true;
       let urls = await this.getDownloadImageURLs()
       this.createPostDto = this.createPostDtoUnit.value;
