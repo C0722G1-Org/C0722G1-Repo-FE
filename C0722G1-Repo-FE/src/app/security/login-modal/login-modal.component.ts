@@ -62,7 +62,7 @@ export class LoginModalComponent implements OnInit {
             this.tokenService.setEmail(data.email);
             this.tokenService.setIdAccount(data.idAccount);
             this.statusRole = data.roles;
-            location.reload();
+            location.href = 'http://localhost:4200/home';
             this.toast.info('Đăng nhập thành công.', 'Thông báo',{
               timeOut: 3000,
               extendedTimeOut: 1500

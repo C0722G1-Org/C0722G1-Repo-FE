@@ -80,13 +80,10 @@
       </div>
 
 
-      <div class="d-flex mt-3 mb-4 w-100 ">
-        <button type="submit" style="margin-right: 5px"
+      <div class="d-flex mt-3 mb-4 w-100 justify-content-center">
+        <button type="submit" style="margin-right: 5px" [routerLink]="['/customer/edit',customerDetail?.idCustomer]"
                 class="btn btn-primary d-flex justify-content-center">
           <p>Sửa thông tin</p>
-        </button>
-        <button class="btn btn-outline btn-outline-danger ms-auto d-flex justify-content-center">
-          <p>Xoá</p>
         </button>
       </div>
 

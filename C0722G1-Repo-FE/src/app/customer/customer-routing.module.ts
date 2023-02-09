@@ -29,7 +29,7 @@ const routes: Routes = [
     canActivate: [AuthGuard] && [AdminEmployeeGuard]
   },
   {
-    path: 'detail/:idCustomer', component: CustomerDetailComponent,canActivate: [AuthGuard] && [AdminEmployeeGuard]
+    path: 'detail/:idCustomer', component: CustomerDetailComponent, canActivate: [AuthGuard] && [AdminEmployeeGuard]
   }
 ];
 

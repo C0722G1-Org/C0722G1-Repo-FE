@@ -11,13 +11,14 @@ import {PostListCustomerComponent} from './post-list-customer/post-list-customer
 import {AuthGuard} from '../authGuard/auth.guard';
 import {AdminGuard} from '../authGuard/admin.guard';
 import {AdminEmployeeGuard} from "../authGuard/admin-employee.guard";
+import {CustomerGuard} from "../authGuard/customer.guard";
 
 const routes: Routes = [
   {
     path: '', component: PostListApprovalComponent, canActivate: [AuthGuard] && [AdminEmployeeGuard]
   },
   {
-    path: 'create', component: PostCreateComponent, canActivate: [AuthGuard] && [AdminGuard]
+    path: 'create', component: PostCreateComponent, canActivate: [AuthGuard] && [CustomerGuard]
   },
   {
     path: 'edit', component: PostEditComponent, canActivate: [AuthGuard]
@@ -26,10 +27,10 @@ const routes: Routes = [
     path: 'charts', component: PostChartComponent, canActivate: [AuthGuard]
   },
   {
-    path: 'detail/:id', component: PostDetailComponent, canActivate: [AuthGuard]
+    path: 'detail/:id', component: PostDetailComponent
   },
   {
-    path: 'list/:search', component: PostListComponent, canActivate: [AuthGuard]
+    path: 'list/:search', component: PostListComponent
   },
   {
     path: 'list/customerByAdmin/:idCustomer', component: PostListCustomerComponent, canActivate: [AuthGuard]

@@ -46,7 +46,7 @@ export class PostChartComponent implements OnInit {
     this.title.setTitle('Thống kê bài đăng');
     this.currentMonth = new Date().getMonth() + 1;
     this.currentYear = new Date().getFullYear();
-    this.monthList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    // this.monthList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     this.getYearList();
   }
 
@@ -353,5 +353,13 @@ export class PostChartComponent implements OnInit {
     this.toastr.error(mess, 'Lỗi', {
       timeOut: 1500
     });
+  }
+  /**
+   * Function create monthList when click select option "Năm"
+   * Author: DatTQ  ;  Date:04/02/2023
+   * @param mess:string
+   */
+  getMonthList() {
+    this.monthList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   }
 }

@@ -1,9 +1,35 @@
 <div>
+  <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active" data-bs-interval="4000">
+        <img src="https://www.reder.vn/uploads/slider/images/banner-1.jpg" class="d-block w-100" alt="..." style="height: 30rem;">
+      </div>
+      <div class="carousel-item" data-bs-interval="4000">
+        <img src="https://trannghia.net/wp-content/uploads/2021/06/banner03.jpg" class="d-block w-100" alt="..." style="height: 30rem;">
+      </div>
+      <div class="carousel-item" data-bs-interval="4000">
+        <img src="https://hqcorp.vn/wp-content/uploads/elementor/thumbs/banner-golden-king-1900-900-23-10-2018-2-pp9rj4fbfh194nixzltkhxsm6lcj8ph1ug7751gw34.jpg" class="d-block w-100" alt="" style="height: 30rem;">
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
   <div class="row container-fluid">
-    <div class="col-lg-1"></div>
-    <div class="col-lg-10 col-md-12 col-sm-12">
+    <div class="col-xl-1"></div>
+    <div class="col-xl-10 col-md-12 col-sm-12">
       <form [formGroup]="formSearch" (ngSubmit)="search()" class="searchArea row p-3 my-5">
-        <div class="col-4">
+        <div class="col-lg-4 col-md-12">
           <select formControlName="area" class="form-select my-2" aria-label="Default select example">
             <option value="" selected>Diện tích</option>
             <option value="0-49">< 50 m2</option>
@@ -18,7 +44,7 @@
             <option *ngFor="let item of landTypeList" [ngValue]="item.nameLandType">{{item.nameLandType}}</option>
           </select>
         </div>
-        <div class="col-4">
+        <div class="col-lg-4 col-md-12">
           <select formControlName="price" class="form-select my-2" aria-label="Default select example">
             <option value="" selected>Giá tiền</option>
             <option value="0-499999999">< 500 triệu</option>
@@ -36,31 +62,43 @@
             <option *ngFor="let item of cityList" [ngValue]="item.nameCity">{{item.nameCity}}</option>
           </select>
         </div>
-        <div class="col-4">
-          <button type="submit" class="btn btn-outline-danger my-1">Tìm kiếm</button>
-          <button class="btn btn-outline-danger my-1 mx-3" (click)="resetSearch()"><i
-            class="fa-solid fa-arrows-rotate"></i></button>
+        <div class="col-lg-4 col-md-12">
           <select formControlName="direction" class="form-select my-2" aria-label="Default select example">
             <option value="">Hướng</option>
-            <option *ngFor="let item of directionList" [ngValue]="item.nameDirection">{{item.nameDirection}}</option>
+            <option value="Đông">Đông</option>
+            <option value="Tây">Tây</option>
+            <option value="Nam">Nam</option>
+            <option value="Bắc">Bắc</option>
+            <option value="Đông Bắc">Đông Bắc</option>
+            <option value="Tây Bắc">Tây Bắc</option>
+            <option value="Đông Nam">Đông Nam</option>
+            <option value="Tây Nam">Tây Nam</option>
           </select>
+          <button type="submit" class="btn btn-outline-danger my-1">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            Tìm kiếm
+          </button>
+          <button class="btn btn-outline-danger my-1 mx-3" (click)="resetSearch()">
+            <i class="fa-solid fa-arrows-rotate"></i>
+            Làm mới
+          </button>
         </div>
       </form>
     </div>
-    <div class="col-lg-1"></div>
+    <div class="col-xl-1"></div>
   </div>
   <div class="row container-fluid">
     <div class="col-12 d-flex justify-content-center" *ngIf="mess!=''" style="height: 280px">
       <h1>{{mess}}</h1>
     </div>
-    <div class="col-lg-3 d-flex justify-content-center" *ngFor="let item of postList" style="text-decoration: none">
-      <a id="postCard" [routerLink]="['/post/detail', item.idPost]" class="card p-0 my-5" style="width: 19rem; text-decoration: none">
+    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 d-flex justify-content-center" *ngFor="let item of postList" style="text-decoration: none">
+      <a id="postCard" [routerLink]="['/post/detail', item.idPost]" class="card p-0 my-3" style="width: 25rem; text-decoration: none">
         <img *ngIf="item.imageURL == ''"
              src="https://premiervillagehalongbayresort.com/wp-content/uploads/2019/08/Bản-sao-của-775A8349-1.jpg"
              class="card-img-top" alt="..." style="height: 250px">
         <img *ngIf="item.imageURL != ''" [src]="item.imageURL"
              class="card-img-top"
-             alt="lỗi"
+             alt="Lỗi!"
              style="height: 250px">
         <div class="card-body" style="height: 200px">
           <h6 class="card-title text-danger" style="height: 50px">{{item.namePost|slice:0:100}}</h6>
@@ -70,7 +108,7 @@
             <ng-template #elseBlock>
               <span>{{item.price / 1000000| number :'1.1-1' }} triệu</span>
             </ng-template>
-            <span> . </span>
+            <span> - </span>
             <span>{{item.area}} m<sup>2</sup></span>
           </p>
           <p class="card-text text-dark">
@@ -78,14 +116,20 @@
             <span>, </span>
             <span>{{item.city}}</span>
           </p>
-          <br>
+          <p>
+            <span>Hướng </span>
+            <span>{{item.nameDirection}}</span>
+            <span> - </span>
+            <span>Loại </span>
+            <span>{{item.nameLandType}}</span>
+          </p>
           <p class="card-text text-secondary">
-            <span>{{item.dateCreation|date:'dd/MM/yyyy'}}</span>
+            Ngày đăng: <span>{{item.dateCreation|date:'dd/MM/yyyy'}}</span>
           </p>
         </div>
       </a>
     </div>
-    ​
+
   </div>
   <div class="text-center my-3">
     <button *ngIf="page != totalPage-1 && mess==''" class="btn btn-outline-dark" (click)="showMore()">Xem thêm</button>

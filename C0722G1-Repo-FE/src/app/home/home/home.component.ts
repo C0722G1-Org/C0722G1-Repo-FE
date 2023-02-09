@@ -8,7 +8,7 @@ import {PostListHome} from '../../entity/post/post-list-home';
 import {Image} from '../../entity/post/image';
 import {PostListService} from '../../post/post-list/post-list.service';
 import {Title} from '@angular/platform-browser';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-home',
@@ -27,13 +27,14 @@ export class HomeComponent implements OnInit {
   mess = '';
   imageList: Image[] = [];
   image = '';
-  code: number | undefined = 0;
+  code: number = 0;
 
   constructor(private postListService: PostListService,
               private fb: FormBuilder,
               private titleService: Title,
               private toastrService: ToastrService,
-              private activatedRoute: ActivatedRoute) {
+              private activatedRoute: ActivatedRoute,
+              private router: Router) {
     this.titleService.setTitle('Trang chủ');
     this.formSearch = this.fb.group({
       area: [''],
@@ -47,7 +48,6 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.getLandType();
     this.getCity();
-    this.getDirection();
     this.postListService.getPostPage(
       this.formSearch.controls.area.value,
       this.formSearch.controls.price.value,
@@ -67,23 +67,7 @@ export class HomeComponent implements OnInit {
           if (code !== null) {
             this.postList = [];
             this.code = parseInt(code);
-            switch (this.code) {
-              case 1:
-                this.searchSellPostList();
-                this.code = 1;
-                break;
-              case 2:
-                this.searchRentPostList();
-                this.code = 2;
-                break;
-              case 3:
-                this.searchBuyPostList();
-                this.code = 3;
-                break;
-              default:
-                this.getPostPage();
-                this.code = 0;
-            }
+            this.checkCode(this.code);
           }
         }, error1 => {
         });
@@ -118,21 +102,6 @@ export class HomeComponent implements OnInit {
   getCity(): void {
     this.postListService.getCity().subscribe(data => {
         this.cityList = data;
-      }, error => {
-      },
-      () => {
-      });
-  }
-
-  /**
-   * Create by: SangNP
-   * Date created: 03/02/2023
-   * Function: take directionList
-   * @return Direction[]
-   */
-  getDirection(): void {
-    this.postListService.getDirection().subscribe(data => {
-        this.directionList = data;
       }, error => {
       },
       () => {
@@ -182,6 +151,7 @@ export class HomeComponent implements OnInit {
         }
         this.postList = this.postList.concat(this.postListTemp);
       }, error => {
+        this.postList = [];
         this.mess = 'Không có dữ liệu';
       },
       () => {
@@ -197,19 +167,7 @@ export class HomeComponent implements OnInit {
   showMore(): void {
     if (this.page < this.totalPage - 1) {
       this.page = this.page + 1;
-      switch (this.code) {
-        case 1:
-          this.searchSellPostList();
-          break;
-        case 2:
-          this.searchRentPostList();
-          break;
-        case 3:
-          this.searchBuyPostList();
-          break;
-        default:
-          this.getPostPage();
-      }
+      this.checkCode(this.code);
     }
   }
 
@@ -219,101 +177,10 @@ export class HomeComponent implements OnInit {
    * Function: to show less post
    * @return void
    */
-  showLess(): void {
+  async showLess(): Promise<void> {
     this.page = 0;
-    switch (this.code) {
-      case 1:
-        this.postListService.getPostPageSell(
-          this.formSearch.controls.area.value,
-          this.formSearch.controls.price.value,
-          this.formSearch.controls.landType.value,
-          this.formSearch.controls.direction.value,
-          this.formSearch.controls.city.value, this.page).subscribe(data => {
-            this.code = 1;
-            this.mess = '';
-            this.postListTemp = data.content;
-            this.postList = [];
-            this.totalPage = data.totalPages;
-            this.page = data.pageable.pageNumber;
-            if (this.postListTemp.length > 0) {
-              this.getImageByIdPost(this.postListTemp);
-            }
-            this.postList = this.postList.concat(this.postListTemp);
-          }, error => {
-            this.postList = [];
-          },
-          () => {
-          });
-        break;
-      case 2:
-        this.postListService.getPostPageRent(
-          this.formSearch.controls.area.value,
-          this.formSearch.controls.price.value,
-          this.formSearch.controls.landType.value,
-          this.formSearch.controls.direction.value,
-          this.formSearch.controls.city.value, this.page).subscribe(data => {
-            this.code = 2;
-            this.mess = '';
-            this.postListTemp = data.content;
-            this.postList = [];
-            this.totalPage = data.totalPages;
-            this.page = data.pageable.pageNumber;
-            if (this.postListTemp.length > 0) {
-              this.getImageByIdPost(this.postListTemp);
-            }
-            this.postList = this.postList.concat(this.postListTemp);
-          }, error => {
-            this.postList = [];
-          },
-          () => {
-          });
-        break;
-      case 3:
-        this.postListService.getPostPageBuy(
-          this.formSearch.controls.area.value,
-          this.formSearch.controls.price.value,
-          this.formSearch.controls.landType.value,
-          this.formSearch.controls.direction.value,
-          this.formSearch.controls.city.value, this.page).subscribe(data => {
-            this.code = 3;
-            this.mess = '';
-            this.postListTemp = data.content;
-            this.postList = [];
-            this.totalPage = data.totalPages;
-            this.page = data.pageable.pageNumber;
-            if (this.postListTemp.length > 0) {
-              this.getImageByIdPost(this.postListTemp);
-            }
-            this.postList = this.postList.concat(this.postListTemp);
-          }, error => {
-            this.postList = [];
-          },
-          () => {
-          });
-        break;
-      default:
-        this.postListService.getPostPage(
-          this.formSearch.controls.area.value,
-          this.formSearch.controls.price.value,
-          this.formSearch.controls.landType.value,
-          this.formSearch.controls.direction.value,
-          this.formSearch.controls.city.value, this.page).subscribe(data => {
-            this.code = 0;
-            this.mess = '';
-            this.postListTemp = data.content;
-            this.postList = [];
-            this.totalPage = data.totalPages;
-            this.page = data.pageable.pageNumber;
-            if (this.postListTemp.length > 0) {
-              this.getImageByIdPost(this.postListTemp);
-            }
-            this.postList = this.postList.concat(this.postListTemp);
-          }, error => {
-            this.postList = [];
-          },
-          () => {
-          });
-    }
+    this.postList = [];
+    await this.checkCode(this.code);
   }
 
   /**
@@ -322,112 +189,9 @@ export class HomeComponent implements OnInit {
    * Function: take post list
    * @return void
    */
-  search(): void {
-    switch (this.code) {
-      case 1:
-        this.postListService.getPostPageSell(
-          this.formSearch.controls.area.value,
-          this.formSearch.controls.price.value,
-          this.formSearch.controls.landType.value,
-          this.formSearch.controls.direction.value,
-          this.formSearch.controls.city.value, this.page).subscribe(data => {
-            this.code = 1;
-            this.mess = '';
-            this.postListTemp = data.content;
-            this.postList = [];
-            this.totalPage = data.totalPages;
-            this.page = data.pageable.pageNumber;
-            if (this.postListTemp.length > 0) {
-              this.getImageByIdPost(this.postListTemp);
-            }
-            this.postList = this.postList.concat(this.postListTemp);
-            this.success('Tìm kiếm thành công');
-          }, error => {
-            this.postList = [];
-            this.mess = 'Không có dữ liệu';
-            this.error('Tìm kiếm thất bại');
-          },
-          () => {
-          });
-        break;
-      case 2:
-        this.postListService.getPostPageRent(
-          this.formSearch.controls.area.value,
-          this.formSearch.controls.price.value,
-          this.formSearch.controls.landType.value,
-          this.formSearch.controls.direction.value,
-          this.formSearch.controls.city.value, this.page).subscribe(data => {
-            this.code = 2;
-            this.mess = '';
-            this.postListTemp = data.content;
-            this.postList = [];
-            this.totalPage = data.totalPages;
-            this.page = data.pageable.pageNumber;
-            if (this.postListTemp.length > 0) {
-              this.getImageByIdPost(this.postListTemp);
-            }
-            this.postList = this.postList.concat(this.postListTemp);
-            this.success('Tìm kiếm thành công');
-          }, error => {
-            this.postList = [];
-            this.mess = 'Không có dữ liệu';
-            this.error('Tìm kiếm thất bại');
-          },
-          () => {
-          });
-        break;
-      case 3:
-        this.postListService.getPostPageBuy(
-          this.formSearch.controls.area.value,
-          this.formSearch.controls.price.value,
-          this.formSearch.controls.landType.value,
-          this.formSearch.controls.direction.value,
-          this.formSearch.controls.city.value, this.page).subscribe(data => {
-            this.code = 3;
-            this.mess = '';
-            this.postListTemp = data.content;
-            this.postList = [];
-            this.totalPage = data.totalPages;
-            this.page = data.pageable.pageNumber;
-            if (this.postListTemp.length > 0) {
-              this.getImageByIdPost(this.postListTemp);
-            }
-            this.postList = this.postList.concat(this.postListTemp);
-            this.success('Tìm kiếm thành công');
-          }, error => {
-            this.postList = [];
-            this.mess = 'Không có dữ liệu';
-            this.error('Tìm kiếm thất bại');
-          },
-          () => {
-          });
-        break;
-      default:
-        this.postListService.getPostPage(
-          this.formSearch.controls.area.value,
-          this.formSearch.controls.price.value,
-          this.formSearch.controls.landType.value,
-          this.formSearch.controls.direction.value,
-          this.formSearch.controls.city.value, this.page).subscribe(data => {
-            this.code = 0;
-            this.mess = '';
-            this.postListTemp = data.content;
-            this.postList = [];
-            this.totalPage = data.totalPages;
-            this.page = data.pageable.pageNumber;
-            if (this.postListTemp.length > 0) {
-              this.getImageByIdPost(this.postListTemp);
-            }
-            this.postList = this.postList.concat(this.postListTemp);
-            this.success('Tìm kiếm thành công');
-          }, error => {
-            this.postList = [];
-            this.mess = 'Không có dữ liệu';
-            this.error('Tìm kiếm thất bại');
-          },
-          () => {
-          });
-    }
+  async search(): Promise<void> {
+    this.postList = await [];
+    await this.checkCode(this.code);
   }
 
   /**
@@ -436,8 +200,17 @@ export class HomeComponent implements OnInit {
    * Function: reset search
    * @return void
    */
-  resetSearch(): void {
-    location.reload();
+  async resetSearch(): Promise<void> {
+    this.formSearch.reset({
+      area: [''],
+      price: [''],
+      landType: [''],
+      city: [''],
+      direction: ['']
+    });
+    this.postList = [];
+    this.code = 0;
+    this.router.navigateByUrl("/home");
   }
 
   /**
@@ -466,7 +239,7 @@ export class HomeComponent implements OnInit {
    * Function: take post list buy
    * @return void
    */
-  searchBuyPostList(): void {
+  getPostPageBuy(): void {
     this.postListService.getPostPageBuy(
       this.formSearch.controls.area.value,
       this.formSearch.controls.price.value,
@@ -482,6 +255,7 @@ export class HomeComponent implements OnInit {
         }
         this.postList = this.postList.concat(this.postListTemp);
       }, error => {
+        this.postList = [];
         this.mess = 'Không có dữ liệu';
       },
       () => {
@@ -494,7 +268,7 @@ export class HomeComponent implements OnInit {
    * Function: take post list sell
    * @return void
    */
-  searchSellPostList(): void {
+  getPostPageSell(): void {
     this.postListService.getPostPageSell(
       this.formSearch.controls.area.value,
       this.formSearch.controls.price.value,
@@ -510,6 +284,7 @@ export class HomeComponent implements OnInit {
         }
         this.postList = this.postList.concat(this.postListTemp);
       }, error => {
+        this.postList = [];
         this.mess = 'Không có dữ liệu';
       },
       () => {
@@ -522,7 +297,7 @@ export class HomeComponent implements OnInit {
    * Function: take post list rent
    * @return void
    */
-  searchRentPostList(): void {
+  getPostPageRent(): void {
     this.postListService.getPostPageRent(
       this.formSearch.controls.area.value,
       this.formSearch.controls.price.value,
@@ -538,9 +313,31 @@ export class HomeComponent implements OnInit {
         }
         this.postList = this.postList.concat(this.postListTemp);
       }, error => {
+        this.postList = [];
         this.mess = 'Không có dữ liệu';
       },
       () => {
       });
+  }
+  /**
+   * Create by: SangNP
+   * Date created: 09/02/2023
+   * Function: check code before display data
+   * @return void
+   */
+  checkCode(code: number): void{
+    switch (code) {
+      case 1:
+        this.getPostPageSell();
+        break;
+      case 2:
+        this.getPostPageRent();
+        break;
+      case 3:
+        this.getPostPageBuy();
+        break;
+      default:
+        this.getPostPage();
+    }
   }
 }

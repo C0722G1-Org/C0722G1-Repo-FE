@@ -9,12 +9,12 @@
       </select>
     </label>
     <label class="me-2">
-      <select #yearVariable style="width: 100%" class="form-select me-1">
+      <select #yearVariable style="width: 100%" class="form-select me-1" (change)="getMonthList()">
         <option value="-1" selected>--Chọn Năm--</option>
         <option *ngFor="let year of yearList" [ngValue]="year">{{year}}</option>
       </select>
     </label>
-    <button class="btn btn-danger me-1" (click)="searchChart(monthVariable.value,yearVariable.value)"
+    <button class="btn btn-outline-danger me-1" (click)="searchChart(monthVariable.value,yearVariable.value)"
             type="button"><i class="bi bi-search"></i> Tìm kiếm
     </button>
   </form>

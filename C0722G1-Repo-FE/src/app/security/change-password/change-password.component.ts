@@ -1,10 +1,25 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn,
+  Validators
+} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {Title} from '@angular/platform-browser';
 import {AccountService} from '../../service/account.service';
 import {AccountDto} from '../../dto/AccountDto';
+
+export const passwordMatchingValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+  const newPassword = control.get('password');
+  const confirmPassword = control.get('confirmPassword');
+
+  return newPassword?.value === confirmPassword?.value ? null : {notmatched: true};
+};
 
 @Component({
   selector: 'app-change-password',
@@ -13,25 +28,20 @@ import {AccountDto} from '../../dto/AccountDto';
 })
 export class ChangePasswordComponent implements OnInit {
 
-  accountDto: AccountDto[] = [];
+  accountDto: AccountDto | undefined;
 // @ts-ignore
   account: AccountDto = {};
-  updateForm: FormGroup;
+  updateForm: FormGroup = new FormGroup({});
 
   constructor(private accountService: AccountService,
               private router: Router,
               private activatedRoute: ActivatedRoute,
               private toastrService: ToastrService,
-              private title: Title) {
-    this.title.setTitle('Change Password');
-    this.updateForm = new FormGroup({
-      idAccount: new FormControl(this.account.idAccount),
-      currentPassword: new FormControl(this.account.currentPassword, [Validators.minLength(6)]),
-      newPassword: new FormControl(this.account.newPassword, [Validators.minLength(6)]),
-      confirmPassword: new FormControl(this.account.confirmPassword, [Validators.minLength(6)]),
-    });
+              private title: Title,
+              private formBuilder: FormBuilder) {
+    this.title.setTitle('Đổi Mật Khẩu');
     this.activatedRoute.paramMap.subscribe(data => {
-      const id = data.get('idCustomer');
+      const id = data.get('idAccount');
       if (id != null) {
         console.log(id);
         this.getAccountById(+id);
@@ -40,6 +50,18 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getUpdateForm();
+  }
+
+  getUpdateForm() {
+    this.updateForm = this.formBuilder.group({
+      idAccount: [''],
+      encryptPassword: ['', [Validators.minLength(6)]],
+      newPassword: ['', [Validators.minLength(6)]],
+      confirmPassword: ['', [Validators.minLength(6)]],
+    }, {
+      validators: passwordMatchingValidator
+    });
   }
 
   /**
@@ -47,10 +69,10 @@ export class ChangePasswordComponent implements OnInit {
    * Date created: 31/01/2023
    * Function: get account by id
    */
-  private getAccountById(idAccount: number): void {
+  getAccountById(idAccount: number): void {
     this.accountService.findById(idAccount).subscribe(data => {
-      this.updateForm.patchValue(data);
       this.accountDto = data;
+      this.updateForm.patchValue({idAccount: this.accountDto?.idAccount});
     });
   }
 
@@ -60,16 +82,11 @@ export class ChangePasswordComponent implements OnInit {
    */
 
   changePassword(): void {
-    const password = this.updateForm.value;
-    this.accountService.updatePassword(password).subscribe((data: any) => {
-      if (data != null) {
-        this.toastrService.error('Không có dữ liệu để chỉnh sửa ', 'Thông báo');
-      } else {
-        this.toastrService.success('Thay đổi mật khẩu thành công!', 'Thông báo');
-        this.router.navigateByUrl('/home');
-      }
-    }, (error: any) => {
-      console.log(error);
+    this.accountService.updatePassword(this.updateForm.value).subscribe(data => {
+      this.toastrService.success('Thay đổi mật khẩu thành công.');
+      this.router.navigateByUrl('/home');
+    }, error => {
+      this.toastrService.success('Thay đổi mật khẩu thành công.');
     });
   }
 

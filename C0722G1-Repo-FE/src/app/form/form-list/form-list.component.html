@@ -26,7 +26,7 @@
             </button>
           </form>
         </div>
-        <div *ngIf="dataFormPage != null else elseBlock">
+        <div>
           <table class="table table-striped center" style="margin-top: 30px">
             <thead class="table table-dark">
             <tr>
@@ -37,23 +37,27 @@
               <th class="text-center">Xóa</th>
             </tr>
             </thead>
-            <tbody>
-            <tr *ngFor="let data of dataFormPage.content; index as i ">
-              <th style="text-align: center">{{(page * 5) + (i + 1)}}</th>
-              <td style="text-align: left">{{data.contentDataForm}}</td>
-              <td class="text-center">
-                <a href="{{data.urlDataForm}}" download class="btn"><i class="fa-solid fa-download"></i></a>
-                <img src="" alt="" id="image"></td>
-              <td [routerLink]="['/form/edit',data.idDataForm]" class="text-center"><a class="btn"><i
-                class="fa-regular fa-pen-to-square"></i></a></td>
-              <td class="text-center">
-                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#deleteFormModal"
-                        (click)="dataForm=data">
-                  <i class="fa-solid fa-trash"></i>
-                </button>
-              </td>
+            <tr *ngIf="dataFormList.length == 0 ; else elseBlock">
+              <td colspan="5" class="table-danger" style="text-align: center;color: red">Không có dữ liệu.</td>
             </tr>
-            </tbody>
+            <ng-template #elseBlock>
+              <tbody>
+              <tr *ngFor="let data of dataFormList; index as i ">
+                <th style="text-align: center">{{(page * 5) + (i + 1)}}</th>
+                <td style="text-align: left">{{data.contentDataForm}}</td>
+                <td class="text-center">
+                  <a href="{{data.urlDataForm}}" download class="btn"><i class="fa-solid fa-download"></i></a>
+                  <img src="" alt="" id="image"></td>
+                <td [routerLink]="['/form/edit',data.idDataForm]" class="text-center"><a class="btn"><i
+                  class="fa-regular fa-pen-to-square"></i></a></td>
+                <td class="text-center">
+                  <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#deleteFormModal"
+                          (click)="dataForm=data">
+                    <i class="fa-regular fa-trash-can"></i>
+                  </button>
+                </td>
+              </tbody>
+            </ng-template>
           </table>
           <!--  Phân trang -->
           <div *ngIf="dataFormPage" class="d-flex justify-content-center" id="last-row">
@@ -112,7 +116,6 @@
             </div>
           </div>
         </div>
-        <ng-template #elseBlock><h2 style="color: red; text-align: center">Không có dữ liệu.</h2></ng-template>
       </div>
       <div class="col-md-2"></div>
     </div>

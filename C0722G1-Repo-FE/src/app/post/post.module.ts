@@ -16,15 +16,17 @@ import {PostListCustomerComponent} from './post-list-customer/post-list-customer
 import {AppModule} from '../app.module';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {TruncateAddressModule} from './post-list-approval/truncate-address/truncate-address.module';
+import {TruncateNoteModule} from "./post-list-approval/truncate-note/truncate-note.module";
 
 
 @NgModule({
   declarations: [PostCreateComponent, PostEditComponent, PostListComponent, PostDeleteComponent, PostDetailComponent, PostChartComponent,
-    PostApprovalComponent, PostListApprovalComponent, PostListCustomerComponent, TruncateAddressModule],
+    PostApprovalComponent, PostListApprovalComponent, PostListCustomerComponent, TruncateAddressModule, TruncateNoteModule],
   exports: [
     PostDeleteComponent,
     PostApprovalComponent,
-    TruncateAddressModule
+    TruncateAddressModule,
+    TruncateNoteModule
   ]
   ,
   imports: [

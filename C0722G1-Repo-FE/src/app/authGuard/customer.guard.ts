@@ -37,7 +37,7 @@ export class CustomerGuard implements CanActivate {
         return false;
       }
     } else {
-      this.router.navigateByUrl('');
+      this.router.navigateByUrl('/security/login');
       return false;
     }
 

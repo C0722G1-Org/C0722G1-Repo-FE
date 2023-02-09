@@ -10,4 +10,7 @@ export interface PostListHome {
   city?: string;
   imageURL?: string;
   dateCreation?: string;
+  nameLandType?: string;
+  nameDirection?: string;
+  idStatus?: number;
 }

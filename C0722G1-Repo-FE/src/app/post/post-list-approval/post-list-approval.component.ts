@@ -10,7 +10,6 @@ import {ToastrService} from 'ngx-toastr';
 import {CityListService} from './city-list.service';
 import {DistrictListService} from './district-list.service';
 import {WardsListService} from './wards-list.service';
-import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-post-list-approval',
@@ -26,6 +25,8 @@ export class PostListApprovalComponent implements OnInit {
   districtList: District[] = [];
   wardsList: Wards[] = [];
   flag = false;
+  showMore = false;
+  abc !: number;
   minPriceSearch: any = '';
   maxPriceSearch: any = '';
   minAreaSearch = '';
@@ -79,35 +80,15 @@ export class PostListApprovalComponent implements OnInit {
       wardsSearch: new FormControl(''),
       minAreaSearch: new FormControl('', [Validators.min(0)]),
       maxAreaSearch: new FormControl('', [Validators.min(0)]),
-    }, [this.validatePriceSearch, this.validateAreaSearch ]);
+    },);
     this.getAllCity();
   }
-
-  /**
-   * Create by: NgocLV
-   * Date created: 05/02/2023
-   * Function: validate price search
-   *
-   * compare value of minPrice and maxPrice when search
-   */
-// tslint:disable-next-line:typedef
-  validatePriceSearch(postApprovalSearch: any) {
-    const minPriceSearch = postApprovalSearch.controls.minPriceSearch.value;
-    const maxPriceSearch = postApprovalSearch.controls.maxPriceSearch.value;
-    return (minPriceSearch > maxPriceSearch) ? {priceCompare: true} : null;
-  }
-  validateAreaSearch(postApprovalSearch: any) {
-    const minAreaSearch = postApprovalSearch.controls.minAreaSearch.value;
-    const maxAreaSearch = postApprovalSearch.controls.maxAreaSearch.value;
-    return (minAreaSearch > maxAreaSearch) ? {areaCompare: true} : null;
-  }
-
   /**
    * Create by: NgocLV
    * Date created: 05/02/2023
    * Function: get page post
    *
-   * @return get all post when access this page
+   * @return return this page with all element
    */
 
   getPagePost(pageNumber: number): void {
@@ -130,8 +111,48 @@ export class PostListApprovalComponent implements OnInit {
     // tslint:disable-next-line:max-line-length
     this.postListApprovalService.getPostApprovalsBySearch(demandTypeSearch, landTypeSearch, minPriceSearch, maxPriceSearch, citySearch, districtSearch, wardsSearch, minAreaSearch, maxAreaSearch , pageNumber).subscribe(data => {
       this.postApprovalList = data;
+      if(this.postApprovalList != null){
+        this.toastrService.success('Tìm kiếm thành công', 'Thông báo', {
+          timeOut: 2000,
+          progressBar: true,
+          positionClass: 'toast-top-right',
+          easing: 'ease-in'
+        })
+      }
+      else {
+        this.toastrService.error('Không tìm thấy dữ liệu', 'warning', {
+          timeOut: 2000,
+          progressBar: true,
+          positionClass: 'toast-top-right',
+          easing: 'ease-in'
+        })
+      }
+      ;
+    }, (error: any) => {
+      this.toastrService.error('Lỗi kết nối', 'Lỗi', {
+        timeOut: 2000,
+        progressBar: true,
+        positionClass: 'toast-top-right',
+        easing: 'ease-in'
+      });
+    }, () => {
     });
   }
+  /**
+   * Create by: NgocLV
+   * Date created: 05/02/2023
+   * Function: get search page post after delete
+   *
+   * @return return this page which all element which is math with value is selected when search
+   */
+// tslint:disable-next-line:max-line-length
+  getSearchPagePostAfterAction(demandTypeSearch: any, landTypeSearch: any, minPriceSearch: any, maxPriceSearch: any, citySearch: any, districtSearch: any, wardsSearch: any,  minAreaSearch: any, maxAreaSearch: any, pageNumber: any): void {
+    // tslint:disable-next-line:max-line-length
+    this.postListApprovalService.getPostApprovalsBySearch(demandTypeSearch, landTypeSearch, minPriceSearch, maxPriceSearch, citySearch, districtSearch, wardsSearch, minAreaSearch, maxAreaSearch , pageNumber).subscribe(data => {
+      this.postApprovalList = data;
+      ;
+    })};
+
   /**
    * Create by: NgocLV
    * Date created: 08/02/2023
@@ -195,6 +216,39 @@ export class PostListApprovalComponent implements OnInit {
         this.postApprovalSearch.value.maxAreaSearch,0);
     }
   }
+  /**
+   * Create by: NgocLV
+   * Date created: 05/02/2023
+   * Function: onsubmit after delete
+   *
+   * @return return this page which all element which is math with value is selected when search
+   */
+// tslint:disable-next-line:typedef
+  onSubmitAfterAction(){
+    this.transferValue()
+    if (this.postApprovalSearch.valid){
+      this.getSearchPagePostAfterAction(this.demandTypeSearch,
+        this.landTypeSearch,
+        this.minPriceSearch,
+        this.maxPriceSearch,
+        this.citySearch,
+        this.districtSearch,
+        this.wardsSearch,
+        this.minAreaSearch,
+        this.maxAreaSearch,0);
+    }
+    else if (!this.postApprovalSearch.controls.minPriceSearch.dirty && !this.postApprovalSearch.controls.maxPriceSearch.dirty || !this.postApprovalSearch.controls.minAreaSearch.dirty && !this.postApprovalSearch.controls.maxAreaSearch.dirty ) {
+      this.getSearchPagePostAfterAction(this.postApprovalSearch.value.demandTypeSearch,
+        this.postApprovalSearch.value.landTypeSearch,
+        this.postApprovalSearch.value.minPriceSearch,
+        this.postApprovalSearch.value.maxPriceSearch,
+        this.postApprovalSearch.value.citySearch,
+        this.postApprovalSearch.value.districtSearch,
+        this.postApprovalSearch.value.wardsSearch,
+        this.postApprovalSearch.value.minAreaSearch,
+        this.postApprovalSearch.value.maxAreaSearch,0);
+    }
+  }
 
   /**
    * Create by: NgocLV
@@ -207,7 +261,7 @@ export class PostListApprovalComponent implements OnInit {
   gotoPage(pageNumber: number): void {
     if (this.postApprovalSearch.dirty){
       if (this.postApprovalSearch.valid){
-        this.getSearchPagePost(this.demandTypeSearch,
+        this.getSearchPagePostAfterAction(this.demandTypeSearch,
           this.landTypeSearch,
           this.minPriceSearch,
           this.maxPriceSearch,
@@ -218,7 +272,7 @@ export class PostListApprovalComponent implements OnInit {
           this.maxAreaSearch,pageNumber);
       }
       else if (!this.postApprovalSearch.controls.minPriceSearch.dirty && !this.postApprovalSearch.controls.maxPriceSearch.dirty || !this.postApprovalSearch.controls.minAreaSearch.dirty && !this.postApprovalSearch.controls.maxAreaSearch.dirty ) {
-        this.getSearchPagePost(this.postApprovalSearch.value.demandTypeSearch,
+        this.getSearchPagePostAfterAction(this.postApprovalSearch.value.demandTypeSearch,
           this.postApprovalSearch.value.landTypeSearch,
           this.postApprovalSearch.value.minPriceSearch,
           this.postApprovalSearch.value.maxPriceSearch,
@@ -272,6 +326,7 @@ export class PostListApprovalComponent implements OnInit {
   getAllDistrict(idCity: number): void {
     this.districtListService.getAllDistrict(idCity).subscribe(data => {
       this.districtList = data;
+      console.log(this.districtList);
     }, error => {
       console.log('Lỗi truy xuất');
     }, () => {
@@ -283,7 +338,7 @@ export class PostListApprovalComponent implements OnInit {
    * Date created: 05/02/2023
    * Function: get list wards
    *
-   * @return HttpStatus.OK if json list wards in one district of Việt Nam
+   \  * @return HttpStatus.OK if json list wards in one district of Việt Nam
    */
   getAllWards(idDistrict: number): void {
     this.wardsListService.getAllWards(idDistrict).subscribe(data => {
@@ -300,7 +355,7 @@ export class PostListApprovalComponent implements OnInit {
    *
    */
 // tslint:disable-next-line:typedef
-  expandOrCollapse(id: number, action: string) {
+  expandOrCollapsePosition(id: number, action: string) {
     if (action === 'expand') {
       // @ts-ignore
       document.getElementById('expandedContent' + id).style.display = 'inline-block';
@@ -313,5 +368,29 @@ export class PostListApprovalComponent implements OnInit {
       document.getElementById('collapsedContent' + id).style.display = 'inline-block';
     }
   }
+  /**
+   * Create by: NgocLV
+   * Date created: 08/02/2023
+   * Function: expand or collapse value which is show in one td
+   *
+   */
 
+
+  expandOrCollapseNote(id: number, action: string) {
+    if (action === 'expand') {
+      // @ts-ignore
+      document.getElementById('expandedContentNote' + id).style.display = 'inline-block';
+      // @ts-ignore
+      document.getElementById('collapsedContentNote' + id).style.display = 'none';
+    } else {
+      // @ts-ignore
+      document.getElementById('expandedContentNote' + id).style.display = 'none';
+      // @ts-ignore
+      document.getElementById('collapsedContentNote' + id).style.display = 'inline-block';
+    }
+  }
+
+  resetSearchValue() {
+    this.ngOnInit();
+  }
 }

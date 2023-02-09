@@ -8,7 +8,7 @@ import {AccountDto} from '../dto/AccountDto';
 })
 export class AccountService {
 
-  ACCOUNT_URL = 'http://localhost:8080/api/account';
+  ACCOUNT_URL = 'http://localhost:8080/api/public/account';
   ACCOUNT_URL_UPDATE = 'http://localhost:8080/api/public/update-password';
 
   constructor(private httpClient: HttpClient) {
@@ -18,6 +18,7 @@ export class AccountService {
   }
 
   updatePassword(accountDto: AccountDto): Observable<any> {
+    console.log(accountDto)
     return this.httpClient.patch(this.ACCOUNT_URL_UPDATE , accountDto);
   }
 }

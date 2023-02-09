@@ -25,6 +25,7 @@ export class AdminEmployeeGuard implements CanActivate {
         return false;
       }
     } else {
+      this.router.navigateByUrl('');
       return false;
     }
   }

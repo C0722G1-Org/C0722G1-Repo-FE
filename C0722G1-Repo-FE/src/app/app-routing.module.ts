@@ -21,7 +21,6 @@ const routes: Routes = [
   {
     path: 'form', loadChildren: () => import('./form/form.module').then(module => module.FormModule),
     canActivate: [AuthGuard]
-      && [AdminEmployeeGuard]
   },
   {
     path: 'notification', loadChildren: () => import('./notification/notification.module').then(module => module.NotificationModule),
