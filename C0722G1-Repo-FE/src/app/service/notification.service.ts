@@ -12,7 +12,8 @@ import {ToastrService} from 'ngx-toastr';
   providedIn: 'root'
 })
 export class NotificationService {
-  private URL_API_NOTIFICATION = 'http://localhost:8080/api/notifications';​
+  private URL_API_NOTIFICATION = 'http://localhost:8080/api/notifications';
+
   constructor(private httpClient: HttpClient) {
   }
   /**
@@ -20,9 +21,9 @@ export class NotificationService {
    * Function: get all and search notifications
    * Date: 31/01/2023
    */
-  getPageNotifications(searchNotification: any, pageNumber: any): Observable<PageNotificationDto> {
+  getPageNotifications(searchNotification: any, pageNumber: any, recordPerPage: any): Observable<PageNotificationDto> {
     return this.httpClient.post<PageNotificationDto>(this.URL_API_NOTIFICATION +
-      '/search?page=' + pageNumber, searchNotification);
+      '/search?page=' + pageNumber + '&size=' + recordPerPage, searchNotification);
   }
   /**
    * Created: DatLA

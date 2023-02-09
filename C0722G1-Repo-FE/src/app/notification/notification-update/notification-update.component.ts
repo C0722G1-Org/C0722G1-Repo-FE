@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Title} from '@angular/platform-browser';
 import {ToastrService} from 'ngx-toastr';
@@ -18,10 +18,7 @@ export class NotificationUpdateComponent implements OnInit {
   id!: number;
   // @ts-ignore
   checkId: boolean;
-​
   notificationHasContent!: boolean;
-​
-
   constructor(private notificationService: NotificationService,
               private activatedRoute: ActivatedRoute,
               private router: Router,
@@ -44,7 +41,7 @@ export class NotificationUpdateComponent implements OnInit {
     }
     return this.notificationService.findNotificationdById(this.id).subscribe(data => {
       if (data == null) {
-        this.notificationHasContent = false;
+        this.router.navigateByUrl("/**");
         return;
       }
       this.notificationHasContent = true;
@@ -55,12 +52,33 @@ export class NotificationUpdateComponent implements OnInit {
       this.notificationForm = this.formBuilder.group({
         id: [],
         title: [this.notification.title, [Validators.required, Validators.minLength(7), Validators.maxLength(45)]],
-        postingDate: [this.getToday(), Validators.required],
+        postingDate: [this.notification.postingDate, [Validators.required, this.constrainNotAfterToday, this.constrainMinToday]],
         content: [this.notification.content, [Validators.required, Validators.maxLength(400), Validators.minLength(7)]]
       });
     }, err => {
-      this.notificationHasContent = false;
+      // @ts-ignore
+      if (error.status === 400 || 404){
+        this.router.navigateByUrl("/**")
+      }
     });
+  }
+
+  constrainNotAfterToday(abstractControl: AbstractControl): any {
+    if (abstractControl.value === '') {
+      return null;
+    }
+    const today = new Date().getTime();
+    const inputSearchDate = new Date(abstractControl.value).getTime();
+    return (today - inputSearchDate >= 0) ? null : {invalidSearchDate: true};
+  }
+
+  constrainMinToday(abstractControl: AbstractControl): any {
+    if (abstractControl.value === '') {
+      return null;
+    }
+    const today = new Date().getTime();
+    const inputSearchDate = new Date(abstractControl.value).getTime();
+    return (today - inputSearchDate < 1000 * 60 * 60 * 24 * 365) ? null : {invalidMinDate: true};
   }
 
   getToday(): string {

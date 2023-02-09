@@ -1,0 +1,27 @@
+input[type="date"]::-webkit-datetime-edit-text , input[type="date"]::-webkit-inner-spin-button, input[type="date"]::-webkit-clear-button {
+  color: #fff;
+}
+
+input[type="date"]::-webkit-datetime-edit-year-field {
+  position: initial !important;
+  border-left: 1px solid #8c8c8c;
+  padding: 2px;
+  color: #000;
+  left: 56px;
+}
+
+input[type="date"]::-webkit-datetime-edit-month-field {
+  position: initial !important;
+  border-left: 1px solid #8c8c8c;
+  padding: 2px;
+  color: #000;
+  left: 30px;
+}
+
+
+input[type="date"]::-webkit-datetime-edit-day-field {
+  position: initial !important;
+  color: #000;
+  padding: 2px;
+  left: 4px;
+}

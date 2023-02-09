@@ -1,43 +1,37 @@
 <div class="p-3 px-5">
-  <div style="margin-left: 15px; margin-top: 15px" class="d-flex justify-content-between">
-    <div><a routerLink="" type="button"><i class="fa-solid fa-arrow-left"></i></a></div>
+  <div style="margin-left: 15px; margin-top: 15px" class="d-flex justify-content-center">
     <div><h2>DANH SÁCH THÔNG BÁO</h2></div>
-    <div></div>
   </div>
   <a routerLink="/notification/create">
-    <button class="btn btn-primary btn-outline-secondary mx-1">
+    <button class="btn btn-primary btn-outline-secondary mx-1 mb-3">
       <span class="text-light"> Thêm mới thông báo </span>
     </button>
   </a>
   <div class="row">
-    <form class="pb-3" *ngIf="rfSearch" [formGroup]="rfSearch" (ngSubmit)="searchNotification(0,false)">
-      <!--      <fieldset style="all: revert; background-color: #eeeeee;">-->
+    <form class="pb-3" *ngIf="rfSearch" [formGroup]="rfSearch" (ngSubmit)="searchNotification(0,true)">
       <fieldset style="all: revert;">
-        <legend style="all: revert; background-color: white;padding: 5px 10px"
-                class="text-center border border-secondary">
-          <strong style="color:#a67802">Tìm kiếm</strong>
-        </legend>
-        <div class="row">
-          <div class="col-8">
-            <strong style="color:#a67802">Tiêu đề thông báo:</strong>
+        <div class="row mt-3">
+          <div class="col-1"></div>
+          <div class="col-4">
+            <strong>Tiêu đề thông báo:</strong>
             <input formControlName="title" type="text" class="form-control rounded-0 mt-2" id="title"
                    placeholder="Nhập tiêu đề cần tìm...">
             <p class="mb-2" *ngIf="!rfSearch.controls['title'].hasError('maxlength')">&nbsp;</p>
             <p class="mb-2" *ngIf="rfSearch.controls['title'].hasError('maxlength')" style="color: red">
               <i class="fa-solid fa-triangle-exclamation"></i>
-              Lưu ý: Nhập tiêu đề tối đa 45 ký tự.
+              Nhập tiêu đề tối đa 45 ký tự.
             </p>
           </div>
           <div class="col-4">
             <div class="row">
               <div class="col-6">
-                <strong style="color:#a67802">Chọn ngày cụ thể: </strong>
+                <strong>Chọn ngày cụ thể: </strong>
                 <input formControlName="startDate" type="date" class="form-control rounded-0 mt-2"
                        id="startDate1" placeholder="dd-mm-yyyy"
                        onfocus="document.getElementById('startDate2').value = ''">
               </div>
               <div class="col-6">
-                <strong style="color:#a67802">Hoặc khoảng thời gian: </strong>
+                <strong>Hoặc khoảng thời gian: </strong>
                 <div class="input-group">
                   <select
                     onchange="document.getElementById('startDate1').value = ''"
@@ -45,9 +39,9 @@
                     class="form-control rounded-0 mt-2"
                     id="startDate2">
                     <option value="">Chọn khoảng thời gian</option>
-                    <option value="">Tất cả thời gian</option>
                     <option value="{{getSearchDate('withinWeek')}}">
                       Trong vòng 1 tuần
+                    </option>
                     <option value="{{getSearchDate('withinMonth')}}">
                       Trong vòng 1 tháng
                     </option>
@@ -65,27 +59,43 @@
                  id="invalidSearchDate"
                  style="color: red">
                 <i class="fa-solid fa-triangle-exclamation"></i>
-                Lưu ý: Nhập thời gian từ ngày hôm nay trở về trước.
+                Nhập thời gian từ ngày hôm nay trở về trước.
               </p>
             </div>
           </div>
+          <div class="col-2">
+            <br>
+            <div class="row">
+              <div class="col-12">
+                <div class="input-group">
+                  <button class="btn btn-outline-danger w-100 mt-2" [disabled]="rfSearch.invalid"
+                          (click)="setflagNotToastResetFalse()">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    Tìm kiếm
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-1"></div>
         </div>
         <div class="row">
+          <div class="col-1"></div>
           <div class="col-8">
-            <strong style="color:#a67802">Nội dung thông báo:</strong>
+            <strong>Nội dung thông báo:</strong>
             <input formControlName="content" type="text" class="form-control rounded-0 mt-2"
                    id="content" placeholder="Nhập nội dung cần tìm...">
             <p class="mb-0" *ngIf="!rfSearch.controls['content'].hasError('maxlength')">&nbsp;</p>
             <p class="mb-0" *ngIf="rfSearch.controls['content'].hasError('maxlength')"
                style="color: red">
               <i class="fa-solid fa-triangle-exclamation"></i>
-              Lưu ý: Nhập nội dung tối đa 100 ký tự.
+              Nhập nội dung tối đa 100 ký tự.
             </p>
           </div>
-          <div class="col-4">
+          <div class="col-2">
             <br>
             <div class="row">
-              <div class="col-6">
+              <div class="col-12">
                 <div class="input-group">
                   <button class="btn btn-outline-danger w-100 mt-2" [disabled]="rfSearch.invalid">
                     <i class="fa-solid fa-magnifying-glass"></i>
@@ -98,7 +108,7 @@
                   <button class="btn btn-outline-secondary w-100 mt-2" (click)="resetFormAndData()"
                           onclick="document.getElementById('startDate').type='text'">
                     <i class="fa-solid fa-arrows-rotate"></i>
-                    Làm mới bộ tìm kiếm
+                    Làm mới
                   </button>
                 </div>
               </div>
@@ -108,13 +118,13 @@
       </fieldset>
     </form>
   </div>
-  <table class="table table-light table-striped table-bordered table-hover" *ngIf="pageNotifications != null">
+  <table class="table table-light table-striped table-bordered table-hover" >
     <thead>
     <tr class="table-dark text-light">
       <th class="text-center align-middle">STT</th>
-      <th class="text-center align-middle">Ngày đăng </th>
-      <th class="text-center align-middle" style="width: 378px">Tiêu đề thông báo </th>
-      <th class="text-center align-middle" style="width: 712px">Nội dung thông báo </th>
+      <th class="text-center align-middle">Ngày tạo</th>
+      <th class="text-center align-middle" style="width: 378px">Tiêu đề thông báo</th>
+      <th class="text-center align-middle" style="width: 712px">Nội dung thông báo</th>
       <th class="text-center align-middle">Sửa</th>
       <th class="text-center align-middle" style="width: 20px;">
         <button class="btn text-light" (click)="addAllToDelete()">
@@ -123,15 +133,16 @@
       </th>
     </tr>
     </thead>
-    <tbody>
+    <tbody *ngIf="pageNotifications != null">
     <tr style="height: 47px" *ngFor="let item of pageNotifications.content;index as i">
-      <td class="text-center align-top pt-2">{{i + 1 + pageNotifications.number * 5}}</td>
+      <td class="text-center align-top pt-2">{{i + 1 + pageNotifications.number * pageNotifications.size}}</td>
       <td class="text-center align-top pt-2">{{item.postingDate | date: 'dd/MM/yyyy' }}</td>
       <td class="align-top pt-2" style="width: 378px">{{item.title}}</td>
       <td class="align-top pt-2" style="width: 712px">
         <div id="collapsedContent{{item.idNotification}}" style="display: inline-block">
           {{item.content | NotificationPipe}}
-          <a style="color:blue;" role="button" id="expandButton{{item.idNotification}}" *ngIf="item.content.length > 70"
+          <a style="color:blue;" role="button" id="expandButton{{item.idNotification}}"
+             *ngIf="item.content.length > 70"
              (click)="expandOrCollapse(item.idNotification, 'expand')">
             xem thêm
           </a>
@@ -146,7 +157,7 @@
       </td>
       <td class="text-center align-top pt-2">
         <a routerLink="/notification/edit/{{item.idNotification}}">
-          <button class="btn btn-success btn-outline-secondary btn-sm text-light">
+          <button>
             <i class="fa-regular fa-pen-to-square"></i>
           </button>
         </a>
@@ -159,7 +170,8 @@
       <!-- Hết Checkbox xóa ở tbody -->
     </tr>
     <!--suppress TypeScriptUnresolvedFunction -->
-    <tr style="height: 47px" *ngFor="let a of [].constructor(5 - pageNotifications.numberOfElements)">
+    <tr style="height: 47px"
+        *ngFor="let a of [].constructor(pageNotifications.size - pageNotifications.numberOfElements)">
       <!--suppress TypeScriptUnresolvedFunction -->
       <td *ngFor="let b of [].constructor(6)"></td>
     </tr>
@@ -169,7 +181,15 @@
 
   <!--  Phân trang + Nút xóa-->
   <div *ngIf="pageNotifications" class="d-flex justify-content-between" id="last-row">
-    <div>
+    <div class="pt-2">
+      <div style="display: inline-block">Tùy chọn số lượng thông báo/trang: &nbsp;</div>
+      <select class="pagination" [(ngModel)]="recordPerPage" style="display: inline-block">
+        <option [ngValue]="5">5 thông báo/trang</option>
+        <option [ngValue]="7">7 thông báo/trang</option>
+        <option [ngValue]="10">10 thông báo/trang</option>
+      </select>&nbsp; &nbsp;
+      <a role="button" class="link-primary" (click)="resetFormAndData()"> Xác nhận</a>
+      <p><small class="w-100">Mặc định: 5 thông báo/trang</small></p>
     </div>
     <div>
       <nav aria-label="Page navigation example">
