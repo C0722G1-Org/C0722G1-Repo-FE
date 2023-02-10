@@ -1,7 +1,7 @@
 <h1 *ngIf="!notificationHasContent else show" style="color: blue; text-align: center">Đang tải dữ liệu ...</h1>
 <ng-template #show>
   <div class="row m-0">
-    <div class=" d-flex justify-content-center align-items-center mt-2 mb-2">
+    <div class=" d-flex justify-content-center align-items-center mt-2 mb-2" style="min-height: 60vh">
       <div class="boxed shadow h-100">
         <form novalidate="novalidate" [formGroup]="notificationForm"
               (ngSubmit)="submit(id)">
