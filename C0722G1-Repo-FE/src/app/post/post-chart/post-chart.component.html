@@ -1,0 +1,137 @@
+<script src="truncate-chart-address.module.ts"></script>
+<div class="mt-2 text-center"><h2><b>THỐNG KÊ BÀI ĐĂNG</b></h2></div>
+<div class="row mt-1 mb-1 me-2 ms-2">
+  <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
+    <form style="border-style: solid;  border-width: 1px;  border-color: red;  border-radius: 15px">
+      <fieldset>
+        <legend class="text-start text-primary"><strong
+          style="position: relative;top: -22px;background-color: white;  left: 30px">
+          Danh sách bài đăng</strong></legend>
+
+        <div class="text-center mt-1">
+          <h6 class="text-primary">Số bài đăng thành công: <span class="text-danger">{{countSuccess}}
+            /{{countTotal}}</span>
+          </h6>
+          <h6 class="text-primary">Tổng giao dịch: <span
+            class="text-danger">{{totalTransaction |number: '1.0-0'}} VNĐ</span>
+          </h6>
+        </div>
+        <div class="mt-1 text-center">
+          <form class="d-flex justify-content-center">
+            <label class="me-2">
+              <select #yearVariable style="width: 100%" class="form-select me-1" (change)="getMonthList()">
+                <option value="-1" selected>--Chọn Năm--</option>
+                <option *ngFor="let year of yearList" [ngValue]="year">{{year}}</option>
+              </select>
+            </label>
+            <label class="me-2">
+              <select #monthVariable class="form-select" style="width: 100%">
+                <option value="-1">--Chọn Tháng--</option>
+                <option *ngFor="let month of monthList" [ngValue]="month"> Tháng {{month}}</option>
+              </select>
+            </label>
+            <button class="btn btn-outline-danger me-1" (click)="searchChart(monthVariable.value,yearVariable.value)"
+                    type="button"><i class="bi bi-search"></i> Tìm kiếm
+            </button>
+          </form>
+          <small class="text-center text-danger"><i>Lưu ý: Chọn năm hoặc chọn cả năm và tháng để hiển thị đúng kết
+            quả.</i></small>
+        </div>
+
+        <div class="d-flex justify-content-center">
+          <table class="table table-light table-striped table-hover mt-3" style="width: 98%">
+            <thead>
+            <tr>
+              <th hidden>ID</th>
+              <th style="width: 5%">STT</th>
+              <th style="width: 10%">Ngày</th>
+              <th style="width: 48%">Vị trí</th>
+              <th style="width: 10%;">Giá (VNĐ)</th>
+              <th style="width: 12%;">Tình trạng</th>
+              <th style="width: 15%;">Lợi nhuận (VNĐ)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let post of postCharList | paginate:{itemsPerPage:6,currentPage:p} ;index as i ">
+              <td hidden>{{post.idPost}}</td>
+              <td>{{i + 1 + itemsPerPage * (p - 1)}}</td>
+              <td>{{post.dateCreation | date:'dd/MM/yyyy'}}</td>
+              <td>
+                <div id="collapsedContentNote{{post.idPost}}" style="display: inline-block">
+                  {{post.numberAddress + ',' + post.nameWards + ',' + post.nameDistrict + ',' + post.nameCity | truncateChartAddress}}
+                  <a style="color: blue; text-decoration: none" class="text-primary " id="expandButtonn{{post.idPost}}"
+                     role="button"
+                     *ngIf="(post.numberAddress.length + post.nameWards.length + post.nameDistrict.length + post.nameCity.length ) > 30"
+                     (click)="expandOrCollapseNote(post.idPost, 'expand')">
+                    xem thêm
+                  </a>
+                </div>
+                <div id="expandedContentNote{{post.idPost}}" style="display: none">
+                  {{post.numberAddress + ',' + post.nameWards + ',' + post.nameDistrict + ',' + post.nameCity}}<br>
+                  <a style=" color: blue" role="button" id="collapseButtonn{{post.idPost}}"
+                     (click)="expandOrCollapseNote(post.idPost, 'collapse')">
+                    thu gọn
+                  </a>
+                </div>
+              </td>
+              <!--            <td>{{post.price | currency:"VNĐ ":"code"}}</td>-->
+              <td>{{post.price | number: '1.0-0'}}</td>
+              <td *ngIf="post.statusPost!=undefined">{{post.statusPost == 1 ? 'Thành Công' : 'Thất Bại'}}</td>
+              <td *ngIf="post.statusPost!= undefined && post.statusPost>1,else block1">{{0|number: '1.0-0'}}</td>
+
+              <ng-template #block1>
+                <td *ngIf="post.price!= undefined && 0 <=post.price && post.price<100000000 ">
+                  {{post.price * 0.02 |number: '1.0-0'}}</td>
+                <td
+                  *ngIf="post.price!= undefined && 100000000 <=post.price && post.price<1000000000 ">
+                  {{post.price * 0.03 |number: '1.0-0'}}</td>
+                <td
+                  *ngIf="post.price!= undefined && 1000000000 <=post.price && post.price<3000000000 ">
+                  {{post.price * 0.03 |number: '1.0-0'}}</td>
+                <td
+                  *ngIf="post.price!= undefined && 3000000000 <=post.price && post.price<5000000000 ">
+                  {{post.price * 0.04 |number: '1.0-0'}}</td>
+                <td *ngIf="post.price != undefined && 5000000000<=post.price">
+                  {{post.price * 0.05 |number: '1.0-0'}}</td>
+              </ng-template>
+            <tr>
+            <tr>
+              <td colspan="10" *ngIf="postCharList.length==0" class="text-center text-danger">Không tìm thấy kết quả.</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <pagination-controls class="text-center" previousLabel="Trang trước" nextLabel="Trang sau"
+                             (pageChange)="p=$event"></pagination-controls>
+      </fieldset>
+    </form>
+  </div>
+
+  <!--CHART.JS-->
+  <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 col-xxl-4 text-primary">
+    <form style="border-style: solid;  border-width: 1px;  border-color: red;  border-radius: 15px">
+      <fieldset>
+        <legend class="text-start text-primary"><strong
+          style="position: relative;top: -22px;background-color: white;  left: 30px">
+          Biểu đồ bài đăng các năm </strong></legend>
+        <div class="row">
+          <div class="col col-sm col-md col-lg col-xl col-xxl text-primary text-center">
+            <label>
+              <select #yearChange (change)="changeYear(yearChange.value)"
+                      class="form-select me-1 align-items-center justify-content-center">
+                <option selected value="-1">--- Xem tất cả ---</option>
+                <option *ngFor="let year of yearList" [ngValue]="year">{{year}}</option>
+              </select>
+            </label>
+          </div>
+          <div style="width:100%">
+            <canvas id="myChart" width="100%" height="75"></canvas>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+
+
+  </div>
+</div>

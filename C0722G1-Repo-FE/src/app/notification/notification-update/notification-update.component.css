@@ -1,118 +1,107 @@
-@import url("//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css");
-
-.login-block {
-  /*background: #DE6262;  !* fallback for old browsers *!*/
-  /*background: -webkit-linear-gradient(to bottom, #FFB88C, #DE6262);  !* Chrome 10-25, Safari 5.1-6 *!*/
-  background: linear-gradient(to bottom, #19313030, #FFFFFF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  float: left;
-  width: 100%;
-  padding: 50px 0;
+*:not(i) {
+  font-family: sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  /*padding: 0;*/
+  border: 0;
+  font-size: 16px;
+  font: inherit;
+  vertical-align: baseline;
 }
 
-.banner-sec {
-  background-size: cover;
-  min-height: 500px;
-  border-radius: 0 10px 10px 0;
-  padding: 0;
-}
-
-.container {
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 15px 20px 0px rgba(35, 34, 34, 0.1);
-}
-
-.carousel-inner {
-  border-radius: 0 10px 10px 0;
-}
-
-.carousel-caption {
-  text-align: left;
-  left: 5%;
-}
-/*điều chỉnh form nằm giữa*/
-.login-sec {
-  padding: 50px 30px;
-  position: relative;
-}
-
-/*điều chỉnh thanh liên kết*/
-.login-sec .copy-text {
+.remove_img {
+  padding: 3px;
   position: absolute;
-  width: 80%;
-  bottom: 20px;
-  font-size: 13px;
-  text-align: center;
-}
-/*màu trái tim*/
-.login-sec .copy-text i {
-  color: #feb58a;
-}
-/*màu link liên kết*/
-.login-sec .copy-text a {
-  color: #e36262;
-}
-/*màu tiêu đề*/
-.login-sec h2 {
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  /*font-size: 3.2em;*/
-  line-height: 48px;
-  padding-bottom: 48px;
-  color: #5543ca;
-  background: #5543ca;
-  background: -moz-linear-gradient(left,#f4524d  0%,#5543ca 100%) !important;
-  background: -webkit-linear-gradient(left,#f4524d  0%,#5543ca 100%) !important;
-  background: linear-gradient(to right,#f4524d  0%,#5543ca  100%) !important;
-  -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-}
-
-/*màu thanh ngang tiêu đề*/
-.login-sec h2:after {
-  content: " ";
-  width: 100px;
-  height: 5px;
-  background: #feb58a;
+  bottom: 0;
+  right: 0;
+  margin: 0;
   display: block;
-  margin-top: 20px;
-  border-radius: 3px;
-  margin-left: auto;
-  margin-right: auto
-}
-
-.banner-text {
-  width: 70%;
-  position: absolute;
-  bottom: 40px;
-  padding-left: 20px;
-}
-
-.banner-text h2:after {
-  content: " ";
-  width: 100px;
-  height: 5px;
-  background: #FFF;
-  display: block;
-  margin-top: 20px;
-  border-radius: 3px;
-}
-
-#backlist {
-  background: linear-gradient(to bottom, #e36262, #feb58a);
-  border-radius: 50%;
-  height: 31px;
-  width: 31px;
-}
-
-#btn-sumit {
-  background: linear-gradient(to bottom, #0dadec, #87eeee);
+  background-color: #ff0000a6;
+  border-radius: 2px;
   color: white;
-  font-weight: 600;
+  cursor: pointer;
 }
-#btn-cancel{
-  background: linear-gradient(to bottom, #d3d3d3, #FFFFFF);
-  color: black;
-  font-weight: 600;
+h1 {
+  font-size: 32px;
+}
+body {
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
+}
+#product-model {
+  display: flex;
+  justify-content: center;
+}
+.boxed {
+  width: 700px;
+  height: auto;
+  border: 5px solid;
+  border-image-slice: 1;
+  border-color: rgb(189, 214, 236);
+  padding: 0px 20px;
+  border-radius: 8px;
+  box-shadow: 4px 2px 4px 1px rgb(238, 243, 247);
+  background-color: #ffffff;
+  /*overflow: auto;*/
+}
+
+.boxed::-webkit-scrollbar {
+  display: none;
+}
+
+button {
+  width: 200px;
+  border-radius: 20px;
+  height: 40px;
+}
+
+.slide {
+  animation: slide 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  animation-iteration-count: infinite;
+  animation-delay: 0.2s;
+}
+@keyframes slide {
+  0% {
+    transform: translateY(0px);
+  }
+  10% {
+    transform: translateY(1px);
+  }
+  20% {
+    transform: translateY(2px);
+  }
+  30% {
+    transform: translateY(2px);
+  }
+  40% {
+    transform: translateY(1px);
+  }
+  50% {
+    transform: translateY(0px);
+  }
+  60% {
+    transform: translateY(-1px);
+  }
+  70% {
+    transform: translateY(-2px);
+  }
+  80% {
+    transform: translateY(-2px);
+  }
+  90% {
+    transform: translateY(-1px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+:host ::ng-deep .ck .ck-toolbar {
+  font-size: 13px;
+}
+.invalid-feedback{
+  font-size: 13px;
+}
+.customer-infor{
+  border: 2px solid #bdd6ec;
 }

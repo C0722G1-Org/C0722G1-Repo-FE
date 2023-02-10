@@ -1,7 +1,8 @@
-import {Customer} from "../entity/customer/customer";
+import {Customer} from '../entity/customer/customer';
+
 
 export interface PageCustomerDto {
-  content: Customer[],
+  content: Customer[];
   pageable: {
     sort: {
       empty: boolean,
@@ -13,18 +14,18 @@ export interface PageCustomerDto {
     pageSize: number,
     paged: true,
     unpaged: boolean
-  },
-  totalPages: number,
-  last: boolean,
-  totalElements: number,
-  size: number,
-  number: number,
+  };
+  totalPages: number;
+  last: boolean;
+  totalElements: number;
+  size: number;
+  number: number;
   sort: {
     empty: true,
     sorted: boolean,
     unsorted: true
-  },
-  first: boolean,
-  numberOfElements: number,
-  empty: boolean
+  };
+  first: boolean;
+  numberOfElements: number;
+  empty: boolean;
 }

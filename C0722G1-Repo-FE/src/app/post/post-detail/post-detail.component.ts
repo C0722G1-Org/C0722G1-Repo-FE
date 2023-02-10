@@ -1,11 +1,11 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {PostDetail} from '../../entity/post/post-detail';
 import {PostService} from '../post.service';
-import {ActivatedRoute} from '@angular/router';
-import {ToastContainerDirective, ToastrService} from 'ngx-toastr';
-import {StatusPost} from '../../entity/post/status-post';
 import {TokenService} from '../../service/token.service';
 import {Image} from '../../entity/post/image';
+import {PostDetailDto} from '../../dto/post/PostDetailDto';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ToastContainerDirective, ToastrService} from 'ngx-toastr';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-post-detail',
@@ -13,49 +13,33 @@ import {Image} from '../../entity/post/image';
   styleUrls: ['./post-detail.component.css']
 })
 export class PostDetailComponent implements OnInit {
-  // @ts-ignore
+// @ts-ignore
   @ViewChild(ToastContainerDirective, {static: true}) toastContainer: ToastContainerDirective;
-  // statusPost: StatusPost[] = [
-  //   {idStatusPost: 1, nameStatusPost: 'Chờ giao dịch'},
-  //   {idStatusPost: 2, nameStatusPost: 'Đã giao dịch'},
-  //   {idStatusPost: 3, nameStatusPost: 'Giao dịch thất bại'}];
-  // postDetail: PostDetail = {
-  //   idPost: 1, price: 5656700000, area: 500, note: 'alo',
-  //   customer: {
-  //     idCustomer: 1,
-  //     nameCustomer: 'Đặng Nhật Huy',
-  //     phoneCustomer1: '0799440683',
-  //     genderCustomer: 3,
-  //     emailCustomer: 'b77cwalk@gmail.com'
-  //   },
-  //   demandType: {idDemandType: 2, nameDemandType: 'Bán'}, landType: {idLandType: 1, nameLandType: 'Căn hộ'},
-  //   statusPost: this.statusPost[0],
-  //   direction: {idDirection: 1, nameDirection: 'Đông Bắc'},
-  //   dateCreation: '2023/02/03',
-  // };
-  postDetail: PostDetail = {};
   imageList: Image[] = [];
-  // imageList: Image[] = [
-  //   {
-  //     idImage: 1,
-  //     url: 'https://file4.batdongsan.com.vn/resize/1275x717/2023/02/02/20230202154431-b87f_wm.jpg'
-  //   },
-  //   {idImage: 2, url: 'https://file4.batdongsan.com.vn/resize/1275x717/2023/02/02/20230202154431-fb0b_wm.jpg'},
-  //   {idImage: 3, url: 'https://file4.batdongsan.com.vn/resize/1275x717/2023/02/02/20230202154432-aded_wm.jpg'}];
-  // @ts-ignore
-  phoneNumber: string | undefined = this.postDetail?.customer?.phoneCustomer1.slice(0, 6) + '*** · Hiện số';
-  accountId = 0;
-  price = this.postDetail.price;
+// @ts-ignore
+  accountId: string | null = '';
+  idCheck = 0;
   million = 1000000;
   billion = 1000000000;
+  postDetail: PostDetailDto = {};
+// Information
+  idPost = 0;
+  displayPrice = '';
+  phoneNumber: string | undefined = '';
+// @ts-ignore
+  displayPhoneNumber: string | undefined = '';
+  url: string | undefined = 'https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921';
 
   constructor(private postService: PostService,
               private activatedRoute: ActivatedRoute,
               private toastr: ToastrService,
-              private tokenService: TokenService) {
+              private tokenService: TokenService,
+              private titleService: Title,
+              private router: Router) {
     this.activatedRoute.paramMap.subscribe(data => {
       const id = data.get('id');
       if (id != null) {
+        this.idPost = Number(id);
         /**
          * Method uses:
          * Send a request to backend API to get a Post by parameter Id
@@ -65,7 +49,15 @@ export class PostDetailComponent implements OnInit {
          * @return a Observable that contain a Post object can be showed on Post detail screen
          */
         this.postService.findPostById(Number(id)).subscribe(dataPost => {
+          if (dataPost.approval === false || dataPost.flagDeleted === true ) {
+            this.router.navigateByUrl('/**');
+          }
           this.postDetail = dataPost;
+          this.phoneNumber = dataPost.phoneCustomer1.slice(0, 4) + ' ' + dataPost.phoneCustomer1.slice(4, 7) + ' *** • Hiện số';
+          this.displayPhoneNumber = dataPost.phoneCustomer1;
+          this.postService.getAccountId(this.postDetail.idCustomer).subscribe(idAccount => {
+            this.idCheck = idAccount;
+          });
           /**
            * Method uses:
            * Send a request to backend API to get a ImageSet by parameter Id
@@ -76,9 +68,20 @@ export class PostDetailComponent implements OnInit {
            */
           this.postService.findImageByIdPost(Number(id)).subscribe(dataImage => {
             this.imageList = dataImage;
+            this.url = this.imageList[0].url;
+            if (this.postDetail.price != null && this.postDetail.price >= this.billion) {
+              this.convertToBillion();
+            } else if (this.postDetail.price != null && this.postDetail.price >= this.million) {
+              this.convertToMillion();
+            }
           });
+        }, error => {
+          if (error.status === 400 || 404 || 403) {
+            this.router.navigateByUrl('/**');
+          }
         });
       }
+    }, error => {
     });
   }
 
@@ -88,14 +91,12 @@ export class PostDetailComponent implements OnInit {
    * Created Date: 03/02/2023
    */
   ngOnInit(): void {
+    this.titleService.setTitle('Chi tiết bất động sản');
     this.toastr.overlayContainer = this.toastContainer;
-    if (this.tokenService.getToken()){
+    if (this.tokenService.getToken()) {
       this.accountId = this.tokenService.getIdAccount();
     }
-    if (this.postDetail.price != null) {
-      this.convertToMillion();
-    }
-    this.convertToBillion();
+    this.toastr.toastrConfig.positionClass = 'toast-bottom-right';
   }
 
   /**
@@ -104,7 +105,10 @@ export class PostDetailComponent implements OnInit {
    * Created Date: 03/02/2023
    */
   showPhoneNumber(): void {
-    this.phoneNumber = this.postDetail.customer?.phoneCustomer1;
+    // @ts-ignore
+    this.phoneNumber = this.displayPhoneNumber?.slice(0, 4) + ' '
+      + this.displayPhoneNumber?.slice(4, 7) + ' '
+      + this.displayPhoneNumber?.slice(7, 10) + ' • Sao chép';
   }
 
   /**
@@ -113,8 +117,8 @@ export class PostDetailComponent implements OnInit {
    * Created Date: 03/02/2023
    */
   showSucceedCopyLink(): void {
-    navigator.clipboard.writeText('http://localhost:4200/post/detail/' + this.postDetail.idPost);
-    this.toastr.info('Đã copy đường dẫn');
+    navigator.clipboard.writeText('http://localhost:4200/post/detail/' + this.idPost);
+    this.toastr.info('Đã sao chép đường dẫn URL.');
   }
 
   /**
@@ -122,9 +126,6 @@ export class PostDetailComponent implements OnInit {
    * Created by HuyDN
    * Created Date: 03/02/2023
    */
-  showSucceedReport(): void {
-    this.toastr.error('Đã báo xấu bài đăng');
-  }
 
   /**
    * In order to change Post's status to Succeed
@@ -133,8 +134,8 @@ export class PostDetailComponent implements OnInit {
    */
   showSucceedConfirmation(): void {
     // @ts-ignore
-    this.postService.succeedConfirm(this.postDetail.idPost);
-    this.toastr.success('Xác nhận giao dịch', 'Thành công!');
+    this.postService.succeedConfirm(this.idPost);
+    this.toastr.success('Xác nhận giao dịch.', 'Thành công');
   }
 
   /**
@@ -146,10 +147,7 @@ export class PostDetailComponent implements OnInit {
 
   convertToMillion(): void {
     // @ts-ignore
-    if (this.postDetail.price >= this.million) {
-      // @ts-ignore
-      this.price = this.postDetail.price / this.million + ' Triệu';
-    }
+    this.displayPrice = (this.postDetail.price / this.million) + ' Triệu';
   }
 
   /**
@@ -160,9 +158,37 @@ export class PostDetailComponent implements OnInit {
    */
   convertToBillion(): void {
     // @ts-ignore
-    if (this.postDetail.price >= this.billion) {
-      // @ts-ignore
-      this.price = this.postDetail.price / this.billion + ' Tỷ';
+    this.displayPrice = (this.postDetail.price / this.billion) + ' Tỷ';
+  }
+
+  copyPhoneNumber(): void {
+    if (this.phoneNumber === this.displayPhoneNumber?.slice(0, 4) + ' '
+      + this.displayPhoneNumber?.slice(4, 7) + ' '
+      + this.displayPhoneNumber?.slice(7, 10) + ' • Sao chép') {
+      if (this.postDetail.phoneCustomer1 != null) {
+        navigator.clipboard.writeText(this.postDetail.phoneCustomer1);
+      }
+      this.toastr.info('Đã sao chép số điện thoại.');
     }
+  }
+
+  changeImage(url: string | undefined): void {
+    this.url = url;
+  }
+
+  addHashTag(event: any, land: any): void {
+    event.target.innerText = '#' + land;
+  }
+
+  removeHashTag(event: any, land: any): void {
+    event.target.innerText = land;
+  }
+
+  addHashTagDirection(event: any, nameDirection: any): void {
+    event.target.innerText = '#hướng ' + nameDirection;
+  }
+
+  removeHashTagDirection(event: any, nameDirection: any): void {
+    event.target.innerText = 'hướng ' + nameDirection;
   }
 }

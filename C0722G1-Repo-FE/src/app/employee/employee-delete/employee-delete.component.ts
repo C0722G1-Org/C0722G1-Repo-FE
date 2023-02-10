@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Employee} from '../../entity/employee/employee';
-import {FormGroup} from '@angular/forms';
 import {EmployeeService} from '../../service/employee.service';
+import {FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-employee-delete',
@@ -42,7 +42,7 @@ export class EmployeeDeleteComponent implements OnInit {
    * Function: show message notification delete success
    */
   private showToastrSuccess(): void {
-    this.employeeService.showSuccess('Xóa nhân viên thành công', 'Thông báo!');
+    this.employeeService.showSuccess('Xóa nhân viên ' + this.employee.nameEmployee + ' thành công.', 'Thông báo');
   }
 
   /**
@@ -51,7 +51,7 @@ export class EmployeeDeleteComponent implements OnInit {
    * Function: show message notification delete error
    */
   private showToastrError(): void {
-    this.employeeService.showError('Có lỗi khi thực hiện', 'Thông báo!');
+    this.employeeService.showError('Có lỗi khi thực hiện', 'Thông báo');
   }
 
 }

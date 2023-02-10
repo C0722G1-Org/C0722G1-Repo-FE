@@ -1,252 +1,144 @@
 <div>
-  <div class="searchArea row p-3 my-5" style="margin-left: 300px; margin-right: 300px">
-    <div class="col-4">
-      <select #area class="form-select my-2" aria-label="Default select example">
-        <option value="" selected>Diện tích</option>
-        <option value="50">0-50 m2</option>
-        <option value="100">50-100 m2</option>
-        <option value="150">100-150 m2</option>
-        <option value="200">150-200 m2</option>
-        <option value="250">200-250 m2</option>
-      </select>
-      <select #landType class="form-select my-2" aria-label="Default select example">
-        <option value="" selected>Loại bất động sản</option>
-        <option value="Dat">Đất</option>
-        <option value="NhaO">Nhà ở</option>
-      </select>
+  <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active"
+              aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
     </div>
-    <div class="col-4">
-      <select #price class="form-select my-2" aria-label="Default select example">
-        <option value="" selected>Giá tiền</option>
-        <option value="0-500000000">< 500 triệu</option>
-        <option value="500000000-1000000000">500 triệu - 1 tỷ</option>
-        <option value="1000000000-1500000000">1 tỷ - 1,5 tỷ</option>
-        <option value="1500000000-2000000000">1,5 tỷ - 2 tỷ</option>
-        <option value="2000000000-2500000000">2 tỷ - 2,5 tỷ</option>
-        <option value="2500000000-3000000000">2,5 tỷ - 3 tỷ</option>
-        <option value="3000000000-3500000000">3 tỷ - 3,5 tỷ</option>
-        <option value="3500000000-4000000000">3,5 tỷ - 4 tỷ</option>
-        <option value="4000000000-3000000000">> 4 tỷ</option>
-      </select>
-      <select #city class="form-select my-2" aria-label="Default select example">
-        <option value="" selected>Thành phố</option>
-        <option value="DaNang">Đà Nẵng</option>
-        <option value="HoChiMinh">Hồ Chí Minh</option>
-        <option value="HaNoi">Hà Nội</option>
-      </select>
+    <div class="carousel-inner">
+      <div class="carousel-item active" data-bs-interval="3000">
+        <img src="https://www.reder.vn/uploads/slider/images/banner-1.jpg" class="d-block w-100" alt="..."
+             style="height: 30rem;">
+      </div>
+      <div class="carousel-item" data-bs-interval="3000">
+        <img src="https://trannghia.net/wp-content/uploads/2021/06/banner03.jpg" class="d-block w-100" alt="..."
+             style="height: 30rem;">
+      </div>
+      <div class="carousel-item" data-bs-interval="3000">
+        <img
+          src="https://hqcorp.vn/wp-content/uploads/elementor/thumbs/banner-golden-king-1900-900-23-10-2018-2-pp9rj4fbfh194nixzltkhxsm6lcj8ph1ug7751gw34.jpg"
+          class="d-block w-100" alt="" style="height: 30rem;">
+      </div>
     </div>
-    <div class="col-4">
-      <button class="btn btn-outline-danger my-1" (click)="search(direction.value, city.value, price.value, landType.value, area.value)">Tìm kiếm</button>
-      <button class="btn btn-outline-danger my-1"><i class="fa-solid fa-arrows-rotate"></i></button>
-      <select #direction class="form-select my-2" aria-label="Default select example">
-        <option value="" selected>Hướng</option>
-        <option value="Đông">Đông</option>
-        <option value="Tây">Tây</option>
-        <option value="Nam">Nam</option>
-        <option value="Băc">Băc</option>
-        <option value="Băc">Đông Bắc</option>
-        <option value="Băc">Tây Bắc</option>
-        <option value="Băc">Đông Nam</option>
-        <option value="Băc">Tây Nam</option>
-      </select>
-    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
   </div>
-  <div class="d-flex flex-wrap justify-content-center">
-    <a href="" style="text-decoration: none">
-      <div class="card p-0 m-2" style="width: 18rem">
-        <img src="https://premiervillagehalongbayresort.com/wp-content/uploads/2019/08/Bản-sao-của-775A8349-1.jpg"
+  <div class="row container-fluid">
+    <div class="col-xl-1"></div>
+    <div class="col-xl-10 col-md-12 col-sm-12">
+      <form [formGroup]="formSearch" (ngSubmit)="search()" class="searchArea row p-3 my-5">
+        <div class="col-lg-4 col-md-12">
+          <select formControlName="area" class="form-select my-2" aria-label="Default select example">
+            <option value="" selected>Diện tích</option>
+            <option value="0-49">< 50 m2</option>
+            <option value="50-100">50-100 m2</option>
+            <option value="100-150">100-150 m2</option>
+            <option value="150-200">150-200 m2</option>
+            <option value="200-250">200-250 m2</option>
+            <option value="251-100000">> 250 m2</option>
+          </select>
+          <select formControlName="landType" class="form-select my-2" aria-label="Default select example">
+            <option value="">Loại bất động sản</option>
+            <option *ngFor="let item of landTypeList" [ngValue]="item.nameLandType">{{item.nameLandType}}</option>
+          </select>
+        </div>
+        <div class="col-lg-4 col-md-12">
+          <select formControlName="price" class="form-select my-2" aria-label="Default select example">
+            <option value="" selected>Giá tiền</option>
+            <option value="0-499999999">< 500 triệu</option>
+            <option value="500000000-1000000000">500 triệu - 1 tỷ</option>
+            <option value="1000000000-1500000000">1 tỷ - 1.5 tỷ</option>
+            <option value="1500000000-2000000000">1.5 tỷ - 2 tỷ</option>
+            <option value="2000000000-2500000000">2 tỷ - 2.5 tỷ</option>
+            <option value="2500000000-3000000000">2.5 tỷ - 3 tỷ</option>
+            <option value="3000000000-3500000000">3 tỷ - 3.5 tỷ</option>
+            <option value="3500000000-4000000000">3.5 tỷ - 4 tỷ</option>
+            <option value="4000000001-1000000000000">> 4 tỷ</option>
+          </select>
+          <select formControlName="city" class="form-select my-2" aria-label="Default select example">
+            <option value="">Thành phố</option>
+            <option *ngFor="let item of cityList" [ngValue]="item.nameCity">{{item.nameCity}}</option>
+          </select>
+        </div>
+        <div class="col-lg-4 col-md-12">
+          <select formControlName="direction" class="form-select my-2" aria-label="Default select example">
+            <option value="">Hướng</option>
+            <option value="Đông">Đông</option>
+            <option value="Tây">Tây</option>
+            <option value="Nam">Nam</option>
+            <option value="Bắc">Bắc</option>
+            <option value="Đông Bắc">Đông Bắc</option>
+            <option value="Tây Bắc">Tây Bắc</option>
+            <option value="Đông Nam">Đông Nam</option>
+            <option value="Tây Nam">Tây Nam</option>
+          </select>
+          <button type="submit" class="btn btn-outline-danger my-1">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            Tìm kiếm
+          </button>
+          <button class="btn btn-outline-secondary my-1 mx-3" (click)="resetSearch()">
+            <i class="fa-solid fa-arrows-rotate"></i>
+            Làm mới
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="col-xl-1"></div>
+  </div>
+  <div class="row container-fluid">
+    <div class="col-12 d-flex justify-content-center" *ngIf="mess!=''" style="height: 280px">
+      <h1>{{mess}}</h1>
+    </div>
+    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 d-flex justify-content-center" *ngFor="let item of postList"
+         style="text-decoration: none">
+      <a id="postCard" [routerLink]="['/post/detail', item.idPost]" class="card p-0 my-3"
+         style="width: 25rem; text-decoration: none">
+        <img *ngIf="item.imageURL == ''"
+             src="https://premiervillagehalongbayresort.com/wp-content/uploads/2019/08/Bản-sao-của-775A8349-1.jpg"
              class="card-img-top" alt="..." style="height: 250px">
+        <img *ngIf="item.imageURL != ''" [src]="item.imageURL"
+             class="card-img-top"
+             alt="Lỗi!"
+             style="height: 250px">
         <div class="card-body" style="height: 200px">
-          <h6 class="card-title text-danger" maxlength="20">Chính chủ bán căn 3N + 2VS căn góc full nội tất cao
-            cấp giá 2,290 tỷ tại Vinhomes Ocean Park</h6>
-          <p class="card-text text-dark">
-            <span>2.5 tỷ</span>
-            <span>.</span>
-            <span>75 m<sup>2</sup></span>
+          <h6 class="card-title text-danger" style="height: 50px">{{item.namePost|slice:0:100}}</h6>
+          <p class="card-text text-dark" *ngIf="item.price != undefined">
+            <span
+              *ngIf="item.price >= 1000000000 && item.idDemandType != 3">{{item.price / 1000000000| number :'1.1-1' }}
+              tỷ</span>
+            <span *ngIf="item.price >= 1000000 && item.price < 1000000000 && item.idDemandType != 3">{{item.price / 1000000| number :'1.1-1' }} triệu</span>
+            <span *ngIf="item.idDemandType == 3">{{item.price / 1000000| number :'1.1-1' }} triệu/tháng</span>
+            <span> - </span>
+            <span>{{item.area}} m<sup>2</sup></span>
           </p>
           <p class="card-text text-dark">
-            <span>Hải Châu</span>
-            <span>,</span>
-            <span>Đà Nẵng</span>
+            <span>{{item.district}}</span>
+            <span>, </span>
+            <span>{{item.city}}</span>
           </p>
-          <br>
+          <p class="card-text text-dark">
+            <span>Hướng </span>
+            <span>{{item.nameDirection}}</span>
+          </p>
           <p class="card-text text-secondary">
-            <span>13/01/2023</span>
+            Ngày đăng: <span>{{item.dateCreation|date:'dd/MM/yyyy'}}</span>
           </p>
         </div>
-      </div>
-    </a>
-    <a href="" style="text-decoration: none">
-      <div class="card p-0 m-2" style="width: 18rem">
-        <img src="https://premiervillagehalongbayresort.com/wp-content/uploads/2019/08/Bản-sao-của-775A8349-1.jpg"
-             class="card-img-top" alt="..." style="height: 250px">
-        <div class="card-body" style="height: 200px">
-          <h6 class="card-title text-danger" maxlength="20">Chính chủ bán căn 3N + 2VS căn góc full nội tất cao
-            cấp giá 2,290 tỷ tại Vinhomes Ocean Park</h6>
-          <p class="card-text text-dark">
-            <span>2.5 tỷ</span>
-            <span>.</span>
-            <span>75 m<sup>2</sup></span>
-          </p>
-          <p class="card-text text-dark">
-            <span>Hải Châu</span>
-            <span>,</span>
-            <span>Đà Nẵng</span>
-          </p>
-          <br>
-          <p class="card-text text-secondary">
-            <span>13/01/2023</span>
-          </p>
-        </div>
-      </div>
-    </a>
-    <a href="" style="text-decoration: none">
-      <div class="card p-0 m-2" style="width: 18rem">
-        <img src="https://premiervillagehalongbayresort.com/wp-content/uploads/2019/08/Bản-sao-của-775A8349-1.jpg"
-             class="card-img-top" alt="..." style="height: 250px">
-        <div class="card-body" style="height: 200px">
-          <h6 class="card-title text-danger" maxlength="20">Chính chủ bán căn 3N + 2VS căn góc full nội tất cao
-            cấp giá 2,290 tỷ tại Vinhomes Ocean Park</h6>
-          <p class="card-text text-dark">
-            <span>2.5 tỷ</span>
-            <span>.</span>
-            <span>75 m<sup>2</sup></span>
-          </p>
-          <p class="card-text text-dark">
-            <span>Hải Châu</span>
-            <span>,</span>
-            <span>Đà Nẵng</span>
-          </p>
-          <br>
-          <p class="card-text text-secondary">
-            <span>13/01/2023</span>
-          </p>
-        </div>
-      </div>
-    </a>
-    <a href="" style="text-decoration: none">
-      <div class="card p-0 m-2" style="width: 18rem">
-        <img src="https://premiervillagehalongbayresort.com/wp-content/uploads/2019/08/Bản-sao-của-775A8349-1.jpg"
-             class="card-img-top" alt="..." style="height: 250px">
-        <div class="card-body" style="height: 200px">
-          <h6 class="card-title text-danger" maxlength="20">Chính chủ bán căn 3N + 2VS căn góc full nội tất cao
-            cấp giá 2,290 tỷ tại Vinhomes Ocean Park</h6>
-          <p class="card-text text-dark">
-            <span>2.5 tỷ</span>
-            <span>.</span>
-            <span>75 m<sup>2</sup></span>
-          </p>
-          <p class="card-text text-dark">
-            <span>Hải Châu</span>
-            <span>,</span>
-            <span>Đà Nẵng</span>
-          </p>
-          <br>
-          <p class="card-text text-secondary">
-            <span>13/01/2023</span>
-          </p>
-        </div>
-      </div>
-    </a>
-    <a href="" style="text-decoration: none">
-      <div class="card p-0 m-2" style="width: 18rem">
-        <img src="https://premiervillagehalongbayresort.com/wp-content/uploads/2019/08/Bản-sao-của-775A8349-1.jpg"
-             class="card-img-top" alt="..." style="height: 250px">
-        <div class="card-body" style="height: 200px">
-          <h6 class="card-title text-danger" maxlength="20">Chính chủ bán căn 3N + 2VS căn góc full nội tất cao
-            cấp giá 2,290 tỷ tại Vinhomes Ocean Park</h6>
-          <p class="card-text text-dark">
-            <span>2.5 tỷ</span>
-            <span>.</span>
-            <span>75 m<sup>2</sup></span>
-          </p>
-          <p class="card-text text-dark">
-            <span>Hải Châu</span>
-            <span>,</span>
-            <span>Đà Nẵng</span>
-          </p>
-          <br>
-          <p class="card-text text-secondary">
-            <span>13/01/2023</span>
-          </p>
-        </div>
-      </div>
-    </a>
-    <a href="" style="text-decoration: none">
-      <div class="card p-0 m-2" style="width: 18rem">
-        <img src="https://premiervillagehalongbayresort.com/wp-content/uploads/2019/08/Bản-sao-của-775A8349-1.jpg"
-             class="card-img-top" alt="..." style="height: 250px">
-        <div class="card-body" style="height: 200px">
-          <h6 class="card-title text-danger" maxlength="20">Chính chủ bán căn 3N + 2VS căn góc full nội tất cao
-            cấp giá 2,290 tỷ tại Vinhomes Ocean Park</h6>
-          <p class="card-text text-dark">
-            <span>2.5 tỷ</span>
-            <span>.</span>
-            <span>75 m<sup>2</sup></span>
-          </p>
-          <p class="card-text text-dark">
-            <span>Hải Châu</span>
-            <span>,</span>
-            <span>Đà Nẵng</span>
-          </p>
-          <br>
-          <p class="card-text text-secondary">
-            <span>13/01/2023</span>
-          </p>
-        </div>
-      </div>
-    </a>
-    <a href="" style="text-decoration: none">
-      <div class="card p-0 m-2" style="width: 18rem">
-        <img src="https://premiervillagehalongbayresort.com/wp-content/uploads/2019/08/Bản-sao-của-775A8349-1.jpg"
-             class="card-img-top" alt="..." style="height: 250px">
-        <div class="card-body" style="height: 200px">
-          <h6 class="card-title text-danger" maxlength="20">Chính chủ bán căn 3N + 2VS căn góc full nội tất cao
-            cấp giá 2,290 tỷ tại Vinhomes Ocean Park</h6>
-          <p class="card-text text-dark">
-            <span>2.5 tỷ</span>
-            <span>.</span>
-            <span>75 m<sup>2</sup></span>
-          </p>
-          <p class="card-text text-dark">
-            <span>Hải Châu</span>
-            <span>,</span>
-            <span>Đà Nẵng</span>
-          </p>
-          <br>
-          <p class="card-text text-secondary">
-            <span>13/01/2023</span>
-          </p>
-        </div>
-      </div>
-    </a>
-    <a href="" style="text-decoration: none">
-      <div class="card p-0 m-2" style="width: 18rem">
-        <img src="https://premiervillagehalongbayresort.com/wp-content/uploads/2019/08/Bản-sao-của-775A8349-1.jpg"
-             class="card-img-top" alt="..." style="height: 250px">
-        <div class="card-body" style="height: 200px">
-          <h6 class="card-title text-danger" maxlength="20">Chính chủ bán căn 3N + 2VS căn góc full nội tất cao
-            cấp giá 2,290 tỷ tại Vinhomes Ocean Park</h6>
-          <p class="card-text text-dark">
-            <span>2.5 tỷ</span>
-            <span>.</span>
-            <span>75 m<sup>2</sup></span>
-          </p>
-          <p class="card-text text-dark">
-            <span>Hải Châu</span>
-            <span>,</span>
-            <span>Đà Nẵng</span>
-          </p>
-          <br>
-          <p class="card-text text-secondary">
-            <span>13/01/2023</span>
-          </p>
-        </div>
-      </div>
-    </a>
-
+      </a>
+    </div>
+    ​
   </div>
   <div class="text-center my-3">
-    <button class="btn btn-outline-dark">Xem thêm</button>
+    <button *ngIf="page != totalPage-1 && mess==''" class="btn btn-outline-dark" (click)="showMore()">Xem thêm</button>
+    <button *ngIf="page == totalPage-1 && mess=='' && totalPage > 1" class="btn btn-outline-dark" (click)="showLess()">
+      Ẩn bớt
+    </button>
   </div>
 </div>

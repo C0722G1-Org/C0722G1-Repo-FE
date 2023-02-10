@@ -14,14 +14,14 @@ export class NotificationServiceService {
   }
 
   update(id: number, notification: Notification): Observable<Notification> {
-    return this.httpClient.patch<Notification>(this.API_URL + 'api/notification/update' + 1, notification);
+    return this.httpClient.patch<Notification>(this.API_URL + 'api/notification/update/' + id, notification);
   }
 
   finNotificationdById(id: number): Observable<Notification> {
-    return this.httpClient.get<Notification>(this.API_URL + 'findById/' + 1);
+    return this.httpClient.get<Notification>(this.API_URL + 'api/notification/findById/' + id);
   }
 
   create(notification: Notification): Observable<Notification>{
-    return this.httpClient.post<Notification>(this.API_URL + 'api/notification/update' +1 , notification );
+    return this.httpClient.post<Notification>(this.API_URL + 'api/notification/create' , notification );
   }
 }

@@ -25,7 +25,7 @@ export class PostApprovalComponent implements OnInit {
   approvalPost(): void {
     this.postListApprovalService.approvalPostById(this.postApproval.idPost).subscribe((data: any) => {
         this.emiter.emit('');
-        this.toastrService.success('Duyệt thành công', 'Thông báo', {
+        this.toastrService.success('Duyệt thành công.', 'Thông báo', {
           timeOut: 2000,
           progressBar: true,
           positionClass: 'toast-top-right',
@@ -33,7 +33,7 @@ export class PostApprovalComponent implements OnInit {
         });
       }
       , (error: any) => {
-        this.toastrService.error('Đã xảy ra lỗi khi duyệt', 'Lỗi', {
+        this.toastrService.error('Nhu cầu đã bị xoá.', 'Lỗi', {
           timeOut: 2000,
           progressBar: true,
           positionClass: 'toast-top-right',

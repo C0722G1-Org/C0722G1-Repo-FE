@@ -1,0 +1,178 @@
+<div style="margin-top: 20px">
+  <div class="container">
+    <h2>
+      <span class="text-primary" (click)="back()"><i class="fa-solid fa-arrow-left"></i></span>
+      <span style=" margin-left: 100px">DANH SÁCH BÀI ĐĂNG CỦA KHÁCH HÀNG {{nameCustomer}}</span>
+    </h2>
+    <div class="header-nav " style="position: sticky;z-index: 1;top: 0">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <button *ngIf="!idCustomer" class="btn btn-outline-primary" [routerLink]="['/post/create']">Thêm nhu
+                  cầu
+                </button>
+              </li>
+            </ul>
+            <div>
+              <form class="d-flex">
+                <select #namDemandType class="border-danger rounded" style="width: 100px; text-align: center">
+                  <option value="">--Tất cả--</option>
+                  <option value="mua">Mua</option>
+                  <option value="bán">Bán</option>
+                  <option value="thuê">Thuê</option>
+                </select>
+                <button type="button" class="btn btn-outline-danger" style="margin-left: 30px"
+                        (click)="searchByNameDemandType(namDemandType.value)">Tìm kiếm
+                </button>
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </nav>
+
+      <div>
+        <p *ngIf="resultPage" class="text-center" style="display:block; min-height: 26px; color: {{search}};">
+          Kết quả: {{resultPage.totalElements}} bài đăng.
+        </p>
+        <p *ngIf="!resultPage" class="text-center" style="display:block; min-height: 26px; color: {{search}};">
+          Kết quả: Không có bài đăng phù hợp !
+        </p>
+      </div>
+      <hr style="background-color: blue; height: 2px">
+    </div>
+    <div *ngIf="!postListCustomer">
+      <p style="text-align: center; min-height: 26px">Bạn chưa có bài đăng nào.</p>
+    </div>
+    <div *ngIf="postListCustomer">
+      <div class="row">
+        <div *ngFor="let item of postListCustomer, let i = index"
+             class="col-lg-3 col-md-3">
+          <div class="card" style="padding: 0 !important;">
+            <img src="{{item?.imageSet[0].url}}" class="card-img-top d-block w-100" style="height: 195px" alt="...">
+            <div class="card-body">
+              <h6 class="card-title text-danger">{{item?.namePost}}</h6>
+              <p class="card-text">Loại BĐS: {{item?.landType?.nameLandType}}</p>
+              <p class="card-text">Giá: {{item?.price| currency:"VND"}}</p>
+              <p class="card-text">Diện tích: {{item?.area}}m<sup>2</sup></p>
+              <p class="card-text">
+                <span *ngIf="item.approval == true" style="color:green;">Đã Phê Duyệt <i class="fa-sharp fa-solid fa-person-circle-check"></i></span>
+                <span *ngIf="item.approval != true" style="color:red;">Đang Phê Duyệt <i class="fa-solid fa-person-circle-exclamation"></i></span>
+              </p>
+              <!-- Button trigger modal -->
+              <button type="button" class="btn btn-outline-primary"
+                      data-bs-toggle="modal" data-bs-target="#exampleModal1" (click)="infoPost(item)">
+                Xem chi tiết
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center align-items-center">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<nav aria-label="..." *ngIf=" postListCustomer && pageTotal && idCustomer!=''">
+  <ul class="pagination">
+    <li class="page-item" [ngClass]="(pageNumber) > 0?'':'disabled'" >
+      <a class="page-link"
+         (click)="goToPageWithRoleAdmin(idCustomer?idCustomer:'',demandType?demandType:'',  pageNumber -1)">Trước</a>
+    </li>
+    <li class="page-item" *ngFor="let pageIndex of [].constructor( pageTotal), index as i"
+        [ngClass]="pageNumber == i ? 'active' : ''">
+      <a class="page-link"
+         (click)="goToPageWithRoleAdmin(idCustomer?idCustomer:'',demandType?demandType:'', i)">{{i + 1}}</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" [ngClass]="(pageNumber-1) < (pageTotal-2)?'':'disabled'"
+         (click)="goToPageWithRoleAdmin(idCustomer?idCustomer:'',demandType?demandType:'',  pageNumber + 1)">Sau</a>
+    </li>
+  </ul>
+</nav>
+
+<nav aria-label="..." *ngIf=" postListCustomer && pageTotal && idCustomer==''">
+  <ul class="pagination">
+    <li class="page-item" [ngClass]="(pageNumber) > 0?'':'disabled'">
+      <a class="page-link"
+         (click)="goToPageWithRoleCustomer(idAccount?idAccount:'',demandType?demandType:'',  pageNumber -1)">Trước</a>
+    </li>
+    <li class="page-item" *ngFor="let pageIndex of [].constructor( pageTotal), index as i"
+        [ngClass]="pageNumber == i ? 'active' : ''">
+      <a class="page-link"
+         (click)="goToPageWithRoleCustomer(idAccount?idAccount:'',demandType?demandType:'', i)">{{i + 1}}</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" [ngClass]="(pageNumber-1) < (pageTotal-2)?'':'disabled'"
+         (click)="goToPageWithRoleCustomer(idAccount?idAccount:'',demandType?demandType:'',  pageNumber+1)">Sau</a>
+    </li>
+  </ul>
+</nav>
+
+<!--  Modal-->
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="border: #BDD6EC 4px solid">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel" style="margin-left: 155px; display: block">CHI TIẾT BÀI ĐĂNG</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="post">
+          <table class="table table-borderless">
+            <thead></thead>
+            <tbody>
+            <tr>
+              <td style="width: 110px">Tên bài đăng:</td>
+              <td>{{post?.namePost}}</td>
+            </tr>
+            <tr>
+              <td>Nhu cầu:</td>
+              <td>{{post?.demandType?.nameDemandType}}</td>
+            </tr>
+            <tr>
+              <td>Diện tích:</td>
+              <td>{{post?.area}}m<sup>2</sup></td>
+            </tr>
+            <tr>
+              <td>Ngày đăng:</td>
+              <td>{{post?.dateCreation | date : "dd/MM/y"}}</td>
+            </tr>
+            <tr>
+              <td>Giá:</td>
+              <td>{{post?.price| currency:"VND"}}</td>
+            </tr>
+            <tr>
+              <td>Địa chỉ:</td>
+              <td>{{post?.address?.numberAddress}},{{post?.address?.wards?.nameWards}}
+                ,{{post?.address?.wards?.district?.nameDistrict}}
+                , {{post?.address?.wards?.district?.city?.nameCity}}</td>
+            </tr>
+            <tr>
+              <td>Loại BĐS:</td>
+              <td>{{post?.landType?.nameLandType}}</td>
+            </tr>
+            <tr>
+              <td>Hướng:</td>
+              <td>{{post?.direction?.nameDirection}}</td>
+            </tr>
+            <tr>
+              <td>Tình trạng:</td>
+              <td>{{post?.statusPost?.nameStatusPost}}
+                <i
+                  [ngClass]="post?.statusPost?.idStatusPost==1?'bi bi-bookmark-check-fill':post?.statusPost?.idStatusPost==2?'bi bi-bookmark-fill':'bi bi-bookmark-dash-fill'"
+                  class=""></i></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="close-modal-delete" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -25,14 +25,14 @@ export class PostDeleteComponent implements OnInit {
 
     this.postListApprovalService.deletePostById(this.postApproval.idPost).subscribe((data: any) => {
       this.emiter.emit('');
-      this.toastrService.success('Xóa thành công', 'Thông báo', {
+      this.toastrService.success('Xóa thành công.', 'Thông báo', {
         timeOut: 2000,
         progressBar: true,
         positionClass: 'toast-top-right',
         easing: 'ease-in'
       });
     }, (error: any) => {
-      this.toastrService.error('Đã xảy ra lỗi khi xóa', 'Lỗi', {
+      this.toastrService.error('Nhu cầu đã bị xoá từ trước.', 'Lỗi', {
         timeOut: 2000,
         progressBar: true,
         positionClass: 'toast-top-right',

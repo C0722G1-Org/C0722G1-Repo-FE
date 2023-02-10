@@ -9,16 +9,13 @@ import {EmployeeGuard} from '../authGuard/employee.guard';
 
 const routes: Routes = [
   {
-    path: '', component: EmployeeListComponent,
-    // canActivate: [AuthGuard] && [EmployeeGuard]
+    path: '', component: EmployeeListComponent,canActivate: [AdminGuard]
   },
   {
-    path: 'create', component: EmployeeCreateComponent,
-    // canActivate: [AuthGuard] && ([AdminGuard] || [EmployeeGuard])
+    path: 'create', component: EmployeeCreateComponent,canActivate: [AdminGuard]
   },
   {
-    path: 'edit/:id', component: EmployeeEditComponent,
-    // canActivate: [AuthGuard] && [AdminGuard] && [EmployeeGuard]
+    path: 'edit/:id', component: EmployeeEditComponent,canActivate: [AdminGuard]
   }
 ];
 

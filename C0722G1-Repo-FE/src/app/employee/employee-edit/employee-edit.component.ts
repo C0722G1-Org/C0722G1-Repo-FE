@@ -1,11 +1,23 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Employee} from '../../entity/employee/employee';
 import {Division} from '../../entity/employee/division';
+import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {EmployeeService} from '../../service/employee.service';
 import {DivisionService} from '../../service/division.service';
+import {Title} from "@angular/platform-browser";
+
+export const checkBirthDay: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+  // @ts-ignore
+  const birthday = new Date(control.get('dateOfBirth').value).getTime();
+  const dateNow = new Date().getTime();
+  if (dateNow - birthday < 18 * 365 * 24 * 60 * 60 * 1000 || dateNow - birthday > 100 * 365 * 24 * 60 * 60 * 1000) {
+    return {checkBirthDay: true};
+  } else {
+    return null;
+  }
+};
 
 @Component({
   selector: 'app-employee-edit',
@@ -26,11 +38,12 @@ export class EmployeeEditComponent implements OnInit {
               private divisionService: DivisionService,
               private router: Router,
               private toastrService: ToastrService,
-              private activatedRoute: ActivatedRoute) {
+              private activatedRoute: ActivatedRoute, private title: Title) {
+    this.title.setTitle('Chỉnh sửa thông tin nhân viên');
     this.formUpdateEmployee = new FormGroup({
       idEmployee: new FormControl(this.employee.idEmployee),
       codeEmployee: new FormControl(this.employee.codeEmployee),
-      nameEmployee: new FormControl(this.employee.nameEmployee),
+      nameEmployee: new FormControl(this.employee.nameEmployee, [Validators.required, Validators.pattern('^[AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬBCDĐEÈẺẼÉẸÊỀỂỄẾỆFGHIÌỈĨÍỊJKLMNOÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢPQRSTUÙỦŨÚỤƯỪỬỮỨỰVWXYỲỶỸÝỴZ][aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz]+ [AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬBCDĐEÈẺẼÉẸÊỀỂỄẾỆFGHIÌỈĨÍỊJKLMNOÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢPQRSTUÙỦŨÚỤƯỪỬỮỨỰVWXYỲỶỸÝỴZ][aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz]+(?: [AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬBCDĐEÈẺẼÉẸÊỀỂỄẾỆFGHIÌỈĨÍỊJKLMNOÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢPQRSTUÙỦŨÚỤƯỪỬỮỨỰVWXYỲỶỸÝỴZ][aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz]*)*$')]),
       phoneEmployee: new FormControl(this.employee.phoneEmployee, [Validators.required, Validators.pattern('^(((\\+|)84)|0)(3|5|7|8|9)+([0-9]{8})$')]),
       emailEmployee: new FormControl(this.employee.emailEmployee, [Validators.required, Validators.email]),
       addressEmployee: new FormControl(this.employee.addressEmployee, Validators.required),
@@ -38,10 +51,9 @@ export class EmployeeEditComponent implements OnInit {
       dateOfBirth: new FormControl(this.employee.dateOfBirth, Validators.required),
       division: new FormControl(''),
       flagDeleted: new FormControl(this.employee.flagDeleted)
-    });
+    }, {validators: [checkBirthDay]});
     this.activatedRoute.paramMap.subscribe(data => {
       const id = data.get('id');
-      console.log(id);
       if (id != null) {
         this.getEmployee(+id);
       }
@@ -54,8 +66,8 @@ export class EmployeeEditComponent implements OnInit {
    * Date created: 03/02/2023
    * Function: compare with
    */
-  compareCate(item1: Employee, item2: Employee): boolean {
-    return item1 && item2 ? item1.idEmployee === item2.idEmployee : item1 === item2;
+  compareCate(item1: Division, item2: Division): boolean {
+    return item1 && item2 ? item1.idDivision === item2.idDivision: item1 === item2;
   }
 
   ngOnInit(): void {
@@ -84,7 +96,6 @@ export class EmployeeEditComponent implements OnInit {
     this.divisionService.getAllDivision().subscribe(data => {
       this.divisions = data;
     }, error => {
-      console.log(error);
     });
   }
 
@@ -96,13 +107,12 @@ export class EmployeeEditComponent implements OnInit {
   updateEmployee(): void {
     this.employeeService.updateEmployee(this.formUpdateEmployee.value).subscribe(data => {
       if (data != null) {
-        this.toastrService.error('Chỉnh sủa không thành công.', 'Cảnh báo');
+        this.toastrService.warning('Chỉnh sủa không thành công.', 'Cảnh báo');
       } else {
-        this.toastrService.success('Chỉnh sửa thành công!', 'Thông báo');
+        this.toastrService.success('Chỉnh sửa thành công.', 'Thông báo');
         this.router.navigateByUrl('/employee');
       }
     }, error => {
-      console.log(error);
     });
   }
 }
