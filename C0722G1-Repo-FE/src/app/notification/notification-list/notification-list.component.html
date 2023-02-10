@@ -1,4 +1,4 @@
-<div class="p-3 px-5">
+<div class="p-3 px-5 main-content">
   <div style="margin-left: 15px; margin-top: 15px" class="d-flex justify-content-center">
     <div><h2 class="fw-bold">DANH SÁCH THÔNG BÁO</h2></div>
   </div>
@@ -259,6 +259,7 @@
       </div>
       <div class="modal-body">
         <strong style="color: red">Đã xảy ra lỗi. Vui lòng thử lại. <br><br></strong>
+        <br>
         <div class="modal-footer">
           <button id="deleteAccept0" class="btn btn-secondary" data-bs-dismiss="modal">
             Huỷ bỏ
@@ -278,6 +279,7 @@
         <div *ngFor="let item of deleteNotifications">
           <strong style="color: red">{{item.title}} &nbsp;</strong>
         </div>
+        <br>
         <div class="modal-footer">
           <button id="deleteCancel" class="btn btn-secondary" data-bs-dismiss="modal">Huỷ bỏ</button>
           <button id="deleteAccept" class="btn btn-warning" data-bs-dismiss="modal"

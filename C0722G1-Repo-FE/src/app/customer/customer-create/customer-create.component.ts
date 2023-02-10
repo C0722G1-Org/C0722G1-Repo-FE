@@ -112,9 +112,9 @@ export class CustomerCreateComponent implements OnInit {
           dateOfBirth: new FormControl('', this.checkDateOfBirth),
           flagDelete: new FormControl(''),
           approvalCustomer: new FormControl(''),
-          phoneCustomer1: new FormControl('', [Validators.required, Validators.pattern('[0][9][0]\\d{7}')]),
+          phoneCustomer1: new FormControl('', [Validators.required, Validators.pattern('(((\\+|)84)|0)(3|5|7|8|9)+([0-9]{8})')]),
           phoneCustomer2: new FormControl('', [
-            Validators.pattern('[0][9][0]\\d{7}')]),
+            Validators.pattern('(((\\+|)84)|0)(3|5|7|8|9)+([0-9]{8})')]),
           usernameAccount: new FormControl('', [Validators.required,
             Validators.pattern('[a-zA-Z0-9' +
               ' _ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪ' +

@@ -119,7 +119,7 @@
           <div class="col col-sm col-md col-lg col-xl col-xxl text-primary text-center">
             <label>
               <select #yearChange (change)="changeYear(yearChange.value)"
-                      class="form-select me-1 text-danger align-items-center justify-content-center">
+                      class="form-select me-1 align-items-center justify-content-center">
                 <option selected value="-1">--- Xem tất cả ---</option>
                 <option *ngFor="let year of yearList" [ngValue]="year">{{year}}</option>
               </select>

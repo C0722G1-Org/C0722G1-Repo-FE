@@ -22,10 +22,12 @@
             <a class="nav-link active" [routerLink]="['home/search', '3']" style="font-size: 130%">Cần Mua Nhà Đất</a>
           </li>
           <li>
-            <a class="nav-link active" *ngIf="roles[0]!=='CUSTOMER' && checkLogin" routerLink="/form" style="font-size: 130%">Biểu Mẫu</a>
+            <a class="nav-link active" *ngIf="roles[0]!=='CUSTOMER' && checkLogin" routerLink="/form"
+               style="font-size: 130%">Biểu Mẫu</a>
           </li>
           <li>
-            <a class="nav-link active" *ngIf="roles[0]!=='CUSTOMER' && checkLogin" routerLink="/post/charts" style="font-size: 130%">Thống Kê</a>
+            <a class="nav-link active" *ngIf="roles[0]!=='CUSTOMER' && checkLogin" routerLink="/post/charts"
+               style="font-size: 130%">Thống Kê</a>
           </li>
           <li class="nav-item dropdown" *ngIf="roles[0]!=='CUSTOMER' && checkLogin" style="font-size: 130%">
             <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown"
@@ -38,12 +40,13 @@
               </li>
               <li><a class="dropdown-item" routerLink="/post">Danh Sách Nhu Cầu</a>
               </li>
-              <li><a class="dropdown-item" *ngIf="roles[0]=='ADMIN'" routerLink="/notification">Danh Sách Thông Báo</a></li>
+              <li><a class="dropdown-item" *ngIf="roles[0]=='ADMIN'" routerLink="/notification">Danh Sách Thông Báo</a>
+              </li>
             </ul>
           </li>
         </ul>
         <div>
-          <span *ngIf="checkLogin"> </span><span style="font-size: 110%; color: blue" class="navbar-brand" href="#"
+          <span *ngIf="checkLogin"> </span><span style="font-size: 110%; color: blue" class="navbar-brand"
                                                  *ngIf="checkLogin">{{name}}</span>
           <button class="btn btn-outline-danger me-2" type="submit" *ngIf="!checkLogin" data-bs-toggle="modal"
                   data-bs-target="#login">Đăng Nhập
@@ -54,12 +57,13 @@
           <button class="btn btn-outline-success me-2" type="submit" routerLink="/post/create"
                   *ngIf="roles[0]=='CUSTOMER' && checkLogin">Đăng Tin
           </button>
-                    <button class="btn btn-outline-success" type="submit" routerLink="/security/login" *ngIf="!checkLogin">Đăng
-                      Tin
-                    </button>
+          <button class="btn btn-outline-success" type="submit" routerLink="/security/login" *ngIf="!checkLogin">Đăng
+            Tin
+          </button>
         </div>
         <div *ngIf="roles[0]=='EMPLOYEE' || 'ADMIN' && checkLogin">
-          <button (click)="checkNotification()"  id="notificationMD" type="reset" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <button (click)="checkNotification()" id="notificationMD" type="reset" class="btn btn-primary"
+                  data-bs-toggle="modal" data-bs-target="#exampleModal">
             <i class="bi bi-bell-fill"></i>
           </button>
         </div>
@@ -69,10 +73,11 @@
               <i class="fa-regular fa-user"></i>
             </button>
             <ul class="dropdown-menu dropdown-menu-end">
-              <li><a class="dropdown-item" [routerLink]="['/post/list/customerByCustomer/',idAccount]">Bài đăng</a></li>   <!-- thông tin khách hàng -->
+              <li><a class="dropdown-item" [routerLink]="['/post/list/customerByCustomer/',idAccount]">Bài đăng</a></li>
+              <!-- thông tin khách hàng -->
               <li><a class="dropdown-item" [routerLink]="['/security/change-password/',idAccount]">Sửa mật khẩu</a></li>
               <!-- thông tin khách hàng -->
-              <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logout" href="#">Đăng xuất</a></li>
+              <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logout">Đăng xuất</a></li>
             </ul>
           </div>
         </div>
@@ -84,7 +89,7 @@
             <ul class="dropdown-menu dropdown-menu-end">
               <li><a class="dropdown-item" routerLink="/customer">Quản lý khách hàng</a></li>
               <li><a class="dropdown-item" [routerLink]="['/security/change-password/',idAccount]">Sửa mật khẩu</a></li>
-              <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logout" href="#">Đăng xuất</a></li>
+              <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logout">Đăng xuất</a></li>
             </ul>
           </div>
         </div>
@@ -97,7 +102,7 @@
               <li><a class="dropdown-item" routerLink="/employee">Quản lý nhân viên</a></li>
               <li><a class="dropdown-item" routerLink="/customer">Quản lý khách hàng</a></li>
               <li><a class="dropdown-item" [routerLink]="['/security/change-password/',idAccount]">Sửa mật khẩu</a></li>
-              <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logout" href="#">Đăng xuất</a></li>
+              <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logout">Đăng xuất</a></li>
             </ul>
           </div>
         </div>

@@ -52,15 +52,22 @@ export class ChangePasswordComponent implements OnInit {
     this.getUpdateForm();
   }
 
+
+
   getUpdateForm() {
     this.updateForm = this.formBuilder.group({
       idAccount: [''],
       encryptPassword: ['', [Validators.minLength(6)]],
-      newPassword: ['', [Validators.minLength(6)]],
-      confirmPassword: ['', [Validators.minLength(6)]],
+      newPassword: ['', [Validators.required]],
+      confirmPassword: ['', [Validators.required]],
     }, {
-      validators: passwordMatchingValidator
+      validators: this.checkPasswords
     });
+  }
+
+  checkPasswords(group: AbstractControl): any {
+    const passwordCheck = group.value;
+    return (passwordCheck.newPassword === passwordCheck.confirmPassword ? null : {notSame: true});
   }
 
   /**
@@ -81,11 +88,15 @@ export class ChangePasswordComponent implements OnInit {
    */
 
   changePassword(): void {
+    console.log(this.updateForm)
     this.accountService.updatePassword(this.updateForm.value).subscribe(data => {
       this.toastrService.success('Thay đổi mật khẩu thành công.');
-      this.router.navigateByUrl('/home');
+      localStorage.clear();
+      location.href = 'http://localhost:4200/security/login';
     }, error => {
-      this.toastrService.success('Thay đổi mật khẩu thành công.');
+      if (error.status === 501 || 400) {
+        this.toastrService.error('Thay đổi mật khẩu không thành công.')
+      }
     });
   }
 

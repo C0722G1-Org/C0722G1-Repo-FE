@@ -27,21 +27,21 @@
               <span class="text-danger ms-3 val"
                     *ngIf="customerForm.controls.usernameAccount.hasError('required') && (customerForm.controls.usernameAccount.touched || submitted) "
                     style="color: red">
-         Vui lòng nhập tài khoản!!!
+         Vui lòng nhập tài khoản.
     </span>
               <span class="text-danger ms-3 val"
                     *ngIf="customerForm.controls.usernameAccount.hasError('pattern') && (customerForm.controls.usernameAccount.touched || submitted) "
                     style="color: red">
-          tài khoản không được chứa ký tự đặc biệt!!!
+          tài khoản không được chứa ký tự đặc biệt.
      </span>
               <span class="text-danger ms-3 val"
                     *ngIf="customerForm.controls.usernameAccount.hasError('minlength') && (customerForm.controls.usernameAccount.touched || submitted) "
                     style="color: red">
-        Tài khoản có ít nhất 3 ký tự!!!
+        Tài khoản có ít nhất 3 ký tự.
     </span>
               <div class="text-danger ms-3 val"
                    *ngIf="customerForm.errors?.areEqual && customerForm.controls['usernameAccount'].touched">
-                Tên đăng nhập đã tồn tại
+                Tên đăng nhập đã tồn tại.
               </div>
             </div>
           </div>
@@ -64,7 +64,7 @@
                 <div class="text-danger ms-3 val"
                      *ngIf="customerForm.get('passGroup').hasError('minlength','encryptPassword')
           && (customerForm.get('passGroup')?.get('encryptPassword').touched || submitted)" style="color: red">
-                  Mật khẩu có ít nhất 6 ký tự!!!
+                  Mật khẩu có ít nhất 6 ký tự.
                 </div>
               </div>
             </div>
@@ -88,7 +88,7 @@
                 <div class="text-danger ms-3 val"
                      *ngIf="customerForm.get('passGroup').hasError('notSame') && !((customerForm.get('passGroup').get('passwordConfirm').pristine) ||submitted)"
                      style="color: red">
-                  Mật khẩu phải giống nhau!!!
+                  Mật khẩu phải giống nhau.
                 </div>
               </div>
             </div>
@@ -109,11 +109,11 @@
                              (customerForm.controls['nameCustomer'].invalid)?'is-invalid':'is-valid':''"/>
               <span class="text-danger ms-3 val"
                     *ngIf="customerForm.controls.nameCustomer.hasError('required') && (customerForm.controls.nameCustomer.touched ||submitted) ">
-         Vui lòng nhập họ và tên!!!
+         Vui lòng nhập họ và tên.
     </span>
               <span class="text-danger ms-3 val"
                     *ngIf="customerForm.controls.nameCustomer.hasError('pattern') && (customerForm.controls.nameCustomer.touched ||submitted) ">
-      Tên khách hàng không được chứa số và ký tự đặc biệt!!!
+      Tên khách hàng không được chứa số và ký tự đặc biệt.
     </span>
             </div>
           </div>
@@ -130,11 +130,11 @@
                              (customerForm.controls['dateOfBirth'].invalid|| customerForm.errors?.customerForm)?'is-invalid':'is-valid':''"/>
               <span class="text-danger ms-3 val"
                     *ngIf="customerForm.controls.dateOfBirth.hasError('required') && (customerForm.controls.dateOfBirth.touched ||submitted) ">
-         Vui lòng nhập ngày sinh!!!
+         Vui lòng nhập ngày sinh.
     </span>
               <span class="text-danger ms-3 val"
                     *ngIf="customerForm.controls.dateOfBirth.hasError('invalidDateOfBirth') && (customerForm.controls.dateOfBirth.touched ||submitted) ">
-         Khách hàng phải > 18 tuổi!!!
+         Khách hàng phải lớn hơn 18 tuổi.
     </span>
             </div>
           </div>
@@ -167,7 +167,9 @@
               <label for="nameAddress" class="form-label ms-2">Địa chỉ<span style="color: red">(*)</span>:</label>
             </div>
             <div class="col-8">
-              <input type="text" class="form-control customer-infor" formControlName="addressCustomer" id="nameAddress"/>
+              <input type="text" class="form-control customer-infor" formControlName="addressCustomer" id="nameAddress"
+                     [ngClass]="(customerForm.controls['addressCustomer'].touched)?
+                             (customerForm.controls['addressCustomer'].invalid|| customerForm.errors?.customerForm)?'is-invalid':'is-valid':''"/>
               <div style="color: red">
               <span class="text-danger ms-3 val"
                     *ngIf="customerForm.controls.addressCustomer.hasError('required') && (customerForm.controls.addressCustomer.touched ||submitted) ">
@@ -189,14 +191,16 @@
               <label for="namePhone1" class="form-label ms-2">Số điện thoại 1<span style="color: red">(*)</span>:</label>
             </div>
             <div class="col-8">
-              <input type="text" class="form-control customer-infor" formControlName="phoneCustomer1" id="namePhone1"/>
+              <input type="text" class="form-control customer-infor" formControlName="phoneCustomer1" id="namePhone1"
+                     [ngClass]="(customerForm.controls['phoneCustomer1'].touched)?
+                             (customerForm.controls['phoneCustomer1'].invalid|| customerForm.errors?.customerForm)?'is-invalid':'is-valid':''"/>
               <div *ngIf="customerForm.controls['phoneCustomer1'].hasError('required') &&
                                      customerForm.controls['phoneCustomer1'].touched" style="color: red">
                 Số điện thoại không được bỏ trống.
               </div>
               <div *ngIf="customerForm.controls['phoneCustomer1'].hasError('pattern') &&
                                      customerForm.controls['phoneCustomer1'].touched" style="color: red">
-                Số điện thoại phải đúng định dạng. Ví dụ: 090 XXXX XXX .
+                Số điện thoại phải đúng định dạng. Ví dụ: 038X[7], 076X[7], 097X[7] .
               </div>
               <div *ngIf="customerForm.errors?.checkPhoneNumber && customerForm.controls['phoneCustomer1'].touched" style="color: red">
                 SDT đã tồn tại.
@@ -212,11 +216,13 @@
               <label for="namePhone2" class="form-label ms-2">Số điện thoại 2:</label>
             </div>
             <div class="col-8">
-              <input type="text" class="form-control customer-infor" formControlName="phoneCustomer2" id="namePhone2"/>
+              <input type="text" class="form-control customer-infor" formControlName="phoneCustomer2" id="namePhone2"
+                     [ngClass]="(customerForm.controls['phoneCustomer2'].touched)?
+                             (customerForm.controls['phoneCustomer2'].invalid|| customerForm.errors?.customerForm)?'is-invalid':'is-valid':''"/>
 
               <div *ngIf="customerForm.controls['phoneCustomer2'].hasError('pattern') &&
                                      customerForm.controls['phoneCustomer2'].touched" style="color: red">
-                Số điện thoại phải đúng định dạng. Ví dụ: 090 XXXX XXX .
+                Số điện thoại phải đúng định dạng. Ví dụ: 038X[7], 076X[7], 097X[7] .
               </div>
             </div>
           </div>

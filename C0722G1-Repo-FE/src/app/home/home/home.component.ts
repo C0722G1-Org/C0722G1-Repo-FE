@@ -31,10 +31,9 @@ export class HomeComponent implements OnInit {
   constructor(private postListService: PostListService,
               private fb: FormBuilder,
               private titleService: Title,
-              private toastrService: ToastrService,
               private activatedRoute: ActivatedRoute,
               private router: Router) {
-    this.titleService.setTitle('Trang chủ');
+    this.titleService.setTitle('Trung tâm môi giới Bất Động Sản');
     this.formSearch = this.fb.group({
       area: [''],
       price: [''],
@@ -211,26 +210,6 @@ export class HomeComponent implements OnInit {
     this.code = 0;
     this.page = 0;
     this.router.navigateByUrl("/home");
-  }
-
-  /**
-   * Create by: SangNP
-   * Date created: 04/02/2023
-   * Function: success for toartr
-   * @return void
-   */
-  success(mess: string): void {
-    this.toastrService.success(mess);
-  }
-
-  /**
-   * Create by: SangNP
-   * Date created: 04/02/2023
-   * Function: error for toartr
-   * @return void
-   */
-  error(mess: string): void {
-    this.toastrService.error(mess);
   }
 
   /**

@@ -75,10 +75,11 @@ export class EmployeeCreateComponent implements OnInit {
   createEmployee(): void {
     const employee = this.formCreateEmployee.value;
     this.employeeService.saveEmployee(employee).subscribe(data => {
-      this.toastrService.success('Thêm mới thành công.', 'Thông báo');
+      this.toastrService.success('Thêm mới thành công!', 'Thông báo');
       this.router.navigateByUrl('/employee');
     }, error => {
       this.toastrService.error('Thêm mới không thành công.', 'Thông báo');
+      console.log(error);
     });
   }
 
@@ -96,6 +97,7 @@ export class EmployeeCreateComponent implements OnInit {
     this.divisionService.getAllDivision().subscribe(data => {
       this.divisions = data;
     }, error => {
+      console.log(error);
     });
   }
 
