@@ -1,6 +1,6 @@
 <div class="p-3 px-5">
   <div style="margin-left: 15px; margin-top: 15px" class="d-flex justify-content-center">
-    <div><h2>DANH SÁCH THÔNG BÁO</h2></div>
+    <div><h2 class="fw-bold">DANH SÁCH THÔNG BÁO</h2></div>
   </div>
   <a routerLink="/notification/create">
     <button class="btn btn-primary btn-outline-secondary mx-1 mb-3">
@@ -9,7 +9,7 @@
   </a>
   <div class="row">
     <form class="pb-3" *ngIf="rfSearch" [formGroup]="rfSearch" (ngSubmit)="searchNotification(0,true)">
-      <fieldset style="all: revert;">
+      <fieldset style="all: revert;" class="border border-danger rounded-3">
         <div class="row mt-3">
           <div class="col-1"></div>
           <div class="col-4">

@@ -99,8 +99,9 @@ export class FormEditComponent implements OnInit {
    */
   // cập nhật và lưu hình ảnh
   updateDataForm(): void {
-    // upload image to firebase
-    // const nameImg = this.getCurrentDateTime();
+    if (this.selectedFile != null){
+      // upload image to firebase
+      // const nameImg = this.getCurrentDateTime();
 
       const nameImg = this.getCurrentDateTime() + this.selectedFile.name;
       const fileRef = this.storage.ref(nameImg);
@@ -117,6 +118,13 @@ export class FormEditComponent implements OnInit {
           });
         })
       ).subscribe();
+    }else {
+      this.formDataFormUpdate.patchValue({urlDataForm: this.url});
+      this.dataFormService.updateDataForm(this.formDataFormUpdate.value).subscribe(() => {
+        this.router.navigateByUrl('form').then(r => this.alertService.showMessage('Cập nhật thành công.'));
+      });
+    }
+
   }
 
   /**
