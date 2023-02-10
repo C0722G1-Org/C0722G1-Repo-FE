@@ -18,7 +18,6 @@ export class AccountService {
   }
 
   updatePassword(accountDto: AccountDto): Observable<any> {
-    console.log(accountDto)
     return this.httpClient.patch(this.ACCOUNT_URL_UPDATE , accountDto);
   }
 }

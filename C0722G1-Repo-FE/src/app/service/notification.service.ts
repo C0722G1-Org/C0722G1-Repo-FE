@@ -2,20 +2,18 @@
 import {Injectable} from '@angular/core';
 // @ts-ignore
 import {Observable} from 'rxjs';
-
 // @ts-ignore
 import {HttpClient} from '@angular/common/http';
 import {PageNotificationDto} from '../dto/notification/page-notification-dto';
 import {NotificationDeleteDto} from '../dto/notification/notification-delete-dto';
 import {ToastrService} from 'ngx-toastr';
 
-
 // @ts-ignore
 @Injectable({
   providedIn: 'root'
 })
 export class NotificationService {
-  private URL_API_NOTIFICATION = 'http://localhost:8080/api/notifications';​
+  private URL_API_NOTIFICATION = 'http://localhost:8080/api/notifications';
 
   constructor(private httpClient: HttpClient) {
   }
@@ -25,9 +23,9 @@ export class NotificationService {
    * Function: get all and search notifications
    * Date: 31/01/2023
    */
-  getPageNotifications(searchNotification: any, pageNumber: any): Observable<PageNotificationDto> {
+  getPageNotifications(searchNotification: any, pageNumber: any, recordPerPage: any): Observable<PageNotificationDto> {
     return this.httpClient.post<PageNotificationDto>(this.URL_API_NOTIFICATION +
-      '/search?page=' + pageNumber, searchNotification);
+      '/search?page=' + pageNumber + '&size=' + recordPerPage, searchNotification);
   }
 
   /**

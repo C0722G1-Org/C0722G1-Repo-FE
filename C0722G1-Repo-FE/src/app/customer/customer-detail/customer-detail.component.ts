@@ -22,7 +22,7 @@ export class CustomerDetailComponent implements OnInit {
               private formBuilder: FormBuilder,
               private router: Router,
               private toast: ToastrService) {
-    this.titleService.setTitle('Xem Chi Tiết Khách Hàng');
+    this.titleService.setTitle('Xem chi tiết khách hàng');
 
   }
 
@@ -47,7 +47,6 @@ export class CustomerDetailComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   detailById(idCustomer: number) {
-
   }
 
 }

@@ -30,7 +30,6 @@ export class NotificationComponent implements OnInit {
     this.searchNotification(0);
     this.deleteIds = [];
     this.checkedAll = false;
-    console.log('test date: ' + this.testDate);
   }
 
   /**
@@ -40,10 +39,9 @@ export class NotificationComponent implements OnInit {
    * Date: 02/02/2023
    */
   searchNotification(pageNumber: number): void {
-    this.notificationService.getPageNotifications(this.rfSearch.value, pageNumber).subscribe(next => {
+    this.notificationService.getPageNotifications(this.rfSearch.value, pageNumber,5).subscribe(next => {
       this.pageNotifications = next;
     }, error => {
-      console.log('Lỗi truy xuất dữ liệu.');
     });
   }
 
@@ -173,7 +171,6 @@ export class NotificationComponent implements OnInit {
     this.notificationService.findByListId(this.deleteIds).subscribe(data => {
       this.deleteNotifications = data;
     }, error => {
-      console.log('Đã xảy ra lỗi, không tìm thấy sản phẩm.');
     });
   }
 
@@ -184,14 +181,14 @@ export class NotificationComponent implements OnInit {
    */
   delete(): void {
     this.notificationService.delete(this.deleteIds).subscribe(next => {
-      this.toastrService.success('Xóa thành công', 'Thông báo', {
+      this.toastrService.success('Xóa thành công.', 'Thông báo', {
         timeOut: 2000,
         progressBar: true,
         positionClass: 'toast-top-right',
         easing: 'ease-in'
       });
     }, error => {
-      this.toastrService.error('Đã xảy ra lỗi khi xóa', 'Lỗi', {
+      this.toastrService.error('Đã xảy ra lỗi khi xóa.', 'Lỗi', {
         timeOut: 2000,
         progressBar: true,
         positionClass: 'toast-top-right',

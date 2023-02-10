@@ -3,16 +3,18 @@
   <div style="text-align: center;">
     <div class="row m-0">
       <div class=" d-flex justify-content-center align-items-center mt-2 mb-2 " >
-        <div class="boxed shadow h-100" style="align-content: center" >
+        <div class="boxed shadow h-100" style="align-content: center; margin-bottom: 7px; margin-top: 7px" >
           <div class="mb-2 row">
-            <div class="d-flex align-items-center mb-2">
-              <a class="btn text-center" routerLink="/form"><i class="fa-solid fa-arrow-left"></i> Quay lại</a>
-            </div>
             <div class="mb-2 row">
               <fieldset>
                 <legend>
-                  <div class="mt-0 text-center fw-bold">
-                    <h1>THÊM BIỂU MẪU</h1>
+                  <div class="row" style="margin-top: 30px">
+                    <div class="d-flex align-items-center mb-2 col-2" style="margin-top: 20px">
+                      <a class="btn-center-primary" routerLink="/form"><i class="fa-solid fa-arrow-left"></i></a>
+                    </div>
+                    <div class="mt-0 text-center fw-bold col-10">
+                      <h1>THÊM BIỂU MẪU</h1>
+                    </div>
                   </div>
                   <br>
                 </legend>
@@ -42,25 +44,30 @@
                 <label  class="form-label ms-2">Tập tin văn bản<span style="color: red">(*)</span>:</label>
               </div>
               <div class="col-8" style="text-align: left">
-                <input type="file" class="form-control-file" (change)="showPreview($event)" accept=".doc,.docx,.xml" formControlName="fileForm">
+                <input type="file" class="form-control-file" (change)="showPreview($event)" accept=".doc,.docx,.xml,.pdf" formControlName="fileForm" >
               </div>
               <div class="text-danger" *ngFor="let validation of validationMessages.fileForm">
                 <div class="error-message"
                      *ngIf="dataFormCreate.get('fileForm')?.hasError(validation.type) && ( dataFormCreate.get('fileForm')?.pristine) else elseBlock">
                   {{validation.message}}</div>
               </div>
+              <div class="text-danger" *ngIf="isOverSizeFile">File không được quá kích thước 5MB.</div>
               <ng-template #elseBlock><br></ng-template>
             </div>
           </div>
           <div class="mb-2">
             <span style="font-size: 15px" class="fst-italic">
               Trường có dấu <span style="color: red"> (*)</span> là bắt
-              buộc,không được bỏ trống
+              buộc,không được bỏ trống.
             </span>
           </div>
           <div class="d-flex justify-content-center" style="margin-bottom: 15px ; margin-top: 30px">
-            <button type="submit" [disabled]="dataFormCreate.invalid" class="btn btn-primary">Lưu thông tin</button>
-            <input style="margin-left: 15px" type="reset" class="btn btn-light" value="Nhập lại">
+            <button *ngIf="!isSubMit" type="submit" [disabled]="dataFormCreate.invalid" class="btn btn-primary">Lưu thông tin</button>
+            <input *ngIf="!isSubMit" style="margin-left: 15px" type="reset" (click)= "resetFileValidate()" class="btn btn-light" value="Nhập lại">
+            <button *ngIf="isSubMit" class="btn btn-primary" type="button" disabled>
+              <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+              Vui lòng chờ...
+            </button>
           </div>
         </div>
       </div>

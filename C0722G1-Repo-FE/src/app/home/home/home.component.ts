@@ -31,10 +31,9 @@ export class HomeComponent implements OnInit {
   constructor(private postListService: PostListService,
               private fb: FormBuilder,
               private titleService: Title,
-              private toastrService: ToastrService,
               private activatedRoute: ActivatedRoute,
               private router: Router) {
-    this.titleService.setTitle('Trang chủ');
+    this.titleService.setTitle('Trung tâm môi giới Bất Động Sản');
     this.formSearch = this.fb.group({
       area: [''],
       price: [''],
@@ -61,7 +60,6 @@ export class HomeComponent implements OnInit {
           this.getImageByIdPost(this.postListTemp);
         }
         this.postList = this.postList.concat(this.postListTemp);
-        console.log(this.postList)
         this.activatedRoute.paramMap.subscribe(data => {
           const code = data.get('code');
           if (code !== null) {
@@ -152,7 +150,7 @@ export class HomeComponent implements OnInit {
         this.postList = this.postList.concat(this.postListTemp);
       }, error => {
         this.postList = [];
-        this.mess = 'Không có dữ liệu';
+        this.mess = 'Không có dữ liệu.';
       },
       () => {
       });
@@ -217,26 +215,6 @@ export class HomeComponent implements OnInit {
   /**
    * Create by: SangNP
    * Date created: 04/02/2023
-   * Function: success for toartr
-   * @return void
-   */
-  success(mess: string): void {
-    this.toastrService.success(mess);
-  }
-
-  /**
-   * Create by: SangNP
-   * Date created: 04/02/2023
-   * Function: error for toartr
-   * @return void
-   */
-  error(mess: string): void {
-    this.toastrService.error(mess);
-  }
-
-  /**
-   * Create by: SangNP
-   * Date created: 04/02/2023
    * Function: take post list buy
    * @return void
    */
@@ -257,7 +235,7 @@ export class HomeComponent implements OnInit {
         this.postList = this.postList.concat(this.postListTemp);
       }, error => {
         this.postList = [];
-        this.mess = 'Không có dữ liệu';
+        this.mess = 'Không có dữ liệu.';
       },
       () => {
       });
@@ -286,7 +264,7 @@ export class HomeComponent implements OnInit {
         this.postList = this.postList.concat(this.postListTemp);
       }, error => {
         this.postList = [];
-        this.mess = 'Không có dữ liệu';
+        this.mess = 'Không có dữ liệu.';
       },
       () => {
       });
@@ -315,7 +293,7 @@ export class HomeComponent implements OnInit {
         this.postList = this.postList.concat(this.postListTemp);
       }, error => {
         this.postList = [];
-        this.mess = 'Không có dữ liệu';
+        this.mess = 'Không có dữ liệu.';
       },
       () => {
       });
@@ -327,18 +305,18 @@ export class HomeComponent implements OnInit {
    * @return void
    */
   checkCode(code: number): void{
-    switch (code) {
-      case 1:
-        this.getPostPageSell();
-        break;
-      case 2:
-        this.getPostPageRent();
-        break;
-      case 3:
-        this.getPostPageBuy();
-        break;
-      default:
-        this.getPostPage();
-    }
+      switch (code) {
+        case 1:
+          this.getPostPageSell();
+          break;
+        case 2:
+          this.getPostPageRent();
+          break;
+        case 3:
+          this.getPostPageBuy();
+          break;
+        default:
+          this.getPostPage();
+      }
   }
 }

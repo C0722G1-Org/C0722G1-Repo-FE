@@ -7,12 +7,12 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <span>Bạn có thực sự muốn xóa hay không?</span><br>
-          <span style="color: red">Nội dung:{{dataFormDelete.contentDataForm}}</span>
+          <span>Bạn có muốn xóa hay không?</span><br>
+          <span >Nội dung: <span style="color: red">{{dataFormDelete.contentDataForm}}</span></span>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">thoát</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal"  (click)="deleteDataForm()" >xóa</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Huỷ bỏ</button>
+          <button type="button" class="btn btn-warning" data-bs-dismiss="modal"  (click)="deleteDataForm()" >Xác nhận</button>
         </div>
       </div>
     </div>

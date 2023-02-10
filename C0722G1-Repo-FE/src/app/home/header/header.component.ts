@@ -48,7 +48,7 @@ export class HeaderComponent implements OnInit {
     this.router.navigateByUrl('/').then(() => {
       location.reload();
     });
-    this.toast.info('Đăng xuất thành công', ' Thông báo',{
+    this.toast.info('Đăng xuất thành công.', ' Thông báo',{
       timeOut: 3000,
       extendedTimeOut: 1500
     });
@@ -62,7 +62,6 @@ export class HeaderComponent implements OnInit {
     this.checkNotificationMd = true;
     if (this.checkNotificationMd){
       this.numberNotification = 0
-      this.toast.info('đã hết thông báo');
     }
   }
 

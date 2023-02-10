@@ -15,6 +15,7 @@ import {IndividualConfig, ToastrService} from "ngx-toastr";
 })
 export class CustomerListComponent implements OnInit {
 
+// customerListFormGroup: FormGroup = new FormGroup({allSearch: new FormControl('',Validators.pattern('[^A-Za-z0-9]'))});
   customer!: PageCustomerDto;
   temp: Customer = {};
   allSearch = '';
@@ -38,9 +39,9 @@ export class CustomerListComponent implements OnInit {
     }, error => {
     }, () => {
     });
-    if (this.allSearch !== ''){
-      this.showToastrSuccess();
-    }
+    // if (this.allSearch !== ''){
+    //   this.showToastrSuccess();
+    // }
     // else {
     //   this.showToastrError();
     // }
@@ -55,11 +56,11 @@ export class CustomerListComponent implements OnInit {
   }
 
   private showToastrError(): void {
-    this.showError('Không có kết quả cần tìm', 'Thông báo!');
+    this.showError('Không có kết quả cần tìm.', 'Thông báo!');
   }
 
   private showToastrSuccess(): void {
-    this.showSuccess('Tìm kiếm thành công', 'Thông báo!',{
+    this.showSuccess('Tìm kiếm thành công.', 'Thông báo!',{
       timeOut: 1000,
       progressBar: true,
       positionClass: 'toast-top-right',
@@ -85,17 +86,26 @@ export class CustomerListComponent implements OnInit {
   reload(): void {
     this.getAllCustomerListComponent(this.pageable);
   }
-  // expandOrCollapse(id: number, action: string) {
-  //   if (action === 'expand') {
-  //     // @ts-ignore
-  //     document.getElementById('expandedContent' + id).style.display = 'inline-block';
-  //     // @ts-ignore
-  //     document.getElementById('collapsedContent' + id).style.display = 'none';
-  //   } else {
-  //     // @ts-ignore
-  //     document.getElementById('expandedContent' + id).style.display = 'none';
-  //     // @ts-ignore
-  //     document.getElementById('collapsedContent' + id).style.display = 'inline-block';
-  //   }
-  // }
+  expandOrCollapse(id: number, action: string) {
+    if (action === 'expand') {
+      // @ts-ignore
+      document.getElementById('expandedContent' + id).style.display = 'inline-block';
+      // @ts-ignore
+      document.getElementById('collapsedContent' + id).style.display = 'none';
+    } else {
+      // @ts-ignore
+      document.getElementById('expandedContent' + id).style.display = 'none';
+      // @ts-ignore
+      document.getElementById('collapsedContent' + id).style.display = 'inline-block';
+    }
+  }
+
+  refresh(): void {
+    window.location.reload();
+  }
+
+// submit(): void {
+//   const listCustomer = this.customerListFormGroup.value;
+//
+// }
 }

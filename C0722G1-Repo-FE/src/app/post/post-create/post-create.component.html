@@ -275,7 +275,7 @@
       </div>
       <div class="col-8">
         <label for="addImage" class="form-label btn btn-outline-success">Chọn ảnh minh hoạ</label>
-        <span id="fileChosen"> {{nameImageList.toString()}}</span>
+        <span id="fileChosen"><p *ngFor="let name of nameImageList">{{name}}</p></span>
         <input type="file" (change)="showFilesName($event)" id="addImage" multiple accept="image/*" hidden/>
       </div>
     </div>
@@ -283,12 +283,17 @@
       <div class="col-2"></div>
       <div class="col-2"></div>
       <div class="col-5">
-        <div class="form-text" *ngIf="submitTimes<=0">
+        <div class="form-text" *ngIf="submitTimes<=0 && !isOverSizeImage && !isNotImage">
           Vui lòng thêm ảnh.
         </div>
-        <div class="text-danger"
-             *ngIf="(submitTimes>0 && (imageList.length == 0||nameImageList.length == 0))">
+        <div class="text-danger" *ngIf="(submitTimes>0 && (imageList.length == 0||nameImageList.length == 0))">
           Vui lòng thêm ảnh.
+        </div>
+        <div class="text-danger" *ngIf="(isNotImage)">
+          File không hợp lệ, vui lòng chỉ chọn file ảnh.
+        </div>
+        <div class="text-danger" *ngIf="(isOverSizeImage)">
+          File ảnh không được quá kích thước 5MB.
         </div>
       </div>
     </div>

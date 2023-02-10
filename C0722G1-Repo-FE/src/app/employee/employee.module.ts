@@ -13,12 +13,12 @@ import {HomeModule} from '../home/home.module';
 
 @NgModule({
   declarations: [EmployeeCreateComponent, EmployeeEditComponent, EmployeeDeleteComponent, EmployeeListComponent, EmployeeDetailComponent],
-  imports: [
-    CommonModule,
-    EmployeeRoutingModule,
-    ReactiveFormsModule,
-    HomeModule
-  ]
+    imports: [
+        CommonModule,
+        EmployeeRoutingModule,
+        ReactiveFormsModule,
+        HomeModule
+    ]
 })
 export class EmployeeModule {
 }

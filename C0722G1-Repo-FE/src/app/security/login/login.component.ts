@@ -67,7 +67,9 @@ export class LoginComponent implements OnInit {
             this.tokenService.setIdAccount(data.idAccount);
             location.href = 'http://localhost:4200/home';
             // window.open('http://localhost:4200/home');
-            this.toast.info('Đăng nhập thành công.', 'Thông báo');
+            this.toast.info('Đăng nhập thành công.', 'Thông báo',{
+              timeOut: 3000
+            });
           }
         }
         // @ts-ignore

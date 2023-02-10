@@ -26,35 +26,32 @@ export class NotificationListComponent implements OnInit {
   deleteNotifications: NotificationDeleteDto[] = [];
   checkedAll!: boolean;
   orderNumber!: number;
-​
+  flagNotToastReset!: boolean;
+  recordPerPage!: number;
 
   constructor(private notificationService: NotificationService,
               private formBuilder: FormBuilder,
               private toastrService: ToastrService,
               private titleService: Title) {
-    this.titleService.setTitle('DANH SÁCH THÔNG BÁO');
+    this.titleService.setTitle('Danh sách thông báo');
   }
-
-​
 
   ngOnInit(): void {
     this.createSearchForm();
-    this.searchNotification(0,true);
+    this.searchNotification(0, false);
     this.deleteIds = [];
     this.checkedAll = false;
   }
 
-​
-
-  searchNotification(pageNumber: number,flag: boolean): void {
+  searchNotification(pageNumber: number, flagSearchToast: boolean): void {
     let notificationToSearch = this.rfSearch.value;
     notificationToSearch.startDate = this.rfSearch.value.startDate.trim();
     notificationToSearch.title = this.rfSearch.value.title.trim();
     notificationToSearch.content = this.rfSearch.value.content.trim();
-    this.notificationService.getPageNotifications(notificationToSearch, pageNumber).subscribe(data => {
+    this.notificationService.getPageNotifications(notificationToSearch, pageNumber, this.recordPerPage).subscribe(data => {
       if (data == null) {
         this.pageNotifications = data;
-        this.toastrService.warning('Không tìm thấy kết quả phù hợp!', '', {
+        this.toastrService.warning('Không tìm thấy kết quả phù hợp.', '', {
           timeOut: 2000,
           progressBar: true,
           positionClass: 'toast-top-right',
@@ -64,7 +61,7 @@ export class NotificationListComponent implements OnInit {
       }
       if (notificationToSearch.title == '%' || notificationToSearch.title == '/' ||
         notificationToSearch.content == '%' || notificationToSearch.content == '/') {
-        this.toastrService.error('Không được nhập duy nhất ký tự "%" hoặc "/" trong ô tìm kiếm', 'Lỗi tìm kiếm', {
+        this.toastrService.error('Không được nhập duy nhất ký tự "%" hoặc "/" trong ô tìm kiếm.', 'Lỗi tìm kiếm', {
           timeOut: 5000,
           progressBar: true,
           positionClass: 'toast-top-right',
@@ -73,9 +70,21 @@ export class NotificationListComponent implements OnInit {
         this.pageNotifications.content = [];
         return;
       }
-      if (flag == false && data !== null && (notificationToSearch.title !== '%' && notificationToSearch.title !== '/' &&
-        notificationToSearch.content !== '%' && notificationToSearch.content !== '/')) {
-        this.toastrService.success('Tìm kiếm thành công', 'Thông báo', {
+      if (this.flagNotToastReset == false && flagSearchToast == true && data !== null && notificationToSearch.title !== '%' && notificationToSearch.title !== '/' &&
+        notificationToSearch.content !== '%' && notificationToSearch.content !== '/') {
+        this.pageNotifications = data;
+        this.toastrService.success('Tìm kiếm thành công.', 'Thông báo', {
+          timeOut: 2000,
+          progressBar: true,
+          positionClass: 'toast-top-right',
+          easing: 'ease-in'
+        });
+      }
+
+      if (this.flagNotToastReset == true && flagSearchToast == true && data !== null && notificationToSearch.title !== '%' && notificationToSearch.title !== '/' &&
+        notificationToSearch.content !== '%' && notificationToSearch.content !== '/') {
+        this.pageNotifications = data;
+        this.toastrService.success('Làm mới thành công.', 'Thông báo', {
           timeOut: 2000,
           progressBar: true,
           positionClass: 'toast-top-right',
@@ -84,16 +93,20 @@ export class NotificationListComponent implements OnInit {
       }
       this.pageNotifications = data;
     }, error => {
-      this.toastrService.error('Đã xảy ra lỗi khi tìm kiếm', 'Lỗi', {
+      this.toastrService.error('Đã xảy ra lỗi khi tìm kiếm.', 'Lỗi', {
         timeOut: 2000,
         progressBar: true,
         positionClass: 'toast-top-right',
         easing: 'ease-in'
       });
+    }, () => {
     });
   }
 
-​
+  setflagNotToastResetFalse() {
+    this.flagNotToastReset = false;
+  }
+
 
   getSearchDate(timeInfo: string): string {
     let today = new Date();
@@ -111,8 +124,6 @@ export class NotificationListComponent implements OnInit {
     }
   }
 
-​
-
   createSearchForm(): void {
     this.rfSearch = this.formBuilder.group({
       title: ['', [
@@ -125,8 +136,6 @@ export class NotificationListComponent implements OnInit {
     });
   }
 
-​
-
   constrainNotAfterToday(abstractControl: AbstractControl): any {
     if (abstractControl.value == '') {
       return null;
@@ -136,26 +145,22 @@ export class NotificationListComponent implements OnInit {
     return (today - inputSearchDate >= 0) ? null : {invalidSearchDate: true};
   }
 
-​
-
   resetFormAndData(): void {
-    this.ngOnInit();
+    this.flagNotToastReset = true;
+    this.createSearchForm();
+    this.searchNotification(0, false);
+    this.deleteIds = [];
+    this.checkedAll = false;
   }
-
-​
 
   gotoPage(pageNumber: number): void {
-    this.searchNotification(pageNumber,true);
+    this.searchNotification(pageNumber, false);
   }
-
-​
 
   addToDelete(id: number): void {
     const index = this.deleteIds.indexOf(id);
     index > -1 ? this.deleteIds.splice(index, 1) : this.deleteIds.push(id);
   }
-
-​
 
   addAllToDelete(): void {
     this.checkedAll = true;
@@ -184,14 +189,12 @@ export class NotificationListComponent implements OnInit {
     }
   }
 
-​
-
   sendToDeleteGroupModal(): void {
     this.deleteNotifications = [];
     this.notificationService.findByListId(this.deleteIds).subscribe(data => {
       this.deleteNotifications = data;
     }, error => {
-      this.toastrService.error('Đã xảy ra lỗi', 'Lỗi', {
+      this.toastrService.error('Đã xảy ra lỗi.', 'Lỗi', {
         timeOut: 2000,
         progressBar: true,
         positionClass: 'toast-top-right',
@@ -200,18 +203,16 @@ export class NotificationListComponent implements OnInit {
     });
   }
 
-​
-
   delete(): void {
     this.notificationService.delete(this.deleteIds).subscribe(next => {
-      this.toastrService.success('Xóa thành công', 'Thông báo', {
+      this.toastrService.info('Xóa thành công.', 'Thông báo', {
         timeOut: 2000,
         progressBar: true,
         positionClass: 'toast-top-right',
         easing: 'ease-in'
       });
     }, error => {
-      this.toastrService.error('Đã xảy ra lỗi khi xóa', 'Lỗi', {
+      this.toastrService.error('Đã xảy ra lỗi khi xóa.', 'Lỗi', {
         timeOut: 2000,
         progressBar: true,
         positionClass: 'toast-top-right',

@@ -1,4 +1,4 @@
-<form >
+ <form >
   <div class="modal fade" id="approvalModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -15,11 +15,10 @@
               <span *ngIf="postApproval.idPost < 1000" class="text-danger">NC{{postApproval.idPost}}</span>
             </ng-template>
           </ng-template>
-          <p>Lưu ý: Hành động này không thể hoàn tác !</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-          <button type="button" (click)="approvalPost()" class="btn btn-primary" data-bs-dismiss="modal">Phê Duyệt</button>
+          <button type="button" (click)="approvalPost()" class="btn btn-primary" data-bs-dismiss="modal">Xác nhận</button>
         </div>
       </div>
     </div>
