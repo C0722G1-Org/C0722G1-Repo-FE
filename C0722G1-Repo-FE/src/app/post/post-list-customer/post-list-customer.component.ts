@@ -1,9 +1,12 @@
 import {Post} from '../../entity/post/post';
 import {PagePostDto} from '../../dto/post/page-post-dto';
 import {PostListCustomerService} from '../../service/post-list-customer/post-list-customer.service';
+// @ts-ignore
 import {Component, OnInit} from '@angular/core';
+// @ts-ignore
 import {ActivatedRoute, Router} from '@angular/router';
-import {TokenService} from "../../service/token.service";
+import {Title} from "@angular/platform-browser";
+import {CustomerService} from "../../service/customer.service";
 
 @Component({
   selector: 'app-post-list-customer',
@@ -23,8 +26,11 @@ export class PostListCustomerComponent implements OnInit {
   post: Post | undefined;
   nameCustomer: string = "";
 
-  constructor(private postListCustomerService: PostListCustomerService, private activatedRoute: ActivatedRoute, private router: Router
-    , private tokenService: TokenService) {
+  constructor(private postListCustomerService: PostListCustomerService, private activatedRoute: ActivatedRoute,
+              private router: Router, private customerService:CustomerService,
+              private title: Title
+              ) {
+    this.title.setTitle('Danh sách nhu cầu khách hàng')
   }
 
   /**
@@ -33,25 +39,8 @@ export class PostListCustomerComponent implements OnInit {
    * * @return call function gotoPage(nameDemandType: string, idAccount: string, pageNumber: number) to display list post of customer with true role log in
    */
   ngOnInit(): void {
-    this.role = this.tokenService.getRole();
-    if (this.role) {
-
-      if (JSON.stringify(this.tokenService.getRole()) === JSON.stringify(['CUSTOMER'])) {
-        this.idAccount = this.tokenService.getIdAccount();
-        console.log(this.idAccount)
-      }
-      // @ts-ignore
-      // this.role = (JSON.parse(this.role)).forEach(data => {
-      //   if (data.authority === "CUSTOMER") {
-      //
-      //     // console.log(this.idAccount);
-      //
-      //   }
-      // })
-    }
-
-
-    if (this.idAccount != "") {
+    this.idAccount = this.activatedRoute.snapshot.params["idAccount"];
+    if (this.idAccount) {
       this.goToPageWithRoleCustomer(this.idAccount + "", "", 0);
     } else {
       this.idCustomer = this.activatedRoute.snapshot.params["idCustomer"];
@@ -66,8 +55,7 @@ export class PostListCustomerComponent implements OnInit {
    * @return call function gotoPage(nameDemandType: string, idAccount: string, pageNumber: number) to search by nameDemandType
    */
   searchByNameDemandType(value: string): void {
-    console.log(value);
-    this.search = 'red';
+    this.search = 'black';
     if (this.idCustomer !== '') {
       this.demandType = value;
       this.pageNumber = 0;
@@ -89,14 +77,20 @@ export class PostListCustomerComponent implements OnInit {
    */
 
   goToPageWithRoleAdmin(idCustomer: string, nameDemandType: string, pageNumber: number): void {
+    this.pageNumber = pageNumber;
     this.postListCustomerService.getAllAndSearchWithRoleAdmin(idCustomer, nameDemandType, pageNumber).subscribe(data => {
+      // @ts-ignore
+      this.customerService.findById(idCustomer).subscribe(value => {
+        this.nameCustomer = value.nameCustomer.toUpperCase();
+      })
+      if(!data){
+        this.postListCustomer = undefined;
+      }
       this.pageTotal = data.totalPages;
       // @ts-ignore
-      this.pageNumber = data.pageable?.pageNumber + 1;
+      this.pageNumber = data.pageable?.pageNumber;
       this.postListCustomer = data.content;
       this.resultPage = data;
-      // @ts-ignore
-      this.nameCustomer = this.postListCustomer[0].customer.nameCustomer.toUpperCase();
     });
   }
 
@@ -108,16 +102,19 @@ export class PostListCustomerComponent implements OnInit {
    * @param pageNumber
    * @return call function getAllAndSearch(nameDemandType, idAccount, pageNumber) from service to display list post of customer have paging
    */
+
   goToPageWithRoleCustomer(idAccount: string, nameDemandType: string, pageNumber: number): void {
+    this.pageNumber = pageNumber;
     this.postListCustomerService.getAllAndSearchWithRoleCustomer(idAccount, nameDemandType, pageNumber).subscribe(data => {
       this.pageTotal = data.totalPages;
       // @ts-ignore
-      this.pageNumber = data.pageable?.pageNumber + 1;
+      this.pageNumber = data.pageable?.pageNumber;
       this.postListCustomer = data.content;
       this.resultPage = data;
       // @ts-ignore
 
       this.nameCustomer = this.postListCustomer[0].customer.nameCustomer.toUpperCase();
+    }, error => {
     });
   }
 

@@ -26,6 +26,8 @@ export class PostListApprovalComponent implements OnInit {
   districtList: District[] = [];
   wardsList: Wards[] = [];
   flag = false;
+  showMore = false;
+  abc !: number;
   minPriceSearch: any = '';
   maxPriceSearch: any = '';
   minAreaSearch = '';
@@ -35,11 +37,15 @@ export class PostListApprovalComponent implements OnInit {
   citySearch = '';
   districtSearch = '';
   wardsSearch = '';
+
   constructor(private postListApprovalService: PostListApprovalService,
               private toastrService: ToastrService,
               private cityListService: CityListService,
               private districtListService: DistrictListService,
-              private wardsListService: WardsListService) {
+              private wardsListService: WardsListService,
+              private title: Title
+  ) {
+    this.title.setTitle('Danh sách nhu cầu');
   }
 
   /**
@@ -79,27 +85,8 @@ export class PostListApprovalComponent implements OnInit {
       wardsSearch: new FormControl(''),
       minAreaSearch: new FormControl('', [Validators.min(0)]),
       maxAreaSearch: new FormControl('', [Validators.min(0)]),
-    }, [this.validatePriceSearch, this.validateAreaSearch ]);
+    },);
     this.getAllCity();
-  }
-
-  /**
-   * Create by: NgocLV
-   * Date created: 05/02/2023
-   * Function: validate price search
-   *
-   * compare value of minPrice and maxPrice when search
-   */
-// tslint:disable-next-line:typedef
-  validatePriceSearch(postApprovalSearch: any) {
-    const minPriceSearch = postApprovalSearch.controls.minPriceSearch.value;
-    const maxPriceSearch = postApprovalSearch.controls.maxPriceSearch.value;
-    return (minPriceSearch > maxPriceSearch) ? {priceCompare: true} : null;
-  }
-  validateAreaSearch(postApprovalSearch: any) {
-    const minAreaSearch = postApprovalSearch.controls.minAreaSearch.value;
-    const maxAreaSearch = postApprovalSearch.controls.maxAreaSearch.value;
-    return (minAreaSearch > maxAreaSearch) ? {areaCompare: true} : null;
   }
 
   /**
@@ -107,14 +94,13 @@ export class PostListApprovalComponent implements OnInit {
    * Date created: 05/02/2023
    * Function: get page post
    *
-   * @return get all post when access this page
+   * @return return this page with all element
    */
 
   getPagePost(pageNumber: number): void {
     this.postListApprovalService.getAllPostApproval(pageNumber).subscribe(next => {
       this.postApprovalList = next;
     }, error => {
-      console.log('Lỗi truy xuất');
     });
   }
 
@@ -126,12 +112,53 @@ export class PostListApprovalComponent implements OnInit {
    * @return return this page which all element which is math with value is selected when search
    */
 // tslint:disable-next-line:max-line-length
-  getSearchPagePost(demandTypeSearch: any, landTypeSearch: any, minPriceSearch: any, maxPriceSearch: any, citySearch: any, districtSearch: any, wardsSearch: any,  minAreaSearch: any, maxAreaSearch: any, pageNumber: any): void {
+  getSearchPagePost(demandTypeSearch: any, landTypeSearch: any, minPriceSearch: any, maxPriceSearch: any, citySearch: any, districtSearch: any, wardsSearch: any, minAreaSearch: any, maxAreaSearch: any, pageNumber: any): void {
     // tslint:disable-next-line:max-line-length
-    this.postListApprovalService.getPostApprovalsBySearch(demandTypeSearch, landTypeSearch, minPriceSearch, maxPriceSearch, citySearch, districtSearch, wardsSearch, minAreaSearch, maxAreaSearch , pageNumber).subscribe(data => {
+    this.postListApprovalService.getPostApprovalsBySearch(demandTypeSearch, landTypeSearch, minPriceSearch, maxPriceSearch, citySearch, districtSearch, wardsSearch, minAreaSearch, maxAreaSearch, pageNumber).subscribe(data => {
       this.postApprovalList = data;
+      if (this.postApprovalList != null) {
+        this.toastrService.success('Tìm kiếm thành công.', 'Thông báo', {
+          timeOut: 2000,
+          progressBar: true,
+          positionClass: 'toast-top-right',
+          easing: 'ease-in'
+        })
+      } else {
+        this.toastrService.error('Không tìm thấy dữ liệu.', 'Lỗi', {
+          timeOut: 2000,
+          progressBar: true,
+          positionClass: 'toast-top-right',
+          easing: 'ease-in'
+        })
+      }
+      ;
+    }, (error: any) => {
+      this.toastrService.error('Lỗi kết nối.', 'Lỗi', {
+        timeOut: 2000,
+        progressBar: true,
+        positionClass: 'toast-top-right',
+        easing: 'ease-in'
+      });
+    }, () => {
     });
   }
+
+  /**
+   * Create by: NgocLV
+   * Date created: 05/02/2023
+   * Function: get search page post after delete
+   *
+   * @return return this page which all element which is math with value is selected when search
+   */
+// tslint:disable-next-line:max-line-length
+  getSearchPagePostAfterAction(demandTypeSearch: any, landTypeSearch: any, minPriceSearch: any, maxPriceSearch: any, citySearch: any, districtSearch: any, wardsSearch: any, minAreaSearch: any, maxAreaSearch: any, pageNumber: any): void {
+    // tslint:disable-next-line:max-line-length
+    this.postListApprovalService.getPostApprovalsBySearch(demandTypeSearch, landTypeSearch, minPriceSearch, maxPriceSearch, citySearch, districtSearch, wardsSearch, minAreaSearch, maxAreaSearch, pageNumber).subscribe(data => {
+      this.postApprovalList = data;
+      ;
+    })
+  };
+
   /**
    * Create by: NgocLV
    * Date created: 08/02/2023
@@ -139,18 +166,16 @@ export class PostListApprovalComponent implements OnInit {
    *
    * @return return the value which is match type to search
    */
-  transferValue(){
-    if(this.postApprovalSearch.value.minPriceSearch == null || this.postApprovalSearch.value.minPriceSearch === '' ){
-      this.minPriceSearch = '' ;
-    }
-    else {
-      this.minPriceSearch = this.postApprovalSearch.value.minPriceSearch * 1000000 ;
+  transferValue() {
+    if (this.postApprovalSearch.value.minPriceSearch == null || this.postApprovalSearch.value.minPriceSearch === '') {
+      this.minPriceSearch = '';
+    } else {
+      this.minPriceSearch = this.postApprovalSearch.value.minPriceSearch * 1000000;
 
     }
-    if(this.postApprovalSearch.value.maxPriceSearch == null || this.postApprovalSearch.value.maxPriceSearch === ''){
+    if (this.postApprovalSearch.value.maxPriceSearch == null || this.postApprovalSearch.value.maxPriceSearch === '') {
       this.maxPriceSearch = '';
-    }
-    else {
+    } else {
       this.maxPriceSearch = this.postApprovalSearch.value.maxPriceSearch * 1000000;
     }
     this.postApprovalSearch.value.minAreaSearch == null ? this.minAreaSearch = '' : this.minAreaSearch = this.postApprovalSearch.value.minAreaSearch;
@@ -170,9 +195,9 @@ export class PostListApprovalComponent implements OnInit {
    * @return return this page which all element which is math with value is selected when search
    */
 // tslint:disable-next-line:typedef
-  onSubmit(){
+  onSubmit() {
     this.transferValue()
-    if (this.postApprovalSearch.valid){
+    if (this.postApprovalSearch.valid) {
       this.getSearchPagePost(this.demandTypeSearch,
         this.landTypeSearch,
         this.minPriceSearch,
@@ -181,9 +206,8 @@ export class PostListApprovalComponent implements OnInit {
         this.districtSearch,
         this.wardsSearch,
         this.minAreaSearch,
-        this.maxAreaSearch,0);
-    }
-    else if (!this.postApprovalSearch.controls.minPriceSearch.dirty && !this.postApprovalSearch.controls.maxPriceSearch.dirty || !this.postApprovalSearch.controls.minAreaSearch.dirty && !this.postApprovalSearch.controls.maxAreaSearch.dirty ) {
+        this.maxAreaSearch, 0);
+    } else if (!this.postApprovalSearch.controls.minPriceSearch.dirty && !this.postApprovalSearch.controls.maxPriceSearch.dirty || !this.postApprovalSearch.controls.minAreaSearch.dirty && !this.postApprovalSearch.controls.maxAreaSearch.dirty) {
       this.getSearchPagePost(this.postApprovalSearch.value.demandTypeSearch,
         this.postApprovalSearch.value.landTypeSearch,
         this.postApprovalSearch.value.minPriceSearch,
@@ -192,7 +216,40 @@ export class PostListApprovalComponent implements OnInit {
         this.postApprovalSearch.value.districtSearch,
         this.postApprovalSearch.value.wardsSearch,
         this.postApprovalSearch.value.minAreaSearch,
-        this.postApprovalSearch.value.maxAreaSearch,0);
+        this.postApprovalSearch.value.maxAreaSearch, 0);
+    }
+  }
+
+  /**
+   * Create by: NgocLV
+   * Date created: 05/02/2023
+   * Function: onsubmit after delete
+   *
+   * @return return this page which all element which is math with value is selected when search
+   */
+// tslint:disable-next-line:typedef
+  onSubmitAfterAction() {
+    this.transferValue()
+    if (this.postApprovalSearch.valid) {
+      this.getSearchPagePostAfterAction(this.demandTypeSearch,
+        this.landTypeSearch,
+        this.minPriceSearch,
+        this.maxPriceSearch,
+        this.citySearch,
+        this.districtSearch,
+        this.wardsSearch,
+        this.minAreaSearch,
+        this.maxAreaSearch, 0);
+    } else if (!this.postApprovalSearch.controls.minPriceSearch.dirty && !this.postApprovalSearch.controls.maxPriceSearch.dirty || !this.postApprovalSearch.controls.minAreaSearch.dirty && !this.postApprovalSearch.controls.maxAreaSearch.dirty) {
+      this.getSearchPagePostAfterAction(this.postApprovalSearch.value.demandTypeSearch,
+        this.postApprovalSearch.value.landTypeSearch,
+        this.postApprovalSearch.value.minPriceSearch,
+        this.postApprovalSearch.value.maxPriceSearch,
+        this.postApprovalSearch.value.citySearch,
+        this.postApprovalSearch.value.districtSearch,
+        this.postApprovalSearch.value.wardsSearch,
+        this.postApprovalSearch.value.minAreaSearch,
+        this.postApprovalSearch.value.maxAreaSearch, 0);
     }
   }
 
@@ -205,9 +262,9 @@ export class PostListApprovalComponent implements OnInit {
    */
 
   gotoPage(pageNumber: number): void {
-    if (this.postApprovalSearch.dirty){
-      if (this.postApprovalSearch.valid){
-        this.getSearchPagePost(this.demandTypeSearch,
+    if (this.postApprovalSearch.dirty) {
+      if (this.postApprovalSearch.valid) {
+        this.getSearchPagePostAfterAction(this.demandTypeSearch,
           this.landTypeSearch,
           this.minPriceSearch,
           this.maxPriceSearch,
@@ -215,10 +272,9 @@ export class PostListApprovalComponent implements OnInit {
           this.districtSearch,
           this.wardsSearch,
           this.minAreaSearch,
-          this.maxAreaSearch,pageNumber);
-      }
-      else if (!this.postApprovalSearch.controls.minPriceSearch.dirty && !this.postApprovalSearch.controls.maxPriceSearch.dirty || !this.postApprovalSearch.controls.minAreaSearch.dirty && !this.postApprovalSearch.controls.maxAreaSearch.dirty ) {
-        this.getSearchPagePost(this.postApprovalSearch.value.demandTypeSearch,
+          this.maxAreaSearch, pageNumber);
+      } else if (!this.postApprovalSearch.controls.minPriceSearch.dirty && !this.postApprovalSearch.controls.maxPriceSearch.dirty || !this.postApprovalSearch.controls.minAreaSearch.dirty && !this.postApprovalSearch.controls.maxAreaSearch.dirty) {
+        this.getSearchPagePostAfterAction(this.postApprovalSearch.value.demandTypeSearch,
           this.postApprovalSearch.value.landTypeSearch,
           this.postApprovalSearch.value.minPriceSearch,
           this.postApprovalSearch.value.maxPriceSearch,
@@ -226,10 +282,9 @@ export class PostListApprovalComponent implements OnInit {
           this.postApprovalSearch.value.districtSearch,
           this.postApprovalSearch.value.wardsSearch,
           this.postApprovalSearch.value.minAreaSearch,
-          this.postApprovalSearch.value.maxAreaSearch,pageNumber);
+          this.postApprovalSearch.value.maxAreaSearch, pageNumber);
       }
-    }
-    else {
+    } else {
       this.getPagePost(pageNumber);
     }
   }
@@ -257,7 +312,6 @@ export class PostListApprovalComponent implements OnInit {
     this.cityListService.getAllCity().subscribe(data => {
       this.cityList = data;
     }, error => {
-      console.log('Lỗi truy xuất');
     }, () => {
     });
   }
@@ -273,7 +327,6 @@ export class PostListApprovalComponent implements OnInit {
     this.districtListService.getAllDistrict(idCity).subscribe(data => {
       this.districtList = data;
     }, error => {
-      console.log('Lỗi truy xuất');
     }, () => {
     });
   }
@@ -283,16 +336,16 @@ export class PostListApprovalComponent implements OnInit {
    * Date created: 05/02/2023
    * Function: get list wards
    *
-   * @return HttpStatus.OK if json list wards in one district of Việt Nam
+   \  * @return HttpStatus.OK if json list wards in one district of Việt Nam
    */
   getAllWards(idDistrict: number): void {
     this.wardsListService.getAllWards(idDistrict).subscribe(data => {
       this.wardsList = data;
     }, error => {
-      console.log('Lỗi truy xuất', error);
     }, () => {
     });
   }
+
   /**
    * Create by: NgocLV
    * Date created: 07/02/2023
@@ -300,7 +353,7 @@ export class PostListApprovalComponent implements OnInit {
    *
    */
 // tslint:disable-next-line:typedef
-  expandOrCollapse(id: number, action: string) {
+  expandOrCollapsePosition(id: number, action: string) {
     if (action === 'expand') {
       // @ts-ignore
       document.getElementById('expandedContent' + id).style.display = 'inline-block';
@@ -314,4 +367,29 @@ export class PostListApprovalComponent implements OnInit {
     }
   }
 
+  /**
+   * Create by: NgocLV
+   * Date created: 08/02/2023
+   * Function: expand or collapse value which is show in one td
+   *
+   */
+
+
+  expandOrCollapseNote(id: number, action: string) {
+    if (action === 'expand') {
+      // @ts-ignore
+      document.getElementById('expandedContentNote' + id).style.display = 'inline-block';
+      // @ts-ignore
+      document.getElementById('collapsedContentNote' + id).style.display = 'none';
+    } else {
+      // @ts-ignore
+      document.getElementById('expandedContentNote' + id).style.display = 'none';
+      // @ts-ignore
+      document.getElementById('collapsedContentNote' + id).style.display = 'inline-block';
+    }
+  }
+
+  resetSearchValue() {
+    this.ngOnInit();
+  }
 }

@@ -4,6 +4,7 @@ import {Customer} from '../../entity/customer/customer';
 import {CustomerService} from '../../service/customer.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Title} from '@angular/platform-browser';
+import {ToastrService} from "ngx-toastr";
 
 
 @Component({
@@ -19,29 +20,33 @@ export class CustomerDetailComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               private titleService: Title,
               private formBuilder: FormBuilder,
-              private router: Router) {
-    this.titleService.setTitle('Xem Chi Tiết Khách Hàng');
-    this.activatedRoute.paramMap.subscribe(data => {
-      const id = data.get('idCustomer');
-      if (id != null) {
-        this.detailById(+id);
-      }
-    });
+              private router: Router,
+              private toast: ToastrService) {
+    this.titleService.setTitle('Xem chi tiết khách hàng');
+
   }
 
 
   ngOnInit(): void {
-    this.detailById(this.activatedRoute.snapshot.params.idCustomr);
+    this.activatedRoute.paramMap.subscribe(data => {
+      const id = data.get('idCustomer');
+      if (id != null) {
+        this.detailById(+id);
+        this.customerService.detailCustomerById(+id).subscribe(
+          data => {
+            this.customerDetail = data;
+          }, error => {
+            if (error.status == 400 || 404){
+              this.router.navigateByUrl('/**')
+            }
+          }
+        );
+      }
+    });
   }
 
   // tslint:disable-next-line:typedef
   detailById(idCustomer: number) {
-    this.customerService.detailCustomerById(idCustomer).subscribe(
-      data => {
-        console.log('asdadasdasd',data);
-        this.customerDetail = data;
-      }
-    );
   }
 
 }

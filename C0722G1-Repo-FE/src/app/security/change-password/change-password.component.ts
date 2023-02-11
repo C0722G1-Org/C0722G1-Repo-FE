@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
+  FormControl,
   FormGroup,
   ValidationErrors,
   ValidatorFn,
@@ -17,9 +18,8 @@ export const passwordMatchingValidator: ValidatorFn = (control: AbstractControl)
   const newPassword = control.get('password');
   const confirmPassword = control.get('confirmPassword');
 
-  return newPassword?.value === confirmPassword?.value ? null : { notmatched: true };
+  return newPassword?.value === confirmPassword?.value ? null : {notmatched: true};
 };
-
 
 @Component({
   selector: 'app-change-password',
@@ -39,11 +39,10 @@ export class ChangePasswordComponent implements OnInit {
               private toastrService: ToastrService,
               private title: Title,
               private formBuilder: FormBuilder) {
-    this.title.setTitle('Đổi mật khẩu');
+    this.title.setTitle('Đổi Mật Khẩu');
     this.activatedRoute.paramMap.subscribe(data => {
       const id = data.get('idAccount');
       if (id != null) {
-        console.log(id);
         this.getAccountById(+id);
       }
     });
@@ -53,15 +52,22 @@ export class ChangePasswordComponent implements OnInit {
     this.getUpdateForm();
   }
 
+
+
   getUpdateForm() {
     this.updateForm = this.formBuilder.group({
       idAccount: [''],
       encryptPassword: ['', [Validators.minLength(6)]],
-      newPassword: ['', [Validators.minLength(6)]],
-      confirmPassword: ['', [Validators.minLength(6)]],
+      newPassword: ['', [Validators.required]],
+      confirmPassword: ['', [Validators.required]],
     }, {
-      validators: passwordMatchingValidator
+      validators: this.checkPasswords
     });
+  }
+
+  checkPasswords(group: AbstractControl): any {
+    const passwordCheck = group.value;
+    return (passwordCheck.newPassword === passwordCheck.confirmPassword ? null : {notSame: true});
   }
 
   /**
@@ -82,26 +88,16 @@ export class ChangePasswordComponent implements OnInit {
    */
 
   changePassword(): void {
+    console.log(this.updateForm)
     this.accountService.updatePassword(this.updateForm.value).subscribe(data => {
-      this.toastrService.success('Thay đổi mật khẩu thành công!');
-      this.router.navigateByUrl('/home');
+      this.toastrService.success('Thay đổi mật khẩu thành công.');
+      localStorage.clear();
+      location.href = 'http://localhost:4200/security/login';
     }, error => {
-      this.toastrService.success('Thay đổi mật khẩu thành công!'
-      )
-      ;
-      this.router.navigateByUrl('/home');
+      if (error.status === 501 || 400) {
+        this.toastrService.error('Thay đổi mật khẩu không thành công.')
+      }
     });
   }
 
-  // confirmPasswordMatch(controlName: string, matchingControlName: string) {
-  //   return (formGroup: FormGroup) => {
-  //     const control = formGroup.controls[controlName];
-  //     const matchingControl = formGroup.controls[matchingControlName];
-  //     if (control.value !== matchingControl.value) {
-  //       matchingControl.setErrors({confirmPasswordMatch: true});
-  //     } else {
-  //       matchingControl.setErrors(null);
-  //     }
-  //   }
-  // }
 }

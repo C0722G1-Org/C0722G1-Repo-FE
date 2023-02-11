@@ -33,10 +33,10 @@ export class FormDeleteComponent implements OnInit {
    */
   deleteDataForm(): void {
     this.dataFormService.deleteById(this.dataFormDelete.idDataForm).subscribe(() => {
-        this.alertService.showMessage('xóa thành công!');
+        this.alertService.showMessage('Xóa thành công.');
         this.deleteEvent.emit();
       }, (error: any) => {
-        this.alertService.showMessageErrors('xóa không thành công!');
+        this.alertService.showMessageErrors('Xóa không thành công.');
       }
       , () => {
       }

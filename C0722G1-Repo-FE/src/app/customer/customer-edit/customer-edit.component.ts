@@ -1,23 +1,17 @@
+
 import {CustomerEdit} from '../../entity/customer/customer-edit';
 import {CustomerService} from '../../service/customer.service';
-import {
-  AbstractControl,
-  FormControl,
-  FormGroup,
-  ValidationErrors,
-  ValidatorFn,
-  Validators} from '@angular/forms';
+import {AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {Component, OnInit} from '@angular/core';
+import {isFromDtsFile} from "@angular/compiler-cli/src/ngtsc/util/src/typescript";
 
 export const checkBirthDay: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
   // @ts-ignore
   const birthday = new Date(control.get('dateOfBirth').value).getTime();
-  console.log(birthday);
   const dateNow = new Date().getTime();
-  console.log(dateNow);
   if (dateNow - birthday < 18 * 365 * 24 * 60 * 60 * 1000 || dateNow - birthday > 100 * 365 * 24 * 60 * 60 * 1000) {
     return {checkBirthDay: true};
   } else {
@@ -42,7 +36,7 @@ export class CustomerEditComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               private toastrService: ToastrService) {
     // @ts-ignore
-    this.titleService.setTitle('Sửa Thông tin Khách Hàng');
+    this.titleService.setTitle('Sửa thông tin khách hàng');
     this.editForm = new FormGroup({
       idCustomer: new FormControl(this.customer.idCustomer),
       // tslint:disable-next-line:max-line-length
@@ -79,6 +73,10 @@ export class CustomerEditComponent implements OnInit {
     this.customerService.findById(idCustomer).subscribe(data => {
       this.editForm.patchValue(data);
       this.customer = data;
+    },error => {
+      if (error.status === 400){
+        this.router.navigateByUrl('/**');
+      }
     });
   }
 
@@ -91,9 +89,9 @@ export class CustomerEditComponent implements OnInit {
     const customer = this.editForm.value;
     this.customerService.updateCustomer(customer).subscribe((data: any) => {
       if (data != null) {
-        this.toastrService.error('Không có dữ liệu để chỉnh sửa!', 'Thông báo');
+        this.toastrService.error('Không có dữ liệu để chỉnh sửa.', 'Thông báo');
       } else {
-        this.toastrService.success('Sửa thông tin khách hàng thành công!', 'Thông báo');
+        this.toastrService.success('Sửa thông tin khách hàng thành công.', 'Thông báo');
         this.router.navigateByUrl('/customer');
       }
     }, (error: any) => {

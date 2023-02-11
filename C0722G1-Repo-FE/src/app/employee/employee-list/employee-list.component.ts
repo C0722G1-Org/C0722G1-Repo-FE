@@ -5,7 +5,7 @@ import {DivisionService} from '../../service/division.service';
 import {EmployeeInfoJson} from '../../dto/employee/employee-info-json';
 import {EmployeeInfo} from '../../dto/employee/employee-info';
 import {Title} from '@angular/platform-browser';
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 
 @Component({
@@ -18,6 +18,10 @@ export class EmployeeListComponent implements OnInit {
   employeeList!: EmployeeInfoJson;
   divisions: Division[] = [];
   temp: Employee = {};
+  @ViewChild('codeEmployeeSearch') inputCode: any;
+  @ViewChild('nameEmployeeSearch') inputName: any;
+  @ViewChild('emailEmployeeSearch') inputEmail: any;
+  @ViewChild('divisionSearch') inputDivision: any;
   codeEmployeeSearch = '';
   nameEmployeeSearch = '';
   emailEmployeeSearch = '';
@@ -61,7 +65,6 @@ export class EmployeeListComponent implements OnInit {
     this.employeeService.getAllEmployee(request).subscribe(data => {
       this.employeeList = data;
       this.employeeInfo = data.content;
-      console.log(this.employeeInfo);
       // @ts-ignore
       this.totalPages = data.totalPages;
       // @ts-ignore
@@ -85,18 +88,8 @@ export class EmployeeListComponent implements OnInit {
     this.nameEmployeeSearch = '';
     this.emailEmployeeSearch = '';
     this.divisionSearch = '';
+    this.request.page = 0;
     this.getAllEmployeeListComponent(this.request);
-  }
-
-  /**
-   * Create by: NhanUQ
-   * Date created: 03/02/2023
-   * Function: navigation to page edit with id employee
-   * @param idEmployee : number
-   */
-  editEmployee(idEmployee: number | undefined): void {
-    this.route.navigate(['/employee/edit', idEmployee]).then(r => {
-    });
   }
 
   /**
@@ -105,7 +98,7 @@ export class EmployeeListComponent implements OnInit {
    * Function: show message toastr when search error
    */
   private showToastrError(): void {
-    this.employeeService.showError('Không có kết quả cần tìm', 'Thông báo!');
+    this.employeeService.showError('Không có kết quả cần tìm.', 'Thông báo');
   }
 
   /**
@@ -114,7 +107,8 @@ export class EmployeeListComponent implements OnInit {
    * Function: show message toastr when search success
    */
   private showToastrSuccess(): void {
-    this.employeeService.showSuccess('Tìm kiếm thành công', 'Thông báo!');
+    this.employeeService.showSuccess('Tìm kiếm thành công.', 'Thông báo');
+
   }
 
   /**
@@ -143,7 +137,6 @@ export class EmployeeListComponent implements OnInit {
       this.request).subscribe(data => {
       this.employeeList = data;
       this.employeeInfo = data.content;
-      console.log(this.employeeInfo);
       // @ts-ignore
       this.totalPages = data.totalPages;
       // @ts-ignore
@@ -156,11 +149,12 @@ export class EmployeeListComponent implements OnInit {
       this.nameEmployeeSearch = '';
       this.emailEmployeeSearch = '';
       this.divisionSearch = '';
-      this.getAllEmployeeListComponent(this.request);
+      this.employeeInfo = [];
       flag = true;
       if (error.status === 404) {
         this.showToastrError();
       }
+
     }, () => {
     });
   }
@@ -174,5 +168,19 @@ export class EmployeeListComponent implements OnInit {
   changePage(pageNumber: number) {
     this.request.page = pageNumber;
     this.ngOnInit();
+  }
+
+  /**
+   * Create by: NhanUQ
+   * Date created: 03/02/2023
+   * Function: reset page list when reset
+   */
+  resetSearch() {
+    this.inputCode.nativeElement.value = '';
+    this.inputName.nativeElement.value = '';
+    this.inputEmail.nativeElement.value = '';
+    this.inputDivision.nativeElement.value = '';
+    this.request.page = 0;
+    this.getAllEmployeeListComponent(this.request);
   }
 }

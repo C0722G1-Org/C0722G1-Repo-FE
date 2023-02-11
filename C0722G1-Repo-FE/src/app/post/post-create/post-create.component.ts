@@ -15,6 +15,7 @@ import {BaseResponseCreatePost} from '../../dto/post/post-create/base-response-c
 import {ResponseStatusEnum} from '../../dto/post/post-create/response-status-enum.enum';
 import {TokenService} from '../../service/token.service';
 import {CreatePostDtoCustomer} from '../../dto/post/post-create/create-post-dto-customer';
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-post-create',
@@ -23,7 +24,7 @@ import {CreatePostDtoCustomer} from '../../dto/post/post-create/create-post-dto-
 })
 export class PostCreateComponent implements OnInit {
 
-  REGEX_VIETNAMESE = '[a-zA-Z0-9àáãạảăắằẳẵặâấầẩẫậèéẹẻẽêềếểễệđìíĩỉịòóõọỏôốồổỗộơớờởỡợùúũụủưứừửữựỳỵỷỹýÀÁÃẠẢĂẮẰẲẴẶÂẤẦẨẪẬÈÉẸẺẼÊỀẾỂỄỆĐÌÍĨỈỊÒÓÕỌỎÔỐỒỔỖỘƠỚỜỞỠỢÙÚŨỤỦƯỨỪỬỮỰỲỴỶỸÝ/ ]+';
+  REGEX_VIETNAMESE = '[a-zA-Z0-9àáãạảăắằẳẵặâấầẩẫậèéẹẻẽêềếểễệđìíĩỉịòóõọỏôốồổỗộơớờởỡợùúũụủưứừửữựỳỵỷỹýÀÁÃẠẢĂẮẰẲẴẶÂẤẦẨẪẬÈÉẸẺẼÊỀẾỂỄỆĐÌÍĨỈỊÒÓÕỌỎÔỐỒỔỖỘƠỚỜỞỠỢÙÚŨỤỦƯỨỪỬỮỰỲỴỶỸÝ/,_. ]+';
 
   createPostDtoUnit = this.fb.group({
     idCustomer: [1, [Validators.required, Validators.min(0)]],
@@ -55,7 +56,6 @@ export class PostCreateComponent implements OnInit {
   nameImageList: string[] = ['Chưa có ảnh'];
   imageList: any[] = [];
   imagePathFireBase = '/post/image';
-  imageDownloadUrl: string[] = [];
   createPostDto: CreatePostDto = {
     area: 0,
     idCustomer: 0,
@@ -70,6 +70,7 @@ export class PostCreateComponent implements OnInit {
     price: 0
   };
 
+  isWaitingResponse: boolean = false;
   idAccount: number | string | null = '';
   baseResponse: BaseResponseCreatePost = {
     code: 0,
@@ -86,6 +87,8 @@ export class PostCreateComponent implements OnInit {
     codeCustomer: '',
   };
 
+  isOverSizeImage: boolean = false;
+  isNotImage: boolean = false;
   codeCustomer = 'Lỗi chưa xác định';
 
   constructor(
@@ -93,7 +96,10 @@ export class PostCreateComponent implements OnInit {
     private createPostService: PostCreateServiceService,
     @Inject(AngularFireStorage) private fireStorage: AngularFireStorage,
     private toastrService: ToastrService,
-    private tokenService: TokenService) {
+    private tokenService: TokenService,
+    private title: Title
+    ) {
+    this.title.setTitle('Tạo bài đăng');
   }
 
   ngOnInit(): void {
@@ -168,27 +174,30 @@ export class PostCreateComponent implements OnInit {
       });
   }
 
-  savePost(): void {
+  async savePost() {
     this.submitTimes++;
-    if (this.createPostDtoUnit.invalid) {
-      this.toastrService.error('Gửi bài đăng thất bại. Vui lòng kiểm tra lại thông tin đã điền');
+
+    if (this.createPostDtoUnit.invalid || this.isOverSizeImage || this.isNotImage) {
+      this.toastrService.error('Gửi bài đăng thất bại. Vui lòng kiểm tra lại thông tin đã điền.');
       this.createPostDtoUnit.markAllAsTouched();
       this.createPostDtoUnit.markAsDirty();
       return;
     }
-    if (this.createPostDtoUnit.valid) {
-      this.getDownloadImageURLList();
+
+    if (this.createPostDtoUnit.valid && !this.isOverSizeImage && !this.isNotImage) {
+      this.isWaitingResponse = true;
+      let urls = await this.getDownloadImageURLs()
       this.createPostDto = this.createPostDtoUnit.value;
-      this.createPostDto.imageListURL = this.imageDownloadUrl;
-      console.log(this.imageDownloadUrl);
+      this.createPostDto.imageListURL = urls;
       this.createPostService.savePost(this.createPostDto).subscribe((payload) => {
+        this.isWaitingResponse = false;
         this.baseResponse = payload;
-        console.log(this.baseResponse);
         if (this.baseResponse.code === 200) {
           this.resetCreatePostDtoUnit();
           this.submitTimes = 0;
           this.messageFormServer = '';
-          this.toastrService.success('Thêm mới thành công');
+          this.toastrService.success('Thêm mới thành công.');
+          this.districtsListOnCity = [];
           return;
         }
         if (this.baseResponse.code === 422) {
@@ -198,24 +207,24 @@ export class PostCreateComponent implements OnInit {
     }
   }
 
-  private getDownloadImageURLList(): void {
-    const amountOfFile = this.imageList.length;
-    if (amountOfFile !== 0) {
-      for (let i = 0; i < amountOfFile; i++) {
-        const filePath = this.imagePathFireBase + this.nameImageList[i];
+  async getDownloadImageURLs(): Promise<string[]> {
+    let imageURLs: string[] = [];
+    for (const image of this.imageList) {
+      await new Promise((resolve, reject) => {
+        const filePath = this.imagePathFireBase + image.name;
         const storageRef = this.fireStorage.ref(filePath);
-        const uploadTask = this.fireStorage.upload(filePath, this.imageList[i]);
-
+        const uploadTask = this.fireStorage.upload(filePath, image);
         uploadTask.snapshotChanges().pipe(
           finalize(() => {
             storageRef.getDownloadURL().subscribe(downloadURL => {
-              this.imageDownloadUrl = [];
-              this.imageDownloadUrl.push(downloadURL);
+              imageURLs.push(downloadURL);
+              resolve();
             });
           })
         ).subscribe();
-      }
+      });
     }
+    return imageURLs;
   }
 
   getDistrictsListOnCity(value: string): void {
@@ -246,8 +255,22 @@ export class PostCreateComponent implements OnInit {
     if (amountOfFile !== 0) {
       this.nameImageList = [];
       for (let i = 0; i < amountOfFile; i++) {
-        this.imageList.push(event.target.files[i]);
-        this.nameImageList.push(event.target.files[i].name);
+        let file = event.target.files[i];
+        if (file.type.includes('image')) {
+          if (file.size / 1024 / 1024 < 5) {
+            this.imageList.push(event.target.files[i]);
+            this.nameImageList.push(event.target.files[i].name);
+            this.isOverSizeImage = false;
+            this.isNotImage = false;
+          } else {
+            this.isOverSizeImage = true;
+            break;
+          }
+        } else {
+          this.isNotImage = true;
+          break;
+        }
+
       }
     } else {
       this.nameImageList = ['Chưa có ảnh'];

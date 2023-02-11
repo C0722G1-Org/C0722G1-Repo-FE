@@ -27,7 +27,7 @@ export class CustomerDeleteComponent implements OnInit {
 
     this.customerService.deleteCustomerById(this.customerApproval.id_customer).subscribe(deleteData => {
         this.emiter.emit('');
-        this.toastrService.success('Xóa thành công', 'Thông báo', {
+        this.toastrService.success('Xóa thành công.', 'Thông báo', {
           timeOut: 2000,
           progressBar: true,
           positionClass: 'toast-top-right',
@@ -35,7 +35,7 @@ export class CustomerDeleteComponent implements OnInit {
         });
       }
       , error => {
-        this.toastrService.error('Đã xảy ra lỗi khi xóa', 'Lỗi', {
+        this.toastrService.error('Đã xảy ra lỗi khi xóa.', 'Lỗi', {
           timeOut: 2000,
           progressBar: true,
           positionClass: 'toast-top-right',

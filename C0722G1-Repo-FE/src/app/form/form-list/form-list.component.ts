@@ -11,10 +11,10 @@ import {DataForm} from '../../entity/form/data-form';
   styleUrls: ['./form-list.component.css']
 })
 export class FormListComponent implements OnInit {
-
   page = 0;
   contentDataForm = '';
   dataFormPage!: DataFormJson;
+  dataFormList: DataForm[] = [];
   dataForm: DataForm = {};
   @ViewChild(ToastContainerDirective, {static: true}) toastContainer: ToastContainerDirective | undefined;
 
@@ -41,19 +41,21 @@ export class FormListComponent implements OnInit {
     this.dataFormService.searchByContent(this.contentDataForm.trim(), this.page).subscribe(data => {
       if (data.content.length !== null) {
         this.dataFormPage = data;
+        this.dataFormList = data.content;
         if (contentDataForm !== '' && !flag) {
-          this.toastrService.success('Tìm kiếm thành công', 'Thông Báo');
-          // this.toastrService.remove();
+          this.toastrService.success('Tìm kiếm thành công.', 'Thông Báo');
         }
       }
     }, error => {
       this.contentDataForm = '';
+      this.dataFormList = [];
       flag = true;
       if (this.dataFormPage != null) {
         this.showToastrError();
       }
     });
   }
+
   /**
    * Create by: DungND
    * Date created: 03/02/2023
@@ -62,19 +64,21 @@ export class FormListComponent implements OnInit {
    */
   // load lại list
   reloadList(): void {
-    this.searchByContent('', true);
+    this.page = 0;
+    this.ngOnInit();
   }
+
   /**
    * Create by: KhanhLB
    * Date created: 03/02/2023
    * Function: show message toastr when search error
    */
   private showToastrError(): void {
-    this.toastrService.error('Không có kết quả cần tìm', 'Thông Báo');
+    this.toastrService.error('Không có kết quả cần tìm.', 'Thông báo');
   }
+
   gotoPage(pageNumber: number): void {
     this.page = pageNumber;
     this.ngOnInit();
-
   }
 }

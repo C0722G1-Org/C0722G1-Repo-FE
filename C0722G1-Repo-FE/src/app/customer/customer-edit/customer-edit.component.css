@@ -1,9 +1,11 @@
-
-h1 {
+#title{
+  font-weight: bold;
   font-size: 32px;
+  font-family: "Arial";
 }
 body {
   width: 100vw;
+  font-family: "Arial";
   height: 100vh;
 }
 #product-model {
@@ -11,6 +13,7 @@ body {
   justify-content: center;
 }
 .boxed {
+  position: relative;
   width: 700px;
   height: auto;
   border-image-slice: 1;
@@ -18,7 +21,9 @@ body {
   border-radius: 8px;
   box-shadow: 4px 2px 4px 1px rgb(238, 243, 247);
   background-color: #ffffff;
-  margin-bottom: 21px;
+  margin-bottom: 40px;
+  left: 50%;
+  transform: translate(-50%);
 }
 
 .boxed::-webkit-scrollbar {

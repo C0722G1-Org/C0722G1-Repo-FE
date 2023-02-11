@@ -3,6 +3,7 @@ import {Routes, RouterModule} from '@angular/router';
 import {AuthGuard} from './authGuard/auth.guard';
 import {AdminGuard} from './authGuard/admin.guard';
 import {CustomerGuard} from './authGuard/customer.guard';
+import {AdminEmployeeGuard} from "./authGuard/admin-employee.guard";
 
 const routes: Routes = [
   {path: 'home', loadChildren: () => import('./home/home.module').then(module => module.HomeModule)},
@@ -10,7 +11,6 @@ const routes: Routes = [
   {
     path: 'employee', loadChildren: () => import('./employee/employee.module').then(module => module.EmployeeModule),
     canActivate: [AuthGuard]
-    && [AdminGuard]
   },
   {
     path: 'post', loadChildren: () => import('./post/post.module').then(module => module.PostModule),
@@ -21,12 +21,12 @@ const routes: Routes = [
   {
     path: 'form', loadChildren: () => import('./form/form.module').then(module => module.FormModule),
     canActivate: [AuthGuard]
-      && [AdminGuard]
   },
   {
-    path: 'notification', loadChildren: () => import('./notification/notification.module').then(module => module.NotificationModule),
+    path: 'notification',
+    loadChildren: () => import('./notification/notification.module').then(module => module.NotificationModule),
     canActivate: [AuthGuard]
-      && [AdminGuard]
+      && [AdminEmployeeGuard]
   },
   {
     path: 'security', loadChildren: () => import('./security/security.module').then(module => module.SecurityModule),

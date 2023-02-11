@@ -3,7 +3,6 @@
     <div class="boxed shadow h-100">
       <form novalidate="novalidate" [formGroup]="notificationForm"
             (ngSubmit)="submit()">
-        ​
         <fieldset>
           <legend>
             <div>
@@ -16,7 +15,6 @@
           </legend>
         </fieldset>
         <br><br><br>
-        ​
         <div class="mb-2 ">
           <div class="d-flex align-items-center mb-2">
             <div class="col-4">
@@ -26,10 +24,8 @@
                    readonly>
           </div>
         </div>
-        ​
         <div class="mb-2 ">
           <div class="d-flex align-items-center mb-2">
-            ​
             <div class="col-4">
               <label for="title" class="form-label ms-2">Tiêu đề<span style="color: red">(*)</span>:</label>
             </div>
@@ -40,22 +36,22 @@
               <div *ngIf="notificationForm.controls['title'].hasError('required') &&
                                      notificationForm.controls['title'].touched" style="color: red">
                 <i class="fa-solid fa-triangle-exclamation"></i>
-                Lưu ý: Tiêu đề không được bỏ trống.
+                Tiêu đề không được bỏ trống.
               </div>
               <div *ngIf="notificationForm.controls['title'].hasError('minlength') &&
                                      notificationForm.controls['title'].touched" style="color: red">
                 <i class="fa-solid fa-triangle-exclamation"></i>
-                Lưu ý: Tiêu đề tối thiểu 5 kí tự.
+                Tiêu đề tối thiểu 5 kí tự.
               </div>
               <div *ngIf="notificationForm.controls['title'].hasError('maxlength') &&
                                      notificationForm.controls['title'].touched" style="color: red">
                 <i class="fa-solid fa-triangle-exclamation"></i>
+                Tiêu đề tối đa 45 kí tự.
                 Lưu ý: Tiêu đề tối đa 45 kí tự.
               </div>
             </div>
           </div>
         </div>
-        ​
         <div class="mb-2 ">
           <div class="d-flex align-items-center mb-2">
             <div class="col-4">
@@ -68,17 +64,17 @@
               <div *ngIf="notificationForm.controls['content'].hasError('required') &&
                                      notificationForm.controls['content'].touched" style="color: red">
                 <i class="fa-solid fa-triangle-exclamation"></i>
-                Lưu ý: Nội dung không được bỏ trống.
+                Nội dung không được bỏ trống.
               </div>
               <div *ngIf="notificationForm.controls['content'].hasError('maxlength') &&
                                      notificationForm.controls['content'].touched" style="color: red">
                 <i class="fa-solid fa-triangle-exclamation"></i>
-                Lưu ý: Nội dung tối đa 400 kí tự.
+                Nội dung tối đa 400 kí tự.
               </div>
               <div *ngIf="notificationForm.controls['content'].hasError('minlength') &&
                                      notificationForm.controls['content'].touched" style="color: red">
                 <i class="fa-solid fa-triangle-exclamation"></i>
-                Lưu ý: Nội dung tối thiểu 7 kí tự.
+                Nội dung tối thiểu 7 kí tự.
               </div>
             </div>
           </div>

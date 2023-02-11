@@ -32,12 +32,12 @@ export class CustomerGuard implements CanActivate {
       } else if (JSON.stringify(this.tokenService.getRole()) === JSON.stringify(['EMPLOYEE'])) {
         return true;
       } else {
-        this.toast.warning('Bạn không đủ quyền', 'Thông báo');
+        this.toast.warning('Bạn không đủ quyền, vui lòng đăng nhập để tiếp tục.', 'Thông báo');
         this.router.navigateByUrl('');
         return false;
       }
     } else {
-      this.router.navigateByUrl('');
+      this.router.navigateByUrl('/security/login');
       return false;
     }
 

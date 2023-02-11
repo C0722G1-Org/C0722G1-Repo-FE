@@ -27,15 +27,12 @@ export class AdminGuard implements CanActivate {
     if (this.tokenService.getToken()) {
       if (JSON.stringify(this.tokenService.getRole()) === JSON.stringify(['ADMIN'])) {
         return true;
-      } else if (JSON.stringify(this.tokenService.getRole()) === JSON.stringify(['EMPLOYEE'])) {
-        return true;
-      } else {
-        this.toast.warning('Bạn không đủ quyền', 'Thông báo');
+      }else {
+        this.toast.warning('Bạn không đủ quyền, vui lòng đăng nhập để tiếp tục.', 'Thông báo');
         this.router.navigateByUrl('');
         return false;
       }
     } else {
-      this.router.navigateByUrl('');
       return false;
     }
   }

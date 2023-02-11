@@ -10,25 +10,26 @@ import {CustomerListComponent} from './customer-list/customer-list.component';
 import {CustomerDetailComponent} from './customer-detail/customer-detail.component';
 import {CustomerAddComponent} from './customer-add/customer-add.component';
 import {PostListCustomerComponent} from '../post/post-list-customer/post-list-customer.component';
+import {AdminEmployeeGuard} from "../authGuard/admin-employee.guard";
 
 const routes: Routes = [
   {
     path: '', component: CustomerListComponent,
-    canActivate: [AuthGuard] && [AdminGuard]
+    canActivate: [AuthGuard] && [AdminEmployeeGuard]
   },
   {
     path: 'create', component: CustomerCreateComponent
   },
   {
     path: 'add', component: CustomerAddComponent,
-    canActivate: [AuthGuard] && [AdminGuard]
+    canActivate: [AuthGuard] && [AdminEmployeeGuard]
   },
   {
     path: 'edit/:idCustomer', component: CustomerEditComponent,
-    canActivate: [AuthGuard] && [AdminGuard]
+    canActivate: [AuthGuard] && [AdminEmployeeGuard]
   },
   {
-    path: 'detail/:idCustomer', component: CustomerDetailComponent,canActivate: [AuthGuard] && [AdminGuard]
+    path: 'detail/:idCustomer', component: CustomerDetailComponent, canActivate: [AuthGuard] && [AdminEmployeeGuard]
   }
 ];
 

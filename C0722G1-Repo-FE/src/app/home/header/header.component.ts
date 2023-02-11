@@ -14,6 +14,13 @@ export class HeaderComponent implements OnInit {
   name: string | null | undefined;
   roles: string[] = [];
   idAccount: string | null | undefined;
+  /**
+   * creator: Trịnh Minh Đức
+   * date:31/01/2023
+   * method of using save customer
+   */
+  checkNotificationMd = false;
+  numberNotification = 5
 
   constructor(private tokenService: TokenService,
               private router: Router,
@@ -27,6 +34,12 @@ export class HeaderComponent implements OnInit {
       this.name = this.tokenService.getName();
       this.roles = this.tokenService.getRole();
       this.idAccount = this.tokenService.getIdAccount();
+      /**
+       * creator: Trịnh Minh Đức
+       * date:31/01/2023
+       * method of using save customer
+       */
+      this.checkNotificationMd = false;
     }
   }
 
@@ -35,7 +48,21 @@ export class HeaderComponent implements OnInit {
     this.router.navigateByUrl('/').then(() => {
       location.reload();
     });
-    this.toast.info('Đăng xuất thành công', ' Thông báo');
+    this.toast.info('Đăng xuất thành công.', ' Thông báo',{
+      timeOut: 3000,
+      extendedTimeOut: 1500
+    });
+  }
+  /**
+   * creator: Trịnh Minh Đức
+   * date:31/01/2023
+   * method of using save customer
+   */
+  checkNotification(): void {
+    this.checkNotificationMd = true;
+    if (this.checkNotificationMd){
+      this.numberNotification = 0
+    }
   }
 
 }
