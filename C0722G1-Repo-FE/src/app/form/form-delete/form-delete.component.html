@@ -1,0 +1,20 @@
+<form (ngSubmit)="deleteDataForm()">
+  <div class="modal fade" id="deleteFormModal" tabindex="-1" aria-labelledby="deleteFormModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="deleteFormModalLabel">Xóa biểu mẫu</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <span>Bạn có muốn xóa hay không?</span><br>
+          <span >Nội dung: <span style="color: red">{{dataFormDelete.contentDataForm}}</span></span>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Huỷ bỏ</button>
+          <button type="button" class="btn btn-warning" data-bs-dismiss="modal"  (click)="deleteDataForm()" >Xác nhận</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

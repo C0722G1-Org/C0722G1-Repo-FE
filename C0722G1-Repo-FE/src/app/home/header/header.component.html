@@ -1,0 +1,134 @@
+<header class="sticky-top">
+  <nav class="navbar navbar-expand-lg" style="background-color: #f2f2f2">
+    <div class="container-fluid">
+      <a class="navbar-brand" routerLink="">
+
+        <img src="../../../assets/image/logoSang.png" width="140"/>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+              aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" [routerLink]="['home/search', '1']" style="font-size: 130%">Nhà Đất Bán</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" [routerLink]="['home/search', '2']" style="font-size: 130%">Nhà Đất Cho Thuê</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" [routerLink]="['home/search', '3']" style="font-size: 130%">Cần Mua Nhà Đất</a>
+          </li>
+          <li>
+            <a class="nav-link active" *ngIf="roles[0]!=='CUSTOMER' && checkLogin" routerLink="/form"
+               style="font-size: 130%">Biểu Mẫu</a>
+          </li>
+          <li>
+            <a class="nav-link active" *ngIf="roles[0]!=='CUSTOMER' && checkLogin" routerLink="/post/charts"
+               style="font-size: 130%">Thống Kê</a>
+          </li>
+          <li class="nav-item dropdown" *ngIf="roles[0]!=='CUSTOMER' && checkLogin" style="font-size: 130%">
+            <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown"
+               aria-expanded="false">
+              Quản Lý
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" routerLink="/customer">Quản Lý Khách Hàng</a></li>
+              <li><a class="dropdown-item" *ngIf="roles[0]!=='EMPLOYEE'" routerLink="/employee">Quản Lý Nhân Viên</a>
+              </li>
+              <li><a class="dropdown-item" routerLink="/post">Danh Sách Nhu Cầu</a>
+              </li>
+              <li><a class="dropdown-item" *ngIf="roles[0]=='ADMIN'" routerLink="/notification">Danh Sách Thông Báo</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <div>
+          <span *ngIf="checkLogin"> </span><span style="font-size: 110%; color: blue" class="navbar-brand"
+                                                 *ngIf="checkLogin">{{name}}</span>
+          <button class="btn btn-outline-danger me-2" type="submit" *ngIf="!checkLogin" data-bs-toggle="modal"
+                  data-bs-target="#login">Đăng Nhập
+          </button>
+          <button class="btn btn-outline-warning me-2" type="submit" routerLink="/customer/create" *ngIf="!checkLogin">
+            Đăng Ký
+          </button>
+          <button class="btn btn-outline-success me-2" type="submit" routerLink="/post/create"
+                  *ngIf="roles[0]=='CUSTOMER' && checkLogin">Đăng Tin
+          </button>
+          <button class="btn btn-outline-success" type="submit" routerLink="/security/login" *ngIf="!checkLogin">Đăng
+            Tin
+          </button>
+        </div>
+        <div *ngIf="roles[0]=='EMPLOYEE' || 'ADMIN' && checkLogin">
+          <button (click)="checkNotification()" id="notificationMD" type="reset" class="btn btn-primary"
+                  data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <i class="bi bi-bell-fill"></i>
+          </button>
+        </div>
+        <div *ngIf="roles[0]=='CUSTOMER' && checkLogin">
+          <div class="dropdown">
+            <button class="btn btn-danger" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa-regular fa-user"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" [routerLink]="['/post/list/customerByCustomer/',idAccount]">Bài đăng</a></li>
+              <!-- thông tin khách hàng -->
+              <li><a class="dropdown-item" [routerLink]="['/security/change-password/',idAccount]">Sửa mật khẩu</a></li>
+              <!-- thông tin khách hàng -->
+              <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logout">Đăng xuất</a></li>
+            </ul>
+          </div>
+        </div>
+        <div *ngIf="roles[0]=='EMPLOYEE' && checkLogin">
+          <div class="dropdown">
+            <button class="btn btn-danger" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa-regular fa-user"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" routerLink="/customer">Quản lý khách hàng</a></li>
+              <li><a class="dropdown-item" [routerLink]="['/security/change-password/',idAccount]">Sửa mật khẩu</a></li>
+              <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logout">Đăng xuất</a></li>
+            </ul>
+          </div>
+        </div>
+        <div *ngIf="roles[0]=='ADMIN' && checkLogin">
+          <div class="dropdown">
+            <button class="btn btn-danger" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa-regular fa-user"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" routerLink="/employee">Quản lý nhân viên</a></li>
+              <li><a class="dropdown-item" routerLink="/customer">Quản lý khách hàng</a></li>
+              <li><a class="dropdown-item" [routerLink]="['/security/change-password/',idAccount]">Sửa mật khẩu</a></li>
+              <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logout">Đăng xuất</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!-- Modal logout-->
+<div class="modal fade" id="logout" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel1">Đăng xuất</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Bạn chắc chắn muốn đăng xuất!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Huỷ bỏ</button>
+        <button type="submit" (click)="logOut()" data-bs-dismiss="modal" class="btn btn-danger">Tiếp tục</button>
+      </div>
+    </div>
+  </div>
+</div>
+<app-login-modal></app-login-modal>
+<app-notification></app-notification>
+

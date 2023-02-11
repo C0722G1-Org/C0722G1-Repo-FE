@@ -1,0 +1,46 @@
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 id="h5">Thông báo</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-bordered align-content-start">
+          <thead>
+          </thead>
+          <tbody class="table" id="table">
+          <tr *ngFor="let item of pageNotifications?.content;index as i">
+            <td><b class="float-start">{{item.postingDate | date: 'dd/MM/yyyy' }}</b> </td>
+            <td style="text-align: left"> {{item.content}} </td>
+          </tr>
+          </tbody>
+        </table>
+        <!--  Phân trang + Nút xóa-->
+        <div *ngIf="pageNotifications" class="d-flex justify-content-between" id="last-row">
+          <div>
+          </div>
+          <div>
+            <nav aria-label="Page navigation example">
+              <ul class="pagination">
+                <li class="page-item" [ngClass]="pageNotifications.first ? 'disabled': ''">
+                  <a role="button" class="page-link" (click)="gotoPage(0)">Trang đầu</a>
+                </li>
+                <li class="page-item" [ngClass]="pageNotifications.first ? 'disabled': ''">
+                  <a role="button" class="page-link" (click)="gotoPage(pageNotifications.number - 1)"><</a>
+                </li>
+                <li class="page-item" [ngClass]="pageNotifications.last ? 'disabled': ''">
+                  <a role="button" class="page-link" (click)="gotoPage(pageNotifications.number + 1)">></a>
+                </li>
+                <li class="page-item" [ngClass]="pageNotifications.last ? 'disabled': ''">
+                  <a role="button" class="page-link" (click)="gotoPage(pageNotifications.totalPages - 1)">Trang cuối</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

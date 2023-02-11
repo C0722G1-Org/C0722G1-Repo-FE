@@ -1,0 +1,28 @@
+<form >
+  <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Xác nhận xóa</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" *ngIf="postApproval.idPost != undefined">
+          <span>Bạn đã chắc chắn muốn xóa nhu cầu: </span>
+          <span *ngIf="postApproval.idPost < 10; else elseCase" class="text-danger">NC00{{postApproval.idPost}}</span>
+          <ng-template #elseCase>
+            <span *ngIf="postApproval.idPost < 100; else elseCase2" class="text-danger">NC0{{postApproval.idPost}}</span>
+            <ng-template #elseCase2>
+              <span *ngIf="postApproval.idPost < 1000" class="text-danger">NC{{postApproval.idPost}}</span>
+            </ng-template>
+          </ng-template>
+          <br>
+          <p> <span class="text-danger">Lưu ý: </span> <span>Hành động này không thể hoàn tác !</span></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
+          <button type="button" (click)="deletePost()" class="btn btn-warning" data-bs-dismiss="modal">Xác nhận</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

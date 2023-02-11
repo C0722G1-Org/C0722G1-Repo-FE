@@ -1,0 +1,63 @@
+#show {
+  background-color: #009BA1;
+
+}
+
+#show:hover {
+  background-color: #02d0d8;
+}
+
+#email {
+  color: #2C2C2C;
+}
+
+#email:hover {
+  background-color: #fafafa;
+}
+
+.link {
+  color: #7d7d7d;
+}
+
+.link:hover {
+  color: #06859c;
+  cursor: pointer;
+}
+
+.hr_title {
+  color: #7d7d7d;
+}
+
+.hr_value {
+  font-weight: 600;
+  font-size: larger;
+}
+
+.hl_value {
+  font-weight: 600;
+}
+
+ul {
+  list-style: none;
+}
+
+#customerName:hover{
+  cursor: pointer;
+}
+#arrow,
+#arrow::before {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: inherit;
+}
+
+#arrow {
+  visibility: hidden;
+}
+
+#arrow::before {
+  visibility: visible;
+  content: '';
+  transform: rotate(45deg);
+}

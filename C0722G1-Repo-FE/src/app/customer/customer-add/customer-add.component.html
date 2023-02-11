@@ -1,0 +1,233 @@
+<div class="row m-0">
+  <div class=" d-flex justify-content-center align-items-center mt-2 mb-2">
+    <div class="boxed shadow h-100">
+      <form *ngIf="rfAddCustomer" class="form" [formGroup]="rfAddCustomer" (ngSubmit)="addCustomer()">
+        <fieldset>
+          <legend>
+            <div>
+              <div style="margin-left: 15px; margin-top: 15px">
+                <a routerLink="/customer" type="button"><i class="fa-solid fa-arrow-left"></i></a>
+                <span style="font-size: 35px; margin-left: 180px">THÊM KHÁCH HÀNG</span>
+              </div>
+            </div>
+          </legend>
+        </fieldset>
+        <div class="mb-2 ">
+          <div class="d-flex align-items-center mb-2">
+            <div class="col-4">
+              <label for="nameCustomer" class="form-label ms-2">Tên khách hàng<span
+                style="color: red">(*)</span>:</label>
+            </div>
+            <div class="col-8">
+              <input type="text" class="form-control customer-infor" formControlName="nameCustomer" id="nameCustomer"
+                     [ngClass]="(rfAddCustomer.controls['nameCustomer'].touched)?
+                             (rfAddCustomer.controls['nameCustomer'].invalid)?'is-invalid':'is-valid':''"/>
+              <div style="color: red"
+                   *ngIf="rfAddCustomer.controls.nameCustomer.invalid && rfAddCustomer.controls.nameCustomer.touched ">
+                <span *ngIf="rfAddCustomer.controls.nameCustomer.hasError('required') ">Tên không được trống.</span>
+                <span
+                  *ngIf="rfAddCustomer.controls.nameCustomer.hasError('pattern')">Tên không chưa kí tự đặc biệt. Ví dụ Nguyễn Văn A </span>
+                <span
+                  *ngIf="rfAddCustomer.controls.nameCustomer.hasError('minlength')">Tên phải nhiều hơn 5 kí tự.</span>
+                <span
+                  *ngIf="rfAddCustomer.controls.nameCustomer.hasError('maxlength')">Tên phải ít hơn 50 kí tự.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-2">
+          <div class="d-flex align-items-center mb-2">
+            <div class="col-4">
+              <label for="nameDate" class="form-label ms-2">Ngày sinh<span style="color: red">(*)</span>:</label>
+            </div>
+            <div class="col-8">
+              <input id="nameDate" type="date" class="form-control customer-infor" formControlName="dateOfBirth"
+                     [ngClass]="(rfAddCustomer.controls['dateOfBirth'].touched)?
+                             (rfAddCustomer.controls['dateOfBirth'].invalid|| rfAddCustomer.errors?.checkBirthDay)?'is-invalid':'is-valid':''"/>
+              <div *ngIf="rfAddCustomer.controls['dateOfBirth'].hasError('required') &&
+                                     rfAddCustomer.controls['dateOfBirth'].touched" style="color: red">
+                Ngày sinh không được bỏ trống.
+              </div>
+              <div *ngIf="rfAddCustomer.errors?.checkBirthDay"
+                   style="color: red">
+                Tuổi phải nằm trong khoảng 18 đến 100.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mb-2">
+          <div class="d-flex mb-2 mt-3 w-100">
+            <div class="col-4">
+              <label for="nameGender" class="form-label ms-2">Giới tính<span style="color: red">(*)</span>:</label>
+            </div>
+            <div class="d-flex align-items-center mb-2 col-8" id="nameGender">
+              <div class="col-4">
+                <input type="radio" formControlName="genderCustomer" value="0" required>
+                <label>Nam</label><br>
+              </div>
+              <div class="col-4">
+                <input type="radio" formControlName="genderCustomer" value="1">
+                <label>Nữ</label><br>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mb-2 ">
+          <div class="d-flex align-items-center mb-2">
+            <div class="col-4">
+              <label for="nameAddress" class="form-label ms-2">Địa chỉ<span style="color: red">(*)</span>:</label>
+            </div>
+            <div class="col-8">
+              <input type="text" class="form-control customer-infor" formControlName="addressCustomer" id="nameAddress"
+                     [ngClass]="(rfAddCustomer.controls['addressCustomer'].touched)?
+                      rfAddCustomer.controls['addressCustomer'].invalid?'is-invalid':'is-valid':''"/>
+              <div style="color: red"
+                   *ngIf="rfAddCustomer.controls.addressCustomer.invalid && rfAddCustomer.controls.addressCustomer.touched ">
+                <span
+                  *ngIf="rfAddCustomer.controls.addressCustomer.hasError('required') ">Địa chỉ không được trống.</span>
+                <span
+                  *ngIf="rfAddCustomer.controls.addressCustomer.hasError('minlength')">Địa chỉ chỉ chứa 5 đến 255 kí tự vui lòng nhập đúng.</span>
+                <span
+                  *ngIf="rfAddCustomer.controls.addressCustomer.hasError('maxlength')">Địa chỉ chỉ chứa 5 đến 255 kí tự vui lòng nhập đúng.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mb-2 ">
+          <div class="d-flex align-items-center mb-2">
+            <div class="col-4">
+              <label for="namePhone1" class="form-label ms-2">Số điện thoại 1<span style="color: red">(*)</span>:</label>
+            </div>
+            <div class="col-8">
+              <input type="text" class="form-control customer-infor" formControlName="phoneCustomer1" id="namePhone1"
+                     [ngClass]="(rfAddCustomer.controls['phoneCustomer1'].touched)?
+                             rfAddCustomer.controls['phoneCustomer1'].invalid?'is-invalid':'is-valid':''"/>
+              <div *ngIf="rfAddCustomer.controls['phoneCustomer1'].hasError('required') &&
+                                     rfAddCustomer.controls['phoneCustomer1'].touched" style="color: red">
+                Số điện thoại không được bỏ trống.
+              </div>
+              <div *ngIf="rfAddCustomer.controls['phoneCustomer1'].hasError('pattern') &&
+                                     rfAddCustomer.controls['phoneCustomer1'].touched" style="color: red">
+                Số điện thoại phải đúng định dạng. Ví dụ: 038X[7], 076X[7], 097X[7] .
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mb-2 ">
+          <div class="d-flex align-items-center mb-2">
+            <div class="col-4">
+              <label for="namePhone2" class="form-label ms-2">Số điện thoại 2:</label>
+            </div>
+            <div class="col-8">
+              <input type="text" class="form-control customer-infor" formControlName="phoneCustomer2" id="namePhone2"/>
+              <div *ngIf="rfAddCustomer.controls['phoneCustomer2'].hasError('required') &&
+                                     rfAddCustomer.controls['phoneCustomer2'].touched" style="color: red">
+                Số điện thoại không được bỏ trống.
+              </div>
+              <div *ngIf="rfAddCustomer.controls['phoneCustomer2'].hasError('pattern') &&
+                                     rfAddCustomer.controls['phoneCustomer2'].touched" style="color: red">
+                Số điện thoại phải đúng định dạng. Ví dụ: 038X[7], 076X[7], 097X[7] .
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mb-2 ">
+          <div class="d-flex align-items-center mb-2">
+            <div class="col-4">
+              <label for="nameEmail" class="form-label ms-2">Email<span style="color: red">(*)</span>:</label>
+            </div>
+            <div class="col-8">
+              <input type="text" class="form-control customer-infor" formControlName="emailCustomer" id="nameEmail"
+                     [ngClass]="(rfAddCustomer.controls['emailCustomer'].touched)?
+                     (rfAddCustomer.controls['emailCustomer'].invalid|| rfAddCustomer.errors?.isExist)?'is-invalid':'is-valid':''"/>
+              <div>
+                <span *ngIf="rfAddCustomer.controls['emailCustomer'].hasError('required') &&
+                                     rfAddCustomer.controls['emailCustomer'].touched" style="color: red">
+                Email không được bỏ trống.
+              </span>
+                <span *ngIf="rfAddCustomer.errors?.isExist && rfAddCustomer.controls['emailCustomer'].touched"
+                      style="color: red">
+                Email đã tồn tại.
+              </span>
+                <span *ngIf="rfAddCustomer.controls['emailCustomer'].hasError('pattern') &&
+                                     rfAddCustomer.controls['emailCustomer'].touched" style="color: red">
+                Email phải đúng định dạng. Ví dụ: abc@gmail.com.
+              </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mb-2 ">
+          <div class="d-flex align-items-center mb-2">
+            <div class="col-4">
+              <label for="namePass" class="form-label ms-2">Mật khẩu<span style="color: red">(*)</span>:</label>
+            </div>
+            <div class="col-8">
+              <input type="password" class="form-control customer-infor" formControlName="encryptPassword" id="namePass"
+                     [ngClass]="(rfAddCustomer.controls['encryptPassword'].touched)?
+                     rfAddCustomer.controls['encryptPassword'].invalid?'is-invalid':'is-valid':''"/>
+              <div *ngIf="rfAddCustomer.controls['encryptPassword'].hasError('required') &&
+                                     rfAddCustomer.controls['encryptPassword'].touched" style="color: red">
+                Mật khẩu không được bỏ trống.
+              </div>
+              <div *ngIf="rfAddCustomer.controls['encryptPassword'].hasError('pattern') &&
+                                     rfAddCustomer.controls['encryptPassword'].touched" style="color: red">
+                Mật khẩu không đúng định dạng.
+              </div>
+              <div *ngIf="rfAddCustomer.controls['encryptPassword'].hasError('minlength') &&
+                                     rfAddCustomer.controls['encryptPassword'].touched" style="color: red">
+                Mật khẩu không được quá ngắn, vui lòng nhập từ khoảng 6-20 kí tự.
+              </div>
+              <div *ngIf="rfAddCustomer.controls['encryptPassword'].hasError('maxlength') &&
+                                     rfAddCustomer.controls['encryptPassword'].touched" style="color: red">
+                Mật khẩu không được quá dài, vui lòng nhập từ khoảng 6-20 kí tự.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mb-2 ">
+          <div class="d-flex align-items-center mb-2">
+            <div class="col-4">
+              <label for="nameCCD" class="form-label ms-2">CCCD<span style="color: red">(*)</span>:</label>
+            </div>
+            <div class="col-8">
+              <input id="nameCCD" type="text" class="form-control customer-infor" formControlName="idCardCustomer"
+                     [ngClass]="(rfAddCustomer.controls['idCardCustomer'].touched)?
+                     rfAddCustomer.controls['idCardCustomer'].invalid?'is-invalid':'is-valid':''"/>
+              <div *ngIf="rfAddCustomer.controls['idCardCustomer'].hasError('required') &&
+                                     rfAddCustomer.controls['idCardCustomer'].touched" style="color: red">
+                CCCD không được bỏ trống.
+              </div>
+              <div *ngIf="rfAddCustomer.controls['idCardCustomer'].hasError('pattern') &&
+                                     rfAddCustomer.controls['idCardCustomer'].touched" style="color: red">
+                CCCD phải đúng định dạng 12 số.
+              </div>
+            </div>
+          </div>
+        </div>
+        ​
+        ​
+        <div class="d-flex mt-3 mb-2 w-100">
+          <button type="button" style="margin-right: 33px"
+                  class="btn btn-outline btn-outline-primary ms-auto d-flex justify-content-center"
+                  (click)="resetFormAndData()">
+            <p>Nhập lại</p>
+          </button>
+          <button type="submit" style="margin-right: 0" [disabled]="(!rfAddCustomer.valid)"
+                  class="btn btn-primary d-flex justify-content-center">
+            <p>Thêm</p>
+          </button>
+        </div>
+      </form>
+      ​
+      <div class="mb-2">
+            <span style="font-size: 15px" class="fst-italic">
+              Trường có dấu <span style="color: red"> (*)</span> là bắt
+              buộc,không được bỏ trống
+            </span>
+      </div>
+      ​
+    </div>
+  </div>
+</div>

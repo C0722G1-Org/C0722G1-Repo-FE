@@ -1,0 +1,239 @@
+<div class="container-fluid mt-5">
+  <div toastContainer></div>
+  <div class="row">
+    <div class="col-lg-2">
+    </div>
+    <div class="col-lg-6">
+      <div class="card card-body w-100">
+        <div id="carouselExampleCaptions" class="carousel slide mb-3" data-bs-ride="false">
+          <div class="carousel-indicators">
+            <button (click)="changeImage(item.url)" *ngFor="let item of imageList" style="width: 5rem;" type="button"
+                    data-bs-target="#carouselExampleCaptions"
+                    class="active rounded"
+                    aria-current="true">
+              <img style="border: inset #585858 4px; border-radius: 1px"
+                   src="{{item.url}}"
+                   class="d-block w-100" alt="...">
+            </button>
+          </div>
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img src="{{url}}"
+                   class="d-block w-100" alt="...">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-2 ">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="card" style="width: 14rem; height: max-content">
+            <div class="row">
+              <div class="col-lg-3"></div>
+              <div class="col-lg-6">
+                <img *ngIf="postDetail?.genderCustomer == 0"
+                     src="https://cdn-icons-png.flaticon.com/512/147/147142.png"
+                     class="card-img-top" alt="...">
+                <img *ngIf="postDetail?.genderCustomer == 1"
+                     src="https://www.shareicon.net/data/512x512/2016/09/15/829471_user_512x512.png"
+                     class="card-img-top">
+                <img *ngIf="postDetail?.genderCustomer == 2"
+                     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAR4AAACwCAMAAADudvHOAAAAMFBMVEX//wDwAACgAMAAeUD/gABAQP/6YwD/ggD/fAD/rAAAbEMAey8yU89BPv9iMuykAL1RhHEwAAABQ0lEQVR4nO3Qy00CAAAFwSd/BaT/bu1gTyR4mKlgs/si7NMB/5s9yZ5kT7In2ZPsSfYke5I9yZ5kT7In2ZPsSfYke5I9yZ5kT7In2ZPsSfYke5I9yZ5kT9qFsCthJ4I9yZ5kT7In2ZPsSfYke5I9yZ5kT7In2ZPsSfYke5I9yZ5kT7In2ZPsSfYke5I9aTfCvgkDAAAAAAAAAHiDH8KOBHuSPcmeZE+yJ9mT7En2JHuSPcmeZE+yJ9mT7En2JHuSPcmeZE+yJ9mT7En2JHuSPWl3wh6EPQk7E+xJ9iR7kj3JnmRPsifZk+xJ9iR7kj3JnmRPsifZk+xJ9iR7kj3JnmRPsifZk+xJ9qT9EvYi7ECwJ9mT7En2JHuSPcmeZE+yJ9mT7En2JHuSPcmeZE+yJ9mT7En2JHuSPcmeZE+yJ9mT7El/pvc54+iDJPIAAAAASUVORK5CYII="
+                     class="card-img">
+              </div>
+              <div class="col-lg-3"></div>
+            </div>
+
+            <div class="card-body">
+
+              <p style="text-align: center"><span>Được đăng bởi</span> <br>
+                <span class="hr_value" id="customerName"
+                      [routerLink]="['/customer/detail', postDetail?.idCustomer]">{{postDetail?.nameCustomer}}</span>
+              </p>
+
+              <p style="font-size: smaller; text-align: center; margin-top: -0.6rem">
+                <span class="hl_value"> Ngày đăng: </span><span>{{postDetail?.dateCreation | date:'dd/MM/y'}}</span>
+              </p>
+            </div>
+
+            <div class="row">
+              <div class="col-1"></div>
+              <div class="col-10">
+                <button style="text-align: center; width: 11rem" id="show" class="btn mt-1"
+                        (click)="showPhoneNumber()"><span id="phoneNumber"
+                                                          style="font-size: smaller; color: white"><span
+                  (click)="copyPhoneNumber()">{{phoneNumber}}</span></span>
+                </button>
+              </div>
+              <div class="col-1"></div>
+              <div class="row">
+                <div class="col-10">
+                  <a href="mailto:{{postDetail?.emailCustomer}}" id="email"
+                     style="border: solid 1px #ccc; width: 11rem"
+                     class="btn mt-1 mb-2"><span
+                    style="font-size: smaller">Gửi email</span></a>
+                </div>
+                <div class="col-1"></div>
+              </div>
+<!--              <div *ngIf="accountId == idCheck" class="row">-->
+<!--                <div class="col-1"></div>-->
+<!--                <div class="col-10">-->
+<!--                  <a (click)="showSucceedConfirmation()"-->
+<!--                     style="border: solid 1px #ccc; width: 11rem"-->
+<!--                     class="btn mt-1 mb-2"><span-->
+<!--                    style="font-size: smaller">Xác nhận đã giao dịch</span></a>-->
+<!--                </div>-->
+<!--                <div class="col-1"></div>-->
+<!--              </div>-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-lg-2">
+
+    </div>
+    <div class="col-lg-6">
+      <span>{{postDetail?.nameDemandType}}</span>
+      / <span [routerLink]="['/post/list/', postDetail?.nameLandType+'1']" (mouseover)="addHashTag($event, postDetail?.nameLandType)"
+              (mouseout)="removeHashTag($event, postDetail?.nameLandType)"
+              class="link">{{postDetail?.nameLandType}}</span>
+      / <span [routerLink]="['/post/list/', postDetail?.nameDirection+'2']" (mouseover)="addHashTagDirection($event, postDetail?.nameDirection)"
+              (mouseout)="removeHashTagDirection($event, postDetail?.nameDirection)"
+              class="link">hướng {{postDetail?.nameDirection}}</span>
+      / <span [routerLink]="['/post/list/', postDetail?.nameCity]" (mouseover)="addHashTag($event, postDetail?.nameCity)"
+              (mouseout)="removeHashTag($event, postDetail?.nameCity)" class="link">{{postDetail?.nameCity}}</span>
+      <h4 class="mt-2">{{postDetail?.namePost}}
+      </h4>
+      <span class="mt-3">{{postDetail?.numberAddress}}, {{postDetail?.nameWards}},
+        {{postDetail?.nameDistrict}}
+        , {{postDetail?.nameCity}}</span>
+      <hr>
+      <div class="row">
+        <div class="col-3"><span class="hr_title">Mức giá</span></div>
+        <div class="col-3"><span class="hr_title">Diện tích</span></div>
+        <div class="col-3"><span class="hr_title">Loại bài viết</span></div>
+        <div class="col-3" style="margin-top: -0.5rem">
+          <a class="btn" (click)="showSucceedCopyLink()"><i id="share" class="fa-solid fa-share-nodes"></i> Chia sẻ
+          </a>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-3"
+             *ngIf="postDetail?.idDemandType == 1 || postDetail?.idDemandType == 2"><span
+          class="hr_value">{{displayPrice}}</span></div>
+        <div *ngIf="postDetail?.idDemandType == 3" class="col-3"><span
+          class="hr_value">{{displayPrice}}</span><span class="hr_value">/Tháng</span>
+        </div>
+        <div class="col-3"><span class="hr_value">{{postDetail?.area}}m²</span></div>
+        <div class="col-3"><span class="hr_value">{{postDetail?.nameDemandType}}</span></div>
+        <!--        <div class="col-3" style="margin-top: -0.2rem">-->
+        <!--          <a class="btn" (click)="showSucceedReport()">-->
+        <!--            <i id="warning" class="fa-solid fa-circle-exclamation"></i> Báo xấu-->
+        <!--          </a>-->
+        <!--        </div>-->
+      </div>
+      <hr>
+    </div>
+    <div class="col-lg-2 rounded">
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-2">
+
+    </div>
+    <div class="col-lg-6 mt-2">
+      <span class="hr_value">Đặc điểm bất động sản</span>
+      <div class="row">
+        <div class="col-6">
+          <hr>
+        </div>
+        <div class="col-6">
+          <hr>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="row">
+            <div class="col-1"><i class="fa-solid fa-chart-area"></i></div>
+            <div class="col-5"><span class="hl_value">Diện tích</span></div>
+            <div class="col-6">{{postDetail?.area}}m²</div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="row">
+            <div class="col-1"><i class="fa-solid fa-coins"></i></div>
+            <div class="col-5"><span class="hl_value">Mức giá</span></div>
+            <div *ngIf="postDetail?.idDemandType == 1 || postDetail?.idDemandType == 2"
+                 class="col-6"><span>{{displayPrice}}</span></div>
+            <div *ngIf="postDetail?.idDemandType == 3" class="col-6">
+              <span>{{displayPrice}}</span><span>/Tháng</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <hr>
+        </div>
+        <div class="col-6">
+          <hr>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="row">
+            <div class="col-1"><i class="fa-sharp fa-solid fa-compass"></i></div>
+            <div class="col-5"><span class="hl_value">Hướng nhà/đất</span></div>
+            <div class="col-6">{{postDetail?.nameDirection}}</div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="row">
+            <div class="col-1"><i class="fa-solid fa-list-check"></i></div>
+            <div class="col-5"><span class="hl_value">Tình trạng</span></div>
+            <div class="col-6"><span>{{postDetail?.nameStatusPost}}</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <hr>
+        </div>
+        <div class="col-6">
+          <hr>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row mt-4">
+  <div class="col-lg-2">
+
+  </div>
+
+  <div class="col-lg-6">
+    <div class="hr_value">Thông tin mô tả</div>
+    <div>
+      <p style="font-family: Arial,serif, sans-serif" class="mt-2">
+        {{postDetail?.note}}
+    </div>
+  </div>
+  <div class="col-lg-2">
+
+  </div>
+  <div class="col-lg-2">
+
+  </div>
+</div>

@@ -1,0 +1,83 @@
+<div class="modal fade" id="login" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row ">
+          <br>
+          <div class="row container">
+            <div class="col-lg-2"></div>
+            <div class="col-lg-8 rounded-3 ms-3 ">
+              <h5 class="text-primary">Xin chào bạn</h5>
+              <h3 class="text-primary">Đăng nhập để tiếp tục</h3>
+              <br>
+              <form [formGroup]="signInForm" (ngSubmit)="login()">
+                <!-- Username input -->
+                <div class="form-floating mb-4">
+                  <input formControlName="username" type="text" class="form-control" id="floatingInput"
+                         placeholder="name@example.com">
+                  <label for="floatingInput">Tên tài khoản<small> *</small></label>
+                  <div class="text-danger"
+                       *ngIf="signInForm.controls.username.invalid && signInForm.controls.username.touched else elseBlock">
+                    <span *ngIf="signInForm.controls.username.hasError('required')"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp; Tên tài khoản không được để trống.</span>
+                    <span *ngIf="signInForm.controls.username.hasError('minlength')"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp;Tên tài khoản Không nhỏ hơn 3 ký tự.</span>
+                  </div>
+                  <ng-template #elseBlock><br></ng-template>
+                </div>
+
+                <!-- Password input -->
+                <div class="form-floating mb-4">
+                  <input formControlName="password" type="password" class="form-control" id="floatingPassword"
+                         placeholder="name@example.com">
+                  <label for="floatingPassword">Mật khẩu<small> *</small></label>
+                  <div class="text-danger"
+                       *ngIf="signInForm.controls.password.invalid && signInForm.controls.password.touched else elseBlock">
+                    <span *ngIf="signInForm.controls.password.hasError('required')"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp; Mật khẩu không được để trống.</span>
+                    <span *ngIf="signInForm.controls.password.hasError('minlength')"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp; Mật khẩu Không nhỏ hơn 5 ký tự.</span>
+                  </div>
+                  <ng-template #elseBlock><br></ng-template>
+                </div>
+
+                <!-- 2 column grid layout for inline styling -->
+                <div class="row mb-4">
+                  <div class="col d-flex justify-content-center">
+                    <!-- Checkbox -->
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="" id="rememberMe"
+                             formControlName="rememberMe"/>
+                      <label class="form-check-label" for="rememberMe"> Nhớ mật khẩu </label>
+                    </div>
+                  </div>
+
+                  <div class="col">
+                    <!-- Simple link -->
+                    <a routerLink="/security/change-password/:idAccount" data-bs-dismiss="modal" class="text-primary">Quên mật khẩu?</a>
+                  </div>
+                </div>
+
+                <!-- Submit button -->
+                <div class="row align-items-center me-1 ms-1">
+                  <button [disabled]="signInForm.invalid" type="submit" class="btn btn-primary btn-block mb-4"
+                          data-bs-dismiss="modal">Đăng nhập
+                  </button>
+                </div>
+
+                <!-- Register buttons -->
+                <div class="text-center">
+                  <p>Chưa có tài khoản? <a routerLink="/customer/create" data-bs-dismiss="modal" class="text-primary">Đăng ký</a></p>
+                </div>
+              </form>
+            </div>
+
+          </div>
+          <div class="col-lg-2"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,183 @@
+
+<div class="container-fluid main-content" style="height: 578px">
+  <h2 class="text-center fw-bold mt-3">DANH SÁCH KHÁCH HÀNG </h2>
+  <div class="row">
+    <div class="col-md-12 col-lg-3 col-xl-2 mt-2" >
+      <button class="btn btn-primary" routerLink="/customer/add">
+        <span class="text"> Thêm khách hàng</span>
+      </button>
+    </div>
+    <div class="col-md-12 col-lg-2 col-xl-6 mt-2" ></div>
+    <div class="col-md-12 col-lg-7 col-xl-4 mt-2 d-flex " >  <input style="width: 300px" class="form-control me-2" type="search"
+                                                                    placeholder="Nhập vào tên hoặc địa chỉ muốn tìm" aria-label="Search" [(ngModel)]="allSearch">
+      <button class="btn btn-outline-danger" type="button" (click)="searchByMore()" style="width: 170px">
+        Tìm kiếm
+      </button>
+    </div>
+
+  </div>
+
+  <table class="table table-light table-striped mt-3">
+    <thead>
+    <tr class="table-dark">
+      <th scope="col-lg-1" style="width: 1%">STT</th>
+      <th scope="col-lg-1" style="width: 4%">Mã KH</th>
+      <th scope="col-lg-2" style="width: 8%">Họ và tên</th>
+      <th scope="col-lg-2" style="width: 10%">Địa chỉ</th>
+      <th scope="col-lg-1" style="width: 4%">Số điện thoại 1</th>
+      <th scope="col-lg-1" style="width: 4%">Số điện thoại 2</th>
+      <th scope="col-lg-1" style="width: 4%">Tình trạng</th>
+      <th scope="col-lg-1" style="width: 4%">Chi tiết</th>
+      <th scope="col-lg-1" style="width: 2%">Sửa</th>
+      <th scope="col-lg-1" style="width: 2%">Xóa</th>
+    </tr>
+    </thead>
+    <tr *ngIf="(customer) == null  ; else elseBlock">
+      <td colspan="10" class="text-danger" style="text-align: center">Không tìm thấy dữ liệu!, Vui lòng kiểm tra lại
+        thông tin<br>
+        <!--                Click để trở lại danh sách-->
+        <!--                <button (click)="refresh()">Refresh</button>-->
+
+      </td>
+    </tr>
+    <ng-template #elseBlock>
+      <tbody>
+      <tr *ngFor="let item of customer.content; let i = index">
+        <td>{{(i + 1) + customer.size * customer.number}}</td>
+        <td>{{item.code_customer}}</td>
+        <td>{{item.name_customer}}</td>
+        <!--        <td>{{item.address_customer}}</td>-->
+        <td>
+          <div *ngIf="item.address_customer && item.id_customer">
+            <div id="collapsedContent{{item.id_customer}}"
+                 style="display: inline-block">
+              {{item.address_customer | CustomerPipe}}
+              <a style="color:blue;" role="button" id="expandButton{{item.id_customer}}"
+                 *ngIf="item.address_customer.length > 30"
+                 (click)="expandOrCollapse(item.id_customer, 'expand') ">
+                ...xem thêm
+              </a>
+            </div>
+          </div>
+          <div *ngIf="item.address_customer && item.id_customer">
+            <div id="expandedContent{{item.id_customer}}"
+                 style="display: none">
+              {{item.address_customer}}
+              <a style=" color: blue" role="button" id="collapseButton{{item.id_customer}}"
+                 (click)="expandOrCollapse(item.id_customer, 'collapse')">
+                rút gọn
+              </a>
+            </div>
+          </div>
+        </td>
+        <td>{{item.phone_customer1}}</td>
+        <!--      <td>-->
+        <!--        <h8 *ngIf="item.approval_customer != null; else elsePhone2">{{item.phone_customer2}}</h8>-->
+        <!--        <ng-template #elsePhone2>Không có</ng-template>-->
+        <!--      </td>-->
+        <td>
+          <span *ngIf="item.phone_customer2">{{item.phone_customer2}}</span>
+          <span *ngIf="!item.phone_customer2">Không có SĐT</span>
+        </td>
+        <td>
+            <span class="text-success" *ngIf="item.approval_customer == 1; else elseApproval "><i
+              class="bi bi-check-lg "></i> Đã duyệt</span>
+          <ng-template #elseApproval>
+            <button type="button" class="btn btn-light btn-outline-secondary btn-sm" data-bs-toggle="modal"
+                    data-bs-target="#confirmModal" (click)="temp = item">Duyệt
+            </button>
+          </ng-template>
+        </td>
+
+        <td>
+          <a [routerLink]="['/customer/detail/', item.id_customer]">
+            <button type="button" class="btn btn-light btn-outline-secondary btn-sm">
+              Chi tiết
+            </button>
+          </a>
+        </td>
+        <td>
+          <a [routerLink]="['/customer/edit', item.id_customer]">
+            <button type="button" class="btn btn-light btn-outline-secondary btn-sm">
+              <i class="fa-regular fa-pen-to-square"></i>
+            </button>
+          </a>
+        </td>
+        <td>
+          <button type="button" class="btn btn-light btn-outline-secondary btn-sm" data-bs-toggle="modal"
+                  data-bs-target="#deleteCustomer" (click)="temp = item">
+            <i class="fa-regular fa-trash-can"></i>
+          </button>
+        </td>
+      </tr>
+      <tr style="height: 47px" *ngFor="let size of [].constructor(5 - customer.numberOfElements)">
+        <td *ngFor="let height of [].constructor(10)"></td>
+      </tr>
+      </tbody>
+    </ng-template>
+  </table>
+
+  <!--  Phân trang + Nút xóa-->
+  <div *ngIf="customer" class="d-flex justify-content-between" id="last-row">
+    <div>
+    </div>
+    <div>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item" [ngClass]="customer.first ? 'disabled': ''">
+            <a role="button" class="page-link" (click)="gotoPage(0)">Trang đầu</a>
+          </li>
+          <li class="page-item" [ngClass]="customer.first ? 'disabled': ''">
+            <a role="button" class="page-link" (click)="gotoPage(customer.number - 1)"><</a>
+          </li>
+          <li class="page-item" *ngIf="customer.number - 3 > 0">
+            <a role="button" class="page-link"
+               (click)="gotoPage(customer.number - 4)">{{customer.number - 3}}</a>
+          </li>
+          <li class="page-item" *ngIf="customer.number - 2 > 0">
+            <a role="button" class="page-link"
+               (click)="gotoPage(customer.number - 3)">{{customer.number - 2}}</a>
+          </li>
+          <li class="page-item" *ngIf="customer.number - 1 > 0">
+            <a role="button" class="page-link"
+               (click)="gotoPage(customer.number - 2)">{{customer.number - 1}}</a>
+          </li>
+          <li class="page-item" *ngIf="customer.number > 0">
+            <a role="button" class="page-link"
+               (click)="gotoPage(customer.number - 1)">{{customer.number}}</a>
+          </li>
+
+          <li class="page-item active"><a class="page-link">{{customer.number + 1}}</a></li>
+
+          <li class="page-item" *ngIf="customer.number + 2 <= customer.totalPages">
+            <a role="button" class="page-link"
+               (click)="gotoPage(customer.number + 1)">{{customer.number + 2}}</a>
+          </li>
+          <li class="page-item" *ngIf="customer.number + 3 <= customer.totalPages">
+            <a role="button" class="page-link"
+               (click)="gotoPage(customer.number + 2)">{{customer.number + 3}}</a>
+          </li>
+          <li class="page-item" *ngIf="customer.number + 4 <= customer.totalPages">
+            <a role="button" class="page-link"
+               (click)="gotoPage(customer.number + 3)">{{customer.number + 4}}</a>
+          </li>
+          <li class="page-item" *ngIf="customer.number + 5 <= customer.totalPages">
+            <a role="button" class="page-link"
+               (click)="gotoPage(customer.number + 4)">{{customer.number + 5}}</a>
+          </li>
+          <li class="page-item" [ngClass]="customer.last ? 'disabled': ''">
+            <a role="button" class="page-link" (click)="gotoPage(customer.number + 1)">></a>
+          </li>
+          <li class="page-item" [ngClass]="customer.last ? 'disabled': ''">
+            <a role="button" class="page-link" (click)="gotoPage(customer.totalPages - 1)">Trang cuối</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div>
+    </div>
+  </div>
+</div>
+
+<app-customer-approval [customerApproval]="temp" (emiter)="reload()"></app-customer-approval>
+<app-customer-delete [customerApproval]="temp" (emiter)="reload()"></app-customer-delete>

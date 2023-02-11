@@ -1,0 +1,94 @@
+.header-nav {
+  background-color:#fff;
+}
+.container-fluid {
+  color: white;
+}
+body {
+  /*background-image: url("src/assets/img/bgfurama.jpg");*/
+  background-position: right bottom;
+  background-repeat: no-repeat;
+  background-size: 70%;
+  background-attachment: fixed;
+}
+
+ul{
+  margin: 0;
+  padding: 0 !important;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+li{
+  margin: 0;
+  padding: 0;
+  width: auto;
+}
+.active {
+  color: #0D6EFD;
+}
+
+.inputSearch{
+  border-radius: 8px;
+  border: 1px solid #DC3545;
+  outline: none;
+  margin-right: 2px;
+  padding: 8px 24px;
+}
+.card {
+  border: none !important;
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.35);
+  margin-bottom: 30px;
+}
+
+.card:hover {
+  cursor: pointer;
+  box-shadow: 1px 1px 17px rgba(0, 0, 0, 0.35);
+}
+
+.link-page {
+  display: inline-block;
+  padding: 4px 8px;
+  border: 1px solid #0D6EFD;
+  min-width: 30px;
+  margin: 0 4px;
+  border-radius: 3px;
+  text-align: center;
+  color: #0D6EFD;
+  background-color: transparent;
+}
+.link-page:hover {
+  background-color: #e8e8e8;
+}
+
+.link-page.active {
+  background-color: #0D6EFD;
+  color: white;
+  border: 1px solid #0D6EFD;
+}
+.link-page.disabled {
+  opacity: 0.5;
+  background-color: #e8e8e8;
+
+}
+.modal-content:hover{
+  background-color:#e8e8e8 ;
+}
+.card-text {
+  display: block;
+  width: 280px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.card-title {
+  display: block;
+  width: 280px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+/*::placeholder{*/
+/*    color: #0D6EFD;*/
+/*}*/

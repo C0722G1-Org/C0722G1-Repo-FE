@@ -1,0 +1,150 @@
+<div class="row m-0 col-md col-lg col-xl">
+  <form [formGroup]="formUpdateEmployee" (ngSubmit)="updateEmployee()" novalidate>
+    <div class="d-flex justify-content-center align-items-center mt-2 mb-2">
+      <div class="boxed shadow h-100 ">
+        <fieldset>
+          <legend>
+            <div>
+              <div style="margin-left: 15px; margin-top: 15px">
+                <a routerLink="/employee" type="button"><i class="fa-solid fa-arrow-left"></i></a>
+                <span style="font-size: 35px; margin-left: 180px">Chỉnh Sửa Nhân viên</span>
+              </div>
+            </div>
+          </legend>
+        </fieldset>
+        <label for="id"></label><input hidden id="id" type="text"
+                                       class="form-control form-control-lg" formControlName="idEmployee"/>
+        <div style="margin-top: 5px">
+          <div class="mb-2">
+            <div class="d-flex align-items-center mb-2">
+              <div class="col-4">
+                <label for="code" class="form-label ms-2">Mã nhân viên<span style="color: red">(*)</span>:</label>
+              </div>
+              <div class="col-8">
+                <input formControlName="codeEmployee" id="code" type="text" class="form-control"
+                       placeholder="NV-XXXX (X: số nguyên dương)" readonly/>
+              </div>
+            </div>
+          </div>
+          <div class="mb-2">
+            <div class="d-flex align-items-center mb-2">
+              <div class="col-4">
+                <label for="name" class="form-label ms-2">Tên nhân viên<span style="color: red">(*)</span>:</label>
+              </div>
+              <div class="col-8">
+                <input formControlName="nameEmployee" id="name" type="text" class="form-control"
+                       placeholder="Nhập tên nhân viên.."/>
+                <div class="text-danger" *ngIf="formUpdateEmployee.controls.nameEmployee.touched && formUpdateEmployee.controls.nameEmployee.touched else elseBlock">
+                  <span *ngIf="formUpdateEmployee.controls.nameEmployee.hasError('required')">Tên không được trống</span>
+                  <span *ngIf="formUpdateEmployee.controls.nameEmployee.hasError('pattern')">Tên chưa đúng định dạng</span>
+                </div>
+                <ng-template #elseBlock><br></ng-template>
+              </div>
+            </div>
+          </div>
+          <div class="mb-2">
+            <div class="d-flex align-items-center mb-2">
+              <div class="col-4">
+                <label for="initialPrice" class="form-label ms-2">Ngày sinh<span
+                  style="color: red">(*)</span>:</label>
+              </div>
+              <div class="col-8">
+                <input formControlName="dateOfBirth" id="initialPrice" type="date" class="form-control"/>
+                <div class="text-danger" *ngIf="formUpdateEmployee.controls.dateOfBirth.touched else elseBlock">
+                  <span *ngIf="formUpdateEmployee.controls.dateOfBirth.hasError('required')">Ngày sinh không được trống</span>
+                </div>
+                <ng-template #elseBlock><br></ng-template>
+                <div *ngIf="formUpdateEmployee.errors?.checkBirthDay"
+                     style="color: red">
+                  Tuổi phải nằm trong khoảng 18 đến 100.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mb-2">
+            <div class="d-flex mb-2 mt-3 w-100">
+              <div class="col-4">
+                <label class="form-label ms-2">Giới tính<span style="color: red">(*)</span>:</label>
+              </div>
+              <div class="d-flex align-items-center mb-2 col-8" >
+                <div class="col-4">
+
+                  <input type="radio" id="male" [value]="true" formControlName="genderEmployee">
+                  <label for="male">Nam</label><br>
+                </div>
+                <div class="col-4">
+                  <input type="radio" id="female" [value]="false" formControlName="genderEmployee">
+
+                  <label for="female">Nữ</label><br>
+                </div>
+              </div>
+            </div>
+            <div class="text-danger" style="margin-left: 220px" *ngIf="formUpdateEmployee.controls.genderEmployee.touched else elseBlock">
+              <span *ngIf="formUpdateEmployee.controls.genderEmployee.hasError('required')">Giới tính không được trống</span>
+            </div>
+            <ng-template #elseBlock><br></ng-template>
+          </div>
+          <div class="mb-2 ">
+            <div class="d-flex align-items-center mb-2">
+              <div class="col-4">
+                <label for="address" class="form-label ms-2">Địa chỉ<span style="color: red">(*)</span>:</label>
+              </div>
+              <div class="col-8">
+                <input formControlName="addressEmployee" id="address" type="text" class="form-control"
+                       placeholder="Nhập địa chỉ nhân viên.."/>
+              </div>
+            </div>
+          </div>
+          <div class="mb-2 ">
+            <div class="d-flex align-items-center mb-2">
+              <div class="col-4">
+                <label for="phone" class="form-label ms-2">Số điện thoại<span style="color: red">(*)</span>:</label>
+                 </div>
+              <div class="col-8">
+                <input formControlName="phoneEmployee" id="phone" type="text" class="form-control"
+                       placeholder="Nhập số điện thoại nhân viên.."/>
+                <div class="text-danger" *ngIf="formUpdateEmployee.controls.phoneEmployee.touched && formUpdateEmployee.controls.phoneEmployee.touched else elseBlock">
+                  <span *ngIf="formUpdateEmployee.controls.phoneEmployee.hasError('required')">SDT không được trống</span>
+                  <span *ngIf="formUpdateEmployee.controls.phoneEmployee.hasError('pattern')">SDT chưa đúng định dạng</span>
+                </div>
+                <ng-template #elseBlock><br></ng-template>
+              </div>
+            </div>
+          </div>
+          <div class="mb-2">
+            <div class="d-flex align-items-center mb-2">
+              <div class="col-4">
+                <label for="email" class="form-label ms-2">Email<span style="color: red">(*)</span>:</label>
+              </div>
+              <div class="col-8">
+                <input formControlName="emailEmployee" id="email" type="text" class="form-control"
+                       placeholder="Nhập email nhân viên.."/>
+                <div class="text-danger" *ngIf="formUpdateEmployee.controls.emailEmployee.touched && formUpdateEmployee.controls.emailEmployee.touched else elseBlock">
+                  <span *ngIf="formUpdateEmployee.controls.emailEmployee.hasError('required')">Email không được trống</span>
+                  <span *ngIf="formUpdateEmployee.controls.emailEmployee.hasError('email')">Email chưa đúng định dạng</span>
+                </div>
+                <ng-template #elseBlock><br></ng-template>
+              </div>
+            </div>
+          </div>
+          <div class="mb-2">
+            <div class="d-flex align-items-center mb-2">
+              <div class="col-4">
+                <label class="form-label ms-2">Chức vụ<span style="color: red">(*)</span>:</label>
+              </div>
+              <div class="col-8">
+                <select [compareWith]="compareCate" class="form-select" formControlName="division">
+                  <option *ngFor="let i of divisions" [ngValue]="i">{{i.nameDivision}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center" style="margin-bottom: 15px">
+          <button type="submit" class="btn btn-primary" [disabled]="!formUpdateEmployee.valid">Lưu thông tin</button>
+          <button style="margin-left: 15px" type="button" class="btn btn-danger" routerLink="/employee">Hủy</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
