@@ -7,23 +7,27 @@ import {HttpClient} from '@angular/common/http';
 import {PageNotificationDto} from '../dto/notification/page-notification-dto';
 import {NotificationDeleteDto} from '../dto/notification/notification-delete-dto';
 import {ToastrService} from 'ngx-toastr';
+
 // @ts-ignore
 @Injectable({
   providedIn: 'root'
 })
 export class NotificationService {
-  private URL_API_NOTIFICATION = 'http://localhost:8080/api/notifications';​
+  private URL_API_NOTIFICATION = 'http://localhost:8080/api/notifications';
+
   constructor(private httpClient: HttpClient) {
   }
+
   /**
    * Created: DatLA
    * Function: get all and search notifications
    * Date: 31/01/2023
    */
-  getPageNotifications(searchNotification: any, pageNumber: any): Observable<PageNotificationDto> {
+  getPageNotifications(searchNotification: any, pageNumber: any, recordPerPage: any): Observable<PageNotificationDto> {
     return this.httpClient.post<PageNotificationDto>(this.URL_API_NOTIFICATION +
-      '/search?page=' + pageNumber, searchNotification);
+      '/search?page=' + pageNumber + '&size=' + recordPerPage, searchNotification);
   }
+
   /**
    * Created: DatLA
    * Function: find notifications by selected ids
@@ -32,6 +36,7 @@ export class NotificationService {
   findByListId(deleteIds: number[]): Observable<NotificationDeleteDto[]> {
     return this.httpClient.post<NotificationDeleteDto[]>(this.URL_API_NOTIFICATION + '/find-by-list-id', deleteIds);
   }
+
   /**
    * Created: DatLA
    * Function: delete notifications by selected ids

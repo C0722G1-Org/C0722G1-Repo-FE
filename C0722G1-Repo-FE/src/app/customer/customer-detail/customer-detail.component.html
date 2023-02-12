@@ -1,20 +1,18 @@
 <div class="row m-0">
   <div class=" d-flex justify-content-center align-items-center mt-2 mb-2" style="min-width: 560px">
-    <div class="boxed shadow h-100">
+    <div class="boxed shadow h-100" style="margin-bottom: 5px; margin-top: 20px">
       <!--      <form *ngIf="rfCustomer">-->
       <fieldset>
         <legend>
           <div>
             <div style="margin-left: 15px; margin-top: 15px">
               <a routerLink="/customer" type="button"><i class="fa-solid fa-arrow-left"></i></a>
-              <span style="font-size: 35px; margin: 0 auto;text-align: center ; display: block;">Thông Tin Chi Tiết Khách Hàng </span>
-              <span
-                style="font-size: 35px; margin: 0 auto;text-align: center ; display: block;">{{customerDetail?.nameCustomer}}</span>
+              <span style="font-size: 35px; margin: 0 auto;text-align: center ; display: block;">THÔNG TIN CHI TIẾT KHÁCH HÀNG</span>
             </div>
           </div>
         </legend>
       </fieldset>
-
+      <br>
       <div class="mb-2 row">
         <div class="col-4">
           <label class="form-label ms-2">Họ và tên:</label>
@@ -24,6 +22,7 @@
         </div>
       </div>
 
+      <br>
 
       <div class="mb-2 row">
         <div class="col-4">
@@ -35,6 +34,7 @@
           <label *ngIf="customerDetail?.genderCustomer == 2">Khác</label>
         </div>
       </div>
+      <br>
 
       <div class="mb-2 row">
         <div class="col-4">
@@ -44,6 +44,7 @@
           <label>{{customerDetail?.dateOfBirth | date : 'dd/MM/y'}}</label>
         </div>
       </div>
+      <br>
 
       <div class="mb-2 row">
         <div class="col-4">
@@ -53,6 +54,7 @@
           <label>{{customerDetail?.phoneCustomer1}}</label>
         </div>
       </div>
+      <br>
 
       <div class="mb-2 row">
         <div class="col-4">
@@ -62,6 +64,7 @@
           <label>{{customerDetail?.emailCustomer}}</label>
         </div>
       </div>
+      <br>
 
       <div class="mb-2 row">
         <div class="col-4">
@@ -71,6 +74,7 @@
           <label>{{customerDetail?.addressCustomer}}</label>
         </div>
       </div>
+      <br>
 
       <div class="mb-2 row justify-content-center ">
         <button type="submit" style="margin-right: 5px ; width: 80%; "
@@ -79,6 +83,7 @@
         </button>
       </div>
 
+      <br>
 
       <div class="d-flex mt-3 mb-4 w-100 justify-content-center">
         <button type="submit" style="margin-right: 5px" [routerLink]="['/customer/edit',customerDetail?.idCustomer]"

@@ -65,7 +65,6 @@ export class EmployeeListComponent implements OnInit {
     this.employeeService.getAllEmployee(request).subscribe(data => {
       this.employeeList = data;
       this.employeeInfo = data.content;
-      console.log(this.employeeInfo);
       // @ts-ignore
       this.totalPages = data.totalPages;
       // @ts-ignore
@@ -99,7 +98,7 @@ export class EmployeeListComponent implements OnInit {
    * Function: show message toastr when search error
    */
   private showToastrError(): void {
-    this.employeeService.showError('Không có kết quả cần tìm.', 'Thông báo!');
+    this.employeeService.showError('Không có kết quả cần tìm.', 'Thông báo');
   }
 
   /**
@@ -108,7 +107,7 @@ export class EmployeeListComponent implements OnInit {
    * Function: show message toastr when search success
    */
   private showToastrSuccess(): void {
-    this.employeeService.showSuccess('Tìm kiếm thành công.', 'Thông báo!');
+    this.employeeService.showSuccess('Tìm kiếm thành công.', 'Thông báo');
 
   }
 
@@ -138,7 +137,6 @@ export class EmployeeListComponent implements OnInit {
       this.request).subscribe(data => {
       this.employeeList = data;
       this.employeeInfo = data.content;
-      console.log(this.employeeInfo);
       // @ts-ignore
       this.totalPages = data.totalPages;
       // @ts-ignore

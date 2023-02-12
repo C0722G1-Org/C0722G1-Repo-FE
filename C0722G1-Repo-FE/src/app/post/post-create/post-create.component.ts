@@ -15,6 +15,7 @@ import {BaseResponseCreatePost} from '../../dto/post/post-create/base-response-c
 import {ResponseStatusEnum} from '../../dto/post/post-create/response-status-enum.enum';
 import {TokenService} from '../../service/token.service';
 import {CreatePostDtoCustomer} from '../../dto/post/post-create/create-post-dto-customer';
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-post-create',
@@ -23,7 +24,7 @@ import {CreatePostDtoCustomer} from '../../dto/post/post-create/create-post-dto-
 })
 export class PostCreateComponent implements OnInit {
 
-  REGEX_VIETNAMESE = '[a-zA-Z0-9àáãạảăắằẳẵặâấầẩẫậèéẹẻẽêềếểễệđìíĩỉịòóõọỏôốồổỗộơớờởỡợùúũụủưứừửữựỳỵỷỹýÀÁÃẠẢĂẮẰẲẴẶÂẤẦẨẪẬÈÉẸẺẼÊỀẾỂỄỆĐÌÍĨỈỊÒÓÕỌỎÔỐỒỔỖỘƠỚỜỞỠỢÙÚŨỤỦƯỨỪỬỮỰỲỴỶỸÝ/ ]+';
+  REGEX_VIETNAMESE = '[a-zA-Z0-9àáãạảăắằẳẵặâấầẩẫậèéẹẻẽêềếểễệđìíĩỉịòóõọỏôốồổỗộơớờởỡợùúũụủưứừửữựỳỵỷỹýÀÁÃẠẢĂẮẰẲẴẶÂẤẦẨẪẬÈÉẸẺẼÊỀẾỂỄỆĐÌÍĨỈỊÒÓÕỌỎÔỐỒỔỖỘƠỚỜỞỠỢÙÚŨỤỦƯỨỪỬỮỰỲỴỶỸÝ/,_. ]+';
 
   createPostDtoUnit = this.fb.group({
     idCustomer: [1, [Validators.required, Validators.min(0)]],
@@ -86,6 +87,8 @@ export class PostCreateComponent implements OnInit {
     codeCustomer: '',
   };
 
+  isOverSizeImage: boolean = false;
+  isNotImage: boolean = false;
   codeCustomer = 'Lỗi chưa xác định';
 
   constructor(
@@ -93,7 +96,10 @@ export class PostCreateComponent implements OnInit {
     private createPostService: PostCreateServiceService,
     @Inject(AngularFireStorage) private fireStorage: AngularFireStorage,
     private toastrService: ToastrService,
-    private tokenService: TokenService) {
+    private tokenService: TokenService,
+    private title: Title
+    ) {
+    this.title.setTitle('Tạo bài đăng');
   }
 
   ngOnInit(): void {
@@ -171,14 +177,14 @@ export class PostCreateComponent implements OnInit {
   async savePost() {
     this.submitTimes++;
 
-    if (this.createPostDtoUnit.invalid) {
-      this.toastrService.error('Gửi bài đăng thất bại. Vui lòng kiểm tra lại thông tin đã điền');
+    if (this.createPostDtoUnit.invalid || this.isOverSizeImage || this.isNotImage) {
+      this.toastrService.error('Gửi bài đăng thất bại. Vui lòng kiểm tra lại thông tin đã điền.');
       this.createPostDtoUnit.markAllAsTouched();
       this.createPostDtoUnit.markAsDirty();
       return;
     }
 
-    if (this.createPostDtoUnit.valid) {
+    if (this.createPostDtoUnit.valid && !this.isOverSizeImage && !this.isNotImage) {
       this.isWaitingResponse = true;
       let urls = await this.getDownloadImageURLs()
       this.createPostDto = this.createPostDtoUnit.value;
@@ -190,7 +196,7 @@ export class PostCreateComponent implements OnInit {
           this.resetCreatePostDtoUnit();
           this.submitTimes = 0;
           this.messageFormServer = '';
-          this.toastrService.success('Thêm mới thành công');
+          this.toastrService.success('Thêm mới thành công.');
           this.districtsListOnCity = [];
           return;
         }
@@ -249,8 +255,22 @@ export class PostCreateComponent implements OnInit {
     if (amountOfFile !== 0) {
       this.nameImageList = [];
       for (let i = 0; i < amountOfFile; i++) {
-        this.imageList.push(event.target.files[i]);
-        this.nameImageList.push(event.target.files[i].name);
+        let file = event.target.files[i];
+        if (file.type.includes('image')) {
+          if (file.size / 1024 / 1024 < 5) {
+            this.imageList.push(event.target.files[i]);
+            this.nameImageList.push(event.target.files[i].name);
+            this.isOverSizeImage = false;
+            this.isNotImage = false;
+          } else {
+            this.isOverSizeImage = true;
+            break;
+          }
+        } else {
+          this.isNotImage = true;
+          break;
+        }
+
       }
     } else {
       this.nameImageList = ['Chưa có ảnh'];

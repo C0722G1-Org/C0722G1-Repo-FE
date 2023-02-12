@@ -16,11 +16,13 @@ import {Title} from '@angular/platform-browser';
 })
 export class FormCreateComponent implements OnInit {
   selectedFile: any = null;
+  isOverSizeFile: boolean = false;
+  isSubMit: boolean = false;
 
   constructor(private dataFormService: DataFormService, private route: Router, @Inject(AngularFireStorage)
               private storage: AngularFireStorage,
               private toastrService: ToastrService, private titleService: Title) {
-    this.titleService.setTitle('Thêm mới hồ sơ');
+    this.titleService.setTitle('Thêm mới biểu mẫu');
   }
 
   /**
@@ -30,13 +32,13 @@ export class FormCreateComponent implements OnInit {
    */
   validationMessages = {
     contentDataForm: [
-      {type: 'required', message: 'Vui lòng nhập nội dung biểu mẫu '},
-      {type: 'pattern', message: 'Vui lòng nhập đúng định dạng Abc'},
-      {type: 'maxlength', message: 'Vui lòng nhập không quá 200 từ'},
-      {type: 'minlength', message: 'Vui lòng nhập không quá 5 từ'}
+      {type: 'required', message: 'Vui lòng nhập nội dung biểu mẫu.'},
+      {type: 'pattern', message: 'Vui lòng nhập đúng định dạng, ví dụ: Hợp Đồng.'},
+      {type: 'maxlength', message: 'Vui lòng nhập không quá 200 từ.'},
+      {type: 'minlength', message: 'Vui lòng nhập nhiều hơn 5 từ.'}
     ],
     fileForm: [
-      {type: 'required', message: '(*) Vui lòng thêm file'}
+      {type: 'required', message: '(*) Vui lòng thêm file.'}
     ]
   };
   dataFormCreate = new FormGroup({
@@ -56,6 +58,7 @@ export class FormCreateComponent implements OnInit {
    * @param: event
    */
   showPreview(event: any): void {
+    this.isOverSizeFile = event.target.files[0].size / 1024 / 1024 > 5;
     if (event.target.files[0] !== null && event.target.files[0] !== '') {
       this.selectedFile = event.target.files[0];
     }
@@ -70,21 +73,28 @@ export class FormCreateComponent implements OnInit {
   saveDataForm(): void {
     const nameFile = this.getCurrentDateTime() + this.selectedFile.name;
     const fileRef = this.storage.ref(nameFile);
-    this.storage.upload(nameFile, this.selectedFile).snapshotChanges().pipe(
-      finalize(() => {
-        fileRef.getDownloadURL().subscribe((url) => {
+    if (this.selectedFile.size / 1024 / 1024 < 5) {
+      this.isSubMit = true
+      this.isOverSizeFile = false;
+      this.storage.upload(nameFile, this.selectedFile).snapshotChanges().pipe(
+        finalize(() => {
+          fileRef.getDownloadURL().subscribe((url) => {
 
-          this.dataFormCreate.patchValue({urlDataForm: url});
+            this.dataFormCreate.patchValue({urlDataForm: url});
 
-          // Call API to create dataForm
-          this.dataFormService.createDataFormDTO(this.dataFormCreate.value).subscribe(() => {
-            console.log(this.dataFormCreate);
-            this.route.navigateByUrl('/form');
-            this.toastrService.success('Thêm mới thành công!', 'Thông báo', {});
+            // Call API to create dataForm
+            this.dataFormService.createDataFormDTO(this.dataFormCreate.value).subscribe(() => {
+              this.isSubMit = false;
+
+              this.route.navigateByUrl('/form');
+              this.toastrService.success('Thêm mới thành công.', 'Thông báo', {});
+            });
           });
-        });
-      })
-    ).subscribe();
+        })
+      ).subscribe();
+    } else {
+      this.toastrService.error('Vui lòng kiểm tra lại thông tin đã điền.', 'Thông Báo')
+    }
   }
 
   /**
@@ -94,5 +104,9 @@ export class FormCreateComponent implements OnInit {
    */
   getCurrentDateTime(): string {
     return formatDate(new Date(), 'dd-MM-yyyyhhmmssa', 'en-US');
+  }
+
+  resetFileValidate() {
+    this.isOverSizeFile= false
   }
 }

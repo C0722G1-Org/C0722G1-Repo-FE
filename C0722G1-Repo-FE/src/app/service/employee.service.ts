@@ -5,6 +5,7 @@ import {Employee} from '../entity/employee/employee';
 import {EmployeeInfo} from '../dto/employee/employee-info';
 import {EmployeeInfoJson} from '../dto/employee/employee-info-json';
 import {ToastrService} from 'ngx-toastr';
+import {CustomerDtoEmailAndUsername} from "../dto/customer/customerDtoEmailAndUsername";
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,8 @@ export class EmployeeService {
   URL_EMPLOYEE = 'http://localhost:8080/api/employees';
   URL_EMPLOYEE_CREATE = 'http://localhost:8080/api/employees/save';
   URL_EMPLOYEE_UPDATE = 'http://localhost:8080/api/employees/update';
+  URL_ACCOUNT ='http://localhost:8080/api/public/ListMailCustomerAnhNameAccount';
+
   constructor(private httpClient: HttpClient,
               private toast: ToastrService) {
   }
@@ -121,7 +124,7 @@ export class EmployeeService {
   showSuccess(message: string, title: string): void {
     this.toast.success(message, title);
   }
-  
+
   /**
    * Created: NhanUQ
    * Function: notification error
@@ -130,6 +133,15 @@ export class EmployeeService {
    */
   showError(message: string, title: string): void {
     this.toast.error(message, title);
+  }
+
+  /**
+   * creator: LongPt
+   * date:31/01/2023
+   * method get username for check account
+   */
+  findListMail(): Observable<CustomerDtoEmailAndUsername[]> {
+    return this.httpClient.get<CustomerDtoEmailAndUsername[]>(this.URL_ACCOUNT);
   }
 }
 

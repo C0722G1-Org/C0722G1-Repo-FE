@@ -48,20 +48,15 @@ export class PostDetailComponent implements OnInit {
          * @param id: a Post' id
          * @return a Observable that contain a Post object can be showed on Post detail screen
          */
-
         this.postService.findPostById(Number(id)).subscribe(dataPost => {
-          console.log(dataPost.approval);
-          if (dataPost.approval === false || dataPost.flagDeleted === true) {
-            this.router.navigateByUrl('/post/error');
+          if (dataPost.approval === false || dataPost.flagDeleted === true ) {
+            this.router.navigateByUrl('/**');
           }
           this.postDetail = dataPost;
           this.phoneNumber = dataPost.phoneCustomer1.slice(0, 4) + ' ' + dataPost.phoneCustomer1.slice(4, 7) + ' *** • Hiện số';
-          console.log(this.phoneNumber)
           this.displayPhoneNumber = dataPost.phoneCustomer1;
           this.postService.getAccountId(this.postDetail.idCustomer).subscribe(idAccount => {
-            console.log(this.postDetail.idCustomer);
             this.idCheck = idAccount;
-            console.log(this.accountId);
           });
           /**
            * Method uses:
@@ -80,6 +75,10 @@ export class PostDetailComponent implements OnInit {
               this.convertToMillion();
             }
           });
+        }, error => {
+          if (error.status === 400 || 404 || 403) {
+            this.router.navigateByUrl('/**');
+          }
         });
       }
     }, error => {
@@ -119,7 +118,7 @@ export class PostDetailComponent implements OnInit {
    */
   showSucceedCopyLink(): void {
     navigator.clipboard.writeText('http://localhost:4200/post/detail/' + this.idPost);
-    this.toastr.info('Đã sao chép đường dẫn URL');
+    this.toastr.info('Đã sao chép đường dẫn URL.');
   }
 
   /**
@@ -136,7 +135,7 @@ export class PostDetailComponent implements OnInit {
   showSucceedConfirmation(): void {
     // @ts-ignore
     this.postService.succeedConfirm(this.idPost);
-    this.toastr.success('Xác nhận giao dịch', 'Thành công!');
+    this.toastr.success('Xác nhận giao dịch.', 'Thành công');
   }
 
   /**
@@ -169,7 +168,7 @@ export class PostDetailComponent implements OnInit {
       if (this.postDetail.phoneCustomer1 != null) {
         navigator.clipboard.writeText(this.postDetail.phoneCustomer1);
       }
-      this.toastr.info('Đã sao chép số điện thoại');
+      this.toastr.info('Đã sao chép số điện thoại.');
     }
   }
 

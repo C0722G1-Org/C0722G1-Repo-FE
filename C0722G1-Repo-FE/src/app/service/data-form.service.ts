@@ -42,14 +42,12 @@ export class DataFormService {
   }
 
   findById(id: number): Observable<DataForm> {
-    console.log(this.url + '/' + id);
     return this.httpClient.get<DataForm>(this.url + '/' + id);
   }
 
 
   updateDataForm(dataForm: DataForm): Observable<DataForm> {
 
-    console.log(this.url + '/update/' + dataForm.idDataForm, dataForm);
     return this.httpClient.put<DataForm>(this.url + '/update/' + dataForm.idDataForm, dataForm);
   }
 
