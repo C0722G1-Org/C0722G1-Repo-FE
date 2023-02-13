@@ -46,7 +46,8 @@ label {
 
   .buttonReset {
     position: absolute;
-    top: 340px;
+
+    top: 500px;
     left: 100px;
     margin-bottom: 40px;
   }
@@ -54,7 +55,7 @@ label {
   .buttonSearch {
     position: absolute;
     left: 280px;
-    top: 340px;
+    top: 500px;
   }
 
   /* Force table to not be like tables anymore */
